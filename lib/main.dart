@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/pages/tab.dart';
 import 'package:guildwars2_companion/pages/token.dart';
 import 'package:guildwars2_companion/utils/token.dart';
@@ -17,16 +19,23 @@ class GuildWars2Companion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    return MaterialApp(
-      title: 'Guild Wars 2 Companion',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-        primaryColor: Color(0xFFAA0404),
-        accentColor: Colors.blue,
-        scaffoldBackgroundColor: Color(0xFFEDF0F6),
-        cursorColor: Color(0xFFAA0404)
+    return MultiBlocProvider(
+      child: MaterialApp(
+        title: 'Guild Wars 2 Companion',
+        theme: ThemeData(
+          primarySwatch: Colors.red,
+          primaryColor: Color(0xFFAA0404),
+          accentColor: Colors.blue,
+          scaffoldBackgroundColor: Color(0xFFEDF0F6),
+          cursorColor: Color(0xFFAA0404)
+        ),
+        home: isAuthenticated ? TabPage() : TokenPage(),
       ),
-      home: isAuthenticated ? TabPage() : TokenPage(),
+      providers: <BlocProvider>[
+        BlocProvider<AccountBloc>(
+          create: (BuildContext context) => AccountBloc(),
+        ),
+      ],
     );
   }
 

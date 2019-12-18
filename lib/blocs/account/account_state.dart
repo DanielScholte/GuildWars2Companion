@@ -9,9 +9,9 @@ class UnauthenticatedState extends AccountState {}
 
 class LoadingAccountState extends AccountState {}
 
-class LoadedAccountState extends AccountState {
+class AuthenticatedState extends AccountState {
   final Account account;
   final TokenInfo tokenInfo;
 
-  LoadedAccountState(this.account, this.tokenInfo);
+  AuthenticatedState(this.account, this.tokenInfo);
 }

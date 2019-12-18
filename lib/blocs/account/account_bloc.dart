@@ -16,8 +16,10 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     TokenUtil.tokenPresent().then((present) {
       if (present) {
         add(AuthenticateEvent(null));
+      } else {
+        add(SetAccountState(UnauthenticatedState()));
       }
-    });
+    }).catchError((_) => add(SetAccountState(UnauthenticatedState())));
   }
 
   @override
@@ -27,6 +29,8 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     if (event is AuthenticateEvent) {
       yield LoadingAccountState();
       yield* _authenticate(event.token == null ? await TokenUtil.getToken() : event.token);
+    } else if (event is SetAccountState) {
+      yield event.state;
     }
   }
 
@@ -34,12 +38,13 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     final response = await http.get(
       Urls.tokenInfoUrl,
       headers: {
-        'Authorization': 'jwt $token',
+        'Authorization': 'Bearer $token',
       }
     );
 
     if (response.statusCode == 200) {
-      yield LoadedAccountState(
+      await TokenUtil.setToken(token);
+      yield AuthenticatedState(
         await _getAccount(token),
         TokenInfo.fromJson(json.decode(response.body))
       );
@@ -52,7 +57,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     final response = await http.get(
       Urls.accountUrl,
       headers: {
-        'Authorization': 'jwt $token',
+        'Authorization': 'Bearer $token',
       }
     );
 
