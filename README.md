@@ -32,3 +32,7 @@ The Guild Wars 2 Companion app
 ### Achievements
 - Achievements (+ Progression?)
 - Dailies
+
+## Ideas
+
+https://assets.materialup.com/uploads/f8e7964a-e4af-46f4-babe-95dc5d39a749/preview.png
