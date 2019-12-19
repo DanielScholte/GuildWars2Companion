@@ -1,4 +1,3 @@
-import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:meta/meta.dart';
 
 @immutable
@@ -10,8 +9,16 @@ class AuthenticateEvent extends AccountEvent {
   AuthenticateEvent(this.token);
 }
 
-class SetAccountState extends AccountEvent {
-  final AccountState state;
+class SetupAccountEvent extends AccountEvent {}
 
-  SetAccountState(this.state);
+class AddTokenEvent extends AccountEvent {
+  final String token;
+
+  AddTokenEvent(this.token);
+}
+
+class RemoveTokenEvent extends AccountEvent {
+  final String token;
+
+  RemoveTokenEvent(this.token);
 }

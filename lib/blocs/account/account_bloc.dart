@@ -13,13 +13,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   AccountState get initialState => LoadingAccountState();
 
   AccountBloc() {
-    TokenUtil.tokenPresent().then((present) {
-      if (present) {
-        add(AuthenticateEvent(null));
-      } else {
-        add(SetAccountState(UnauthenticatedState()));
-      }
-    }).catchError((_) => add(SetAccountState(UnauthenticatedState())));
+    add(SetupAccountEvent());
   }
 
   @override
@@ -28,9 +22,20 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   ) async* {
     if (event is AuthenticateEvent) {
       yield LoadingAccountState();
-      yield* _authenticate(event.token == null ? await TokenUtil.getToken() : event.token);
-    } else if (event is SetAccountState) {
-      yield event.state;
+      yield* _authenticate(event.token);
+    } else if (event is SetupAccountEvent) {
+      yield LoadingAccountState();
+      if (await TokenUtil.tokenPresent()) {
+        yield* _authenticate(await TokenUtil.getToken());
+        return;
+      }
+      yield await _getUnauthenticated(null);
+    } else if (event is AddTokenEvent) {
+      yield LoadingAccountState();
+      yield* _addToken(event.token);
+    } else if (event is RemoveTokenEvent) {
+      yield LoadingAccountState();
+      yield* _removeToken(event.token);
     }
   }
 
@@ -49,8 +54,24 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
         TokenInfo.fromJson(json.decode(response.body))
       );
     } else {
-      yield UnauthenticatedState();
+      yield await _getUnauthenticated("Invalid token");
     }
+  }
+
+  Stream<AccountState> _addToken(String token) async* {
+    Account account = await _getAccount(token);
+    if (account == null) {
+      yield await _getUnauthenticated("Invalid token");
+      return;
+    }
+
+    await TokenUtil.addToTokenList('$token;${account.name};${DateTime.now()}');
+    yield await _getUnauthenticated("Token added");
+  }
+
+  Stream<AccountState> _removeToken(String token) async* {
+    await TokenUtil.removeFromTokenList(token);
+    yield await _getUnauthenticated("Token removed");
   }
 
   Future<Account> _getAccount(String token) async {
@@ -68,5 +89,10 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     return null;
   }
 
-
+  Future<UnauthenticatedState> _getUnauthenticated(String message) async {
+    return UnauthenticatedState(
+      await TokenUtil.getTokenList(),
+      message
+    );
+  }
 }

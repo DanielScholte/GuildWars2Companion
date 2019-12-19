@@ -17,8 +17,10 @@ class _TabPageState extends State<TabPage> {
 
   final List<TabEntry> _tabs = [
     TabEntry(null, "Home", Icons.home, Colors.red),
-    TabEntry(null, "Test", Icons.vpn_key, Colors.blue),
-    TabEntry(null, "Hmm", Icons.person, Colors.green),
+    TabEntry(null, "Characters", Icons.vpn_key, Colors.blue),
+    TabEntry(null, "Trading Post", Icons.person, Colors.green),
+    TabEntry(null, "Bank", Icons.person, Colors.green),
+    TabEntry(null, "Achievements", Icons.person, Colors.green),
   ];
   
   @override
@@ -75,7 +77,8 @@ class _TabPageState extends State<TabPage> {
             title: Text(
               t.title,
               style: TextStyle(
-                color: Colors.white
+                color: Colors.white,
+                fontSize: 12.0
               ),
             ),
             backgroundColor: t.color

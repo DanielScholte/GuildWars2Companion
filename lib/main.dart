@@ -25,9 +25,9 @@ class GuildWars2Companion extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.red,
           primaryColor: Color(0xFFAA0404),
-          accentColor: Colors.blue,
+          accentColor: Colors.red,
           scaffoldBackgroundColor: Color(0xFFEDF0F6),
-          cursorColor: Color(0xFFAA0404)
+          cursorColor: Color(0xFFAA0404),
         ),
         home: isAuthenticated ? TabPage() : TokenPage(),
       ),

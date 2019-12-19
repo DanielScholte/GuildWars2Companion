@@ -1,3 +1,4 @@
+import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/models/account/account.dart';
 import 'package:guildwars2_companion/models/account/token_info.dart';
 import 'package:meta/meta.dart';
@@ -5,7 +6,12 @@ import 'package:meta/meta.dart';
 @immutable
 abstract class AccountState {}
 
-class UnauthenticatedState extends AccountState {}
+class UnauthenticatedState extends AccountState {
+  final String message;
+  final List<String> tokens;
+
+  UnauthenticatedState(this.tokens, this.message);
+}
 
 class LoadingAccountState extends AccountState {}
 
