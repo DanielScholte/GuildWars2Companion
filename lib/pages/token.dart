@@ -155,7 +155,12 @@ class TokenPage extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(8.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        // color: Colors.white,
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [Theme.of(context).primaryColor, Colors.red] 
+        ),
         borderRadius: BorderRadius.circular(8.0),
         boxShadow: [
           BoxShadow(
@@ -169,8 +174,8 @@ class TokenPage extends StatelessWidget {
         child: InkWell(
           onTap: () => BlocProvider.of<AccountBloc>(context).add(AuthenticateEvent(tokenParts[0])),
           borderRadius: BorderRadius.circular(8.0),
-          splashColor: Color(0xFFDDDDDD),
-          highlightColor: Color(0xFFDDDDDD),
+          splashColor: Color(0x22DDDDDD),
+          highlightColor: Color(0x22DDDDDD),
           child: Padding(
             padding: EdgeInsets.all(8.0),
             child: Row(
@@ -185,6 +190,7 @@ class TokenPage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.w500,
+                        color: Colors.white,
                       ),
                     ),
                     if (added != null)
@@ -192,12 +198,14 @@ class TokenPage extends StatelessWidget {
                         'Added: ${DateFormat('yyyy-MM-dd - kk:mm').format(added)}',
                         style: TextStyle(
                           fontSize: 16.0,
+                          color: Colors.white,
                         ),
                       ),
                   ],
                 ),
                 Icon(
-                  Icons.chevron_right
+                  Icons.chevron_right,
+                  color: Colors.white,
                 )
               ],
             ),

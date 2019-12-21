@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
+import 'package:guildwars2_companion/pages/tabs/home.dart';
 import 'package:guildwars2_companion/pages/token.dart';
 
 class TabPage extends StatefulWidget {
@@ -16,11 +17,11 @@ class _TabPageState extends State<TabPage> {
   int _currentIndex = 0;
 
   final List<TabEntry> _tabs = [
-    TabEntry(null, "Home", Icons.home, Colors.red),
-    TabEntry(null, "Characters", Icons.vpn_key, Colors.blue),
-    TabEntry(null, "Trading Post", Icons.person, Colors.green),
-    TabEntry(null, "Bank", Icons.person, Colors.green),
-    TabEntry(null, "Achievements", Icons.person, Colors.green),
+    TabEntry(HomePage(), "Home", Icons.home, Colors.red),
+    TabEntry(Scaffold(), "Characters", Icons.vpn_key, Colors.blue),
+    TabEntry(Scaffold(), "Trading Post", Icons.person, Colors.green),
+    TabEntry(Scaffold(), "Bank", Icons.person, Colors.green),
+    TabEntry(Scaffold(), "Achievements", Icons.person, Colors.green),
   ];
   
   @override
@@ -55,7 +56,10 @@ class _TabPageState extends State<TabPage> {
 
   Widget _buildTabPage(BuildContext context, AuthenticatedState authenticatedState) {
     return Scaffold(
-      body: Center(child: Text('Welcome ${authenticatedState.account.name}')),
+      body: IndexedStack(
+        children: _tabs.map((t) => t.widget).toList(),
+        index: _currentIndex,
+      ),
       bottomNavigationBar: BubbleBottomBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
