@@ -1,7 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
+import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/utils/gw.dart';
+import 'package:guildwars2_companion/widgets/full_button.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -21,7 +24,7 @@ class HomePage extends StatelessWidget {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black,
+                      color: Colors.black38,
                       blurRadius: 8.0,
                     ),
                   ],
@@ -48,6 +51,18 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
+              MediaQuery.removePadding(
+                removeTop: true,
+                context: context,
+                child: Expanded(
+                  child: ListView(
+                    children: <Widget>[
+                      if (state.tokenInfo.permissions.contains('wallet'))
+                        _buildWallet(context),
+                    ],
+                  ),
+                ),
+              )
             ],
           );
         }
@@ -85,7 +100,7 @@ class HomePage extends StatelessWidget {
     return BlocBuilder<AccountBloc, AccountState>(
       builder: (context, state) {
         if (state is AuthenticatedState) {
-          return _buildHeaderInfoBox(context, 'Playtime', GuildWarsUtil.calculatePlayTime(state.account.age).toString(), false);
+          return _buildHeaderInfoBox(context, 'Playtime', GuildWarsUtil.calculatePlayTime(state.account.age).toString() + 'h', false);
         }
 
         return _buildHeaderInfoBox(context, 'Playtime', '?', true);
@@ -135,6 +150,79 @@ class HomePage extends StatelessWidget {
             ),
         ],
       ),
+    );
+  }
+
+  Widget _buildWallet(BuildContext context) {
+    return BlocBuilder<WalletBloc, WalletState>(
+      builder: (BuildContext context, WalletState state) {
+        if (state is LoadedWalletState) {
+          return CompanionFullButton(
+            color: Color(0xFF42A5F5),
+            title: 'Wallet',
+            onTap: () {},
+            leading: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                state.currencies.firstWhere((c) => c.name == 'Coin', orElse: null),
+                state.currencies.firstWhere((c) => c.name == 'Karma', orElse: null),
+                state.currencies.firstWhere((c) => c.name == 'Gem', orElse: null),
+              ] .where((c) => c != null)
+                .map((c) => Row(
+                  children: <Widget>[
+                    Container(
+                      width: 20.0,
+                      height: 20.0,
+                      margin: EdgeInsets.symmetric(horizontal: 8.0),
+                      child: CachedNetworkImage(
+                        imageUrl: c.icon,
+                        placeholder: (context, url) => CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    if (c.name == 'Coin')
+                      Text(
+                        (c.value / 10000).round().toString(),
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    if (c.name == 'Karma' && c.value < 1000000)
+                      Text(
+                        (c.value / 1000).round().toString() + 'k',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    if (c.name == 'Karma' && c.value >= 1000000)
+                      Text(
+                        (c.value / 1000000).round().toString() + 'm',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    if (c.name == 'Gem')
+                      Text(
+                        c.value.toString(),
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                  ],
+                ))
+                .toList(),
+            ),
+          );
+        }
+
+        return CompanionFullButton(
+          color: Color(0xFF42A5F5),
+          title: 'Wallet',
+          onTap: () {},
+          loading: true,
+        );
+      },
     );
   }
 }

@@ -1,4 +1,3 @@
-import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/models/account/account.dart';
 import 'package:guildwars2_companion/models/account/token_info.dart';
 import 'package:meta/meta.dart';

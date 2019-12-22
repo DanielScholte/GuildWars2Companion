@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
-import 'package:guildwars2_companion/utils/gw.dart';
 import 'package:intl/intl.dart';
 
 import 'tab.dart';
@@ -164,8 +163,8 @@ class TokenPage extends StatelessWidget {
         borderRadius: BorderRadius.circular(8.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey,
-            blurRadius: 12.0,
+            color: Colors.black38,
+            blurRadius: 8.0,
           ),
         ]
       ),

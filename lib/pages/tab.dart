@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
+import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/pages/tabs/home.dart';
 import 'package:guildwars2_companion/pages/token.dart';
 
@@ -16,14 +17,11 @@ class _TabPageState extends State<TabPage> {
 
   int _currentIndex = 0;
 
-  final List<TabEntry> _tabs = [
+  List<TabEntry> _tabs = [
     TabEntry(HomePage(), "Home", Icons.home, Colors.red),
-    TabEntry(Scaffold(), "Characters", Icons.vpn_key, Colors.blue),
-    TabEntry(Scaffold(), "Trading Post", Icons.person, Colors.green),
-    TabEntry(Scaffold(), "Bank", Icons.person, Colors.green),
     TabEntry(Scaffold(), "Achievements", Icons.person, Colors.green),
   ];
-  
+ 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -32,8 +30,14 @@ class _TabPageState extends State<TabPage> {
     ));
 
     return BlocListener<AccountBloc, AccountState>(
-      condition: (previous, current) => current is UnauthenticatedState,
-      listener: (BuildContext context, state) {
+      condition: (previous, current) => current is UnauthenticatedState || current is AuthenticatedState,
+      listener: (BuildContext context, state) async {
+        if (state is AuthenticatedState) {
+          await _handleAuth(context, state);
+          setState(() {});
+          return;
+        }
+
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (BuildContext context) => TokenPage()));
       },
@@ -90,6 +94,28 @@ class _TabPageState extends State<TabPage> {
         ).toList(),
       ),
     );
+  }
+
+  Future<void> _handleAuth(BuildContext context, AuthenticatedState state) async {
+    List<TabEntry> tabs = [
+      TabEntry(HomePage(), "Home", Icons.home, Colors.red),
+    ];
+
+    if (state.tokenInfo.permissions.contains('characters')) {
+      tabs.addAll([
+        TabEntry(Scaffold(), "Characters", Icons.vpn_key, Colors.blue),
+        TabEntry(Scaffold(), "Trading Post", Icons.person, Colors.green),
+        TabEntry(Scaffold(), "Bank", Icons.person, Colors.green),
+        TabEntry(Scaffold(), "Achievements", Icons.person, Colors.green),
+      ]);
+    }
+
+    if (state.tokenInfo.permissions.contains('wallet')) {
+      BlocProvider.of<WalletBloc>(context).add(LoadWalletEvent());
+    }
+
+    _tabs = tabs;
+    return;
   }
 }
 
