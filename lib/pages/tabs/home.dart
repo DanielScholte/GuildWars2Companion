@@ -59,6 +59,8 @@ class HomePage extends StatelessWidget {
                     children: <Widget>[
                       if (state.tokenInfo.permissions.contains('wallet'))
                         _buildWallet(context),
+                      _buildWorldBosses(),
+                      _buildRaids()
                     ],
                   ),
                 ),
@@ -176,7 +178,10 @@ class HomePage extends StatelessWidget {
                       margin: EdgeInsets.symmetric(horizontal: 8.0),
                       child: CachedNetworkImage(
                         imageUrl: c.icon,
-                        placeholder: (context, url) => CircularProgressIndicator(),
+                        placeholder: (context, url) => Theme(
+                          data: Theme.of(context).copyWith(accentColor: Colors.white),
+                          child: CircularProgressIndicator(),
+                        ),
                         errorWidget: (context, url, error) => Icon(Icons.error),
                         fit: BoxFit.cover,
                       ),
@@ -223,6 +228,24 @@ class HomePage extends StatelessWidget {
           loading: true,
         );
       },
+    );
+  }
+
+  Widget _buildWorldBosses() {
+    return CompanionFullButton(
+      color: Colors.green,
+      title: 'World Bosses',
+      onTap: () {},
+      leading: Image.asset('assets/button_headers/world_bosses.jpg'),
+    );
+  }
+
+  Widget _buildRaids() {
+    return CompanionFullButton(
+      color: Colors.red,
+      title: 'Raids',
+      onTap: () {},
+      leading: Image.asset('assets/button_headers/raids.jpg'),
     );
   }
 }

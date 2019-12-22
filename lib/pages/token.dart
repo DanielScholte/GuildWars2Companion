@@ -154,19 +154,14 @@ class TokenPage extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(8.0),
       decoration: BoxDecoration(
-        // color: Colors.white,
-        gradient: LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [Theme.of(context).primaryColor, Colors.red] 
-        ),
+        color: Colors.red,
         borderRadius: BorderRadius.circular(8.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black38,
-            blurRadius: 8.0,
-          ),
-        ]
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: Colors.black38,
+        //     blurRadius: 8.0,
+        //   ),
+        // ]
       ),
       child: Material(
         color: Colors.transparent,

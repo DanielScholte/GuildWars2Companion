@@ -17,6 +17,14 @@ class _TabPageState extends State<TabPage> {
 
   int _currentIndex = 0;
 
+  @override
+  void initState() {
+    super.initState();
+    if (BlocProvider.of<AccountBloc>(context).state is AuthenticatedState) {
+      _handleAuth(context, BlocProvider.of<AccountBloc>(context).state);
+    }
+  }
+
   List<TabEntry> _tabs = [
     TabEntry(HomePage(), "Home", Icons.home, Colors.red),
     TabEntry(Scaffold(), "Achievements", Icons.person, Colors.green),
@@ -34,7 +42,6 @@ class _TabPageState extends State<TabPage> {
       listener: (BuildContext context, state) async {
         if (state is AuthenticatedState) {
           await _handleAuth(context, state);
-          setState(() {});
           return;
         }
 
@@ -115,6 +122,8 @@ class _TabPageState extends State<TabPage> {
     }
 
     _tabs = tabs;
+
+    setState(() {});
     return;
   }
 }
