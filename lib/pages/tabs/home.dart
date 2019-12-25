@@ -17,11 +17,7 @@ class HomePage extends StatelessWidget {
             children: <Widget>[
               Container(
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Color(0xFFde382c), Colors.red] 
-                  ),
+                  color: Colors.red,
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black38,
@@ -191,6 +187,7 @@ class HomePage extends StatelessWidget {
                         (c.value / 10000).round().toString(),
                         style: TextStyle(
                           color: Colors.white,
+                          fontWeight: FontWeight.w500
                         ),
                       ),
                     if (c.name == 'Karma' && c.value < 1000000)
@@ -198,6 +195,7 @@ class HomePage extends StatelessWidget {
                         (c.value / 1000).round().toString() + 'k',
                         style: TextStyle(
                           color: Colors.white,
+                          fontWeight: FontWeight.w500
                         ),
                       ),
                     if (c.name == 'Karma' && c.value >= 1000000)
@@ -205,6 +203,7 @@ class HomePage extends StatelessWidget {
                         (c.value / 1000000).round().toString() + 'm',
                         style: TextStyle(
                           color: Colors.white,
+                          fontWeight: FontWeight.w500
                         ),
                       ),
                     if (c.name == 'Gem')
@@ -212,6 +211,7 @@ class HomePage extends StatelessWidget {
                         c.value.toString(),
                         style: TextStyle(
                           color: Colors.white,
+                          fontWeight: FontWeight.w500
                         ),
                       ),
                   ],
