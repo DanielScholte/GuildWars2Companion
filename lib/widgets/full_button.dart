@@ -25,12 +25,12 @@ class CompanionFullButton extends StatelessWidget {
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(12.0),
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: Colors.black38,
-        //     blurRadius: 4.0,
-        //   ),
-        // ],
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 8.0,
+          ),
+        ],
       ),
       margin: EdgeInsets.all(8.0),
       child: ClipRRect(

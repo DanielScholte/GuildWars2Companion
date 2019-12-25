@@ -160,7 +160,7 @@ class HomePage extends StatelessWidget {
       builder: (BuildContext context, WalletState state) {
         if (state is LoadedWalletState) {
           return CompanionFullButton(
-            color: Color(0xFF42A5F5),
+            color: Colors.orange,
             title: 'Wallet',
             onTap: () {},
             leading: Column(
@@ -233,7 +233,7 @@ class HomePage extends StatelessWidget {
 
   Widget _buildWorldBosses() {
     return CompanionFullButton(
-      color: Colors.green,
+      color: Colors.deepPurple,
       title: 'World Bosses',
       onTap: () {},
       leading: Image.asset('assets/button_headers/world_bosses.jpg'),
@@ -242,7 +242,7 @@ class HomePage extends StatelessWidget {
 
   Widget _buildRaids() {
     return CompanionFullButton(
-      color: Colors.red,
+      color: Colors.blue,
       title: 'Raids',
       onTap: () {},
       leading: Image.asset('assets/button_headers/raids.jpg'),
