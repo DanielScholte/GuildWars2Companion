@@ -6,6 +6,7 @@ import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/pages/wallet_page.dart';
 import 'package:guildwars2_companion/utils/gw.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
+import 'package:guildwars2_companion/widgets/info_box.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -34,15 +35,27 @@ class HomePage extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       _buildAccountHeader(state.account.name),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          _buildPlaytimeBox(context),
-                          if (state.tokenInfo.permissions.contains('progression'))
-                            _buildHeaderInfoBox(context, "Mastery level", "298?", false),
-                          if (state.tokenInfo.permissions.contains('progression'))
-                            _buildHeaderInfoBox(context, "Achievements", "30.000?", false),
-                        ],
+                      Container(
+                        width: double.infinity,
+                        child: Wrap(
+                          alignment: WrapAlignment.spaceEvenly,
+                          runSpacing: 8.0,
+                          children: <Widget>[
+                            _buildPlaytimeBox(context),
+                            if (state.tokenInfo.permissions.contains('progression'))
+                              CompanionInfoBox(
+                                header: 'Mastery level',
+                                text: '298?',
+                                loading: false,
+                              ),
+                            if (state.tokenInfo.permissions.contains('progression'))
+                              CompanionInfoBox(
+                                header: 'Achievements',
+                                text: '30.000?',
+                                loading: false,
+                              ),
+                          ],
+                        ),
                       )
                     ],
                   ),
@@ -81,7 +94,7 @@ class HomePage extends StatelessWidget {
             color: Colors.white,
             fontSize: 20.0,
             fontWeight: FontWeight.w300
-          ),            
+          ),
           children: [
             TextSpan(
               text: accountName,
@@ -99,56 +112,17 @@ class HomePage extends StatelessWidget {
     return BlocBuilder<AccountBloc, AccountState>(
       builder: (context, state) {
         if (state is AuthenticatedState) {
-          return _buildHeaderInfoBox(context, 'Playtime', GuildWarsUtil.calculatePlayTime(state.account.age).toString() + 'h', false);
+          return CompanionInfoBox(
+            header: 'Playtime',
+            text: GuildWarsUtil.calculatePlayTime(state.account.age).toString() + 'h',
+            loading: false,
+          );
         }
 
-        return _buildHeaderInfoBox(context, 'Playtime', '?', true);
+        return CompanionInfoBox(
+          header: 'Playtime',
+        );
       },
-    );
-  }
-
-  Widget _buildHeaderInfoBox(BuildContext context, String header, String text, bool loading) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.transparent,
-        border: Border.all(color: Colors.white, width: 2.0),
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      height: 80.0,
-      width: 100.0,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Text(
-            header,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 12.0
-            ),
-            textAlign: TextAlign.center,
-          ),
-          if (loading)
-            Theme(
-              data: Theme.of(context).copyWith(accentColor: Colors.white),
-              child: Container(
-                width: 22.0,
-                height: 22.0,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2.0,
-                )
-              ),
-            ),
-          if (!loading)
-            Text(
-              text,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20.0,
-                fontWeight: FontWeight.w600
-              ),
-            ),
-        ],
-      ),
     );
   }
 
