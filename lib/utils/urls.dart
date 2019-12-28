@@ -9,4 +9,5 @@ class Urls {
 
   static final String charactersUrl = '$baseUrl/characters?ids=all';
   static final String titlesUrl = '$baseUrl/titles?ids=all';
+  static final String professionsUrl = '$baseUrl/professions?ids=all';
 }

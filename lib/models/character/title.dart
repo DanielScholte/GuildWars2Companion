@@ -10,7 +10,9 @@ class Title {
     id = json['id'];
     name = json['name'];
     achievement = json['achievement'];
-    achievements = json['achievements'].cast<int>();
+    if (json.containsKey('achievements')) {
+      achievements = json['achievements'].cast<int>();
+    }
   }
 
   Map<String, dynamic> toJson() {

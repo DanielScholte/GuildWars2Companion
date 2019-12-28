@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
+import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/pages/tab.dart';
 import 'package:guildwars2_companion/pages/token.dart';
@@ -38,6 +39,9 @@ class GuildWars2Companion extends StatelessWidget {
         ),
         BlocProvider<WalletBloc>(
           create: (BuildContext context) => WalletBloc(),
+        ),
+        BlocProvider<CharacterBloc>(
+          create: (BuildContext context) => CharacterBloc(),
         ),
       ],
     );

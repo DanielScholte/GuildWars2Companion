@@ -1,3 +1,7 @@
+import 'dart:ui';
+
+import 'package:guildwars2_companion/models/character/profession.dart';
+
 import 'bags.dart';
 import 'crafting.dart';
 import 'equipment.dart';
@@ -7,6 +11,8 @@ class Character {
 	String race;
 	String gender;
 	String profession;
+  Profession professionInfo;
+  Color professionColor;
 	int level;
 	String guild;
 	int age;

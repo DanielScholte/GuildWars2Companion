@@ -7,6 +7,10 @@ class Inventory {
 	Inventory({this.id, this.count, this.binding, this.charges});
 
 	Inventory.fromJson(Map<String, dynamic> json) {
+    if (json == null) {
+      id = -1;
+      return;
+    }
 		id = json['id'];
 		count = json['count'];
 		binding = json['binding'];

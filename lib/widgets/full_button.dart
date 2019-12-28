@@ -4,7 +4,7 @@ class CompanionFullButton extends StatelessWidget {
   final bool loading;
   final Widget leading;
   final String title;
-  final String subtitle;
+  final List<String> subtitles;
   final VoidCallback onTap;
   final Color color;
 
@@ -12,7 +12,7 @@ class CompanionFullButton extends StatelessWidget {
     @required this.title,
     @required this.onTap,
     @required this.color,
-    this.subtitle,
+    this.subtitles,
     this.leading,
     this.loading = false,
   });
@@ -71,28 +71,36 @@ class CompanionFullButton extends StatelessWidget {
   }
 
   Widget _buildTitle() {
+    List<Widget> titles = [
+      Text(
+        this.title,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 18.0,
+          fontWeight: FontWeight.w500
+        ),
+      ),
+    ];
+
+    if (this.subtitles != null) {
+      titles.addAll(
+        this.subtitles.map(
+          (s) => Text(
+            s,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16.0,
+            ),
+          )
+        ).toList()
+      );
+    }
+
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            this.title,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18.0,
-              fontWeight: FontWeight.w500
-            ),
-          ),
-          if (this.subtitle != null)
-            Text(
-              this.subtitle,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16.0,
-              ),
-            ),
-        ],
+        children: titles,
       ),
     );
   }

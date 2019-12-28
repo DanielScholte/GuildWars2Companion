@@ -4,7 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
+import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
+import 'package:guildwars2_companion/pages/tabs/characters.dart';
 import 'package:guildwars2_companion/pages/tabs/home.dart';
 import 'package:guildwars2_companion/pages/token.dart';
 
@@ -109,12 +111,8 @@ class _TabPageState extends State<TabPage> {
     ];
 
     if (state.tokenInfo.permissions.contains('characters')) {
-      tabs.addAll([
-        TabEntry(Scaffold(), "Characters", Icons.vpn_key, Colors.blue),
-        TabEntry(Scaffold(), "Trading Post", Icons.person, Colors.green),
-        TabEntry(Scaffold(), "Bank", Icons.person, Colors.green),
-        TabEntry(Scaffold(), "Achievements", Icons.person, Colors.green),
-      ]);
+      BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent());
+      tabs.add(TabEntry(CharactersPage(), "Characters", Icons.people, Colors.blue));
     }
 
     if (state.tokenInfo.permissions.contains('wallet')) {

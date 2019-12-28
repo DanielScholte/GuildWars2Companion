@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
+import 'package:guildwars2_companion/pages/wallet_page.dart';
 import 'package:guildwars2_companion/utils/gw.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
 
@@ -158,7 +159,9 @@ class HomePage extends StatelessWidget {
           return CompanionFullButton(
             color: Colors.orange,
             title: 'Wallet',
-            onTap: () {},
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => WalletPage())
+            ),
             leading: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -222,9 +225,9 @@ class HomePage extends StatelessWidget {
         }
 
         return CompanionFullButton(
-          color: Color(0xFF42A5F5),
+          color: Colors.orange,
           title: 'Wallet',
-          onTap: () {},
+          onTap: null,
           loading: true,
         );
       },

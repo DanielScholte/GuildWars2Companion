@@ -11,9 +11,13 @@ class Equipment {
 	Equipment.fromJson(Map<String, dynamic> json) {
 		id = json['id'];
 		slot = json['slot'];
-		upgrades = json['upgrades'].cast<int>();
 		binding = json['binding'];
-		infusions = json['infusions'].cast<int>();
+    if (json.containsKey('upgrades')) {
+      upgrades = json['upgrades'].cast<int>();
+    }
+    if (json.containsKey('infusions')) {
+      infusions = json['infusions'].cast<int>();
+    }
 		skin = json['skin'];
 	}
 

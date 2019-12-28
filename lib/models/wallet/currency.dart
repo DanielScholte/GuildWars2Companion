@@ -6,7 +6,7 @@ class Currency {
   String icon;
   int value;
 
-  Currency({this.id, this.name, this.description, this.order, this.icon});
+  Currency({this.id, this.name, this.description, this.order, this.icon, this.value});
 
   Currency.fromJson(Map<String, dynamic> json) {
     id = json['id'];
