@@ -10,4 +10,19 @@ class Urls {
   static final String charactersUrl = '$baseUrl/characters?ids=all';
   static final String titlesUrl = '$baseUrl/titles?ids=all';
   static final String professionsUrl = '$baseUrl/professions?ids=all';
+
+  static final String itemsUrl = '$baseUrl/items?ids=';
+  static final String skinsUrl = '$baseUrl/skins?ids=';
+
+  static List<String> divideIdLists(List<int> ids) {
+    List<List<int>> output = [[]];
+    ids.forEach((id) {
+      output.firstWhere((l) => l.length < 150, orElse: () {
+        List<int> newList = [];
+        output.add(newList);
+        return newList;
+      }).add(id);
+    });
+    return output.map((l) => l.join(',')).toList();
+  }
 }

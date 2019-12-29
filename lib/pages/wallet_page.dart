@@ -13,9 +13,9 @@ class WalletPage extends StatelessWidget {
     return Scaffold(
       appBar: CompanionAppBar(
         title: 'Wallet',
-        // color: Colors.orange,
-        // foregroundColor: Colors.white,
-        // elevation: 4.0,
+        color: Colors.orange,
+        foregroundColor: Colors.white,
+        elevation: 4.0,
       ),
       body: BlocBuilder<WalletBloc, WalletState>(
         builder: (context, state) {

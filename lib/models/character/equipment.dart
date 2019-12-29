@@ -1,3 +1,6 @@
+import 'package:guildwars2_companion/models/items/item.dart';
+import 'package:guildwars2_companion/models/items/skin.dart';
+
 class Equipment {
 	int id;
 	String slot;
@@ -5,6 +8,8 @@ class Equipment {
 	String binding;
 	List<int> infusions;
 	int skin;
+  Item itemInfo;
+  Skin skinInfo;
 
 	Equipment({this.id, this.slot, this.upgrades, this.binding, this.infusions, this.skin});
 

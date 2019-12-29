@@ -1,9 +1,12 @@
+import 'package:guildwars2_companion/models/items/item.dart';
+
 import 'inventory.dart';
 
 class Bags {
 	int id;
 	int size;
 	List<Inventory> inventory;
+  Item itemInfo;
 
 	Bags({this.id, this.size, this.inventory});
 

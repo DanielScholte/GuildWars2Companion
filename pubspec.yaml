@@ -57,6 +57,7 @@ flutter:
    - assets/
    - assets/button_headers/
    - assets/coin/
+   - assets/crafting/
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

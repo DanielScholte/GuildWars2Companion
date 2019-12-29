@@ -1,10 +1,16 @@
+import 'package:guildwars2_companion/models/items/item.dart';
+import 'package:guildwars2_companion/models/items/skin.dart';
+
 class Inventory {
 	int id;
 	int count;
+  int skin;
 	String binding;
 	int charges;
+  Item itemInfo;
+  Skin skinInfo;
 
-	Inventory({this.id, this.count, this.binding, this.charges});
+	Inventory({this.id, this.count, this.binding, this.charges, this.skin});
 
 	Inventory.fromJson(Map<String, dynamic> json) {
     if (json == null) {
@@ -15,6 +21,7 @@ class Inventory {
 		count = json['count'];
 		binding = json['binding'];
 		charges = json['charges'];
+    skin = json['skin'];
 	}
 
 	Map<String, dynamic> toJson() {
@@ -23,6 +30,7 @@ class Inventory {
 		data['count'] = this.count;
 		data['binding'] = this.binding;
 		data['charges'] = this.charges;
+    data['skin'] = this.skin;
 		return data;
 	}
 }

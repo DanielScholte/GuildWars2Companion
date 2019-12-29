@@ -36,7 +36,7 @@ class _TabPageState extends State<TabPage> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
-      systemNavigationBarIconBrightness: Brightness.light
+      systemNavigationBarIconBrightness: Brightness.dark
     ));
 
     return BlocListener<AccountBloc, AccountState>(

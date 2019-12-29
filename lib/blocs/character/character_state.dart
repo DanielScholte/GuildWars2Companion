@@ -9,6 +9,7 @@ class LoadingCharactersState extends CharacterState {}
 class LoadedCharactersState extends CharacterState {
   final List<Character> characters;
   final bool itemsLoaded;
+  final bool itemsLoading;
 
-  LoadedCharactersState(this.characters, this.itemsLoaded);
+  LoadedCharactersState(this.characters, {this.itemsLoaded = false, this.itemsLoading = false});
 }

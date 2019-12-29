@@ -39,7 +39,7 @@ class HomePage extends StatelessWidget {
                         width: double.infinity,
                         child: Wrap(
                           alignment: WrapAlignment.spaceEvenly,
-                          runSpacing: 8.0,
+                          runSpacing: 16.0,
                           children: <Widget>[
                             _buildPlaytimeBox(context),
                             if (state.tokenInfo.permissions.contains('progression'))

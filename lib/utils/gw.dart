@@ -29,9 +29,46 @@ class GuildWarsUtil {
         return Color(0xFF86308e);
       case 'Necromancer':
         return Color(0xFF1f6557);
+      default:
+        return Colors.red;
     }
+  }
 
-    return Colors.red;
+  static Color getRarityColor(String rarity) {
+    switch (rarity) {
+      case 'Junk':
+        return Color(0xFFAAAAAA);
+      case 'Basic':
+        return Colors.grey;
+      case 'Fine':
+        return Color(0xFF62A4DA);
+      case 'Masterwork':
+        return Color(0xFF1a9306);
+      case 'Rare':
+        return Color(0xFFfcd00b);
+      case 'Exotic':
+        return Color(0xFFffa405);
+      case 'Ascended':
+        return Color(0xFFfb3e8d);
+      case 'Legendary':
+        return Color(0xFF4C139D);
+      default:
+        return Color(0xFF000000);
+    }
+  }
+
+  static List<String> validDisciplines() {
+    return [
+      'Armorsmith',
+      'Artificer',
+      'Chef',
+      'Huntsman',
+      'Jeweler',
+      'Leatherworker',
+      'Scribe',
+      'Tailor',
+      'Weaponsmith'
+    ];
   }
 
   static List<Currency> getCoin(int coin) {
