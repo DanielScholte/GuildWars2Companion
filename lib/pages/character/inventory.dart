@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/models/character/bags.dart';
 import 'package:guildwars2_companion/models/character/character.dart';
-import 'package:guildwars2_companion/models/character/inventory.dart';
+import 'package:guildwars2_companion/models/items/inventory.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
 
@@ -48,7 +48,7 @@ class InventoryPage extends StatelessWidget {
   }
 
   Widget _buildBag(Bags bag) {
-    List<Inventory> inventory = bag.inventory.where((i) => i.id != -1 && i.itemInfo != null).toList();
+    List<InventoryItem> inventory = bag.inventory.where((i) => i.id != -1 && i.itemInfo != null).toList();
     int usedSlots = inventory.length;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
@@ -59,6 +59,7 @@ class InventoryPage extends StatelessWidget {
               if (bag.itemInfo != null)
                 CompanionItemBox(
                   item: bag.itemInfo,
+                  size: 45.0,
                   includeMargin: false,
                 ),
               if (bag.itemInfo != null)

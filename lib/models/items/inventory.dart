@@ -1,7 +1,7 @@
 import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/models/items/skin.dart';
 
-class Inventory {
+class InventoryItem {
 	int id;
 	int count;
   int skin;
@@ -10,9 +10,9 @@ class Inventory {
   Item itemInfo;
   Skin skinInfo;
 
-	Inventory({this.id, this.count, this.binding, this.charges, this.skin});
+	InventoryItem({this.id, this.count, this.binding, this.charges, this.skin});
 
-	Inventory.fromJson(Map<String, dynamic> json) {
+	InventoryItem.fromJson(Map<String, dynamic> json) {
     if (json == null) {
       id = -1;
       return;

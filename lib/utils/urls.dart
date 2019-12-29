@@ -14,6 +14,11 @@ class Urls {
   static final String itemsUrl = '$baseUrl/items?ids=';
   static final String skinsUrl = '$baseUrl/skins?ids=';
 
+  static final String inventoryUrl = '$baseUrl/account/inventory';
+  static final String bankUrl = '$baseUrl/account/bank';
+  static final String materialUrl = '$baseUrl/account/materials';
+  static final String materialCategoryUrl = '$baseUrl/materials?ids=all';
+
   static List<String> divideIdLists(List<int> ids) {
     List<List<int>> output = [[]];
     ids.forEach((id) {

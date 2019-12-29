@@ -1,11 +1,10 @@
+import 'package:guildwars2_companion/models/items/inventory.dart';
 import 'package:guildwars2_companion/models/items/item.dart';
-
-import 'inventory.dart';
 
 class Bags {
 	int id;
 	int size;
-	List<Inventory> inventory;
+	List<InventoryItem> inventory;
   Item itemInfo;
 
 	Bags({this.id, this.size, this.inventory});
@@ -14,8 +13,8 @@ class Bags {
 		id = json['id'];
 		size = json['size'];
 		if (json['inventory'] != null) {
-			inventory = new List<Inventory>();
-			json['inventory'].forEach((v) { inventory.add(new Inventory.fromJson(v)); });
+			inventory = new List<InventoryItem>();
+			json['inventory'].forEach((v) { inventory.add(new InventoryItem.fromJson(v)); });
 		}
 	}
 

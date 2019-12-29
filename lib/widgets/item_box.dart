@@ -29,7 +29,7 @@ class CompanionItemBox extends StatelessWidget {
       height: this.size,
       margin: includeMargin ? EdgeInsets.all(4.0) : null,
       decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: Colors.grey,
         borderRadius: BorderRadius.circular(6.0),
         boxShadow: [
           BoxShadow(
@@ -50,9 +50,19 @@ class CompanionItemBox extends StatelessWidget {
             _buildImage(),
             if (quantity > 1)
               _buildQuantity(),
+            if (quantity == 0)
+              _buildGreyOverlay()
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildGreyOverlay() { 
+    return Container(
+      width: this.size,
+      height: this.size,
+      color: Colors.white54,
     );
   }
 
@@ -84,9 +94,7 @@ class CompanionItemBox extends StatelessWidget {
 
   Widget _buildImage() {
     if (displayEmpty) {
-      return Container(
-        color: Colors.grey,
-      );
+      return Container();
     }
 
     if (skin != null) {
@@ -94,7 +102,7 @@ class CompanionItemBox extends StatelessWidget {
         imageUrl: skin.icon,
         placeholder: (context, url) => Theme(
           data: Theme.of(context).copyWith(accentColor: Colors.white),
-          child: CircularProgressIndicator(),
+          child: Center(child: CircularProgressIndicator()),
         ),
         errorWidget: (context, url, error) => Icon(Icons.error),
         fit: BoxFit.cover,
@@ -105,7 +113,7 @@ class CompanionItemBox extends StatelessWidget {
       imageUrl: item.icon,
       placeholder: (context, url) => Theme(
         data: Theme.of(context).copyWith(accentColor: Colors.white),
-        child: CircularProgressIndicator(),
+        child: Center(child: CircularProgressIndicator()),
       ),
       errorWidget: (context, url, error) => Icon(Icons.error),
       fit: BoxFit.cover,
