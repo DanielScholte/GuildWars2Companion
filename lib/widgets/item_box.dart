@@ -11,21 +11,23 @@ class CompanionItemBox extends StatelessWidget {
   final int quantity;
   final bool displayEmpty;
   final bool includeMargin;
+  final double size;
 
   CompanionItemBox({
     @required this.item,
     this.skin,
     this.quantity = 1,
+    this.size = 55.0,
     this.displayEmpty = false,
-    this.includeMargin = true
+    this.includeMargin = false
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 45.0,
-      height: 45.0,
-      margin: includeMargin ? EdgeInsets.all(2.0) : null,
+      width: this.size,
+      height: this.size,
+      margin: includeMargin ? EdgeInsets.all(4.0) : null,
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.circular(6.0),
@@ -36,7 +38,7 @@ class CompanionItemBox extends StatelessWidget {
           ),
         ],
         border: Border.all(
-          color: GuildWarsUtil.getRarityColor(item.rarity),
+          color: GuildWarsUtil.getRarityColor(displayEmpty ? 'Basic' : item.rarity),
           width: 2.0
         ),
       ),

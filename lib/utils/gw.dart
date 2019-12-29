@@ -53,7 +53,7 @@ class GuildWarsUtil {
       case 'Legendary':
         return Color(0xFF4C139D);
       default:
-        return Color(0xFF000000);
+        return Colors.grey;
     }
   }
 

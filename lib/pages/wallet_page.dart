@@ -21,7 +21,7 @@ class WalletPage extends StatelessWidget {
         builder: (context, state) {
           if (state is LoadedWalletState) {
             return RefreshIndicator(
-              backgroundColor: Colors.red,
+              backgroundColor: Colors.orange,
               color: Colors.white,
               onRefresh: () async {
                 BlocProvider.of<WalletBloc>(context).add(LoadWalletEvent());
@@ -84,7 +84,7 @@ class WalletPage extends StatelessWidget {
             child: CachedNetworkImage(
               imageUrl: currency.icon,
               placeholder: (context, url) => Theme(
-                data: Theme.of(context).copyWith(accentColor: Colors.white),
+                data: Theme.of(context).copyWith(accentColor: Colors.orange),
                 child: CircularProgressIndicator(),
               ),
               errorWidget: (context, url, error) => Icon(Icons.error),

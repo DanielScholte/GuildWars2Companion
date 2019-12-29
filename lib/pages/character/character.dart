@@ -5,6 +5,7 @@ import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/models/character/character.dart';
 import 'package:guildwars2_companion/models/character/crafting.dart';
+import 'package:guildwars2_companion/pages/character/equipment.dart';
 import 'package:guildwars2_companion/pages/character/inventory.dart';
 import 'package:guildwars2_companion/utils/gw.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
@@ -171,6 +172,26 @@ class CharacterPage extends StatelessWidget {
                 data: Theme.of(context).copyWith(accentColor: _character.professionColor),
                 child: ListView(
                   children: <Widget>[
+                    if (state.tokenInfo.permissions.contains('inventories')
+                      && state.tokenInfo.permissions.contains('builds'))
+                      CompanionFullButton(
+                        color: Colors.teal,
+                        onTap: () {
+                          if (!characterState.itemsLoaded && !characterState.itemsLoading) {
+                            BlocProvider.of<CharacterBloc>(context).add(LoadCharacterItemsEvent(characterState.characters));
+                          }
+
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => EquipmentPage(_character),
+                          ));
+                        },
+                        title: 'Equipment',
+                        leading: Icon(
+                          Icons.kitchen,
+                          size: 48.0,
+                          color: Colors.white,
+                        ),
+                      ),
                     if (state.tokenInfo.permissions.contains('inventories'))
                       CompanionFullButton(
                         color: Colors.indigo,
@@ -189,7 +210,7 @@ class CharacterPage extends StatelessWidget {
                           size: 48.0,
                           color: Colors.white,
                         ),
-                      )
+                      ),
                   ],
                 ),
               ),
