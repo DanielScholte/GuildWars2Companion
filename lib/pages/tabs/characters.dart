@@ -31,17 +31,20 @@ class CharactersPage extends StatelessWidget {
     return CompanionFullButton(
       color: character.professionColor,
       title: character.name,
-      leading: ColorFiltered(
-        child: CachedNetworkImage(
-          imageUrl: character.professionInfo.iconBig,
-          placeholder: (context, url) => Theme(
-            data: Theme.of(context).copyWith(accentColor: Colors.white),
-            child: CircularProgressIndicator(),
+      leading: Hero(
+        child: ColorFiltered(
+          child: CachedNetworkImage(
+            imageUrl: character.professionInfo.iconBig,
+            placeholder: (context, url) => Theme(
+              data: Theme.of(context).copyWith(accentColor: Colors.white),
+              child: CircularProgressIndicator(),
+            ),
+            errorWidget: (context, url, error) => Icon(Icons.error),
+            fit: BoxFit.cover,
           ),
-          errorWidget: (context, url, error) => Icon(Icons.error),
-          fit: BoxFit.cover,
+          colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcATop),
         ),
-        colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcATop),
+        tag: character.name,
       ),
       subtitles: [
         'Level ${character.level} ${character.race} ${character.professionInfo.name}',

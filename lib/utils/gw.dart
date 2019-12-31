@@ -70,30 +70,4 @@ class GuildWarsUtil {
       'Weaponsmith'
     ];
   }
-
-  static List<Currency> getCoin(int coin) {
-    int gold = coin ~/ 10000;
-    int silver = (coin - (gold * 10000)) ~/ 100;
-    int copper = (coin - (gold * 10000) - (silver * 100));
-
-    return [
-      if (gold > 0)
-        Currency(
-          name: 'Gold',
-          value: gold,
-          icon: 'assets/coin/gold_coin.png'
-        ),
-      if (silver > 0)
-        Currency(
-          name: 'Silver',
-          value: silver,
-          icon: 'assets/coin/silver_coin.png'
-        ),
-      Currency(
-        name: 'Copper',
-        value: copper,
-        icon: 'assets/coin/copper_coin.png'
-      ),
-    ];
-  }
 }

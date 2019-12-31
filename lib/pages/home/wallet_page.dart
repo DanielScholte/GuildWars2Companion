@@ -5,6 +5,7 @@ import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/models/wallet/currency.dart';
 import 'package:guildwars2_companion/utils/gw.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
+import 'package:guildwars2_companion/widgets/coin.dart';
 import 'package:intl/intl.dart';
 
 class WalletPage extends StatelessWidget {
@@ -64,7 +65,7 @@ class WalletPage extends StatelessWidget {
 
   Widget _buildCurrency(BuildContext context, Currency currency) {
     if (currency.name == 'Coin') {
-      return _buildCoin(context, currency);
+      return CompanionCoin(currency.value);
     }
 
     return Padding(
@@ -93,33 +94,6 @@ class WalletPage extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildCoin(BuildContext context, Currency currency) {
-    return Row(
-      children: GuildWarsUtil
-        .getCoin(currency.value)
-        .map((c) => Padding(
-          padding: EdgeInsets.only(left: 4.0),
-          child: Row(
-            children: <Widget>[
-              Text(
-                valueToString(c.value),
-                style: TextStyle(
-                  fontSize: 18.0,
-                ),
-              ),
-              Container(
-                width: 20.0,
-                height: 20.0,
-                margin: EdgeInsets.only(left: 4.0),
-                child: Image.asset(c.icon)
-              )
-            ],
-          ),
-        ))
-        .toList(),
     );
   }
 

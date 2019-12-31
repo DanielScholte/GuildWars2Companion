@@ -28,17 +28,20 @@ class CharacterPage extends StatelessWidget {
         icon: Container(
           width: 28,
           height: 28,
-          child: ColorFiltered(
-            child: CachedNetworkImage(
-              imageUrl: _character.professionInfo.iconBig,
-              placeholder: (context, url) => Theme(
-                data: Theme.of(context).copyWith(accentColor: Colors.white),
-                child: CircularProgressIndicator(),
+          child: Hero(
+            child: ColorFiltered(
+              child: CachedNetworkImage(
+                imageUrl: _character.professionInfo.iconBig,
+                placeholder: (context, url) => Theme(
+                  data: Theme.of(context).copyWith(accentColor: Colors.white),
+                  child: CircularProgressIndicator(),
+                ),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+                fit: BoxFit.contain,
               ),
-              errorWidget: (context, url, error) => Icon(Icons.error),
-              fit: BoxFit.contain,
+              colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcATop),
             ),
-            colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcATop),
+            tag: _character.name,
           ),
         ),
       ),
