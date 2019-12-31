@@ -233,7 +233,7 @@ class WorldBossesRepository {
       WorldBoss(
         name: 'Triple Trouble Wurm',
         id: 'triple_trouble_wurm',
-        location: 'Sparkfly Fen',
+        location: 'Bloodtide Coast',
         color: Colors.green,
         times: [
           '01:00',
