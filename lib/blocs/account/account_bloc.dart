@@ -1,18 +1,22 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/widgets.dart';
 import 'package:guildwars2_companion/models/account/account.dart';
 import 'package:guildwars2_companion/models/account/token_info.dart';
+import 'package:guildwars2_companion/repositories/account.dart';
 import 'package:guildwars2_companion/utils/token.dart';
-import 'package:guildwars2_companion/utils/urls.dart';
 import './bloc.dart';
-import 'package:http/http.dart' as http;
+
 
 class AccountBloc extends Bloc<AccountEvent, AccountState> {
   @override
   AccountState get initialState => LoadingAccountState();
 
-  AccountBloc() {
+  final AccountRepository accountRepository;
+
+  AccountBloc({
+    @required this.accountRepository
+  }) {
     add(SetupAccountEvent());
   }
 
@@ -40,18 +44,13 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   }
 
   Stream<AccountState> _authenticate(String token) async* {
-    final response = await http.get(
-      Urls.tokenInfoUrl,
-      headers: {
-        'Authorization': 'Bearer $token',
-      }
-    );
+    TokenInfo tokenInfo = await accountRepository.getTokenInfo(token);
 
-    if (response.statusCode == 200) {
+    if (tokenInfo != null) {
       await TokenUtil.setToken(token);
       yield AuthenticatedState(
-        await _getAccount(token),
-        TokenInfo.fromJson(json.decode(response.body))
+        await accountRepository.getAccount(token),
+        tokenInfo
       );
     } else {
       yield await _getUnauthenticated("Invalid token");
@@ -59,7 +58,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   }
 
   Stream<AccountState> _addToken(String token) async* {
-    Account account = await _getAccount(token);
+    Account account = await accountRepository.getAccount(token);
     if (account == null) {
       yield await _getUnauthenticated("Invalid token");
       return;
@@ -72,22 +71,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   Stream<AccountState> _removeToken(String token) async* {
     await TokenUtil.removeFromTokenList(token);
     yield await _getUnauthenticated("Token removed");
-  }
-
-  Future<Account> _getAccount(String token) async {
-    final response = await http.get(
-      Urls.accountUrl,
-      headers: {
-        'Authorization': 'Bearer $token',
-      }
-    );
-
-    if (response.statusCode == 200) {
-      return Account.fromJson(json.decode(response.body));
-    }
-
-    return null;
-  }
+  }  
 
   Future<UnauthenticatedState> _getUnauthenticated(String message) async {
     return UnauthenticatedState(

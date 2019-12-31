@@ -2,11 +2,11 @@ import 'package:guildwars2_companion/models/other/world_boss.dart';
 import 'package:meta/meta.dart';
 
 @immutable
-abstract class WorldbossesState {}
+abstract class WorldBossesState {}
   
-class LoadingWorldbossesState extends WorldbossesState {}
+class LoadingWorldbossesState extends WorldBossesState {}
 
-class LoadedWorldbossesState extends WorldbossesState {
+class LoadedWorldbossesState extends WorldBossesState {
   final List<WorldBoss> worldBosses;
 
   LoadedWorldbossesState(this.worldBosses);

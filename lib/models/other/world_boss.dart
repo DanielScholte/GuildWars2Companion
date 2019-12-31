@@ -7,6 +7,7 @@ class WorldBoss {
   String id;
   String location;
   Color color;
+  bool completed;
   DateTime dateTime;
   DateTime refreshTime;
   List<String> times;
@@ -16,6 +17,7 @@ class WorldBoss {
     @required this.location,
     this.id,
     this.dateTime,
+    this.completed,
     this.refreshTime,
     this.times,
     this.color

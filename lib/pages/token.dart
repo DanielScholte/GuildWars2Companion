@@ -137,7 +137,7 @@ class TokenPage extends StatelessWidget {
                 foregroundColor: Colors.white,
                 splashColor: Color(0x10FFFFFF),
                 child: Icon(Icons.add),
-                onPressed: () => _createToken(context),
+                onPressed: () => _addToken(context),
               );
             }
 
@@ -209,7 +209,7 @@ class TokenPage extends StatelessWidget {
     );
   }
 
-  Future<void> _createToken(BuildContext context) async {
+  Future<void> _addToken(BuildContext context) async {
     TextEditingController tokenFieldController = TextEditingController();
 
     showDialog(
@@ -237,7 +237,7 @@ class TokenPage extends StatelessWidget {
             ),
             FlatButton(
               child: Text(
-                'Create',
+                'Add',
                 style: TextStyle(
                   fontSize: 18.0
                 ),

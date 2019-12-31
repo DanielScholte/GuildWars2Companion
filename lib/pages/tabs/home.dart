@@ -214,7 +214,7 @@ class HomePage extends StatelessWidget {
       color: Colors.deepPurple,
       title: 'World bosses',
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => WorldbossesPage()
+        builder: (context) => WorldBossesPage()
       )),
       leading: Image.asset('assets/button_headers/world_bosses.jpg'),
     );

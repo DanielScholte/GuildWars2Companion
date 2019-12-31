@@ -1,12 +1,12 @@
-class Title {
+class AccountTitle {
   int id;
   String name;
   int achievement;
   List<int> achievements;
 
-  Title({this.id, this.name, this.achievement, this.achievements});
+  AccountTitle({this.id, this.name, this.achievement, this.achievements});
 
-  Title.fromJson(Map<String, dynamic> json) {
+  AccountTitle.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     achievement = json['achievement'];

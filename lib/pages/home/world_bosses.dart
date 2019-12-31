@@ -8,12 +8,12 @@ import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
 import 'package:intl/intl.dart';
 
-class WorldbossesPage extends StatefulWidget {
+class WorldBossesPage extends StatefulWidget {
   @override
-  _WorldbossesPageState createState() => _WorldbossesPageState();
+  _WorldBossesPageState createState() => _WorldBossesPageState();
 }
 
-class _WorldbossesPageState extends State<WorldbossesPage> {
+class _WorldBossesPageState extends State<WorldBossesPage> {
 
   final DateFormat timeFormat = DateFormat.Hm();
 
@@ -24,7 +24,7 @@ class _WorldbossesPageState extends State<WorldbossesPage> {
   void initState() {
     super.initState();
 
-    BlocProvider.of<WorldbossesBloc>(context).add(LoadWorldbossesEvent(true));
+    BlocProvider.of<WorldBossesBloc>(context).add(LoadWorldbossesEvent(true));
 
     _timer = Timer.periodic(
       Duration(seconds: 1),
@@ -53,7 +53,7 @@ class _WorldbossesPageState extends State<WorldbossesPage> {
         foregroundColor: Colors.white,
         elevation: 4.0,
       ),
-      body: BlocBuilder<WorldbossesBloc, WorldbossesState>(
+      body: BlocBuilder<WorldBossesBloc, WorldBossesState>(
         builder: (context, state) {
           if (state is LoadedWorldbossesState) {
             DateTime now = DateTime.now();
@@ -61,7 +61,7 @@ class _WorldbossesPageState extends State<WorldbossesPage> {
             if (state.worldBosses.any((w) => w.refreshTime.toLocal().isBefore(now))
               && _refreshTimeout == 0) {
               _refreshTimeout = 30;
-              BlocProvider.of<WorldbossesBloc>(context).add(LoadWorldbossesEvent(false));
+              BlocProvider.of<WorldBossesBloc>(context).add(LoadWorldbossesEvent(false));
             }
 
             return ListView(
@@ -85,7 +85,23 @@ class _WorldbossesPageState extends State<WorldbossesPage> {
     return CompanionFullButton(
       color: worldBoss.color,
       title: worldBoss.name,
-      leading: Image.asset('assets/world_bosses/${worldBoss.id}.jpg'),
+      leading: Stack(
+        children: <Widget>[
+          Image.asset('assets/world_bosses/${worldBoss.id}.jpg'),
+          if (worldBoss.completed)
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: Colors.white60,
+              alignment: Alignment.center,
+              child: Icon(
+                Icons.check,
+                color: Colors.black87,
+                size: 48.0,
+              ),
+            ),
+        ],
+      ),
       subtitles: [
         worldBoss.location,
       ],

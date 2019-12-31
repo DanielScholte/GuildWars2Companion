@@ -8,6 +8,12 @@ import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/blocs/world_bosses/bloc.dart';
 import 'package:guildwars2_companion/pages/tab.dart';
 import 'package:guildwars2_companion/pages/token.dart';
+import 'package:guildwars2_companion/repositories/account.dart';
+import 'package:guildwars2_companion/repositories/bank.dart';
+import 'package:guildwars2_companion/repositories/character.dart';
+import 'package:guildwars2_companion/repositories/item.dart';
+import 'package:guildwars2_companion/repositories/wallet.dart';
+import 'package:guildwars2_companion/repositories/world_bosses.dart';
 import 'package:guildwars2_companion/utils/token.dart';
 
 Future main() async {
@@ -23,37 +29,85 @@ class GuildWars2Companion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    return MultiBlocProvider(
-      child: MaterialApp(
-        title: 'Guild Wars 2 Companion',
-        theme: ThemeData(
-          primarySwatch: Colors.red,
-          primaryColor: Color(0xFFAA0404),
-          accentColor: Colors.red,
-          scaffoldBackgroundColor: Color(0xFFEDF0F6),
-          cursorColor: Color(0xFFAA0404),
+
+    return _initializeRepositories(
+      child: _initializeBlocs(
+        child: MaterialApp(
+          title: 'Guild Wars 2 Companion',
+          theme: ThemeData(
+            primarySwatch: Colors.red,
+            primaryColor: Color(0xFFAA0404),
+            accentColor: Colors.red,
+            scaffoldBackgroundColor: Color(0xFFEDF0F6),
+            cursorColor: Color(0xFFAA0404),
+          ),
+          home: isAuthenticated ? TabPage() : TokenPage(),
         ),
-        home: isAuthenticated ? TabPage() : TokenPage(),
       ),
-      providers: <BlocProvider>[
-        BlocProvider<AccountBloc>(
-          create: (BuildContext context) => AccountBloc(),
+    );
+  }
+
+  Widget _initializeRepositories({Widget child}) {
+    return MultiRepositoryProvider(
+      child: child,
+      providers: [
+        RepositoryProvider<AccountRepository>(
+          create: (BuildContext context) => AccountRepository(),
         ),
-        BlocProvider<WalletBloc>(
-          create: (BuildContext context) => WalletBloc(),
+        RepositoryProvider<BankRepository>(
+          create: (BuildContext context) => BankRepository(),
         ),
-        BlocProvider<CharacterBloc>(
-          create: (BuildContext context) => CharacterBloc(),
+        RepositoryProvider<CharacterRepository>(
+          create: (BuildContext context) => CharacterRepository(),
         ),
-        BlocProvider<BankBloc>(
-          create: (BuildContext context) => BankBloc(),
+        RepositoryProvider<ItemRepository>(
+          create: (BuildContext context) => ItemRepository(),
         ),
-        BlocProvider<WorldbossesBloc>(
-          create: (BuildContext context) => WorldbossesBloc(),
+        RepositoryProvider<WalletRepository>(
+          create: (BuildContext context) => WalletRepository(),
+        ),
+        RepositoryProvider<WorldBossesRepository>(
+          create: (BuildContext context) => WorldBossesRepository(),
         ),
       ],
     );
   }
 
-  // B2537E72-F213-E34F-8499-20FE02DA411216C368B9-75F1-41A5-B616-B447A1228A0B
+  Widget _initializeBlocs({Widget child}) {
+    return MultiBlocProvider(
+      child: child,
+      providers: [
+        BlocProvider<AccountBloc>(
+          create: (BuildContext context) => AccountBloc(
+            accountRepository: RepositoryProvider.of<AccountRepository>(context),
+          ),
+        ),
+        BlocProvider<WalletBloc>(
+          create: (BuildContext context) => WalletBloc(
+            walletRepository: RepositoryProvider.of<WalletRepository>(context),
+          ),
+        ),
+        BlocProvider<CharacterBloc>(
+          create: (BuildContext context) => CharacterBloc(
+            characterRepository: RepositoryProvider.of<CharacterRepository>(context),
+            itemRepository: RepositoryProvider.of<ItemRepository>(context),
+          ),
+        ),
+        BlocProvider<BankBloc>(
+          create: (BuildContext context) => BankBloc(
+            bankRepository: RepositoryProvider.of<BankRepository>(context),
+            itemRepository: RepositoryProvider.of<ItemRepository>(context),
+          ),
+        ),
+        BlocProvider<WorldBossesBloc>(
+          create: (BuildContext context) => WorldBossesBloc(
+            worldBossesRepository: RepositoryProvider.of<WorldBossesRepository>(context),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // All: B2537E72-F213-E34F-8499-20FE02DA411216C368B9-75F1-41A5-B616-B447A1228A0B
+  // None: E335E350-DEF3-8F4E-873F-F776BF00CC2F19D7D5FA-8129-4FF5-8C47-D9B3060957FF
 }

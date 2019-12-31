@@ -1,47 +1,30 @@
-import 'dart:async';
-import 'package:bloc/bloc.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/models/other/world_boss.dart';
-import './bloc.dart';
+import 'package:guildwars2_companion/utils/token.dart';
+import 'package:guildwars2_companion/utils/urls.dart';
+import 'package:http/http.dart' as http;
 
-class WorldbossesBloc extends Bloc<WorldbossesEvent, WorldbossesState> {
-  @override
-  WorldbossesState get initialState => LoadingWorldbossesState();
+class WorldBossesRepository {
+  Future<List<String>> getCompletedWorldBosses() async {
+    final response = await http.get(
+      Urls.completedWorldBossesUrl,
+      headers: {
+        'Authorization': 'Bearer ${await TokenUtil.getToken()}',
+      }
+    );
 
-  @override
-  Stream<WorldbossesState> mapEventToState(
-    WorldbossesEvent event,
-  ) async* {
-    if (event is LoadWorldbossesEvent)  {
-      List<WorldBoss> worldBosses = _getWorldBosses();
-
-      DateTime now = DateTime.now().toUtc();
-
-      worldBosses.forEach((worldBoss) {
-        List<DateTime> times = worldBoss.times
-          .map((t) {
-            List<int> timeParts = t.split(':').map((p) => int.parse(p)).toList();
-            return DateTime.utc(
-              now.year,
-              now.month,
-              now.day,
-              timeParts[0],
-              timeParts[1]
-            );
-          })
-          .toList();
-        DateTime next = times
-          .firstWhere((t) => t.add(Duration(minutes: 15)).isAfter(now), orElse: () => times[0].add(Duration(days: 1)));
-        worldBoss.dateTime = next;
-        worldBoss.refreshTime = next.add(Duration(minutes: 15));
-      });
-      worldBosses.sort((a, b) => a.dateTime.compareTo(b.dateTime));
-
-      yield LoadedWorldbossesState(worldBosses);
+    if (response.statusCode == 200) {
+      List worldBosses = json.decode(response.body);
+      // return worldBosses;
+      return worldBosses.map((a) => a.toString()).toList();
+    } else {
+      return [];
     }
   }
 
-  List<WorldBoss> _getWorldBosses() {
+  List<WorldBoss> getWorldBosses() {
     return [
       WorldBoss(
         name: 'Admiral Taidha Covington',
@@ -99,7 +82,7 @@ class WorldbossesBloc extends Bloc<WorldbossesEvent, WorldbossesState> {
         name: 'Great Jungle Wurm',
         id: 'great_jungle_wurm',
         location: 'Caledon Forest',
-        color: Colors.lightGreen,
+        color: Colors.green,
         times: [
           '01:15',
           '03:15',

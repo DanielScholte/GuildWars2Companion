@@ -31,7 +31,7 @@ class _TabPageState extends State<TabPage> {
 
   List<TabEntry> _tabs = [
     TabEntry(HomePage(), "Home", Icons.home, Colors.red),
-    TabEntry(Scaffold(), "Achievements", Icons.person, Colors.green),
+    TabEntry(Scaffold(), "Progression", Icons.crop_square, Colors.orange),
   ];
  
   @override
@@ -125,6 +125,8 @@ class _TabPageState extends State<TabPage> {
     if (state.tokenInfo.permissions.contains('wallet')) {
       BlocProvider.of<WalletBloc>(context).add(LoadWalletEvent());
     }
+
+    _tabs.add(TabEntry(Scaffold(), "Progression", Icons.crop_square, Colors.orange));
     _tabs = tabs;
 
     setState(() {});
