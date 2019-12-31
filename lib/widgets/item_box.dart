@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/models/items/skin.dart';
+import 'package:guildwars2_companion/pages/general/item.dart';
 import 'package:guildwars2_companion/utils/gw.dart';
 
 class CompanionItemBox extends StatelessWidget {
@@ -12,6 +13,7 @@ class CompanionItemBox extends StatelessWidget {
   final bool displayEmpty;
   final bool includeMargin;
   final double size;
+  final bool enablePopup;
 
   CompanionItemBox({
     @required this.item,
@@ -19,7 +21,8 @@ class CompanionItemBox extends StatelessWidget {
     this.quantity = 1,
     this.size = 55.0,
     this.displayEmpty = false,
-    this.includeMargin = false
+    this.includeMargin = false,
+    this.enablePopup = true,
   });
 
   @override
@@ -51,7 +54,9 @@ class CompanionItemBox extends StatelessWidget {
             if (quantity > 1)
               _buildQuantity(),
             if (quantity == 0)
-              _buildGreyOverlay()
+              _buildGreyOverlay(),
+            if (quantity > 0 && enablePopup)
+              _buildInkwell(context)
           ],
         ),
       ),
@@ -117,6 +122,22 @@ class CompanionItemBox extends StatelessWidget {
       ),
       errorWidget: (context, url, error) => Icon(Icons.error),
       fit: BoxFit.cover,
+    );
+  }
+
+  Widget _buildInkwell(BuildContext context) {
+    return Positioned.fill(
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () => Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => ItemPage(
+              item: item,
+              skin: skin,
+            )
+          ))
+        ),
+      ),
     );
   }
 }
