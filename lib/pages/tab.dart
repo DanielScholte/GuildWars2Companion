@@ -7,6 +7,7 @@ import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/blocs/bank/bloc.dart';
 import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
+import 'package:guildwars2_companion/blocs/world_bosses/bloc.dart';
 import 'package:guildwars2_companion/pages/tabs/bank.dart';
 import 'package:guildwars2_companion/pages/tabs/characters.dart';
 import 'package:guildwars2_companion/pages/tabs/home.dart';
@@ -125,7 +126,7 @@ class _TabPageState extends State<TabPage> {
     if (state.tokenInfo.permissions.contains('wallet')) {
       BlocProvider.of<WalletBloc>(context).add(LoadWalletEvent());
     }
-
+    BlocProvider.of<WorldbossesBloc>(context).add(LoadWorldbossesEvent());
     _tabs = tabs;
 
     setState(() {});

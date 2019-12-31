@@ -5,6 +5,7 @@ import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/blocs/bank/bloc.dart';
 import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
+import 'package:guildwars2_companion/blocs/world_bosses/bloc.dart';
 import 'package:guildwars2_companion/pages/tab.dart';
 import 'package:guildwars2_companion/pages/token.dart';
 import 'package:guildwars2_companion/utils/token.dart';
@@ -46,6 +47,9 @@ class GuildWars2Companion extends StatelessWidget {
         ),
         BlocProvider<BankBloc>(
           create: (BuildContext context) => BankBloc(),
+        ),
+        BlocProvider<WorldbossesBloc>(
+          create: (BuildContext context) => WorldbossesBloc(),
         ),
       ],
     );
