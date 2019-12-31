@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:guildwars2_companion/models/wallet/currency.dart';
 
 class GuildWarsUtil {
 
