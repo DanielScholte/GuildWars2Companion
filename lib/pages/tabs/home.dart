@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
-import 'package:guildwars2_companion/pages/wallet_page.dart';
+import 'package:guildwars2_companion/pages/home/wallet_page.dart';
+import 'package:guildwars2_companion/pages/home/world_bosses.dart';
 import 'package:guildwars2_companion/utils/gw.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
 import 'package:guildwars2_companion/widgets/info_box.dart';
@@ -69,7 +70,7 @@ class HomePage extends StatelessWidget {
                     children: <Widget>[
                       if (state.tokenInfo.permissions.contains('wallet'))
                         _buildWallet(context),
-                      _buildWorldBosses(),
+                      _buildWorldBosses(context),
                       _buildRaids()
                     ],
                   ),
@@ -208,11 +209,13 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildWorldBosses() {
+  Widget _buildWorldBosses(BuildContext context) {
     return CompanionFullButton(
       color: Colors.deepPurple,
-      title: 'World Bosses',
-      onTap: () {},
+      title: 'World bosses',
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => WorldbossesPage()
+      )),
       leading: Image.asset('assets/button_headers/world_bosses.jpg'),
     );
   }

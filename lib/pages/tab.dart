@@ -126,7 +126,6 @@ class _TabPageState extends State<TabPage> {
     if (state.tokenInfo.permissions.contains('wallet')) {
       BlocProvider.of<WalletBloc>(context).add(LoadWalletEvent());
     }
-    BlocProvider.of<WorldbossesBloc>(context).add(LoadWorldbossesEvent());
     _tabs = tabs;
 
     setState(() {});

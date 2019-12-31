@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class CompanionFullButton extends StatelessWidget {
   final bool loading;
   final Widget leading;
+  final Widget trailing;
   final String title;
   final List<String> subtitles;
   final VoidCallback onTap;
@@ -14,6 +15,7 @@ class CompanionFullButton extends StatelessWidget {
     @required this.color,
     this.subtitles,
     this.leading,
+    this.trailing,
     this.loading = false,
   });
 
@@ -45,7 +47,10 @@ class CompanionFullButton extends StatelessWidget {
               children: <Widget>[
                 _buildLeading(context),
                 _buildTitle(),
-                _buildArrow()
+                if (trailing == null)
+                  _buildArrow()
+                else
+                  trailing
               ],
             ),
           ),
