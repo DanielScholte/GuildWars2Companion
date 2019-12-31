@@ -83,9 +83,9 @@ class _WorldbossesPageState extends State<WorldbossesPage> {
     bool isActive = worldBoss.dateTime.toLocal().isBefore(DateTime.now());
 
     return CompanionFullButton(
-      color: Colors.blue,
+      color: worldBoss.color,
       title: worldBoss.name,
-      loading: true,
+      leading: Image.asset('assets/world_bosses/${worldBoss.id}.jpg'),
       subtitles: [
         worldBoss.location,
       ],

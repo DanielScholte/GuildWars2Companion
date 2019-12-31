@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/models/other/world_boss.dart';
 import './bloc.dart';
 
@@ -46,6 +47,7 @@ class WorldbossesBloc extends Bloc<WorldbossesEvent, WorldbossesState> {
         name: 'Admiral Taidha Covington',
         id: 'admiral_taidha_covington',
         location: 'Bloodtide Coast',
+        color: Colors.brown,
         times: [
           '00:00',
           '03:00',
@@ -61,6 +63,7 @@ class WorldbossesBloc extends Bloc<WorldbossesEvent, WorldbossesState> {
         name: 'Claw of Jormag',
         id: 'claw_of_jormag',
         location: 'Frostgorge Sound',
+        color: Colors.blue,
         times: [
           '02:30',
           '05:30',
@@ -76,6 +79,7 @@ class WorldbossesBloc extends Bloc<WorldbossesEvent, WorldbossesState> {
         name: 'Fire Elemental',
         id: 'fire_elemental',
         location: 'Metrica Province',
+        color: Colors.deepOrange,
         times: [
           '00:45',
           '02:45',
@@ -95,6 +99,7 @@ class WorldbossesBloc extends Bloc<WorldbossesEvent, WorldbossesState> {
         name: 'Great Jungle Wurm',
         id: 'great_jungle_wurm',
         location: 'Caledon Forest',
+        color: Colors.lightGreen,
         times: [
           '01:15',
           '03:15',
@@ -114,6 +119,7 @@ class WorldbossesBloc extends Bloc<WorldbossesEvent, WorldbossesState> {
         name: 'Inquest Golem Mark II',
         id: 'inquest_golem_mark_ii',
         location: 'Mount Maelstrom',
+        color: Colors.blueGrey,
         times: [
           '02:00',
           '05:00',
@@ -129,6 +135,7 @@ class WorldbossesBloc extends Bloc<WorldbossesEvent, WorldbossesState> {
         name: 'Karka Queen',
         id: 'karka_queen',
         location: 'Southsun Cove',
+        color: Colors.pink,
         times: [
           '02:00',
           '06:00',
@@ -142,6 +149,7 @@ class WorldbossesBloc extends Bloc<WorldbossesEvent, WorldbossesState> {
         name: 'Megadestroyer',
         id: 'megadestroyer',
         location: 'Mount Maelstrom',
+        color: Colors.red,
         times: [
           '00:30',
           '03:30',
@@ -157,6 +165,7 @@ class WorldbossesBloc extends Bloc<WorldbossesEvent, WorldbossesState> {
         name: 'Modniir Ulgoth',
         id: 'modniir_ulgoth',
         location: 'Harathi Hinterlands',
+        color: Colors.brown,
         times: [
           '01:30',
           '04:30',
@@ -172,6 +181,7 @@ class WorldbossesBloc extends Bloc<WorldbossesEvent, WorldbossesState> {
         name: 'Shadow Behemoth',
         id: 'shadow_behemoth',
         location: 'Queensdale',
+        color: Colors.brown,
         times: [
           '01:45',
           '03:45',
@@ -191,6 +201,7 @@ class WorldbossesBloc extends Bloc<WorldbossesEvent, WorldbossesState> {
         name: 'Svanir Shaman Chief',
         id: 'svanir_shaman_chief',
         location: 'Wayfarer Foothills',
+        color: Colors.lightBlue,
         times: [
           '00:15',
           '02:15',
@@ -210,6 +221,7 @@ class WorldbossesBloc extends Bloc<WorldbossesEvent, WorldbossesState> {
         name: 'Tequatl the Sunless',
         id: 'tequatl_the_sunless',
         location: 'Sparkfly Fen',
+        color: Colors.green,
         times: [
           '00:00',
           '03:00',
@@ -223,6 +235,7 @@ class WorldbossesBloc extends Bloc<WorldbossesEvent, WorldbossesState> {
         name: 'The Shatterer',
         id: 'the_shatterer',
         location: 'Blazeridge Steppes',
+        color: Colors.deepPurple,
         times: [
           '01:00',
           '04:00',
@@ -238,6 +251,7 @@ class WorldbossesBloc extends Bloc<WorldbossesEvent, WorldbossesState> {
         name: 'Triple Trouble Wurm',
         id: 'triple_trouble_wurm',
         location: 'Sparkfly Fen',
+        color: Colors.green,
         times: [
           '01:00',
           '04:00',
