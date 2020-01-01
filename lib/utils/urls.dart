@@ -21,6 +21,8 @@ class Urls {
   static final String materialUrl = '$baseUrl/account/materials';
   static final String materialCategoryUrl = '$baseUrl/materials?ids=all';
 
+  static final String tradingPostPriceUrl = '$baseUrl/commerce/prices/';
+
   static List<String> divideIdLists(List<int> ids) {
     List<List<int>> output = [[]];
     ids.forEach((id) {

@@ -162,7 +162,7 @@ class HomePage extends StatelessWidget {
                     ),
                     if (c.name == 'Coin')
                       Text(
-                        (c.value / 10000).round().toString(),
+                        (c.value ~/ 10000).toString(),
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500

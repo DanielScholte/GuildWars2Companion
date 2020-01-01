@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class GuildWarsUtil {
 
@@ -68,5 +69,51 @@ class GuildWarsUtil {
       'Tailor',
       'Weaponsmith'
     ];
+  }
+
+  static String durationToString(Duration duration) {
+    String twoDigits(int n) {
+      if (n >= 10) return "$n";
+      return "0$n";
+    }
+
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+
+    if (duration.inHours == 0) {
+      return "$twoDigitMinutes:$twoDigitSeconds";
+    }
+
+    return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+  }
+
+  static String durationToTextString(Duration duration) {
+    String output = '';
+
+    if (duration.inHours > 0) {
+      output += "${duration.inHours} hour${duration.inHours > 1 ? 's' : ''}";
+    }
+
+    if (duration.inMinutes.remainder(60) > 0) {
+      if (output.isNotEmpty) {
+        output += ' ';
+      }
+
+      output += "${duration.inMinutes.remainder(60)} minute${duration.inMinutes > 1 ? 's' : ''}";
+    }
+
+    if (duration.inSeconds.remainder(60) > 0) {
+      if (output.isNotEmpty) {
+        output += ' ';
+      }
+
+      output += "${duration.inSeconds.remainder(60)} second${duration.inSeconds > 1 ? 's' : ''}";
+    }
+
+    return output;
+  }
+
+  static String intToString(int value) {
+    return NumberFormat('###,###', 'en').format(value);
   }
 }

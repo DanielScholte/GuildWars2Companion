@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/world_bosses/bloc.dart';
 import 'package:guildwars2_companion/models/other/world_boss.dart';
+import 'package:guildwars2_companion/utils/gw.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
 import 'package:intl/intl.dart';
@@ -122,7 +123,7 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
               )
             else
               Text(
-                _printDuration(worldBoss.dateTime.toLocal().difference(DateTime.now())),
+                GuildWarsUtil.durationToString(worldBoss.dateTime.toLocal().difference(DateTime.now())),
                 style: TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.w500,
@@ -141,21 +142,5 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
       ),
       onTap: () {},
     );
-  }
-
-  String _printDuration(Duration duration) {
-    String twoDigits(int n) {
-      if (n >= 10) return "$n";
-      return "0$n";
-    }
-
-    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
-    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
-
-    if (duration.inHours == 0) {
-      return "$twoDigitMinutes:$twoDigitSeconds";
-    }
-
-    return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
   }
 }

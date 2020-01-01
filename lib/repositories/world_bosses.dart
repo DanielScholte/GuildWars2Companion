@@ -30,7 +30,7 @@ class WorldBossesRepository {
         name: 'Admiral Taidha Covington',
         id: 'admiral_taidha_covington',
         location: 'Bloodtide Coast',
-        color: Colors.brown,
+        color: Colors.green,
         times: [
           '00:00',
           '03:00',

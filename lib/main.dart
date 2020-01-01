@@ -12,6 +12,7 @@ import 'package:guildwars2_companion/repositories/account.dart';
 import 'package:guildwars2_companion/repositories/bank.dart';
 import 'package:guildwars2_companion/repositories/character.dart';
 import 'package:guildwars2_companion/repositories/item.dart';
+import 'package:guildwars2_companion/repositories/trading_post.dart';
 import 'package:guildwars2_companion/repositories/wallet.dart';
 import 'package:guildwars2_companion/repositories/world_bosses.dart';
 import 'package:guildwars2_companion/utils/token.dart';
@@ -38,7 +39,7 @@ class GuildWars2Companion extends StatelessWidget {
             primarySwatch: Colors.red,
             primaryColor: Color(0xFFAA0404),
             accentColor: Colors.red,
-            scaffoldBackgroundColor: Color(0xFFEDF0F6),
+            scaffoldBackgroundColor: Color(0xFFEEEEEE),
             cursorColor: Color(0xFFAA0404),
           ),
           home: isAuthenticated ? TabPage() : TokenPage(),
@@ -62,6 +63,9 @@ class GuildWars2Companion extends StatelessWidget {
         ),
         RepositoryProvider<ItemRepository>(
           create: (BuildContext context) => ItemRepository(),
+        ),
+        RepositoryProvider<TradingPostRepository>(
+          create: (BuildContext context) => TradingPostRepository(),
         ),
         RepositoryProvider<WalletRepository>(
           create: (BuildContext context) => WalletRepository(),

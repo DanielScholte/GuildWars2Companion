@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/models/wallet/currency.dart';
-import 'package:intl/intl.dart';
+import 'package:guildwars2_companion/utils/gw.dart';
 
 class CompanionCoin extends StatelessWidget {
 
   final int coin;
+  final double innerPadding;
 
-  CompanionCoin(this.coin);
+  CompanionCoin(this.coin, {
+    this.innerPadding = 4.0
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,19 +18,19 @@ class CompanionCoin extends StatelessWidget {
       children: 
         _getCoin(coin)
         .map((c) => Padding(
-          padding: EdgeInsets.only(left: 4.0),
+          padding: EdgeInsets.only(left: innerPadding),
           child: Row(
             children: <Widget>[
               Text(
-                _valueToString(c.value),
+                GuildWarsUtil.intToString(c.value),
                 style: TextStyle(
-                  fontSize: 18.0,
+                  fontSize: 16.0,
                 ),
               ),
               Container(
-                width: 20.0,
-                height: 20.0,
-                margin: EdgeInsets.only(left: 4.0),
+                width: 16.0,
+                height: 16.0,
+                margin: EdgeInsets.only(left: innerPadding),
                 child: Image.asset(c.icon)
               )
             ],
@@ -35,10 +38,6 @@ class CompanionCoin extends StatelessWidget {
         ))
         .toList(),
     );
-  }
-
-  String _valueToString(int value) {
-    return NumberFormat('###,###', 'en').format(value);
   }
 
   List<Currency> _getCoin(int coin) {
@@ -53,7 +52,7 @@ class CompanionCoin extends StatelessWidget {
           value: gold,
           icon: 'assets/coin/gold_coin.png'
         ),
-      if (silver > 0)
+      if (silver > 0 || gold > 0)
         Currency(
           name: 'Silver',
           value: silver,

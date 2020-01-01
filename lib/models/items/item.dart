@@ -1,3 +1,5 @@
+import 'package:guildwars2_companion/models/items/item_details.dart';
+
 class Item {
   String name;
   String description;
@@ -8,6 +10,7 @@ class Item {
   int id;
   String chatLink;
   String icon;
+  ItemDetails details;
 
   Item(
       {this.name,
@@ -18,7 +21,8 @@ class Item {
       this.vendorValue,
       this.id,
       this.chatLink,
-      this.icon});
+      this.icon,
+      this.details});
 
   Item.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -30,6 +34,8 @@ class Item {
     id = json['id'];
     chatLink = json['chat_link'];
     icon = json['icon'];
+    details =
+        json['details'] != null ? new ItemDetails.fromJson(json['details']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -43,6 +49,9 @@ class Item {
     data['id'] = this.id;
     data['chat_link'] = this.chatLink;
     data['icon'] = this.icon;
+    if (this.details != null) {
+      data['details'] = this.details.toJson();
+    }
     return data;
   }
 }

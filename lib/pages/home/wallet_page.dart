@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/models/wallet/currency.dart';
+import 'package:guildwars2_companion/utils/gw.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
-import 'package:intl/intl.dart';
 
 class WalletPage extends StatelessWidget {
   @override
@@ -50,7 +50,7 @@ class WalletPage extends StatelessWidget {
             child: Text(
               currency.name,
               style: TextStyle(
-                fontSize: 18.0,
+                fontSize: 16.0,
                 fontWeight: FontWeight.w500
               ),
             ),
@@ -64,7 +64,13 @@ class WalletPage extends StatelessWidget {
 
   Widget _buildCurrency(BuildContext context, Currency currency) {
     if (currency.name == 'Coin') {
-      return CompanionCoin(currency.value);
+      return Padding(
+        padding: EdgeInsets.only(right: 2.0),
+        child: CompanionCoin(
+          currency.value,
+          innerPadding: 6.0,
+        ),
+      );
     }
 
     return Padding(
@@ -72,9 +78,9 @@ class WalletPage extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Text(
-            valueToString(currency.value),
+            GuildWarsUtil.intToString(currency.value),
             style: TextStyle(
-              fontSize: 18.0,
+              fontSize: 16.0,
             ),
           ),
           Container(
@@ -85,7 +91,9 @@ class WalletPage extends StatelessWidget {
               imageUrl: currency.icon,
               placeholder: (context, url) => Theme(
                 data: Theme.of(context).copyWith(accentColor: Colors.orange),
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.0,
+                ),
               ),
               errorWidget: (context, url, error) => Icon(Icons.error),
               fit: BoxFit.cover,
@@ -94,9 +102,5 @@ class WalletPage extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String valueToString(int value) {
-    return NumberFormat('###,###', 'en').format(value);
   }
 }
