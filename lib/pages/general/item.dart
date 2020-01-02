@@ -6,6 +6,7 @@ import 'package:guildwars2_companion/models/trading_post/price.dart';
 import 'package:guildwars2_companion/repositories/trading_post.dart';
 import 'package:guildwars2_companion/utils/gw.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
+import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
 
@@ -13,10 +14,14 @@ class ItemPage extends StatelessWidget {
 
   final Item item;
   final Skin skin;
+  final List<Item> upgradesInfo;
+  final List<Item> infusionsInfo;
 
   ItemPage({
     @required this.item,
-    this.skin
+    this.skin,
+    this.upgradesInfo,
+    this.infusionsInfo,
   });
 
   @override
@@ -34,13 +39,17 @@ class ItemPage extends StatelessWidget {
             child: ListView(
               children: <Widget>[
                 if (skin != null)
-                  _buildOriginalItemInfo(),
+                  _buildTransmutedItemInfo(),
                 if (item.description != null && item.description.isNotEmpty)
                   _buildItemDescription(),
                 if (item.details != null)
                   _buildItemDetails()
                 else
                   _buildRarityOnlyDetails(),
+                if (upgradesInfo != null && upgradesInfo.where((up) => up != null).toList().isNotEmpty)
+                  _buildItemList('Upgrades', upgradesInfo),
+                if (infusionsInfo != null && infusionsInfo.where((inf) => inf != null).toList().isNotEmpty)
+                  _buildItemList('Infusions', infusionsInfo),
                 _buildValue(context)
               ],
             ),
@@ -99,45 +108,89 @@ class ItemPage extends StatelessWidget {
     );
   }
 
-  Widget _buildOriginalItemInfo() {
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(bottom: 8.0),
-          child: Text(
-            'Transmuted',
-            style: TextStyle(
-              fontSize: 18.0
+  Widget _buildTransmutedItemInfo() {
+    return CompanionCard(
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(bottom: 8.0),
+            child: Text(
+              'Transmuted',
+              style: TextStyle(
+                fontSize: 18.0
+              ),
             ),
           ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            CompanionItemBox(
-              item: item,
-              size: 60.0,
-              enablePopup: false,
-            ),
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                item.name,
-                style: TextStyle(
-                  fontSize: 22.0
-                ),
-                textAlign: TextAlign.center,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              CompanionItemBox(
+                item: item,
+                size: 45.0,
+                enablePopup: false,
               ),
-            )
-          ],
-        )
-      ],
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  item.name,
+                  style: TextStyle(
+                    fontSize: 16.0
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildItemList(String header, List<Item> items) {
+    return CompanionCard(
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(bottom: 8.0),
+            child: Text(
+              header,
+              style: TextStyle(
+                fontSize: 18.0
+              ),
+            ),
+          ),
+          Column(
+            children: items
+            .where((i) => i != null)
+            .map((i) => Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                CompanionItemBox(
+                  item: i,
+                  size: 45.0,
+                  includeMargin: true,
+                ),
+                Padding(
+                  padding: EdgeInsets.all(4.0),
+                  child: Text(
+                    i.name,
+                    style: TextStyle(
+                      fontSize: 16.0
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                )
+              ],
+            ))
+            .toList(),
+          )
+        ],
+      ),
     );
   }
 
   Widget _buildItemDescription() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
+    return CompanionCard(
       child: Column(
         children: <Widget>[
           Padding(
@@ -181,8 +234,7 @@ class ItemPage extends StatelessWidget {
       'UpgradeComponent',
       'Weapon'
     ].contains(item.type))  {
-      return Padding(
-        padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+      return CompanionCard(
         child: Column(
           children: <Widget>[
             Padding(
@@ -193,6 +245,10 @@ class ItemPage extends StatelessWidget {
                   fontSize: 18.0
                 ),
               ),
+            ),
+            _buildInfoRow(
+              header: 'Rarity',
+              text: item.rarity
             ),
             if (item.type == 'Armor')
               _buildArmorDetails(),
@@ -218,10 +274,6 @@ class ItemPage extends StatelessWidget {
     return Column(
       children: <Widget>[
         _buildInfoRow(
-          header: 'Rarity',
-          text: item.rarity
-        ),
-        _buildInfoRow(
           header: 'Type',
           text: typeToName(item.details.type)
         ),
@@ -241,10 +293,6 @@ class ItemPage extends StatelessWidget {
     return Column(
       children: <Widget>[
         _buildInfoRow(
-          header: 'Rarity',
-          text: item.rarity
-        ),
-        _buildInfoRow(
           header: 'Size',
           text: GuildWarsUtil.intToString(item.details.size)
         ),
@@ -255,10 +303,6 @@ class ItemPage extends StatelessWidget {
   Widget _buildConsumableDetails() {
     return Column(
       children: <Widget>[
-        _buildInfoRow(
-          header: 'Rarity',
-          text: item.rarity
-        ),
         _buildInfoRow(
           header: 'Type',
           text: typeToName(item.details.type)
@@ -281,10 +325,6 @@ class ItemPage extends StatelessWidget {
     return Column(
       children: <Widget>[
         _buildInfoRow(
-          header: 'Rarity',
-          text: item.rarity
-        ),
-        _buildInfoRow(
           header: 'Type',
           text: item.details.type
         ),
@@ -296,10 +336,6 @@ class ItemPage extends StatelessWidget {
     return Column(
       children: <Widget>[
         _buildInfoRow(
-          header: 'Rarity',
-          text: item.rarity
-        ),
-        _buildInfoRow(
           header: 'Charges',
           text: GuildWarsUtil.intToString(item.details.charges)
         ),
@@ -308,8 +344,7 @@ class ItemPage extends StatelessWidget {
   }
 
   Widget _buildRarityOnlyDetails() {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+    return CompanionCard(
       child: Column(
         children: <Widget>[
           Padding(
@@ -334,10 +369,6 @@ class ItemPage extends StatelessWidget {
     return Column(
       children: <Widget>[
         _buildInfoRow(
-          header: 'Rarity',
-          text: item.rarity
-        ),
-        _buildInfoRow(
           header: 'Type',
           text: item.details.type
         ),
@@ -359,8 +390,7 @@ class ItemPage extends StatelessWidget {
       future: RepositoryProvider.of<TradingPostRepository>(context).getItemPrice(item.id),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+          return CompanionCard(
             child: Column(
               children: <Widget>[
                 Padding(
@@ -390,9 +420,7 @@ class ItemPage extends StatelessWidget {
         }
 
         if (!snapshot.hasData) {
-          print(item.id);
-          return Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+          return CompanionCard(
             child: Column(
               children: <Widget>[
                 Padding(
@@ -433,9 +461,8 @@ class ItemPage extends StatelessWidget {
           );
         }
 
-        return Padding(
-          padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-          child: Column(
+        return CompanionCard(
+            child: Column(
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(bottom: 8.0),

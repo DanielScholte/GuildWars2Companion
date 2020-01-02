@@ -5,7 +5,11 @@ class InventoryItem {
 	int id;
 	int count;
   int skin;
+  List<int> upgrades;
+  List<Item> upgradesInfo;
 	String binding;
+  List<int> infusions;
+  List<Item> infusionsInfo;
 	int charges;
   Item itemInfo;
   Skin skinInfo;
@@ -16,6 +20,12 @@ class InventoryItem {
     if (json == null) {
       id = -1;
       return;
+    }
+    if (json.containsKey('upgrades')) {
+      upgrades = json['upgrades'].cast<int>();
+    }
+    if (json.containsKey('infusions')) {
+      infusions = json['infusions'].cast<int>();
     }
 		id = json['id'];
 		count = json['count'];

@@ -91,6 +91,8 @@ class InventoryPage extends StatelessWidget {
                   .map((i) => CompanionItemBox(
                     item: i.itemInfo,
                     skin: i.skinInfo,
+                    upgradesInfo: i.upgradesInfo,
+                    infusionsInfo: i.infusionsInfo,
                     quantity: i.charges != null ? i.charges : i.count,
                     includeMargin: false,
                   ))

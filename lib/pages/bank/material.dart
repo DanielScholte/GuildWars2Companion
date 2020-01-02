@@ -46,7 +46,8 @@ class MaterialPage extends StatelessWidget {
             child: Text(
               category.name,
               style: TextStyle(
-                fontWeight: FontWeight.w500
+                fontWeight: FontWeight.w500,
+                fontSize: 18.0
               ),
             ),
           ),

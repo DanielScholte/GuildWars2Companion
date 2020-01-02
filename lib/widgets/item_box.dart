@@ -14,11 +14,15 @@ class CompanionItemBox extends StatelessWidget {
   final bool includeMargin;
   final double size;
   final bool enablePopup;
+  final List<Item> upgradesInfo;
+  final List<Item> infusionsInfo;
 
   CompanionItemBox({
     @required this.item,
     this.skin,
     this.quantity = 1,
+    this.upgradesInfo,
+    this.infusionsInfo, 
     this.size = 55.0,
     this.displayEmpty = false,
     this.includeMargin = false,
@@ -134,6 +138,8 @@ class CompanionItemBox extends StatelessWidget {
             builder: (context) => ItemPage(
               item: item,
               skin: skin,
+              upgradesInfo: upgradesInfo,
+              infusionsInfo: infusionsInfo,
             )
           ))
         ),

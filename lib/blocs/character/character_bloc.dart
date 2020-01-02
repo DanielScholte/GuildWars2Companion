@@ -2,8 +2,10 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:guildwars2_companion/models/character/character.dart';
+import 'package:guildwars2_companion/models/character/equipment.dart';
 import 'package:guildwars2_companion/models/character/profession.dart';
 import 'package:guildwars2_companion/models/character/title.dart';
+import 'package:guildwars2_companion/models/items/inventory.dart';
 import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/models/items/skin.dart';
 import 'package:guildwars2_companion/repositories/character.dart';
@@ -58,19 +60,13 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
           c.bags.forEach((b) {
             b.itemInfo = items.firstWhere((i) => i.id == b.id, orElse: () => null);
             b.inventory.where((i) => i.id != -1).forEach((inventory) {
-              inventory.itemInfo = items.firstWhere((i) => i.id == inventory.id, orElse: () => null);
-              if (inventory.skin != null) {
-                inventory.skinInfo = skins.firstWhere((i) => i.id == inventory.skin, orElse: () => null);
-              }
+              _fillInventoryItemInfo(inventory, items, skins);
             });
           });
         }
         if (c.equipment != null) {
           c.equipment.forEach((e) {
-            e.itemInfo = items.firstWhere((i) => i.id == e.id, orElse: () => null);
-            if (e.skin != null) {
-              e.skinInfo = skins.firstWhere((i) => i.id == e.skin, orElse: () => null);
-            }
+            _fillEquipmentInfo(e, items, skins);
           });
         }
       });
@@ -85,11 +81,25 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
       if (c.bags != null) {
         c.bags.forEach((b) {
           itemIds.add(b.id);
-          itemIds.addAll(b.inventory.where((i) => i.id != -1).map((i) => i.id).toList());
+          b.inventory.where((i) => i.id != -1).forEach((item) {
+            itemIds.add(item.id);
+
+            if (item.infusions != null && item.infusions.isNotEmpty) {
+              itemIds.addAll(item.infusions.where((inf) => inf != null).toList());
+            }
+
+            if (item.upgrades != null && item.upgrades.isNotEmpty) {
+              itemIds.addAll(item.upgrades.where((up) => up != null).toList());
+            }
+          });
         });
       }
       if (c.equipment != null) {
         itemIds.addAll(c.equipment.map((e) => e.id).toList());
+        c.equipment.where((e) => e.infusions != null && e.infusions.isNotEmpty)
+          .forEach((e) => itemIds.addAll(e.infusions.where((inf) => inf != null).toList()));
+        c.equipment.where((e) => e.upgrades != null && e.upgrades.isNotEmpty)
+          .forEach((e) => itemIds.addAll(e.upgrades.where((up) => up != null).toList()));
       }
     });
     return itemIds.toSet().toList();
@@ -108,5 +118,65 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
       }
     });
     return skinIds.toSet().toList();
-  }  
+  }
+
+  void _fillInventoryItemInfo(InventoryItem inventory, List<Item> items, List<Skin> skins) {
+    inventory.itemInfo = items.firstWhere((i) => i.id == inventory.id, orElse: () => null);
+
+    if (inventory.skin != null) {
+      inventory.skinInfo = skins.firstWhere((i) => i.id == inventory.skin, orElse: () => null);
+    }
+
+    if (inventory.infusions != null && inventory.infusions.isNotEmpty) {
+      inventory.infusionsInfo = [];
+      inventory.infusions.where((inf) => inf != null).forEach((inf) {
+        Item infusion = items.firstWhere((i) => i.id == inf, orElse: () => null);
+
+        if (infusion != null) {
+          inventory.infusionsInfo.add(infusion);
+        }
+      });
+    }
+    
+    if (inventory.upgrades != null && inventory.upgrades.isNotEmpty) {
+      inventory.upgradesInfo = [];
+      inventory.upgrades.where((up) => up != null).forEach((up) {
+        Item upgrade = items.firstWhere((i) => i.id == up, orElse: () => null);
+
+        if (upgrade != null) {
+          inventory.upgradesInfo.add(upgrade);
+        }
+      });
+    }
+  }
+
+  void _fillEquipmentInfo(Equipment equipment, List<Item> items, List<Skin> skins) {
+    equipment.itemInfo = items.firstWhere((i) => i.id == equipment.id, orElse: () => null);
+
+    if (equipment.skin != null) {
+      equipment.skinInfo = skins.firstWhere((i) => i.id == equipment.skin, orElse: () => null);
+    }
+
+    if (equipment.infusions != null && equipment.infusions.isNotEmpty) {
+      equipment.infusionsInfo = [];
+      equipment.infusions.where((inf) => inf != null).forEach((inf) {
+        Item infusion = items.firstWhere((i) => i.id == inf, orElse: () => null);
+
+        if (infusion != null) {
+          equipment.infusionsInfo.add(infusion);
+        }
+      });
+    }
+    
+    if (equipment.upgrades != null && equipment.upgrades.isNotEmpty) {
+      equipment.upgradesInfo = [];
+      equipment.upgrades.where((up) => up != null).forEach((up) {
+        Item upgrade = items.firstWhere((i) => i.id == up, orElse: () => null);
+
+        if (upgrade != null) {
+          equipment.upgradesInfo.add(upgrade);
+        }
+      });
+    }
+  }
 }

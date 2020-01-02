@@ -5,8 +5,10 @@ class Equipment {
 	int id;
 	String slot;
 	List<int> upgrades;
+  List<Item> upgradesInfo;
 	String binding;
 	List<int> infusions;
+  List<Item> infusionsInfo;
 	int skin;
   Item itemInfo;
   Skin skinInfo;

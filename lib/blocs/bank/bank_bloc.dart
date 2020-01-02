@@ -5,6 +5,7 @@ import 'package:guildwars2_companion/models/bank/material.dart';
 import 'package:guildwars2_companion/models/bank/material_category.dart';
 import 'package:guildwars2_companion/models/items/inventory.dart';
 import 'package:guildwars2_companion/models/items/item.dart';
+import 'package:guildwars2_companion/models/items/skin.dart';
 import 'package:guildwars2_companion/repositories/bank.dart';
 import 'package:guildwars2_companion/repositories/item.dart';
 import 'package:guildwars2_companion/utils/urls.dart';
@@ -39,10 +40,23 @@ class BankBloc extends Bloc<BankEvent, BankState> {
       itemIds.addAll(materials.map((i) => i.id).toList());
       itemIds = itemIds.toSet().toList();
 
-      List<Item> items = await itemRepository.getItems(Urls.divideIdLists(itemIds));
+      List<int> skinIds = inventory.where((i) => i.skin != null).map((i) => i.skin).toList();
+      skinIds.addAll(bank.where((i) => i.skin != null).map((i) => i.skin).toList());
+      skinIds = skinIds.toSet().toList();
 
-      inventory.forEach((item) => item.itemInfo = items.firstWhere((i) => i.id == item.id, orElse: () => null));
-      bank.forEach((item) => item.itemInfo = items.firstWhere((i) => i.id == item.id, orElse: () => null));
+      List<Item> items = await itemRepository.getItems(Urls.divideIdLists(itemIds));
+      List<Skin> skins = await itemRepository.getSkins(Urls.divideIdLists(skinIds));
+
+      inventory.forEach((item) {
+        item.itemInfo = items.firstWhere((i) => i.id == item.id, orElse: () => null);
+        item.skinInfo = skins.firstWhere((i) => i.id == item.skin, orElse: () => null);
+      });
+      
+      bank.forEach((item) {
+        item.itemInfo = items.firstWhere((i) => i.id == item.id, orElse: () => null);
+        item.skinInfo = skins.firstWhere((i) => i.id == item.skin, orElse: () => null);
+      });
+
       materials.forEach((item) {
         item.itemInfo = items.firstWhere((i) => i.id == item.id, orElse: () => null);
         MaterialCategory category = materialCategories.firstWhere((c) => c.id == item.category, orElse: () => null);
