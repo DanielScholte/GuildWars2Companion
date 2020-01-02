@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/blocs/bank/bloc.dart';
 import 'package:guildwars2_companion/blocs/character/bloc.dart';
@@ -30,8 +31,8 @@ class _TabPageState extends State<TabPage> {
   }
 
   List<TabEntry> _tabs = [
-    TabEntry(HomePage(), "Home", Icons.home, Colors.red),
-    TabEntry(Scaffold(), "Progression", Icons.crop_square, Colors.orange),
+    TabEntry(HomePage(), "Home", FontAwesomeIcons.home, 20.0, Colors.red),
+    TabEntry(Scaffold(), "Progression", Icons.crop_square, 24.0, Colors.orange),
   ];
  
   @override
@@ -88,10 +89,12 @@ class _TabPageState extends State<TabPage> {
             icon: Icon(
               t.icon,
               color: t.color,
+              size: t.iconSize,
             ),
             activeIcon: Icon(
               t.icon,
               color: Colors.white,
+              size: t.iconSize
             ),
             title: Text(
               t.title,
@@ -109,24 +112,28 @@ class _TabPageState extends State<TabPage> {
 
   Future<void> _handleAuth(BuildContext context, AuthenticatedState state) async {
     List<TabEntry> tabs = [
-      TabEntry(HomePage(), "Home", Icons.home, Colors.red),
+      TabEntry(HomePage(), "Home", FontAwesomeIcons.home, 20.0, Colors.red),
     ];
 
     if (state.tokenInfo.permissions.contains('characters')) {
       BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent());
-      tabs.add(TabEntry(CharactersPage(), "Characters", Icons.people, Colors.blue));
+      tabs.add(TabEntry(CharactersPage(), "Characters", Icons.people, 24.0, Colors.blue));
     }
 
     if (state.tokenInfo.permissions.contains('inventories')) {
       BlocProvider.of<BankBloc>(context).add(LoadBankEvent());
-      tabs.add(TabEntry(BankPage(), "Bank", Icons.grid_on, Colors.orange));
+      tabs.add(TabEntry(BankPage(), "Bank", Icons.grid_on, 24.0, Colors.orange));
+    }
+
+    if (state.tokenInfo.permissions.contains('tradingpost')) {
+      tabs.add(TabEntry(Scaffold(), "Trading Post", FontAwesomeIcons.balanceScaleLeft, 20.0, Colors.green));
     }
 
     if (state.tokenInfo.permissions.contains('wallet')) {
       BlocProvider.of<WalletBloc>(context).add(LoadWalletEvent());
     }
 
-    _tabs.add(TabEntry(Scaffold(), "Progression", Icons.crop_square, Colors.orange));
+    _tabs.add(TabEntry(Scaffold(), "Progression", Icons.crop_square, 24.0, Colors.orange));
     _tabs = tabs;
 
     setState(() {});
@@ -138,12 +145,14 @@ class TabEntry {
   Widget widget;
   String title;
   IconData icon;
+  double iconSize;
   Color color;
 
-  TabEntry(Widget widget, String title, IconData icon, Color color) {
+  TabEntry(Widget widget, String title, IconData icon, double iconSize, Color color) {
     this.widget = widget;
     this.title = title;
     this.icon = icon;
+    this.iconSize = iconSize;
     this.color = color;
   }
 }

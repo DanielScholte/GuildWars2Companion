@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CompanionFullButton extends StatelessWidget {
   final bool loading;
@@ -111,10 +112,13 @@ class CompanionFullButton extends StatelessWidget {
   }
 
   Widget _buildArrow() {
-    return Icon(
-      Icons.chevron_right,
-      color: Colors.white,
-      size: 32.0,
+    return Padding(
+      padding: EdgeInsets.all(4.0),
+      child: Icon(
+        FontAwesomeIcons.chevronRight,
+        color: Colors.white,
+        size: 18.0,
+      ),
     );
   }
 }

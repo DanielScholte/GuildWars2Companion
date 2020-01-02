@@ -3,12 +3,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/bank/bloc.dart';
 import 'package:guildwars2_companion/pages/bank/generic_bank.dart';
 import 'package:guildwars2_companion/pages/bank/material.dart';
+import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
 
 class BankPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CompanionAppBar(
+        title: 'Bank',
+        color: Colors.orange,
+        foregroundColor: Colors.white,
+        elevation: 4.0,
+      ),
       body: BlocBuilder<BankBloc, BankState>(
         builder: (context, state) {
           if (state is LoadedBankState) {

@@ -36,6 +36,8 @@ dependencies:
 
   cached_network_image: ^2.0.0-rc
 
+  font_awesome_flutter: ^8.5.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

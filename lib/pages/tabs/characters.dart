@@ -5,12 +5,19 @@ import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/models/character/character.dart';
 import 'package:guildwars2_companion/pages/character/character.dart';
 import 'package:guildwars2_companion/utils/gw.dart';
+import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
 
 class CharactersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CompanionAppBar(
+        title: 'Characters',
+        color: Colors.blue,
+        foregroundColor: Colors.white,
+        elevation: 4.0,
+      ),
       body: BlocBuilder<CharacterBloc, CharacterState>(
         builder: (context, state) {
           if (state is LoadedCharactersState) {
