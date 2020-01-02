@@ -35,26 +35,55 @@ class BankBloc extends Bloc<BankEvent, BankState> {
       List<Material> materials = await bankRepository.getMaterials();
       List<MaterialCategory> materialCategories = await bankRepository.getMaterialCategories();
 
-      List<int> itemIds = inventory.map((i) => i.id).toList();
-      itemIds.addAll(bank.map((i) => i.id).toList());
-      itemIds.addAll(materials.map((i) => i.id).toList());
-      itemIds = itemIds.toSet().toList();
+      List<int> itemIds = [];
+      List<int> skinIds = [];
 
-      List<int> skinIds = inventory.where((i) => i.skin != null).map((i) => i.skin).toList();
-      skinIds.addAll(bank.where((i) => i.skin != null).map((i) => i.skin).toList());
-      skinIds = skinIds.toSet().toList();
+      itemIds.addAll(materials.map((i) => i.id).toList());
+
+      inventory.forEach((item) {
+        itemIds.add(item.id);
+
+        if (item.skin != null) {
+          skinIds.add(item.skin);
+        }
+
+        if (item.infusions != null && item.infusions.isNotEmpty) {
+          itemIds.addAll(item.infusions.where((inf) => inf != null).toList());
+        }
+
+        if (item.upgrades != null && item.upgrades.isNotEmpty) {
+          itemIds.addAll(item.upgrades.where((up) => up != null).toList());
+        }
+      });
+
+      bank.forEach((item) {
+        itemIds.add(item.id);
+
+        if (item.skin != null) {
+          skinIds.add(item.skin);
+        }
+
+        if (item.infusions != null && item.infusions.isNotEmpty) {
+          itemIds.addAll(item.infusions.where((inf) => inf != null).toList());
+        }
+
+        if (item.upgrades != null && item.upgrades.isNotEmpty) {
+          itemIds.addAll(item.upgrades.where((up) => up != null).toList());
+        }
+      });
+
+      itemIds = itemIds.toSet().toList();
+      skinIds = skinIds.toSet().toList();      
 
       List<Item> items = await itemRepository.getItems(Urls.divideIdLists(itemIds));
       List<Skin> skins = await itemRepository.getSkins(Urls.divideIdLists(skinIds));
 
       inventory.forEach((item) {
-        item.itemInfo = items.firstWhere((i) => i.id == item.id, orElse: () => null);
-        item.skinInfo = skins.firstWhere((i) => i.id == item.skin, orElse: () => null);
+        _fillInventoryItemInfo(item, items, skins);
       });
-      
+
       bank.forEach((item) {
-        item.itemInfo = items.firstWhere((i) => i.id == item.id, orElse: () => null);
-        item.skinInfo = skins.firstWhere((i) => i.id == item.skin, orElse: () => null);
+        _fillInventoryItemInfo(item, items, skins);
       });
 
       materials.forEach((item) {
@@ -67,6 +96,36 @@ class BankBloc extends Bloc<BankEvent, BankState> {
       materialCategories.sort((a, b) => a.order.compareTo(b.order));
 
       yield LoadedBankState(bank, inventory, materialCategories);
+    }
+  }
+
+  void _fillInventoryItemInfo(InventoryItem inventory, List<Item> items, List<Skin> skins) {
+    inventory.itemInfo = items.firstWhere((i) => i.id == inventory.id, orElse: () => null);
+
+    if (inventory.skin != null) {
+      inventory.skinInfo = skins.firstWhere((i) => i.id == inventory.skin, orElse: () => null);
+    }
+
+    if (inventory.infusions != null && inventory.infusions.isNotEmpty) {
+      inventory.infusionsInfo = [];
+      inventory.infusions.where((inf) => inf != null).forEach((inf) {
+        Item infusion = items.firstWhere((i) => i.id == inf, orElse: () => null);
+
+        if (infusion != null) {
+          inventory.infusionsInfo.add(infusion);
+        }
+      });
+    }
+    
+    if (inventory.upgrades != null && inventory.upgrades.isNotEmpty) {
+      inventory.upgradesInfo = [];
+      inventory.upgrades.where((up) => up != null).forEach((up) {
+        Item upgrade = items.firstWhere((i) => i.id == up, orElse: () => null);
+
+        if (upgrade != null) {
+          inventory.upgradesInfo.add(upgrade);
+        }
+      });
     }
   }
 }
