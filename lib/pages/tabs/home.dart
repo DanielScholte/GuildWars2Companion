@@ -170,7 +170,7 @@ class HomePage extends StatelessWidget {
                       ),
                     if (c.name == 'Karma' && c.value < 1000000)
                       Text(
-                        (c.value / 1000).round().toString() + 'k',
+                        (c.value ~/ 1000).toString() + 'k',
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500
@@ -178,7 +178,7 @@ class HomePage extends StatelessWidget {
                       ),
                     if (c.name == 'Karma' && c.value >= 1000000)
                       Text(
-                        (c.value / 1000000).round().toString() + 'm',
+                        (c.value ~/ 1000000).toString() + 'm',
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500
