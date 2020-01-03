@@ -51,7 +51,7 @@ class WorldBossPage extends StatelessWidget {
         ],
         borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12.0), bottomRight: Radius.circular(12.0))
       ),
-      margin: EdgeInsets.only(bottom: 16.0),
+      margin: EdgeInsets.only(bottom: 8.0),
       width: double.infinity,
       child: SafeArea(
         minimum: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),

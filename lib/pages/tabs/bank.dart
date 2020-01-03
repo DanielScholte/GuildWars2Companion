@@ -14,7 +14,7 @@ class BankPage extends StatelessWidget {
     return Scaffold(
       appBar: CompanionAppBar(
         title: 'Bank',
-        color: Colors.orange,
+        color: Colors.indigo,
         foregroundColor: Colors.white,
         elevation: 4.0,
       ),

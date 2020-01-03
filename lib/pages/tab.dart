@@ -123,7 +123,7 @@ class _TabPageState extends State<TabPage> {
 
     if (state.tokenInfo.permissions.contains('inventories')) {
       BlocProvider.of<BankBloc>(context).add(LoadBankEvent());
-      tabs.add(TabEntry(BankPage(), "Bank", GuildWarsIcons.inventory, 24.0, Colors.orange));
+      tabs.add(TabEntry(BankPage(), "Bank", GuildWarsIcons.inventory, 24.0, Colors.indigo));
     }
 
     if (state.tokenInfo.permissions.contains('tradingpost')) {
@@ -134,7 +134,7 @@ class _TabPageState extends State<TabPage> {
       BlocProvider.of<WalletBloc>(context).add(LoadWalletEvent());
     }
 
-    _tabs.add(TabEntry(Scaffold(), "Progression", GuildWarsIcons.achievement, 24.0, Colors.orange));
+    tabs.add(TabEntry(Scaffold(), "Progression", GuildWarsIcons.achievement, 24.0, Colors.orange));
     _tabs = tabs;
 
     setState(() {});

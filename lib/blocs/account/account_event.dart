@@ -22,3 +22,5 @@ class RemoveTokenEvent extends AccountEvent {
 
   RemoveTokenEvent(this.token);
 }
+
+class UnauthenticateEvent extends AccountEvent {}

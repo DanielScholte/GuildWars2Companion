@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
+import 'package:guildwars2_companion/widgets/full_button.dart';
 import 'package:intl/intl.dart';
 
 import 'tab.dart';
@@ -11,6 +14,11 @@ class TokenPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor: Colors.black,
+      systemNavigationBarIconBrightness: Brightness.light
+    ));
+
     return BlocListener<AccountBloc, AccountState>(
       condition: (previous, current) => current is AuthenticatedState || current is UnauthenticatedState,
       listener: (BuildContext context, state) {
@@ -151,61 +159,18 @@ class TokenPage extends StatelessWidget {
   Widget _tokenCard(BuildContext context, String token) {
     List<String> tokenParts = token.split(';');
     DateTime added = DateTime.tryParse(tokenParts[2]);
-    return Container(
-      margin: EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-        color: Colors.red,
-        borderRadius: BorderRadius.circular(8.0),
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: Colors.black38,
-        //     blurRadius: 8.0,
-        //   ),
-        // ]
+
+    return CompanionFullButton(
+      color: Colors.blue,
+      leading: Icon(
+        FontAwesomeIcons.key,
+        color: Colors.white,
       ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: () => BlocProvider.of<AccountBloc>(context).add(AuthenticateEvent(tokenParts[0])),
-          borderRadius: BorderRadius.circular(8.0),
-          splashColor: Color(0x22DDDDDD),
-          highlightColor: Color(0x22DDDDDD),
-          child: Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      tokenParts[1],
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                      ),
-                    ),
-                    if (added != null)
-                      Text(
-                        'Added: ${DateFormat('yyyy-MM-dd - kk:mm').format(added)}',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                  ],
-                ),
-                Icon(
-                  Icons.chevron_right,
-                  color: Colors.white,
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
+      title: tokenParts[1],
+      subtitles: added != null ? [
+        'Added: ${DateFormat('yyyy-MM-dd - kk:mm').format(added)}'
+      ] : null,
+      onTap: () => BlocProvider.of<AccountBloc>(context).add(AuthenticateEvent(tokenParts[0])),
     );
   }
 
