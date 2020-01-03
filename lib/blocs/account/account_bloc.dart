@@ -40,6 +40,9 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     } else if (event is RemoveTokenEvent) {
       yield LoadingAccountState();
       yield* _removeToken(event.token);
+    } else if (event is UnauthenticateEvent) {
+      await TokenUtil.removeToken();
+      yield await _getUnauthenticated(null);
     }
   }
 

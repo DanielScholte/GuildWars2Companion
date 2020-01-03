@@ -10,7 +10,7 @@ import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/models/items/skin.dart';
 import 'package:guildwars2_companion/repositories/character.dart';
 import 'package:guildwars2_companion/repositories/item.dart';
-import 'package:guildwars2_companion/utils/gw.dart';
+import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/utils/urls.dart';
 import './bloc.dart';
 

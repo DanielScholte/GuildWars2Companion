@@ -16,7 +16,7 @@ class GenericBankPage extends StatelessWidget {
     return Scaffold(
       appBar: CompanionAppBar(
         title: bankType == BankType.bank ? 'Bank' : 'Shared inventory',
-        color: bankType == BankType.bank ? Colors.indigo : Colors.blue,
+        color: bankType == BankType.bank ? Colors.blueGrey : Colors.blue,
         foregroundColor: Colors.white,
         elevation: 4.0,
       ),

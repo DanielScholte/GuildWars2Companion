@@ -1,11 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/pages/home/wallet_page.dart';
 import 'package:guildwars2_companion/pages/home/world_bosses.dart';
-import 'package:guildwars2_companion/utils/gw.dart';
+import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
 import 'package:guildwars2_companion/widgets/info_box.dart';
 
@@ -16,26 +17,64 @@ class HomePage extends StatelessWidget {
       condition: (previous, current) => current is AuthenticatedState,
       builder: (context, state) {
         if (state is AuthenticatedState) {
-          return Column(
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black38,
-                      blurRadius: 8.0,
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.red,
+              centerTitle: true,
+              elevation: 0.0,
+              title: RichText(
+                text: TextSpan(
+                  text: 'Welcome ',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w300
+                  ),
+                  children: [
+                    TextSpan(
+                      text: state.account.name,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400
+                      )
                     ),
                   ],
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12.0), bottomRight: Radius.circular(12.0))
                 ),
-                margin: EdgeInsets.only(bottom: 16.0),
-                width: double.infinity,
-                child: SafeArea(
-                  minimum: EdgeInsets.all(16.0),
+              ),
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(
+                    FontAwesomeIcons.infoCircle,
+                    size: 20.0,
+                  ),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: Icon(
+                    FontAwesomeIcons.signOutAlt,
+                    size: 20.0,
+                  ),
+                  onPressed: () => BlocProvider.of<AccountBloc>(context).add(UnauthenticateEvent()),
+                ),
+              ],
+            ),
+            body: Column(
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black38,
+                        blurRadius: 8.0,
+                      ),
+                    ],
+                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12.0), bottomRight: Radius.circular(12.0))
+                  ),
+                  padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+                  margin: EdgeInsets.only(bottom: 8.0),
+                  width: double.infinity,
                   child: Column(
                     children: <Widget>[
-                      _buildAccountHeader(state.account.name),
                       Container(
                         width: double.infinity,
                         child: Wrap(
@@ -61,51 +100,27 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
-              MediaQuery.removePadding(
-                removeTop: true,
-                context: context,
-                child: Expanded(
-                  child: ListView(
-                    children: <Widget>[
-                      if (state.tokenInfo.permissions.contains('wallet'))
-                        _buildWallet(context),
-                      _buildWorldBosses(context),
-                      _buildRaids()
-                    ],
+                MediaQuery.removePadding(
+                  removeTop: true,
+                  context: context,
+                  child: Expanded(
+                    child: ListView(
+                      children: <Widget>[
+                        if (state.tokenInfo.permissions.contains('wallet'))
+                          _buildWallet(context),
+                        _buildWorldBosses(context),
+                        _buildRaids()
+                      ],
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           );
         }
 
         return Container();
       },
-    );
-  }
-
-  Widget _buildAccountHeader(String accountName) {
-    return Padding(
-      padding: EdgeInsets.only(top: 16.0, bottom: 16.0),
-      child: RichText(
-        text: TextSpan(
-          text: 'Welcome ',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20.0,
-            fontWeight: FontWeight.w300
-          ),
-          children: [
-            TextSpan(
-              text: accountName,
-              style: TextStyle(
-                fontWeight: FontWeight.w400
-              )
-            ),
-          ],
-        ),
-      ),
     );
   }
 

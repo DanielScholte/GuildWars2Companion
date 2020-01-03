@@ -4,7 +4,7 @@ import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/models/items/skin.dart';
 import 'package:guildwars2_companion/models/trading_post/price.dart';
 import 'package:guildwars2_companion/repositories/trading_post.dart';
-import 'package:guildwars2_companion/utils/gw.dart';
+import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
@@ -71,7 +71,7 @@ class ItemPage extends StatelessWidget {
         ],
         borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12.0), bottomRight: Radius.circular(12.0))
       ),
-      margin: EdgeInsets.only(bottom: 16.0),
+      margin: EdgeInsets.only(bottom: 8.0),
       width: double.infinity,
       child: SafeArea(
         minimum: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/bank/bloc.dart';
 import 'package:guildwars2_companion/pages/bank/generic_bank.dart';
 import 'package:guildwars2_companion/pages/bank/material.dart';
+import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
 
@@ -12,7 +14,7 @@ class BankPage extends StatelessWidget {
     return Scaffold(
       appBar: CompanionAppBar(
         title: 'Bank',
-        color: Colors.orange,
+        color: Colors.indigo,
         foregroundColor: Colors.white,
         elevation: 4.0,
       ),
@@ -22,7 +24,7 @@ class BankPage extends StatelessWidget {
             return ListView(
               children: <Widget>[
                 CompanionFullButton(
-                  color: Colors.indigo,
+                  color: Colors.blueGrey,
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => GenericBankPage(BankType.bank),
@@ -30,8 +32,8 @@ class BankPage extends StatelessWidget {
                   },
                   title: 'Bank',
                   leading: Icon(
-                    Icons.grid_on,
-                    size: 48.0,
+                    FontAwesomeIcons.archive,
+                    size: 42.0,
                     color: Colors.white,
                   ),
                 ),
@@ -44,8 +46,8 @@ class BankPage extends StatelessWidget {
                   },
                   title: 'Materials',
                   leading: Icon(
-                    Icons.grid_on,
-                    size: 48.0,
+                    FontAwesomeIcons.th,
+                    size: 42.0,
                     color: Colors.white,
                   ),
                 ),
@@ -58,7 +60,7 @@ class BankPage extends StatelessWidget {
                   },
                   title: 'Shared inventory',
                   leading: Icon(
-                    Icons.grid_on,
+                    GuildWarsIcons.inventory,
                     size: 48.0,
                     color: Colors.white,
                   ),
