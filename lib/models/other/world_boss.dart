@@ -6,6 +6,8 @@ class WorldBoss {
   String name;
   String id;
   String location;
+  String waypoint;
+  int level;
   Color color;
   bool completed;
   DateTime dateTime;
@@ -20,6 +22,8 @@ class WorldBoss {
     this.completed,
     this.refreshTime,
     this.times,
-    this.color
+    this.color,
+    this.level,
+    this.waypoint
   });
 }

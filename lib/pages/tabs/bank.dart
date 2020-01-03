@@ -24,7 +24,7 @@ class BankPage extends StatelessWidget {
             return ListView(
               children: <Widget>[
                 CompanionFullButton(
-                  color: Colors.indigo,
+                  color: Colors.blueGrey,
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => GenericBankPage(BankType.bank),
@@ -32,8 +32,8 @@ class BankPage extends StatelessWidget {
                   },
                   title: 'Bank',
                   leading: Icon(
-                    GuildWarsIcons.inventory,
-                    size: 48.0,
+                    FontAwesomeIcons.archive,
+                    size: 42.0,
                     color: Colors.white,
                   ),
                 ),
@@ -47,7 +47,7 @@ class BankPage extends StatelessWidget {
                   title: 'Materials',
                   leading: Icon(
                     FontAwesomeIcons.th,
-                    size: 48.0,
+                    size: 42.0,
                     color: Colors.white,
                   ),
                 ),

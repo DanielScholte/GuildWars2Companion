@@ -30,6 +30,8 @@ class WorldBossesRepository {
         name: 'Admiral Taidha Covington',
         id: 'admiral_taidha_covington',
         location: 'Bloodtide Coast',
+        waypoint: 'Laughing Gull Waypoint',
+        level: 50,
         color: Colors.green,
         times: [
           '00:00',
@@ -46,6 +48,8 @@ class WorldBossesRepository {
         name: 'Claw of Jormag',
         id: 'claw_of_jormag',
         location: 'Frostgorge Sound',
+        waypoint: 'Earthshake Waypoint',
+        level: 80,
         color: Colors.blue,
         times: [
           '02:30',
@@ -62,6 +66,8 @@ class WorldBossesRepository {
         name: 'Fire Elemental',
         id: 'fire_elemental',
         location: 'Metrica Province',
+        waypoint: 'Muridian Waypoint',
+        level: 15,
         color: Colors.deepOrange,
         times: [
           '00:45',
@@ -82,6 +88,8 @@ class WorldBossesRepository {
         name: 'Great Jungle Wurm',
         id: 'great_jungle_wurm',
         location: 'Caledon Forest',
+        waypoint: 'Twilight Arbor Waypoint',
+        level: 15,
         color: Colors.green,
         times: [
           '01:15',
@@ -102,6 +110,8 @@ class WorldBossesRepository {
         name: 'Inquest Golem Mark II',
         id: 'inquest_golem_mark_ii',
         location: 'Mount Maelstrom',
+        waypoint: 'Old Sledge Site Waypoint',
+        level: 68,
         color: Colors.blueGrey,
         times: [
           '02:00',
@@ -118,6 +128,8 @@ class WorldBossesRepository {
         name: 'Karka Queen',
         id: 'karka_queen',
         location: 'Southsun Cove',
+        waypoint: 'Camp Karka Waypoint',
+        level: 80,
         color: Colors.pink,
         times: [
           '02:00',
@@ -132,6 +144,8 @@ class WorldBossesRepository {
         name: 'Megadestroyer',
         id: 'megadestroyer',
         location: 'Mount Maelstrom',
+        waypoint: "Maelstrom's Waypoint",
+        level: 66,
         color: Colors.red,
         times: [
           '00:30',
@@ -148,6 +162,8 @@ class WorldBossesRepository {
         name: 'Modniir Ulgoth',
         id: 'modniir_ulgoth',
         location: 'Harathi Hinterlands',
+        waypoint: 'Cloven Hoof Waypoint',
+        level: 43,
         color: Colors.brown,
         times: [
           '01:30',
@@ -164,6 +180,8 @@ class WorldBossesRepository {
         name: 'Shadow Behemoth',
         id: 'shadow_behemoth',
         location: 'Queensdale',
+        waypoint: 'Swamplost Haven Waypoint',
+        level: 15,
         color: Colors.brown,
         times: [
           '01:45',
@@ -184,6 +202,8 @@ class WorldBossesRepository {
         name: 'Svanir Shaman Chief',
         id: 'svanir_shaman_chief',
         location: 'Wayfarer Foothills',
+        waypoint: "Krennak's Homestead Waypoint",
+        level: 10,
         color: Colors.lightBlue,
         times: [
           '00:15',
@@ -204,6 +224,8 @@ class WorldBossesRepository {
         name: 'Tequatl the Sunless',
         id: 'tequatl_the_sunless',
         location: 'Sparkfly Fen',
+        waypoint: 'Splintered Coast Waypoint',
+        level: 65,
         color: Colors.green,
         times: [
           '00:00',
@@ -218,6 +240,8 @@ class WorldBossesRepository {
         name: 'The Shatterer',
         id: 'the_shatterer',
         location: 'Blazeridge Steppes',
+        waypoint: 'Lowland Burns Waypoint',
+        level: 50,
         color: Colors.deepPurple,
         times: [
           '01:00',
@@ -234,6 +258,8 @@ class WorldBossesRepository {
         name: 'Triple Trouble Wurm',
         id: 'triple_trouble_wurm',
         location: 'Bloodtide Coast',
+        waypoint: 'Firthside Vigil Waypoint',
+        level: 55,
         color: Colors.green,
         times: [
           '01:00',
