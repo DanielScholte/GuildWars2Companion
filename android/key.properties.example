@@ -1,0 +1,4 @@
+storePassword=
+keyPassword=
+keyAlias=GuildWarsCompanionKey
+storeFile=../signing_key.jks
