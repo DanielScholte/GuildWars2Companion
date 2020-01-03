@@ -5,6 +5,7 @@ import 'package:guildwars2_companion/models/character/bags.dart';
 import 'package:guildwars2_companion/models/character/character.dart';
 import 'package:guildwars2_companion/models/items/inventory.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
+import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
 
 class InventoryPage extends StatelessWidget {
@@ -50,8 +51,7 @@ class InventoryPage extends StatelessWidget {
   Widget _buildBag(Bags bag) {
     List<InventoryItem> inventory = bag.inventory.where((i) => i.id != -1 && i.itemInfo != null).toList();
     int usedSlots = inventory.length;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+    return CompanionCard(
       child: Column(
         children: <Widget>[
           Row(

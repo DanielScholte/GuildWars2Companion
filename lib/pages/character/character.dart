@@ -7,7 +7,8 @@ import 'package:guildwars2_companion/models/character/character.dart';
 import 'package:guildwars2_companion/models/character/crafting.dart';
 import 'package:guildwars2_companion/pages/character/equipment.dart';
 import 'package:guildwars2_companion/pages/character/inventory.dart';
-import 'package:guildwars2_companion/utils/gw.dart';
+import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
 import 'package:guildwars2_companion/widgets/info_box.dart';
@@ -190,7 +191,7 @@ class CharacterPage extends StatelessWidget {
                         },
                         title: 'Equipment',
                         leading: Icon(
-                          Icons.kitchen,
+                          GuildWarsIcons.equipment,
                           size: 48.0,
                           color: Colors.white,
                         ),
@@ -209,7 +210,7 @@ class CharacterPage extends StatelessWidget {
                         },
                         title: 'Inventory',
                         leading: Icon(
-                          Icons.grid_on,
+                          GuildWarsIcons.inventory,
                           size: 48.0,
                           color: Colors.white,
                         ),

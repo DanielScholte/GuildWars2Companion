@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/models/items/skin.dart';
 import 'package:guildwars2_companion/pages/general/item.dart';
-import 'package:guildwars2_companion/utils/gw.dart';
+import 'package:guildwars2_companion/utils/guild_wars.dart';
 
 class CompanionItemBox extends StatelessWidget {
 

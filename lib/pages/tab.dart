@@ -12,6 +12,7 @@ import 'package:guildwars2_companion/pages/tabs/bank.dart';
 import 'package:guildwars2_companion/pages/tabs/characters.dart';
 import 'package:guildwars2_companion/pages/tabs/home.dart';
 import 'package:guildwars2_companion/pages/token.dart';
+import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
 
 class TabPage extends StatefulWidget {
   @override
@@ -117,12 +118,12 @@ class _TabPageState extends State<TabPage> {
 
     if (state.tokenInfo.permissions.contains('characters')) {
       BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent());
-      tabs.add(TabEntry(CharactersPage(), "Characters", Icons.people, 24.0, Colors.blue));
+      tabs.add(TabEntry(CharactersPage(), "Characters", GuildWarsIcons.hero, 24.0, Colors.blue));
     }
 
     if (state.tokenInfo.permissions.contains('inventories')) {
       BlocProvider.of<BankBloc>(context).add(LoadBankEvent());
-      tabs.add(TabEntry(BankPage(), "Bank", Icons.grid_on, 24.0, Colors.orange));
+      tabs.add(TabEntry(BankPage(), "Bank", GuildWarsIcons.inventory, 24.0, Colors.orange));
     }
 
     if (state.tokenInfo.permissions.contains('tradingpost')) {
@@ -133,7 +134,7 @@ class _TabPageState extends State<TabPage> {
       BlocProvider.of<WalletBloc>(context).add(LoadWalletEvent());
     }
 
-    _tabs.add(TabEntry(Scaffold(), "Progression", Icons.crop_square, 24.0, Colors.orange));
+    _tabs.add(TabEntry(Scaffold(), "Progression", GuildWarsIcons.achievement, 24.0, Colors.orange));
     _tabs = tabs;
 
     setState(() {});
