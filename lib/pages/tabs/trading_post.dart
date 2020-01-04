@@ -39,92 +39,95 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        appBar: CompanionAppBar(
-          title: 'Trading Post',
-          color: Colors.green,
-          foregroundColor: Colors.white,
-        ),
-        body: Column(
-          children: <Widget>[
-            Material(
-              color: Colors.green,
-              elevation: 4.0,
-              child: TabBar(
-                indicatorColor: Colors.white,
-                tabs: [
-                  Tab(
-                    child: Text(
-                      'Buying',
-                      style: TextStyle(
-                        fontSize: 16.0
-                      ),
-                    ),
-                  ),
-                  Tab(
-                    child: Text(
-                      'Selling',
-                      style: TextStyle(
-                        fontSize: 16.0
-                      ),
-                    ),
-                  ),
-                  Tab(
-                    child: Text(
-                      'Bought',
-                      style: TextStyle(
-                        fontSize: 16.0
-                      ),
-                    ),
-                  ),
-                  Tab(
-                    child: Text(
-                      'Sold',
-                      style: TextStyle(
-                        fontSize: 16.0
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: BlocBuilder<TradingPostBloc, TradingPostState>(
-                builder: (context, state) {
-                  if (state is LoadedTradingPostState) {
-                    return Stack(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 64.0),
-                          child: TabBarView(
-                            children: [
-                              state.buying,
-                              state.selling,
-                              state.bought,
-                              state.sold
-                            ]
-                            .map((t) => _buildTransactionTab(t))
-                            .toList(),
-                          ),
+    return Theme(
+      data: Theme.of(context).copyWith(accentColor: Colors.green),
+      child: DefaultTabController(
+        length: 4,
+        child: Scaffold(
+          appBar: CompanionAppBar(
+            title: 'Trading Post',
+            color: Colors.green,
+            foregroundColor: Colors.white,
+          ),
+          body: Column(
+            children: <Widget>[
+              Material(
+                color: Colors.green,
+                elevation: 4.0,
+                child: TabBar(
+                  indicatorColor: Colors.white,
+                  tabs: [
+                    Tab(
+                      child: Text(
+                        'Buying',
+                        style: TextStyle(
+                          fontSize: 16.0
                         ),
-                        _buildBackground(),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: _buildDelivery(context, state.tradingPostDelivery),
-                        )
-                      ],
-                    );
-                  }
-
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
+                      ),
+                    ),
+                    Tab(
+                      child: Text(
+                        'Selling',
+                        style: TextStyle(
+                          fontSize: 16.0
+                        ),
+                      ),
+                    ),
+                    Tab(
+                      child: Text(
+                        'Bought',
+                        style: TextStyle(
+                          fontSize: 16.0
+                        ),
+                      ),
+                    ),
+                    Tab(
+                      child: Text(
+                        'Sold',
+                        style: TextStyle(
+                          fontSize: 16.0
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+              Expanded(
+                child: BlocBuilder<TradingPostBloc, TradingPostState>(
+                  builder: (context, state) {
+                    if (state is LoadedTradingPostState) {
+                      return Stack(
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 64.0),
+                            child: TabBarView(
+                              children: [
+                                state.buying,
+                                state.selling,
+                                state.bought,
+                                state.sold
+                              ]
+                              .map((t) => _buildTransactionTab(t))
+                              .toList(),
+                            ),
+                          ),
+                          _buildBackground(),
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: _buildDelivery(context, state.tradingPostDelivery),
+                          )
+                        ],
+                      );
+                    }
+
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -260,28 +263,25 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
     }
 
     return Expanded(
-      child: Theme(
-        data: Theme.of(context).copyWith(accentColor: Colors.green),
-        child: ListView(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Wrap(
-                alignment: WrapAlignment.center,
-                spacing: 4.0,
-                runSpacing: 4.0,
-                children: items
-                  .where((i) => i.id != -1)
-                  .map((i) => CompanionItemBox(
-                    item: i.itemInfo,
-                    quantity: i.count,
-                    includeMargin: false,
-                  ))
-                  .toList(),
-              ),
+      child: ListView(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 4.0,
+              runSpacing: 4.0,
+              children: items
+                .where((i) => i.id != -1)
+                .map((i) => CompanionItemBox(
+                  item: i.itemInfo,
+                  quantity: i.count,
+                  includeMargin: false,
+                ))
+                .toList(),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -299,63 +299,57 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
       );
     }
 
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.green),
-      child: ListView(
-        children: transactions
-          .where((t) => t.itemInfo != null)
-          .map((t) => CompanionFullButton(
-            leading: Stack(
-              alignment: Alignment.topRight,
-              children: <Widget>[
-                CachedNetworkImage(
-                  height: 64.0,
-                  imageUrl: t.itemInfo.icon,
-                  placeholder: (context, url) => Theme(
-                    data: Theme.of(context).copyWith(accentColor: Colors.green),
-                    child: Center(child: CircularProgressIndicator()),
-                  ),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                  fit: BoxFit.fill,
-                ),
-                if (t.quantity > 1)
-                  Padding(
-                    padding: EdgeInsets.only(right: 2.0),
-                    child: Text(
-                      t.quantity.toString(),
-                      style: TextStyle(
-                        color: Color(0xFFe3e0b5),
-                        fontSize: 18.0,
-                        shadows: [
-                          BoxShadow(
-                            color: Colors.black,
-                            blurRadius: 6.0,
-                          ),
-                          BoxShadow(
-                            color: Colors.black,
-                            blurRadius: 2.0,
-                          ),
-                          BoxShadow(
-                            color: Colors.black,
-                            blurRadius: 4.0,
-                          ),
-                        ],
-                      ),
+    return ListView(
+      children: transactions
+        .where((t) => t.itemInfo != null)
+        .map((t) => CompanionFullButton(
+          leading: Stack(
+            alignment: Alignment.topRight,
+            children: <Widget>[
+              CachedNetworkImage(
+                height: 64.0,
+                imageUrl: t.itemInfo.icon,
+                placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+                fit: BoxFit.fill,
+              ),
+              if (t.quantity > 1)
+                Padding(
+                  padding: EdgeInsets.only(right: 2.0),
+                  child: Text(
+                    t.quantity.toString(),
+                    style: TextStyle(
+                      color: Color(0xFFe3e0b5),
+                      fontSize: 18.0,
+                      shadows: [
+                        BoxShadow(
+                          color: Colors.black,
+                          blurRadius: 6.0,
+                        ),
+                        BoxShadow(
+                          color: Colors.black,
+                          blurRadius: 2.0,
+                        ),
+                        BoxShadow(
+                          color: Colors.black,
+                          blurRadius: 4.0,
+                        ),
+                      ],
                     ),
                   ),
-              ],
-            ),
-            subtitleWidgets: <Widget>[
-              CompanionCoin(t.price)
+                ),
             ],
-            height: 64.0,
-            title: t.itemInfo.name,
-            color: Colors.white,
-            foregroundColor: Colors.black,
-            onTap: () {},
-          ))
-          .toList(),
-      ),
+          ),
+          subtitleWidgets: <Widget>[
+            CompanionCoin(t.price)
+          ],
+          height: 64.0,
+          title: t.itemInfo.name,
+          color: Colors.white,
+          foregroundColor: Colors.black,
+          onTap: () {},
+        ))
+        .toList(),
     );
   }
 }
