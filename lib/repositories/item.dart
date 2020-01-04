@@ -8,7 +8,8 @@ import 'package:guildwars2_companion/utils/urls.dart';
 import 'package:http/http.dart' as http;
 
 class ItemRepository {
-  Future<List<Item>> getItems(List<String> itemIdsList) async {
+  Future<List<Item>> getItems(List<int> itemIds) async {
+    List<String> itemIdsList = Urls.divideIdLists(itemIds);
     List<Item> items = [];
     for (var itemIds in itemIdsList) {
       final response = await http.get(
@@ -26,7 +27,8 @@ class ItemRepository {
     return items;
   }
 
-  Future<List<Skin>> getSkins(List<String> skinIdsList) async {
+  Future<List<Skin>> getSkins(List<int> skinIds) async {
+    List<String> skinIdsList = Urls.divideIdLists(skinIds);
     List<Skin> skins = [];
     for (var skinIds in skinIdsList) {
       final response = await http.get(

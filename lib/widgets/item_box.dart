@@ -82,6 +82,7 @@ class CompanionItemBox extends StatelessWidget {
         quantity.toString(),
         style: TextStyle(
           color: Color(0xFFe3e0b5),
+          fontSize: 16.0,
           shadows: [
             BoxShadow(
               color: Colors.black,

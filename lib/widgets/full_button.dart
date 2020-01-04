@@ -7,14 +7,20 @@ class CompanionFullButton extends StatelessWidget {
   final Widget trailing;
   final String title;
   final List<String> subtitles;
+  final List<Widget> subtitleWidgets;
   final VoidCallback onTap;
+  final double height;
   final Color color;
+  final Color foregroundColor;
 
   CompanionFullButton({
     @required this.title,
     @required this.onTap,
     @required this.color,
+    this.height = 80.0,
+    this.foregroundColor = Colors.white,
     this.subtitles,
+    this.subtitleWidgets,
     this.leading,
     this.trailing,
     this.loading = false,
@@ -24,7 +30,7 @@ class CompanionFullButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 80.0,
+      height: height,
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(12.0),
@@ -41,8 +47,8 @@ class CompanionFullButton extends StatelessWidget {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            splashColor: Colors.white12,
-            highlightColor: Colors.white12,
+            splashColor: Colors.black12,
+            highlightColor: Colors.black12,
             onTap: () => onTap(),
             child: Row(
               children: <Widget>[
@@ -62,10 +68,10 @@ class CompanionFullButton extends StatelessWidget {
 
   Widget _buildLeading(BuildContext context) {
     return Container(
-      width: 80.0,
-      height: 80.0,
+      width: height,
+      height: height,
       color: Colors.black12,
-      margin: EdgeInsets.only(right: 16.0),
+      margin: EdgeInsets.only(right: 12.0),
       alignment: Alignment.center,
       child: this.loading ?
         Theme(
@@ -81,12 +87,18 @@ class CompanionFullButton extends StatelessWidget {
       Text(
         this.title,
         style: TextStyle(
-          color: Colors.white,
+          color: foregroundColor,
           fontSize: 18.0,
           fontWeight: FontWeight.w500
         ),
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
       ),
     ];
+
+    if (this.subtitleWidgets != null) {
+      titles.addAll(this.subtitleWidgets);
+    }
 
     if (this.subtitles != null) {
       titles.addAll(
@@ -94,7 +106,7 @@ class CompanionFullButton extends StatelessWidget {
           (s) => Text(
             s,
             style: TextStyle(
-              color: Colors.white,
+              color: foregroundColor,
               fontSize: 16.0,
             ),
           )
@@ -113,10 +125,10 @@ class CompanionFullButton extends StatelessWidget {
 
   Widget _buildArrow() {
     return Padding(
-      padding: EdgeInsets.all(4.0),
+      padding: EdgeInsets.all(8.0),
       child: Icon(
         FontAwesomeIcons.chevronRight,
-        color: Colors.white,
+        color: foregroundColor,
         size: 18.0,
       ),
     );

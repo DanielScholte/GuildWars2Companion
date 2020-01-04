@@ -7,13 +7,15 @@ class CompanionAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Color color;
   final Color foregroundColor;
   final double elevation;
+  final Widget bottom;
 
   CompanionAppBar({
     @required this.title,
     this.icon,
     this.color = Colors.transparent,
     this.foregroundColor = Colors.black87,
-    this.elevation = 0
+    this.elevation = 0,
+    this.bottom
   });
 
   @override
@@ -40,6 +42,7 @@ class CompanionAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       backgroundColor: color,
       elevation: elevation,
+      bottom: bottom,
     );
   }
 

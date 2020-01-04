@@ -8,7 +8,6 @@ import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/models/items/skin.dart';
 import 'package:guildwars2_companion/repositories/bank.dart';
 import 'package:guildwars2_companion/repositories/item.dart';
-import 'package:guildwars2_companion/utils/urls.dart';
 import './bloc.dart';
 
 class BankBloc extends Bloc<BankEvent, BankState> {
@@ -75,8 +74,8 @@ class BankBloc extends Bloc<BankEvent, BankState> {
       itemIds = itemIds.toSet().toList();
       skinIds = skinIds.toSet().toList();      
 
-      List<Item> items = await itemRepository.getItems(Urls.divideIdLists(itemIds));
-      List<Skin> skins = await itemRepository.getSkins(Urls.divideIdLists(skinIds));
+      List<Item> items = await itemRepository.getItems(itemIds);
+      List<Skin> skins = await itemRepository.getSkins(skinIds);
 
       inventory.forEach((item) {
         _fillInventoryItemInfo(item, items, skins);

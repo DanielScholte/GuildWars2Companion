@@ -11,7 +11,6 @@ import 'package:guildwars2_companion/models/items/skin.dart';
 import 'package:guildwars2_companion/repositories/character.dart';
 import 'package:guildwars2_companion/repositories/item.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
-import 'package:guildwars2_companion/utils/urls.dart';
 import './bloc.dart';
 
 class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
@@ -49,8 +48,8 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
 
       yield LoadedCharactersState(characters, itemsLoading: true);
 
-      List<String> itemIds = Urls.divideIdLists(_getItemIds(characters));
-      List<String> skinIds = Urls.divideIdLists(_getSkinIds(characters));
+      List<int> itemIds = _getItemIds(characters);
+      List<int> skinIds = _getSkinIds(characters);
 
       List<Item> items = await itemRepository.getItems(itemIds);
       List<Skin> skins = await itemRepository.getSkins(skinIds);

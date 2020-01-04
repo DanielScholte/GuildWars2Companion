@@ -7,10 +7,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/blocs/bank/bloc.dart';
 import 'package:guildwars2_companion/blocs/character/bloc.dart';
+import 'package:guildwars2_companion/blocs/trading_post/bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/pages/tabs/bank.dart';
 import 'package:guildwars2_companion/pages/tabs/characters.dart';
 import 'package:guildwars2_companion/pages/tabs/home.dart';
+import 'package:guildwars2_companion/pages/tabs/trading_post.dart';
 import 'package:guildwars2_companion/pages/token.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
 
@@ -43,30 +45,39 @@ class _TabPageState extends State<TabPage> {
       systemNavigationBarIconBrightness: Brightness.dark
     ));
 
-    return BlocListener<AccountBloc, AccountState>(
-      condition: (previous, current) => current is UnauthenticatedState || current is AuthenticatedState,
-      listener: (BuildContext context, state) async {
-        if (state is AuthenticatedState) {
-          await _handleAuth(context, state);
-          return;
+    return WillPopScope(
+      onWillPop: () async {
+        if (_currentIndex != 0) {
+          setState(() => _currentIndex = 0);
+          return false;
         }
-
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (BuildContext context) => TokenPage()));
+        return true;
       },
-      child: BlocBuilder<AccountBloc, AccountState>(
-        condition: (previous, current) => current is LoadingAccountState || current is AuthenticatedState,
-        builder: (BuildContext context, state) {
-          if (state is LoadingAccountState) {
-            return Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
+      child: BlocListener<AccountBloc, AccountState>(
+        condition: (previous, current) => current is UnauthenticatedState || current is AuthenticatedState,
+        listener: (BuildContext context, state) async {
+          if (state is AuthenticatedState) {
+            await _handleAuth(context, state);
+            return;
           }
 
-          return _buildTabPage(context, state);
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (BuildContext context) => TokenPage()));
         },
+        child: BlocBuilder<AccountBloc, AccountState>(
+          condition: (previous, current) => current is LoadingAccountState || current is AuthenticatedState,
+          builder: (BuildContext context, state) {
+            if (state is LoadingAccountState) {
+              return Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+
+            return _buildTabPage(context, state);
+          },
+        ),
       ),
     );
   }
@@ -127,7 +138,8 @@ class _TabPageState extends State<TabPage> {
     }
 
     if (state.tokenInfo.permissions.contains('tradingpost')) {
-      tabs.add(TabEntry(Scaffold(), "Trading Post", FontAwesomeIcons.balanceScaleLeft, 20.0, Colors.green));
+      BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostEvent());
+      tabs.add(TabEntry(TradingPostPage(), "Trading Post", FontAwesomeIcons.balanceScaleLeft, 20.0, Colors.green));
     }
 
     if (state.tokenInfo.permissions.contains('wallet')) {

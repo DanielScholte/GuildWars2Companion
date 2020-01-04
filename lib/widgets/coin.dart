@@ -13,12 +13,13 @@ class CompanionCoin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Currency> _currency = _getCoin(coin);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: 
-        _getCoin(coin)
+        _currency
         .map((c) => Padding(
-          padding: EdgeInsets.only(left: innerPadding),
+          padding: _currency.indexOf(c) > 0 ? EdgeInsets.only(left: innerPadding) : EdgeInsets.zero,
           child: Row(
             children: <Widget>[
               Text(

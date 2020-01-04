@@ -8,6 +8,7 @@ class LoadingCharactersState extends CharacterState {}
 
 class LoadedCharactersState extends CharacterState {
   final List<Character> characters;
+
   final bool itemsLoaded;
   final bool itemsLoading;
 
