@@ -8,6 +8,7 @@ import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
+import 'package:guildwars2_companion/widgets/info_row.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
 
 class ItemPage extends StatelessWidget {
@@ -246,7 +247,7 @@ class ItemPage extends StatelessWidget {
                 ),
               ),
             ),
-            _buildInfoRow(
+            InfoRow(
               header: 'Rarity',
               text: item.rarity
             ),
@@ -273,15 +274,15 @@ class ItemPage extends StatelessWidget {
   Widget _buildArmorDetails() {
     return Column(
       children: <Widget>[
-        _buildInfoRow(
+        InfoRow(
           header: 'Type',
           text: typeToName(item.details.type)
         ),
-        _buildInfoRow(
+        InfoRow(
           header: 'Weight Class',
           text: item.details.weightClass
         ),
-        _buildInfoRow(
+        InfoRow(
           header: 'Defense',
           text: GuildWarsUtil.intToString(item.details.defense)
         ),
@@ -292,7 +293,7 @@ class ItemPage extends StatelessWidget {
   Widget _buildBagDetails() {
     return Column(
       children: <Widget>[
-        _buildInfoRow(
+        InfoRow(
           header: 'Size',
           text: GuildWarsUtil.intToString(item.details.size)
         ),
@@ -303,17 +304,17 @@ class ItemPage extends StatelessWidget {
   Widget _buildConsumableDetails() {
     return Column(
       children: <Widget>[
-        _buildInfoRow(
+        InfoRow(
           header: 'Type',
           text: typeToName(item.details.type)
         ),
         if (item.details.durationMs != null)
-          _buildInfoRow(
+          InfoRow(
             header: 'Duration',
             text: GuildWarsUtil.durationToTextString(Duration(milliseconds: item.details.durationMs)),
           ),
         if (item.details.name != null)
-          _buildInfoRow(
+          InfoRow(
             header: 'Effect Type',
             text: item.details.name
           ),
@@ -324,7 +325,7 @@ class ItemPage extends StatelessWidget {
   Widget _buildTypeOnlyDetails() {
     return Column(
       children: <Widget>[
-        _buildInfoRow(
+        InfoRow(
           header: 'Type',
           text: item.details.type
         ),
@@ -335,7 +336,7 @@ class ItemPage extends StatelessWidget {
   Widget _buildToolDetails() {
     return Column(
       children: <Widget>[
-        _buildInfoRow(
+        InfoRow(
           header: 'Charges',
           text: GuildWarsUtil.intToString(item.details.charges)
         ),
@@ -356,7 +357,7 @@ class ItemPage extends StatelessWidget {
               ),
             ),
           ),
-          _buildInfoRow(
+          InfoRow(
             header: 'Rarity',
             text: item.rarity
           ),
@@ -368,16 +369,16 @@ class ItemPage extends StatelessWidget {
   Widget _buildWeaponDetails() {
     return Column(
       children: <Widget>[
-        _buildInfoRow(
+        InfoRow(
           header: 'Type',
           text: item.details.type
         ),
-        _buildInfoRow(
+        InfoRow(
           header: 'Weapon Strength',
           text: '${GuildWarsUtil.intToString(item.details.minPower)} - ${GuildWarsUtil.intToString(item.details.maxPower)}'
         ),
         if (item.details.defense != null && item.details.defense > 0)
-          _buildInfoRow(
+          InfoRow(
             header: 'Defense',
             text: GuildWarsUtil.intToString(item.details.defense)
           ),
@@ -402,15 +403,15 @@ class ItemPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                _buildInfoRow(
+                InfoRow(
                   header: 'Vendor',
                   widget: CompanionCoin(item.vendorValue)
                 ),
-                _buildInfoRow(
+                InfoRow(
                   header: 'TP Buy',
                   text: '-'
                 ),
-                _buildInfoRow(
+                InfoRow(
                   header: 'TP Sell',
                   text: '-'
                 ),
@@ -432,11 +433,11 @@ class ItemPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                _buildInfoRow(
+                InfoRow(
                   header: 'Vendor',
                   widget: CompanionCoin(item.vendorValue)
                 ),
-                _buildInfoRow(
+                InfoRow(
                   header: 'TP Buy',
                   widget: Container(
                     width: 16.0,
@@ -446,7 +447,7 @@ class ItemPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                _buildInfoRow(
+                InfoRow(
                   header: 'TP Sell',
                   widget: Container(
                     width: 16.0,
@@ -473,15 +474,15 @@ class ItemPage extends StatelessWidget {
                   ),
                 ),
               ),
-              _buildInfoRow(
+              InfoRow(
                 header: 'Vendor',
                 widget: CompanionCoin(item.vendorValue)
               ),
-              _buildInfoRow(
+              InfoRow(
                 header: 'Trading Post Buy',
                 widget: CompanionCoin(snapshot.data.buys.unitPrice)
               ),
-              _buildInfoRow(
+              InfoRow(
                 header: 'Trading Post Sell',
                 widget: CompanionCoin(snapshot.data.sells.unitPrice)
               ),
@@ -489,34 +490,6 @@ class ItemPage extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-
-  Widget _buildInfoRow({@required String header, String text, Widget widget }) {
-    return Container(
-      width: 400.0,
-      margin: EdgeInsets.symmetric(vertical: 2.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(
-            header,
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 16.0
-            ),
-          ),
-          if (widget != null)
-            widget
-          else
-            Text(
-              text,
-              style: TextStyle(
-                fontSize: 16.0
-              ),
-            )
-        ],
-      ),
     );
   }
 

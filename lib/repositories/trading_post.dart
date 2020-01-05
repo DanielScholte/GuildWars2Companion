@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:guildwars2_companion/models/trading_post/delivery.dart';
+import 'package:guildwars2_companion/models/trading_post/listing.dart';
 import 'package:guildwars2_companion/models/trading_post/price.dart';
 import 'package:guildwars2_companion/models/trading_post/transaction.dart';
 import 'package:guildwars2_companion/utils/token.dart';
@@ -55,5 +56,24 @@ class TradingPostRepository {
     }
 
     return [];
+  }
+
+  Future<List<TradingPostListing>> getListings(List<int> itemIds) async {
+    List<String> itemIdsList = Urls.divideIdLists(itemIds);
+    List<TradingPostListing> items = [];
+    for (var itemIds in itemIdsList) {
+      final response = await http.get(
+        Urls.tradingPostListingsUrl + itemIds,
+        headers: {
+          'Authorization': 'Bearer ${await TokenUtil.getToken()}',
+        }
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 206) {
+        List reponseItems = json.decode(response.body);
+        items.addAll(reponseItems.map((a) => TradingPostListing.fromJson(a)).toList());
+      }
+    }
+    return items;
   }
 }

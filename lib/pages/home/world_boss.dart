@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/models/other/world_boss.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
+import 'package:guildwars2_companion/widgets/info_row.dart';
 import 'package:intl/intl.dart';
 
 class WorldBossPage extends StatelessWidget {
@@ -112,15 +113,15 @@ class WorldBossPage extends StatelessWidget {
               ),
             ),
           ),
-          _buildInfoRow(
+          InfoRow(
             header: 'Level',
             text: worldBoss.level.toString()
           ),
-          _buildInfoRow(
+          InfoRow(
             header: 'Map',
             text: worldBoss.location
           ),
-          _buildInfoRow(
+          InfoRow(
             header: 'Waypoint',
             text: worldBoss.waypoint
           ),
@@ -183,33 +184,5 @@ class WorldBossPage extends StatelessWidget {
     dateTimes.sort((a, b) => a.hour.compareTo(b.hour));
 
     return dateTimes;
-  }
-
-  Widget _buildInfoRow({@required String header, String text, Widget widget }) {
-    return Container(
-      width: 400.0,
-      margin: EdgeInsets.symmetric(vertical: 2.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(
-            header,
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 16.0
-            ),
-          ),
-          if (widget != null)
-            widget
-          else
-            Text(
-              text,
-              style: TextStyle(
-                fontSize: 16.0
-              ),
-            )
-        ],
-      ),
-    );
   }
 }

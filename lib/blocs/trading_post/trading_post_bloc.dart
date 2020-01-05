@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/models/trading_post/delivery.dart';
+import 'package:guildwars2_companion/models/trading_post/listing.dart';
 import 'package:guildwars2_companion/models/trading_post/transaction.dart';
 import 'package:guildwars2_companion/repositories/item.dart';
 import 'package:guildwars2_companion/repositories/trading_post.dart';
@@ -54,6 +55,37 @@ class TradingPostBloc extends Bloc<TradingPostEvent, TradingPostState> {
         bought: bought,
         sold: sold,
         tradingPostDelivery: tradingPostDelivery
+      );
+    } else if (event is LoadTradingPostListingsEvent) {
+      yield LoadedTradingPostState(
+        buying: event.buying,
+        selling: event.selling,
+        bought: event.bought,
+        sold: event.sold,
+        tradingPostDelivery: event.tradingPostDelivery,
+        listingsLoading: true
+      ); 
+
+      List<int> itemIds = [];
+      event.buying.forEach((t) => itemIds.add(t.itemId));
+      event.selling.forEach((t) => itemIds.add(t.itemId));
+      event.bought.forEach((t) => itemIds.add(t.itemId));
+      event.sold.forEach((t) => itemIds.add(t.itemId));
+
+      List<TradingPostListing> listings = await tradingPostRepository.getListings(itemIds.toSet().toList());
+
+      event.buying.forEach((t) => t.listing = listings.firstWhere((i) => i.id == t.itemId, orElse: () => null));
+      event.selling.forEach((t) => t.listing = listings.firstWhere((i) => i.id == t.itemId, orElse: () => null));
+      event.bought.forEach((t) => t.listing = listings.firstWhere((i) => i.id == t.itemId, orElse: () => null));
+      event.sold.forEach((t) => t.listing = listings.firstWhere((i) => i.id == t.itemId, orElse: () => null));
+
+      yield LoadedTradingPostState(
+        buying: event.buying,
+        selling: event.selling,
+        bought: event.bought,
+        sold: event.sold,
+        tradingPostDelivery: event.tradingPostDelivery,
+        listingsLoaded: true
       );
     }
   }

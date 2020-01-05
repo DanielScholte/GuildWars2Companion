@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/trading_post/bloc.dart';
 import 'package:guildwars2_companion/models/trading_post/delivery.dart';
 import 'package:guildwars2_companion/models/trading_post/transaction.dart';
+import 'package:guildwars2_companion/pages/trading_post/trading_post_item.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
@@ -107,7 +108,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
                                 state.bought,
                                 state.sold
                               ]
-                              .map((t) => _buildTransactionTab(t))
+                              .map((t) => _buildTransactionTab(t, state))
                               .toList(),
                             ),
                           ),
@@ -286,7 +287,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
     );
   }
 
-  Widget _buildTransactionTab(List<TradingPostTransaction> transactions) {
+  Widget _buildTransactionTab(List<TradingPostTransaction> transactions, LoadedTradingPostState state) {
     if (transactions.where((t) => t.itemInfo != null).isEmpty) {
       return Center(
         child: Text(
@@ -347,7 +348,21 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
           title: t.itemInfo.name,
           color: Colors.white,
           foregroundColor: Colors.black,
-          onTap: () {},
+          onTap: () {
+            if (!state.listingsLoaded && !state.listingsLoading) {
+              BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostListingsEvent(
+                buying: state.buying,
+                selling: state.selling,
+                bought: state.bought,
+                sold: state.sold,
+                tradingPostDelivery: state.tradingPostDelivery,
+              ));
+            }
+
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => TradingPostItemPage(item: t.itemInfo,),
+            ));
+          },
         ))
         .toList(),
     );
