@@ -14,9 +14,11 @@ import 'package:guildwars2_companion/widgets/info_row.dart';
 class TradingPostItemPage extends StatelessWidget {
 
   final Item item;
+  final int orderValue;
 
   TradingPostItemPage({
-    this.item
+    @required this.item,
+    this.orderValue,
   });
 
   @override
@@ -145,7 +147,8 @@ class TradingPostItemPage extends StatelessWidget {
     }
 
     return ListView(
-      children: offers.map((o) => Padding(
+      children: offers.map((o) => Container(
+        color: o.unitPrice == orderValue ? Colors.red[100] : Colors.transparent,
         padding: EdgeInsets.symmetric(horizontal: 8.0),
         child: InfoRow(
           header: '${GuildWarsUtil.intToString(o.quantity)} $type',

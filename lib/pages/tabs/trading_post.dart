@@ -360,7 +360,10 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
             }
 
             Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => TradingPostItemPage(item: t.itemInfo,),
+              builder: (context) => TradingPostItemPage(
+                item: t.itemInfo,
+                orderValue: t.purchased == null ? t.price : null,
+              ),
             ));
           },
         ))
