@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/trading_post/bloc.dart';
 import 'package:guildwars2_companion/models/items/item.dart';
-import 'package:guildwars2_companion/models/trading_post/listing.dart';
 import 'package:guildwars2_companion/models/trading_post/listing_offer.dart';
 import 'package:guildwars2_companion/models/trading_post/transaction.dart';
 import 'package:guildwars2_companion/pages/general/item.dart';
