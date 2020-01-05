@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/models/other/world_boss.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
+import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_row.dart';
 import 'package:intl/intl.dart';
 
@@ -28,6 +29,7 @@ class WorldBossPage extends StatelessWidget {
             child: Theme(
               data: Theme.of(context).copyWith(accentColor: worldBoss.color),
               child: ListView(
+                padding: EdgeInsets.only(top: 8.0),
                 children: <Widget>[
                   _buildStats(),
                   _buildTimes()
@@ -41,61 +43,47 @@ class WorldBossPage extends StatelessWidget {
   }
 
   Widget _buildHeader() {
-    return Container(
-      decoration: BoxDecoration(
-        color: worldBoss.color,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black38,
-            blurRadius: 8.0,
-          ),
-        ],
-        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12.0), bottomRight: Radius.circular(12.0))
-      ),
-      margin: EdgeInsets.only(bottom: 8.0),
-      width: double.infinity,
-      child: SafeArea(
-        minimum: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: 80.0,
-              height: 80.0,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 4.0,
-                  ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(6.0),
-                child: Image.asset('assets/world_bosses/${worldBoss.id}.jpg'),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(4.0),
-              child: Text(
-                worldBoss.name,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.0,
+    return CompanionHeader(
+      color: worldBoss.color,
+      child: Column(
+        children: <Widget>[
+          Container(
+            width: 80.0,
+            height: 80.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 4.0,
                 ),
-                textAlign: TextAlign.center,
-              ),
+              ],
             ),
-            Text(
-              worldBoss.location,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(6.0),
+              child: Image.asset('assets/world_bosses/${worldBoss.id}.jpg'),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(4.0),
+            child: Text(
+              worldBoss.name,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 16.0
+                fontSize: 22.0,
               ),
               textAlign: TextAlign.center,
             ),
-          ],
-        ),
+          ),
+          Text(
+            worldBoss.location,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16.0
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }

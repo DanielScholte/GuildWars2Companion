@@ -8,6 +8,7 @@ import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
+import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_row.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
 
@@ -38,6 +39,7 @@ class ItemPage extends StatelessWidget {
           _buildHeader(),
           Expanded(
             child: ListView(
+              padding: EdgeInsets.only(top: 8.0),
               children: <Widget>[
                 if (skin != null)
                   _buildTransmutedItemInfo(),
@@ -61,50 +63,35 @@ class ItemPage extends StatelessWidget {
   }
 
   Widget _buildHeader() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.red,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black38,
-            blurRadius: 8.0,
+    return CompanionHeader(
+      child: Column(
+        children: <Widget>[
+          CompanionItemBox(
+            item: item,
+            skin: skin,
+            size: 60.0,
+            enablePopup: false,
           ),
-        ],
-        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12.0), bottomRight: Radius.circular(12.0))
-      ),
-      margin: EdgeInsets.only(bottom: 8.0),
-      width: double.infinity,
-      child: SafeArea(
-        minimum: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-        child: Column(
-          children: <Widget>[
-            CompanionItemBox(
-              item: item,
-              skin: skin,
-              size: 60.0,
-              enablePopup: false,
-            ),
-            Padding(
-              padding: EdgeInsets.all(4.0),
-              child: Text(
-                skin != null ? skin.name : item.name,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.0,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Text(
-              item.type != null ? typeToName(item.type) : '',
+          Padding(
+            padding: EdgeInsets.all(4.0),
+            child: Text(
+              skin != null ? skin.name : item.name,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 16.0
+                fontSize: 22.0,
               ),
               textAlign: TextAlign.center,
             ),
-          ],
-        ),
+          ),
+          Text(
+            item.type != null ? typeToName(item.type) : '',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16.0
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }

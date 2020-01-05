@@ -11,6 +11,7 @@ import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
+import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_box.dart';
 
 class CharacterPage extends StatelessWidget {
@@ -57,51 +58,37 @@ class CharacterPage extends StatelessWidget {
 
             return Column(
               children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    color: character.professionColor,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black38,
-                        blurRadius: 8.0,
-                      ),
-                    ],
-                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12.0), bottomRight: Radius.circular(12.0))
-                  ),
-                  margin: EdgeInsets.only(bottom: 8.0),
-                  width: double.infinity,
-                  child: SafeArea(
-                    minimum: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          width: double.infinity,
-                          child: Wrap(
-                            alignment: WrapAlignment.spaceEvenly,
-                            runSpacing: 16.0,
-                            children: <Widget>[
-                              CompanionInfoBox(
-                                header: 'Level',
-                                text: character.level.toString(),
-                                loading: false,
-                              ),
-                              CompanionInfoBox(
-                                header: 'Playtime',
-                                text: GuildWarsUtil.calculatePlayTime(character.age).toString() + 'h',
-                                loading: false,
-                              ),
-                              CompanionInfoBox(
-                                header: 'Deaths',
-                                text: character.deaths.toString(),
-                                loading: false,
-                              ),
-                            ],
-                          ),
+                CompanionHeader(
+                  color: _character.professionColor,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        width: double.infinity,
+                        child: Wrap(
+                          alignment: WrapAlignment.spaceEvenly,
+                          runSpacing: 16.0,
+                          children: <Widget>[
+                            CompanionInfoBox(
+                              header: 'Level',
+                              text: character.level.toString(),
+                              loading: false,
+                            ),
+                            CompanionInfoBox(
+                              header: 'Playtime',
+                              text: GuildWarsUtil.calculatePlayTime(character.age).toString() + 'h',
+                              loading: false,
+                            ),
+                            CompanionInfoBox(
+                              header: 'Deaths',
+                              text: character.deaths.toString(),
+                              loading: false,
+                            ),
+                          ],
                         ),
-                        if (character.crafting != null && character.crafting.isNotEmpty)
-                          _buildCrafting(character.crafting)
-                      ],
-                    ),
+                      ),
+                      if (character.crafting != null && character.crafting.isNotEmpty)
+                        _buildCrafting(character.crafting)
+                    ],
                   ),
                 ),
                 _buildButtons(context, state)
@@ -175,6 +162,7 @@ class CharacterPage extends StatelessWidget {
               child: Theme(
                 data: Theme.of(context).copyWith(accentColor: _character.professionColor),
                 child: ListView(
+                  padding: EdgeInsets.only(top: 8.0),
                   children: <Widget>[
                     if (state.tokenInfo.permissions.contains('inventories')
                       && state.tokenInfo.permissions.contains('builds'))

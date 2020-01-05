@@ -8,6 +8,7 @@ import 'package:guildwars2_companion/pages/home/wallet_page.dart';
 import 'package:guildwars2_companion/pages/home/world_bosses.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
+import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_box.dart';
 
 class HomePage extends StatelessWidget {
@@ -59,20 +60,7 @@ class HomePage extends StatelessWidget {
             ),
             body: Column(
               children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black38,
-                        blurRadius: 8.0,
-                      ),
-                    ],
-                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12.0), bottomRight: Radius.circular(12.0))
-                  ),
-                  padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-                  margin: EdgeInsets.only(bottom: 8.0),
-                  width: double.infinity,
+                CompanionHeader(
                   child: Column(
                     children: <Widget>[
                       Container(
@@ -105,6 +93,7 @@ class HomePage extends StatelessWidget {
                   context: context,
                   child: Expanded(
                     child: ListView(
+                      padding: EdgeInsets.only(top: 8.0),
                       children: <Widget>[
                         if (state.tokenInfo.permissions.contains('wallet'))
                           _buildWallet(context),
