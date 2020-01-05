@@ -16,18 +16,18 @@ class WorldBossPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CompanionAppBar(
-        title: '',
-        color: worldBoss.color,
-        foregroundColor: Colors.white,
-      ),
-      body: Column(
-        children: <Widget>[
-          _buildHeader(),
-          Expanded(
-            child: Theme(
-              data: Theme.of(context).copyWith(accentColor: worldBoss.color),
+    return Theme(
+      data: Theme.of(context).copyWith(accentColor: worldBoss.color),
+      child: Scaffold(
+        appBar: CompanionAppBar(
+          title: '',
+          color: worldBoss.color,
+          foregroundColor: Colors.white,
+        ),
+        body: Column(
+          children: <Widget>[
+            _buildHeader(),
+            Expanded(
               child: ListView(
                 padding: EdgeInsets.only(top: 8.0),
                 children: <Widget>[
@@ -36,8 +36,8 @@ class WorldBossPage extends StatelessWidget {
                 ],
               ),
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }

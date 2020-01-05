@@ -10,33 +10,36 @@ import 'package:guildwars2_companion/widgets/coin.dart';
 class WalletPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CompanionAppBar(
-        title: 'Wallet',
-        color: Colors.orange,
-        foregroundColor: Colors.white,
-        elevation: 4.0,
-      ),
-      body: BlocBuilder<WalletBloc, WalletState>(
-        builder: (context, state) {
-          if (state is LoadedWalletState) {
-            return RefreshIndicator(
-              backgroundColor: Colors.orange,
-              color: Colors.white,
-              onRefresh: () async {
-                BlocProvider.of<WalletBloc>(context).add(LoadWalletEvent());
-                await Future.delayed(Duration(milliseconds: 200), () {});
-              },
-              child: ListView(
-                children: state.currencies.map((c) => _buildCurrencyRow(context, c)).toList(),
-              ),
-            );
-          }
+    return Theme(
+      data: Theme.of(context).copyWith(accentColor: Colors.orange),
+      child: Scaffold(
+        appBar: CompanionAppBar(
+          title: 'Wallet',
+          color: Colors.orange,
+          foregroundColor: Colors.white,
+          elevation: 4.0,
+        ),
+        body: BlocBuilder<WalletBloc, WalletState>(
+          builder: (context, state) {
+            if (state is LoadedWalletState) {
+              return RefreshIndicator(
+                backgroundColor: Colors.orange,
+                color: Colors.white,
+                onRefresh: () async {
+                  BlocProvider.of<WalletBloc>(context).add(LoadWalletEvent());
+                  await Future.delayed(Duration(milliseconds: 200), () {});
+                },
+                child: ListView(
+                  children: state.currencies.map((c) => _buildCurrencyRow(context, c)).toList(),
+                ),
+              );
+            }
 
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        },
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        ),
       ),
     );
   }
@@ -89,11 +92,8 @@ class WalletPage extends StatelessWidget {
             margin: EdgeInsets.only(left: 4.0),
             child: CachedNetworkImage(
               imageUrl: currency.icon,
-              placeholder: (context, url) => Theme(
-                data: Theme.of(context).copyWith(accentColor: Colors.orange),
-                child: CircularProgressIndicator(
-                  strokeWidth: 2.0,
-                ),
+              placeholder: (context, url) => CircularProgressIndicator(
+                strokeWidth: 2.0,
               ),
               errorWidget: (context, url, error) => Icon(Icons.error),
               fit: BoxFit.cover,

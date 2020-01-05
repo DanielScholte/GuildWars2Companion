@@ -11,68 +11,71 @@ import 'package:guildwars2_companion/widgets/full_button.dart';
 class BankPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CompanionAppBar(
-        title: 'Bank',
-        color: Colors.indigo,
-        foregroundColor: Colors.white,
-        elevation: 4.0,
-      ),
-      body: BlocBuilder<BankBloc, BankState>(
-        builder: (context, state) {
-          if (state is LoadedBankState) {
-            return ListView(
-              children: <Widget>[
-                CompanionFullButton(
-                  color: Colors.blueGrey,
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => GenericBankPage(BankType.bank),
-                    ));
-                  },
-                  title: 'Bank',
-                  leading: Icon(
-                    FontAwesomeIcons.archive,
-                    size: 42.0,
-                    color: Colors.white,
+    return Theme(
+      data: Theme.of(context).copyWith(accentColor: Colors.indigo),
+      child: Scaffold(
+        appBar: CompanionAppBar(
+          title: 'Bank',
+          color: Colors.indigo,
+          foregroundColor: Colors.white,
+          elevation: 4.0,
+        ),
+        body: BlocBuilder<BankBloc, BankState>(
+          builder: (context, state) {
+            if (state is LoadedBankState) {
+              return ListView(
+                children: <Widget>[
+                  CompanionFullButton(
+                    color: Colors.blueGrey,
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => GenericBankPage(BankType.bank),
+                      ));
+                    },
+                    title: 'Bank',
+                    leading: Icon(
+                      FontAwesomeIcons.archive,
+                      size: 42.0,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                CompanionFullButton(
-                  color: Colors.deepOrange,
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => MaterialPage(),
-                    ));
-                  },
-                  title: 'Materials',
-                  leading: Icon(
-                    FontAwesomeIcons.th,
-                    size: 42.0,
-                    color: Colors.white,
+                  CompanionFullButton(
+                    color: Colors.deepOrange,
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => MaterialPage(),
+                      ));
+                    },
+                    title: 'Materials',
+                    leading: Icon(
+                      FontAwesomeIcons.th,
+                      size: 42.0,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                CompanionFullButton(
-                  color: Colors.blue,
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => GenericBankPage(BankType.inventory),
-                    ));
-                  },
-                  title: 'Shared inventory',
-                  leading: Icon(
-                    GuildWarsIcons.inventory,
-                    size: 48.0,
-                    color: Colors.white,
+                  CompanionFullButton(
+                    color: Colors.blue,
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => GenericBankPage(BankType.inventory),
+                      ));
+                    },
+                    title: 'Shared inventory',
+                    leading: Icon(
+                      GuildWarsIcons.inventory,
+                      size: 48.0,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-              ],
-            );
-          }
+                ],
+              );
+            }
 
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        },
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        ),
       ),
     );
   }

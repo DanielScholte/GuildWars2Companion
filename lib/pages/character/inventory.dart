@@ -16,34 +16,34 @@ class InventoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CompanionAppBar(
-        title: 'Inventory',
-        color: Colors.indigo,
-        foregroundColor: Colors.white,
-        elevation: 4.0,
-      ),
-      body: BlocBuilder<CharacterBloc, CharacterState>(
-        builder: (context, state) {
-          if (state is LoadedCharactersState && state.itemsLoaded) {
-            Character character = state.characters.firstWhere((c) => c.name == _character.name);
+    return Theme(
+      data: Theme.of(context).copyWith(accentColor: Colors.indigo),
+      child: Scaffold(
+        appBar: CompanionAppBar(
+          title: 'Inventory',
+          color: Colors.indigo,
+          foregroundColor: Colors.white,
+          elevation: 4.0,
+        ),
+        body: BlocBuilder<CharacterBloc, CharacterState>(
+          builder: (context, state) {
+            if (state is LoadedCharactersState && state.itemsLoaded) {
+              Character character = state.characters.firstWhere((c) => c.name == _character.name);
 
-            if (character == null) {
-              return Container();
+              if (character == null) {
+                return Container();
+              }
+
+              return ListView(
+                children: character.bags.map((b) => _buildBag(b)).toList(),
+              );
             }
 
-            return Theme(
-              data: Theme.of(context).copyWith(accentColor: Colors.indigo),
-              child: ListView(
-                children: character.bags.map((b) => _buildBag(b)).toList(),
-              )
+            return Center(
+              child: CircularProgressIndicator(),
             );
-          }
-
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        },
+          },
+        ),
       ),
     );
   }

@@ -13,24 +13,24 @@ class GenericBankPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CompanionAppBar(
-        title: bankType == BankType.bank ? 'Bank' : 'Shared inventory',
-        color: bankType == BankType.bank ? Colors.blueGrey : Colors.blue,
-        foregroundColor: Colors.white,
-        elevation: 4.0,
+    return Theme(
+      data: Theme.of(context).copyWith(
+        accentColor: bankType == BankType.bank ? Colors.blueGrey : Colors.blue
       ),
-      body: BlocBuilder<BankBloc, BankState>(
-        builder: (context, state) {
-          if (state is LoadedBankState) {
-            List<InventoryItem> inventory = bankType == BankType.bank 
-              ? state.bank : state.inventory;
+      child: Scaffold(
+        appBar: CompanionAppBar(
+          title: bankType == BankType.bank ? 'Bank' : 'Shared inventory',
+          color: bankType == BankType.bank ? Colors.blueGrey : Colors.blue,
+          foregroundColor: Colors.white,
+          elevation: 4.0,
+        ),
+        body: BlocBuilder<BankBloc, BankState>(
+          builder: (context, state) {
+            if (state is LoadedBankState) {
+              List<InventoryItem> inventory = bankType == BankType.bank 
+                ? state.bank : state.inventory;
 
-            return Theme(
-              data: Theme.of(context).copyWith(
-                accentColor: bankType == BankType.bank ? Colors.indigo : Colors.blue
-              ),
-              child: ListView(
+              return ListView(
                 children: <Widget>[
                   Padding(
                     padding: EdgeInsets.all(8.0),
@@ -52,14 +52,14 @@ class GenericBankPage extends StatelessWidget {
                     ),
                   ),
                 ],
-              ),
-            );
-          }
+              );
+            }
 
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        },
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        ),
       ),
     );
   }

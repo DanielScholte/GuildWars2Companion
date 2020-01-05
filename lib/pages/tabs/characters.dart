@@ -11,25 +11,28 @@ import 'package:guildwars2_companion/widgets/full_button.dart';
 class CharactersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CompanionAppBar(
-        title: 'Characters',
-        color: Colors.blue,
-        foregroundColor: Colors.white,
-        elevation: 4.0,
-      ),
-      body: BlocBuilder<CharacterBloc, CharacterState>(
-        builder: (context, state) {
-          if (state is LoadedCharactersState) {
-            return ListView(
-              children: state.characters.map((c) => _buildCharacterRow(context, c)).toList(),
-            );
-          }
+    return Theme(
+      data: Theme.of(context).copyWith(accentColor: Colors.blue),
+      child: Scaffold(
+        appBar: CompanionAppBar(
+          title: 'Characters',
+          color: Colors.blue,
+          foregroundColor: Colors.white,
+          elevation: 4.0,
+        ),
+        body: BlocBuilder<CharacterBloc, CharacterState>(
+          builder: (context, state) {
+            if (state is LoadedCharactersState) {
+              return ListView(
+                children: state.characters.map((c) => _buildCharacterRow(context, c)).toList(),
+              );
+            }
 
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        },
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        ),
       ),
     );
   }

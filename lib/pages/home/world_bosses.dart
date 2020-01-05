@@ -48,35 +48,38 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CompanionAppBar(
-        title: 'World Bosses',
-        color: Colors.deepPurple,
-        foregroundColor: Colors.white,
-        elevation: 4.0,
-      ),
-      body: BlocBuilder<WorldBossesBloc, WorldBossesState>(
-        builder: (context, state) {
-          if (state is LoadedWorldbossesState) {
-            DateTime now = DateTime.now();
+    return Theme(
+      data: Theme.of(context).copyWith(accentColor: Colors.deepPurple),
+      child: Scaffold(
+        appBar: CompanionAppBar(
+          title: 'World Bosses',
+          color: Colors.deepPurple,
+          foregroundColor: Colors.white,
+          elevation: 4.0,
+        ),
+        body: BlocBuilder<WorldBossesBloc, WorldBossesState>(
+          builder: (context, state) {
+            if (state is LoadedWorldbossesState) {
+              DateTime now = DateTime.now();
 
-            if (state.worldBosses.any((w) => w.refreshTime.toLocal().isBefore(now))
-              && _refreshTimeout == 0) {
-              _refreshTimeout = 30;
-              BlocProvider.of<WorldBossesBloc>(context).add(LoadWorldbossesEvent(false));
+              if (state.worldBosses.any((w) => w.refreshTime.toLocal().isBefore(now))
+                && _refreshTimeout == 0) {
+                _refreshTimeout = 30;
+                BlocProvider.of<WorldBossesBloc>(context).add(LoadWorldbossesEvent(false));
+              }
+
+              return ListView(
+                children: state.worldBosses
+                  .map((w) => _buildWorldbossRow(context, w))
+                  .toList(),
+              );
             }
 
-            return ListView(
-              children: state.worldBosses
-                .map((w) => _buildWorldbossRow(context, w))
-                .toList(),
+            return Center(
+              child: CircularProgressIndicator(),
             );
-          }
-
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        },
+          },
+        ),
       ),
     );
   }

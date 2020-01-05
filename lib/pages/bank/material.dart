@@ -8,30 +8,30 @@ import 'package:guildwars2_companion/widgets/item_box.dart';
 class MaterialPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CompanionAppBar(
-        title: 'Materials',
-        color: Colors.deepOrange,
-        foregroundColor: Colors.white,
-        elevation: 4.0,
-      ),
-      body: BlocBuilder<BankBloc, BankState>(
-        builder: (context, state) {
-          if (state is LoadedBankState) {
-            return Theme(
-              data: Theme.of(context).copyWith(accentColor: Colors.deepOrange),
-              child: ListView(
+    return Theme(
+      data: Theme.of(context).copyWith(accentColor: Colors.deepOrange),
+      child: Scaffold(
+        appBar: CompanionAppBar(
+          title: 'Materials',
+          color: Colors.deepOrange,
+          foregroundColor: Colors.white,
+          elevation: 4.0,
+        ),
+        body: BlocBuilder<BankBloc, BankState>(
+          builder: (context, state) {
+            if (state is LoadedBankState) {
+              return ListView(
                 children: state.materialCategories
                   .map((c) => _buildMaterialCategory(c))
                   .toList(),
-              )
-            );
-          }
+              );
+            }
 
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        },
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        ),
       ),
     );
   }
