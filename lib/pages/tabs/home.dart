@@ -6,6 +6,7 @@ import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/pages/home/wallet_page.dart';
 import 'package:guildwars2_companion/pages/home/world_bosses.dart';
+import 'package:guildwars2_companion/pages/info.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
@@ -47,7 +48,9 @@ class HomePage extends StatelessWidget {
                     FontAwesomeIcons.infoCircle,
                     size: 20.0,
                   ),
-                  onPressed: () {},
+                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => InfoPage()
+                  )),
                 ),
                 IconButton(
                   icon: Icon(
