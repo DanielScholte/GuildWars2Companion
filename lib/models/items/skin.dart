@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Skin {
   String name;
   String type;
@@ -15,6 +17,14 @@ class Skin {
     icon = json['icon'];
   }
 
+  Skin.fromDb(Map<String, dynamic> item) {
+    id =  item['id'];
+    name = item['name'];
+    type = item['type'];
+    rarity = item['rarity'];
+    icon = item['icon'];
+  }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['name'] = this.name;
@@ -22,6 +32,23 @@ class Skin {
     data['rarity'] = this.rarity;
     data['id'] = this.id;
     data['icon'] = this.icon;
+    return data;
+  }
+
+  Map<String, dynamic> toDb() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    data['type'] = this.type;
+    data['rarity'] = this.rarity;
+    data['id'] = this.id;
+    data['icon'] = this.icon;
+    data['expiration_date'] = DateFormat('yyyyMMdd')
+      .format(
+        DateTime
+        .now()
+        .add(Duration(days: 31))
+        .toUtc()
+      );
     return data;
   }
 }

@@ -20,13 +20,26 @@ import 'package:guildwars2_companion/utils/token.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(GuildWars2Companion(await TokenUtil.tokenPresent()));
+
+  ItemRepository itemRepository = ItemRepository();
+  await itemRepository.loadCachedData();
+
+  bool tokenPresent = await TokenUtil.tokenPresent();
+
+  runApp(GuildWars2Companion(
+    itemRepository: itemRepository,
+    isAuthenticated: tokenPresent,
+  ));
 }
 
 class GuildWars2Companion extends StatelessWidget {
+  final ItemRepository itemRepository;
   final bool isAuthenticated;
 
-  GuildWars2Companion(this.isAuthenticated);
+  GuildWars2Companion({
+    @required this.isAuthenticated,
+    @required this.itemRepository
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +76,7 @@ class GuildWars2Companion extends StatelessWidget {
           create: (BuildContext context) => CharacterRepository(),
         ),
         RepositoryProvider<ItemRepository>(
-          create: (BuildContext context) => ItemRepository(),
+          create: (BuildContext context) => itemRepository,
         ),
         RepositoryProvider<TradingPostRepository>(
           create: (BuildContext context) => TradingPostRepository(),
