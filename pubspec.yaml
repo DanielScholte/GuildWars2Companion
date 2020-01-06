@@ -67,6 +67,7 @@ flutter:
    - assets/coin/
    - assets/crafting/
    - assets/world_bosses/
+   - assets/dungeons/
   #  - images/a_dot_ham.jpeg
 
   fonts:

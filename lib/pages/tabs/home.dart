@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
+import 'package:guildwars2_companion/blocs/dungeons/bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
+import 'package:guildwars2_companion/pages/home/dungeons.dart';
 import 'package:guildwars2_companion/pages/home/wallet_page.dart';
 import 'package:guildwars2_companion/pages/home/world_bosses.dart';
 import 'package:guildwars2_companion/pages/info.dart';
@@ -101,7 +103,8 @@ class HomePage extends StatelessWidget {
                         if (state.tokenInfo.permissions.contains('wallet'))
                           _buildWallet(context),
                         _buildWorldBosses(context),
-                        _buildRaids()
+                        _buildRaids(),
+                        _buildDungeons(context)
                       ],
                     ),
                   ),
@@ -183,7 +186,15 @@ class HomePage extends StatelessWidget {
                           fontWeight: FontWeight.w500
                         ),
                       ),
-                    if (c.name == 'Karma' && c.value >= 1000000)
+                    if (c.name == 'Karma' && c.value >= 1000000 && c.value < 10000000)
+                      Text(
+                        (c.value / 1000000).toStringAsFixed(1) + 'm',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500
+                        ),
+                      ),
+                    if (c.name == 'Karma' && c.value >= 10000000)
                       Text(
                         (c.value ~/ 1000000).toString() + 'm',
                         style: TextStyle(
@@ -224,6 +235,20 @@ class HomePage extends StatelessWidget {
         builder: (context) => WorldBossesPage()
       )),
       leading: Image.asset('assets/button_headers/world_bosses.jpg'),
+    );
+  }
+
+  Widget _buildDungeons(BuildContext context) {
+    return CompanionFullButton(
+      color: Colors.deepOrange,
+      title: 'Dungeons',
+      onTap: () {
+        BlocProvider.of<DungeonBloc>(context).add(LoadDungeonsEvent());
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => DungeonsPage()
+        ));
+      },
+      leading: Image.asset('assets/button_headers/dungeons.jpg'),
     );
   }
 

@@ -6,9 +6,11 @@ class CompanionCoin extends StatelessWidget {
 
   final int coin;
   final double innerPadding;
+  final Color color;
 
   CompanionCoin(this.coin, {
-    this.innerPadding = 4.0
+    this.innerPadding = 4.0,
+    this.color = Colors.black,
   });
 
   @override
@@ -26,6 +28,7 @@ class CompanionCoin extends StatelessWidget {
                 GuildWarsUtil.intToString(c.value),
                 style: TextStyle(
                   fontSize: 16.0,
+                  color: color
                 ),
               ),
               Container(

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/world_bosses/bloc.dart';
 import 'package:guildwars2_companion/models/other/world_boss.dart';
 import 'package:guildwars2_companion/pages/home/world_boss.dart';
@@ -100,9 +101,9 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
               color: Colors.white60,
               alignment: Alignment.center,
               child: Icon(
-                Icons.check,
+                FontAwesomeIcons.check,
                 color: Colors.black87,
-                size: 48.0,
+                size: 38.0,
               ),
             ),
         ],

@@ -15,8 +15,8 @@ class CompanionFullButton extends StatelessWidget {
 
   CompanionFullButton({
     @required this.title,
-    @required this.onTap,
     @required this.color,
+    this.onTap,
     this.height = 80.0,
     this.foregroundColor = Colors.white,
     this.subtitles,
@@ -44,7 +44,7 @@ class CompanionFullButton extends StatelessWidget {
       margin: EdgeInsets.all(8.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12.0),
-        child: Material(
+        child: onTap != null ? Material(
           color: Colors.transparent,
           child: InkWell(
             splashColor: Colors.black12,
@@ -61,6 +61,15 @@ class CompanionFullButton extends StatelessWidget {
               ],
             ),
           ),
+        ) : Row(
+          children: <Widget>[
+            _buildLeading(context),
+            _buildTitle(),
+            if (trailing == null)
+              _buildArrow()
+            else
+              trailing
+          ],
         ),
       ),
     );

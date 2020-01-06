@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/blocs/bank/bloc.dart';
+import 'package:guildwars2_companion/blocs/dungeons/bloc.dart';
 import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/blocs/trading_post/bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
@@ -12,6 +13,7 @@ import 'package:guildwars2_companion/pages/token.dart';
 import 'package:guildwars2_companion/repositories/account.dart';
 import 'package:guildwars2_companion/repositories/bank.dart';
 import 'package:guildwars2_companion/repositories/character.dart';
+import 'package:guildwars2_companion/repositories/dungeons.dart';
 import 'package:guildwars2_companion/repositories/item.dart';
 import 'package:guildwars2_companion/repositories/trading_post.dart';
 import 'package:guildwars2_companion/repositories/wallet.dart';
@@ -75,6 +77,9 @@ class GuildWars2Companion extends StatelessWidget {
         RepositoryProvider<CharacterRepository>(
           create: (BuildContext context) => CharacterRepository(),
         ),
+        RepositoryProvider<DungeonsRepository>(
+          create: (BuildContext context) => DungeonsRepository(),
+        ),
         RepositoryProvider<ItemRepository>(
           create: (BuildContext context) => itemRepository,
         ),
@@ -110,6 +115,11 @@ class GuildWars2Companion extends StatelessWidget {
           create: (BuildContext context) => CharacterBloc(
             characterRepository: RepositoryProvider.of<CharacterRepository>(context),
             itemRepository: RepositoryProvider.of<ItemRepository>(context),
+          ),
+        ),
+        BlocProvider<DungeonBloc>(
+          create: (BuildContext context) => DungeonBloc(
+            dungeonsRepository: RepositoryProvider.of<DungeonsRepository>(context),
           ),
         ),
         BlocProvider<TradingPostBloc>(

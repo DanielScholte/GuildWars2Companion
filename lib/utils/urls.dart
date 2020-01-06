@@ -8,6 +8,7 @@ class Urls {
   static final String walletUrl = '$baseUrl/account/wallet';
 
   static final String completedWorldBossesUrl = '$baseUrl/account/worldbosses';
+  static final String completedDungeonsUrl = '$baseUrl/account/dungeons';
 
   static final String charactersUrl = '$baseUrl/characters?ids=all';
   static final String titlesUrl = '$baseUrl/titles?ids=all';
