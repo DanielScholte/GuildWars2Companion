@@ -58,22 +58,18 @@ class TradingPostRepository {
     return [];
   }
 
-  Future<List<TradingPostListing>> getListings(List<int> itemIds) async {
-    List<String> itemIdsList = Urls.divideIdLists(itemIds);
-    List<TradingPostListing> items = [];
-    for (var itemIds in itemIdsList) {
-      final response = await http.get(
-        Urls.tradingPostListingsUrl + itemIds,
-        headers: {
-          'Authorization': 'Bearer ${await TokenUtil.getToken()}',
-        }
-      );
-
-      if (response.statusCode == 200 || response.statusCode == 206) {
-        List reponseItems = json.decode(response.body);
-        items.addAll(reponseItems.map((a) => TradingPostListing.fromJson(a)).toList());
+  Future<TradingPostListing> getListing(int itemId) async {
+    final response = await http.get(
+      Urls.tradingPostListingsUrl + itemId.toString(),
+      headers: {
+        'Authorization': 'Bearer ${await TokenUtil.getToken()}',
       }
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 206) {
+      return TradingPostListing.fromJson(json.decode(response.body));
     }
-    return items;
+
+    return null;
   }
 }

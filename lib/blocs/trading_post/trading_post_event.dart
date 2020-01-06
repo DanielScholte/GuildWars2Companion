@@ -13,6 +13,7 @@ class LoadTradingPostListingsEvent extends TradingPostEvent {
   final List<TradingPostTransaction> bought;
   final List<TradingPostTransaction> sold;
   final TradingPostDelivery tradingPostDelivery;
+  final int itemId;
 
   LoadTradingPostListingsEvent({
     @required this.buying,
@@ -20,5 +21,6 @@ class LoadTradingPostListingsEvent extends TradingPostEvent {
     @required this.bought,
     @required this.sold,
     @required this.tradingPostDelivery,
+    @required this.itemId,
   });
 }

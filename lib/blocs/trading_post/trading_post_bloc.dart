@@ -64,28 +64,23 @@ class TradingPostBloc extends Bloc<TradingPostEvent, TradingPostState> {
         sold: event.sold,
         tradingPostDelivery: event.tradingPostDelivery,
         listingsLoading: true
-      ); 
+      );
 
-      List<int> itemIds = [];
-      event.buying.forEach((t) => itemIds.add(t.itemId));
-      event.selling.forEach((t) => itemIds.add(t.itemId));
-      event.bought.forEach((t) => itemIds.add(t.itemId));
-      event.sold.forEach((t) => itemIds.add(t.itemId));
+      TradingPostListing listing = await tradingPostRepository.getListing(event.itemId);
 
-      List<TradingPostListing> listings = await tradingPostRepository.getListings(itemIds.toSet().toList());
-
-      event.buying.forEach((t) => t.listing = listings.firstWhere((i) => i.id == t.itemId, orElse: () => null));
-      event.selling.forEach((t) => t.listing = listings.firstWhere((i) => i.id == t.itemId, orElse: () => null));
-      event.bought.forEach((t) => t.listing = listings.firstWhere((i) => i.id == t.itemId, orElse: () => null));
-      event.sold.forEach((t) => t.listing = listings.firstWhere((i) => i.id == t.itemId, orElse: () => null));
+      if (listing != null) {
+        event.buying.where((t) => t.itemId == event.itemId).forEach((t) => t.listing = listing);
+        event.selling.where((t) => t.itemId == event.itemId).forEach((t) => t.listing = listing);
+        event.bought.where((t) => t.itemId == event.itemId).forEach((t) => t.listing = listing);
+        event.sold.where((t) => t.itemId == event.itemId).forEach((t) => t.listing = listing);
+      }
 
       yield LoadedTradingPostState(
         buying: event.buying,
         selling: event.selling,
         bought: event.bought,
         sold: event.sold,
-        tradingPostDelivery: event.tradingPostDelivery,
-        listingsLoaded: true
+        tradingPostDelivery: event.tradingPostDelivery
       );
     }
   }

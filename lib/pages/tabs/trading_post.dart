@@ -349,13 +349,14 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
           color: Colors.white,
           foregroundColor: Colors.black,
           onTap: () {
-            if (!state.listingsLoaded && !state.listingsLoading) {
+            if (!state.listingsLoading) {
               BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostListingsEvent(
                 buying: state.buying,
                 selling: state.selling,
                 bought: state.bought,
                 sold: state.sold,
                 tradingPostDelivery: state.tradingPostDelivery,
+                itemId: t.itemId
               ));
             }
 

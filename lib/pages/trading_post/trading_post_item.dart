@@ -53,10 +53,12 @@ class TradingPostItemPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(
-                  item.name,
-                  style: TextStyle(
-                    color: Colors.white
+                Expanded(
+                  child: Text(
+                    item.name,
+                    style: TextStyle(
+                      color: Colors.white
+                    ),
                   ),
                 )
               ],
@@ -105,7 +107,7 @@ class TradingPostItemPage extends StatelessWidget {
               Expanded(
                 child: BlocBuilder<TradingPostBloc, TradingPostState>(
                   builder: (context, state) {
-                    if (state is LoadedTradingPostState && state.listingsLoaded) {
+                    if (state is LoadedTradingPostState && !state.listingsLoading) {
                       TradingPostTransaction tradingPostTransaction = _getTradingPostTransaction(state);
 
                       if (tradingPostTransaction == null) {
