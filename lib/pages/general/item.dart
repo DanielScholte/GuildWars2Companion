@@ -66,11 +66,14 @@ class ItemPage extends StatelessWidget {
     return CompanionHeader(
       child: Column(
         children: <Widget>[
-          CompanionItemBox(
-            item: item,
-            skin: skin,
-            size: 60.0,
-            enablePopup: false,
+          Padding(
+            padding: EdgeInsets.only(top: 4.0),
+            child: CompanionItemBox(
+              item: item,
+              skin: skin,
+              size: 60.0,
+              enablePopup: false,
+            ),
           ),
           Padding(
             padding: EdgeInsets.all(4.0),

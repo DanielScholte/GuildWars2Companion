@@ -23,6 +23,7 @@ class InfoPage extends StatelessWidget {
                   'assets/logo.png',
                   width: 100.0,
                 ),
+                Container(height: 16.0,),
                 Text(
                   'Guild Wars 2 Companion',
                   style: TextStyle(

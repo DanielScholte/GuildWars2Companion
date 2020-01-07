@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/models/character/character.dart';
@@ -40,7 +41,11 @@ class CharacterPage extends StatelessWidget {
                     data: Theme.of(context).copyWith(accentColor: Colors.white),
                     child: CircularProgressIndicator(),
                   ),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  errorWidget: (context, url, error) => Center(child: Icon(
+                    FontAwesomeIcons.dizzy,
+                    size: 20,
+                    color: Colors.white,
+                  )),
                   fit: BoxFit.contain,
                 ),
                 colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcATop),

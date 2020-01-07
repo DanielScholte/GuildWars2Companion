@@ -47,7 +47,11 @@ class TradingPostItemPage extends StatelessWidget {
                           data: Theme.of(context).copyWith(accentColor: Colors.white),
                           child: CircularProgressIndicator(),
                         ),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        errorWidget: (context, url, error) => Center(child: Icon(
+                          FontAwesomeIcons.dizzy,
+                          size: 20,
+                          color: Colors.white,
+                        )),
                         fit: BoxFit.contain,
                       ),
                     ),

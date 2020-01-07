@@ -311,7 +311,11 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
                 height: 64.0,
                 imageUrl: t.itemInfo.icon,
                 placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) => Icon(Icons.error),
+                errorWidget: (context, url, error) => Center(child: Icon(
+                  FontAwesomeIcons.dizzy,
+                  size: 28,
+                  color: Colors.black,
+                )),
                 fit: BoxFit.fill,
               ),
               if (t.quantity > 1)

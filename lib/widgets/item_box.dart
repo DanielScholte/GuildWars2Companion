@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/models/items/skin.dart';
 import 'package:guildwars2_companion/pages/general/item.dart';
@@ -31,6 +32,10 @@ class CompanionItemBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (item == null) {
+      return _buildError();
+    }
+
     return Container(
       width: this.size,
       height: this.size,
@@ -64,6 +69,33 @@ class CompanionItemBox extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildError() {
+    return Container(
+      width: this.size,
+      height: this.size,
+      margin: includeMargin ? EdgeInsets.all(4.0) : null,
+      decoration: BoxDecoration(
+        color: Colors.grey,
+        borderRadius: BorderRadius.circular(6.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 4.0,
+          ),
+        ],
+        border: Border.all(
+          color: GuildWarsUtil.getRarityColor('Basic'),
+          width: 2.0
+        ),
+      ),
+      child: Icon(
+        FontAwesomeIcons.dizzy,
+        size: this.size / 1.5,
+        color: Colors.white,
+      )
     );
   }
 
@@ -114,7 +146,11 @@ class CompanionItemBox extends StatelessWidget {
           data: Theme.of(context).copyWith(accentColor: Colors.white),
           child: Center(child: CircularProgressIndicator()),
         ),
-        errorWidget: (context, url, error) => Icon(Icons.error),
+        errorWidget: (context, url, error) => Center(child: Icon(
+          FontAwesomeIcons.dizzy,
+          size: this.size / 1.5,
+          color: Colors.white,
+        )),
         fit: BoxFit.cover,
       );
     }
@@ -125,7 +161,11 @@ class CompanionItemBox extends StatelessWidget {
         data: Theme.of(context).copyWith(accentColor: Colors.white),
         child: Center(child: CircularProgressIndicator()),
       ),
-      errorWidget: (context, url, error) => Icon(Icons.error),
+      errorWidget: (context, url, error) => Center(child: Icon(
+        FontAwesomeIcons.dizzy,
+        size: this.size / 1.5,
+        color: Colors.white,
+      )),
       fit: BoxFit.cover,
     );
   }

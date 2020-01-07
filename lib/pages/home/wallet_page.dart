@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/models/wallet/currency.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
@@ -95,7 +96,11 @@ class WalletPage extends StatelessWidget {
               placeholder: (context, url) => CircularProgressIndicator(
                 strokeWidth: 2.0,
               ),
-              errorWidget: (context, url, error) => Icon(Icons.error),
+              errorWidget: (context, url, error) => Center(child: Icon(
+                FontAwesomeIcons.dizzy,
+                size: 14,
+                color: Colors.black,
+              )),
               fit: BoxFit.cover,
             ),
           ),
