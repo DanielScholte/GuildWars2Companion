@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:guildwars2_companion/models/other/dungeon.dart';
-import 'package:guildwars2_companion/repositories/dungeons.dart';
+import 'package:guildwars2_companion/repositories/dungeon.dart';
 import './bloc.dart';
 
 class DungeonBloc extends Bloc<DungeonEvent, DungeonState> {
   @override
   DungeonState get initialState => LoadingDungeonsState();
 
-  final DungeonsRepository dungeonsRepository;
+  final DungeonRepository dungeonsRepository;
 
   DungeonBloc({
     this.dungeonsRepository

@@ -27,6 +27,11 @@ class Urls {
   static final String tradingPostTransactionsUrl = '$baseUrl/commerce/transactions/';
   static final String tradingPostListingsUrl = '$baseUrl/commerce/listings/';
 
+  static final String achievementProgressUrl = '$baseUrl/account/achievements';
+  static final String achievementCategoriesUrl = '$baseUrl/achievements/categories?ids=all';
+  static final String achievementGroupsUrl = '$baseUrl/achievements/groups?ids=all';
+  static final String dailiesUrl = '$baseUrl/achievements/daily';
+
   static List<String> divideIdLists(List<int> ids) {
     List<List<int>> output = [[]];
     ids.forEach((id) {

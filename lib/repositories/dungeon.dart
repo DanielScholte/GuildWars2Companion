@@ -7,7 +7,7 @@ import 'package:guildwars2_companion/utils/urls.dart';
 
 import 'package:http/http.dart' as http;
 
-class DungeonsRepository {
+class DungeonRepository {
   Future<List<String>> getCompletedDungeons() async {
     final response = await http.get(
       Urls.completedDungeonsUrl,
