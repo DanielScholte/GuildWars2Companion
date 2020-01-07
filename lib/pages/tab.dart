@@ -139,7 +139,7 @@ class _TabPageState extends State<TabPage> {
 
     if (state.tokenInfo.permissions.contains('tradingpost')) {
       BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostEvent());
-      tabs.add(TabEntry(TradingPostPage(), "Trading Post", FontAwesomeIcons.balanceScaleLeft, 20.0, Colors.green));
+      tabs.add(TabEntry(TradingPostPage(), "Trading", FontAwesomeIcons.balanceScaleLeft, 20.0, Colors.green));
     }
 
     if (state.tokenInfo.permissions.contains('wallet')) {

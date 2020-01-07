@@ -32,7 +32,7 @@ class CompanionItemBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (item == null) {
+    if (item == null && !displayEmpty) {
       return _buildError();
     }
 

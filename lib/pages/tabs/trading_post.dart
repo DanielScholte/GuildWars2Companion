@@ -62,32 +62,40 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
                       child: Text(
                         'Buying',
                         style: TextStyle(
-                          fontSize: 16.0
+                          fontSize: 14.0
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     Tab(
                       child: Text(
                         'Selling',
                         style: TextStyle(
-                          fontSize: 16.0
+                          fontSize: 14.0
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     Tab(
                       child: Text(
                         'Bought',
                         style: TextStyle(
-                          fontSize: 16.0
+                          fontSize: 14.0
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     Tab(
                       child: Text(
                         'Sold',
                         style: TextStyle(
-                          fontSize: 16.0
+                          fontSize: 14.0
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],
