@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guildwars2_companion/repositories/item.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:package_info/package_info.dart';
+import 'package:flutter/foundation.dart' as Foundation;
 
 class InfoPage extends StatelessWidget {
   @override
@@ -45,10 +48,34 @@ class InfoPage extends StatelessWidget {
                 fontSize: 16.0
               ),
             ),
-            Container()
+            if (Foundation.kDebugMode)
+              _buildDebugInfo(context)
+            else
+              Container()
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildDebugInfo(BuildContext context) {
+    ItemRepository itemRepository = RepositoryProvider.of<ItemRepository>(context);
+
+    return Column(
+      children: <Widget>[
+        Text(
+          'Items cached: ${itemRepository.getCachedItemsCount()}',
+          style: TextStyle(
+            fontSize: 16.0
+          ),
+        ),
+        Text(
+          'Skins cached: ${itemRepository.getCachedSkinsCount()}',
+          style: TextStyle(
+            fontSize: 16.0
+          ),
+        )
+      ],
     );
   }
 

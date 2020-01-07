@@ -65,17 +65,13 @@ class ItemRepository {
 
     await database.delete(
       'items',
-      // Use a `where` clause to delete a specific dog.
       where: "expiration_date <= ?",
-      // Pass the Dog's id as a whereArg to prevent SQL injection.
       whereArgs: [DateFormat('yyyyMMdd').format(now)],
     );
 
     await database.delete(
       'skins',
-      // Use a `where` clause to delete a specific dog.
       where: "expiration_date <= ?",
-      // Pass the Dog's id as a whereArg to prevent SQL injection.
       whereArgs: [DateFormat('yyyyMMdd').format(now)],
     );
 
@@ -86,6 +82,14 @@ class ItemRepository {
     _cachedSkins = List.generate(skins.length, (i) => Skin.fromDb(skins[i]));
 
     return;
+  }
+
+  int getCachedItemsCount() {
+    return _cachedItems.length;
+  }
+
+  int getCachedSkinsCount() {
+    return _cachedSkins.length;
   }
 
   Future<List<Item>> getItems(List<int> itemIds) async {
