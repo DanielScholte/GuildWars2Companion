@@ -117,6 +117,7 @@ class AchievementBits {
   String type;
   String text;
   int id;
+  int achievementId;
 
   AchievementBits({this.type, this.id});
 
@@ -130,6 +131,7 @@ class AchievementBits {
     type = json['type'];
     text = json['text'];
     id = json['id'];
+    achievementId = json['achievement_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -153,6 +155,7 @@ class AchievementBits {
 class AchievementTiers {
   int count;
   int points;
+  int achievementId;
 
   AchievementTiers({this.count, this.points});
 
@@ -164,6 +167,7 @@ class AchievementTiers {
   AchievementTiers.fromDb(Map<String, dynamic> json) {
     count = json['count'];
     points = json['points'];
+    achievementId = json['achievement_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -188,6 +192,7 @@ class AchievementRewards {
   int id;
   int count;
   String region;
+  int achievementId;
 
   AchievementRewards({this.type, this.id, this.count});
 
@@ -203,6 +208,7 @@ class AchievementRewards {
     id = json['id'];
     count = json['count'];
     region = json['region'];
+    achievementId = json['achievement_id'];
   }
 
   Map<String, dynamic> toJson() {

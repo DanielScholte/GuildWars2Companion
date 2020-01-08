@@ -29,28 +29,22 @@ Future main() async {
   ItemRepository itemRepository = ItemRepository();
   await itemRepository.loadCachedData();
 
-  AchievementRepository achievementRepository = AchievementRepository();
-  await achievementRepository.loadCachedData();
-
   bool tokenPresent = await TokenUtil.tokenPresent();
 
   runApp(GuildWars2Companion(
     itemRepository: itemRepository,
-    achievementRepository: achievementRepository,
     isAuthenticated: tokenPresent,
   ));
 }
 
 class GuildWars2Companion extends StatelessWidget {
   final ItemRepository itemRepository;
-  final AchievementRepository achievementRepository;
 
   final bool isAuthenticated;
 
   GuildWars2Companion({
     @required this.isAuthenticated,
     @required this.itemRepository,
-    @required this.achievementRepository,
   });
 
   @override
@@ -82,7 +76,7 @@ class GuildWars2Companion extends StatelessWidget {
           create: (BuildContext context) => AccountRepository(),
         ),
         RepositoryProvider<AchievementRepository>(
-          create: (BuildContext context) => achievementRepository,
+          create: (BuildContext context) => AchievementRepository(),
         ),
         RepositoryProvider<BankRepository>(
           create: (BuildContext context) => BankRepository(),

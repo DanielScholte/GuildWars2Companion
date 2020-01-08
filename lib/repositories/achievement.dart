@@ -95,38 +95,22 @@ class AchievementRepository {
     );
 
     final List<Map<String, dynamic>> achievements = await database.query('achievements');
-    for(var a in achievements) {
-      Achievement achievement = Achievement.fromDb(a);
+    _cachedAchievements = List.generate(achievements.length, (i) => Achievement.fromDb(achievements[i]));
 
-      final List<Map<String, dynamic>> bits = await database.query(
-        'bits',
-        where: 'achievement_id = ?',
-        whereArgs: [achievement.id]
-      );
-      if (bits.isNotEmpty) {
-        achievement.bits = List.generate(bits.length, (i) => AchievementBits.fromDb(bits[i]));
-      }
+    final List<Map<String, dynamic>> bitsMap = await database.query('bits');
+    List<AchievementBits> bits = List.generate(bitsMap.length, (i) => AchievementBits.fromDb(bitsMap[i]));
 
-      final List<Map<String, dynamic>> tiers = await database.query(
-        'tiers',
-        where: 'achievement_id = ?',
-        whereArgs: [achievement.id]
-      );
-      if (tiers.isNotEmpty) {
-        achievement.tiers = List.generate(tiers.length, (i) => AchievementTiers.fromDb(tiers[i]));
-      }
+    final List<Map<String, dynamic>> tiersMap = await database.query('tiers');
+    List<AchievementTiers> tiers = List.generate(tiersMap.length, (i) => AchievementTiers.fromDb(tiersMap[i]));
 
-      final List<Map<String, dynamic>> rewards = await database.query(
-        'rewards',
-        where: 'achievement_id = ?',
-        whereArgs: [achievement.id]
-      );
-      if (rewards.isNotEmpty) {
-        achievement.rewards = List.generate(rewards.length, (i) => AchievementRewards.fromDb(rewards[i]));
-      }
+    final List<Map<String, dynamic>> rewardsMap = await database.query('rewards');
+    List<AchievementRewards> rewards = List.generate(rewardsMap.length, (i) => AchievementRewards.fromDb(rewardsMap[i]));
 
-      _cachedAchievements.add(achievement);
-    }
+    _cachedAchievements.forEach((achievement) {
+      achievement.bits = bits.where((b) => b.achievementId == achievement.id).toList();
+      achievement.tiers = tiers.where((t) => t.achievementId == achievement.id).toList();
+      achievement.rewards = rewards.where((r) => r.achievementId == achievement.id).toList();
+    });
     return;
   }
 

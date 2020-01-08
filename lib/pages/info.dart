@@ -49,7 +49,7 @@ class InfoPage extends StatelessWidget {
                 fontSize: 16.0
               ),
             ),
-            if (Foundation.kDebugMode)
+            if (Foundation.kDebugMode || true)
               _buildDebugInfo(context)
             else
               Container()

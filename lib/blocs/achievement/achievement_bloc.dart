@@ -30,6 +30,8 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
   Stream<AchievementState> _loadAchievements() async* {
     yield LoadingAchievementsState();
 
+    await achievementRepository.loadCachedData();
+
     List<AchievementGroup> achievementGroups = await achievementRepository.getAchievementGroups();
     List<AchievementCategory> achievementCategories = await achievementRepository.getAchievementCategories();
     DailyGroup dailyGroups = await achievementRepository.getDailies();
