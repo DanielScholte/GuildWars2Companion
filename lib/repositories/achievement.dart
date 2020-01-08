@@ -15,7 +15,7 @@ import 'package:sqflite/sqflite.dart';
 class AchievementRepository {
   List<Achievement> _cachedAchievements = [];
 
-  Future<Database> getDatabase() async {
+  Future<Database> _getDatabase() async {
     return await openDatabase(
       join(await getDatabasesPath(), 'achievements.db'),
       onCreate: (db, version) async {
@@ -66,7 +66,7 @@ class AchievementRepository {
   }
 
   Future<void> loadCachedData() async {
-    Database database = await getDatabase();
+    Database database = await _getDatabase();
 
     DateTime now = DateTime.now().toUtc();
 
@@ -113,7 +113,7 @@ class AchievementRepository {
         whereArgs: [achievement.id]
       );
       if (tiers.isNotEmpty) {
-        achievement.tiers = List.generate(bits.length, (i) => AchievementTiers.fromDb(tiers[i]));
+        achievement.tiers = List.generate(tiers.length, (i) => AchievementTiers.fromDb(tiers[i]));
       }
 
       final List<Map<String, dynamic>> rewards = await database.query(
@@ -122,7 +122,7 @@ class AchievementRepository {
         whereArgs: [achievement.id]
       );
       if (rewards.isNotEmpty) {
-        achievement.rewards = List.generate(bits.length, (i) => AchievementRewards.fromDb(rewards[i]));
+        achievement.rewards = List.generate(rewards.length, (i) => AchievementRewards.fromDb(rewards[i]));
       }
 
       _cachedAchievements.add(achievement);
@@ -160,7 +160,7 @@ class AchievementRepository {
     List<Achievement> achievements = [];
     for (var achievementIdsString in achievementIdsList) {
       final response = await http.get(
-        Urls.itemsUrl + achievementIdsString,
+        Urls.achievementsUrl + achievementIdsString,
         headers: {
           'Authorization': 'Bearer ${await TokenUtil.getToken()}',
         }
@@ -178,7 +178,7 @@ class AchievementRepository {
   }
 
   Future<void> _cacheAchievements(List<Achievement> achievements) async {
-    Database database = await getDatabase();
+    Database database = await _getDatabase();
 
     List<Achievement> nonCachedItems = achievements.where((i) => !_cachedAchievements.any((ca) => ca.id == i.id)).toList();
     _cachedAchievements.addAll(nonCachedItems);
@@ -263,7 +263,7 @@ class AchievementRepository {
     }
   }
 
-  Future<List<Daily>> getDailies() async {
+  Future<DailyGroup> getDailies() async {
     final response = await http.get(
       Urls.dailiesUrl,
       headers: {
@@ -272,10 +272,9 @@ class AchievementRepository {
     );
 
     if (response.statusCode == 200) {
-      List dailies = json.decode(response.body);
-      return dailies.where((a) => a != null).map((a) => Daily.fromJson(a)).toList();
+      return DailyGroup.fromJson(json.decode(response.body));
     } else {
-      return [];
+      return DailyGroup();
     }
   }
 }

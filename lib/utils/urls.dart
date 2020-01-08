@@ -27,6 +27,7 @@ class Urls {
   static final String tradingPostTransactionsUrl = '$baseUrl/commerce/transactions/';
   static final String tradingPostListingsUrl = '$baseUrl/commerce/listings/';
 
+  static final String achievementsUrl = '$baseUrl/achievements?ids=';
   static final String achievementProgressUrl = '$baseUrl/account/achievements';
   static final String achievementCategoriesUrl = '$baseUrl/achievements/categories?ids=all';
   static final String achievementGroupsUrl = '$baseUrl/achievements/groups?ids=all';

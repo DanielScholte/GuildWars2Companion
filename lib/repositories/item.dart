@@ -15,7 +15,7 @@ class ItemRepository {
   List<Item> _cachedItems;
   List<Skin> _cachedSkins;
 
-  Future<Database> getDatabase() async {
+  Future<Database> _getDatabase() async {
     return await openDatabase(
       join(await getDatabasesPath(), 'items.db'),
       onCreate: (db, version) async {
@@ -59,7 +59,7 @@ class ItemRepository {
   }
 
   Future<void> loadCachedData() async {
-    Database database = await getDatabase();
+    Database database = await _getDatabase();
 
     DateTime now = DateTime.now().toUtc();
 
@@ -136,7 +136,7 @@ class ItemRepository {
   }
 
   Future<void> _cacheItems(List<Item> items) async {
-    Database database = await getDatabase();
+    Database database = await _getDatabase();
 
     List<Item> nonCachedItems = items.where((i) => !_cachedItems.any((ci) => ci.id == i.id)).toList();
     _cachedItems.addAll(nonCachedItems);
@@ -200,7 +200,7 @@ class ItemRepository {
   }
 
   Future<void> _cacheSkins(List<Skin> skins) async {
-    Database database = await getDatabase();
+    Database database = await _getDatabase();
 
     List<Skin> nonCachedSkins = skins.where((s) => !_cachedSkins.any((cs) => cs.id == s.id)).toList();
     _cachedSkins.addAll(nonCachedSkins);

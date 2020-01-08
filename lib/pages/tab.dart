@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
+import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
 import 'package:guildwars2_companion/blocs/bank/bloc.dart';
 import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/blocs/trading_post/bloc.dart';
@@ -12,6 +13,7 @@ import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/pages/tabs/bank.dart';
 import 'package:guildwars2_companion/pages/tabs/characters.dart';
 import 'package:guildwars2_companion/pages/tabs/home.dart';
+import 'package:guildwars2_companion/pages/tabs/progression.dart';
 import 'package:guildwars2_companion/pages/tabs/trading_post.dart';
 import 'package:guildwars2_companion/pages/token.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
@@ -35,7 +37,7 @@ class _TabPageState extends State<TabPage> {
 
   List<TabEntry> _tabs = [
     TabEntry(HomePage(), "Home", FontAwesomeIcons.home, 20.0, Colors.red),
-    TabEntry(Scaffold(), "Progression", Icons.crop_square, 24.0, Colors.orange),
+    TabEntry(ProgressionPage(), "Progression", GuildWarsIcons.achievement, 24.0, Colors.orange),
   ];
  
   @override
@@ -142,11 +144,13 @@ class _TabPageState extends State<TabPage> {
       tabs.add(TabEntry(TradingPostPage(), "Trading", FontAwesomeIcons.balanceScaleLeft, 20.0, Colors.green));
     }
 
+    BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent());
+    tabs.add(TabEntry(ProgressionPage(), "Progression", GuildWarsIcons.achievement, 24.0, Colors.orange));
+
     if (state.tokenInfo.permissions.contains('wallet')) {
       BlocProvider.of<WalletBloc>(context).add(LoadWalletEvent());
     }
-
-    tabs.add(TabEntry(Scaffold(), "Progression", GuildWarsIcons.achievement, 24.0, Colors.orange));
+    
     _tabs = tabs;
 
     setState(() {});

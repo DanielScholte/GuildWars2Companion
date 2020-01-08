@@ -111,19 +111,18 @@ class TradingPostItemPage extends StatelessWidget {
               Expanded(
                 child: BlocBuilder<TradingPostBloc, TradingPostState>(
                   builder: (context, state) {
-                    if (state is LoadedTradingPostState && !state.listingsLoading) {
+                    if (state is LoadedTradingPostState) {
                       TradingPostTransaction tradingPostTransaction = _getTradingPostTransaction(state);
 
-                      if (tradingPostTransaction == null) {
-                        return Container();
+                      if (tradingPostTransaction != null && !tradingPostTransaction.loading && tradingPostTransaction.listing != null) {
+                        return TabBarView(
+                          children: <Widget>[
+                            _buildListingTab(tradingPostTransaction.listing.buys, 'Ordered', 'No orders found'),
+                            _buildListingTab(tradingPostTransaction.listing.sells, 'Available', 'No items found'),
+                          ],
+                        );
                       }
-
-                      return TabBarView(
-                        children: <Widget>[
-                          _buildListingTab(tradingPostTransaction.listing.buys, 'Ordered', 'No orders found'),
-                          _buildListingTab(tradingPostTransaction.listing.sells, 'Available', 'No items found'),
-                        ],
-                      );
+                      
                     }
 
                     return Center(

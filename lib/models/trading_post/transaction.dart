@@ -11,6 +11,7 @@ class TradingPostTransaction {
   String purchased;
   Item itemInfo;
   TradingPostListing listing;
+  bool loading;
 
   TradingPostTransaction(
       {this.id,
@@ -21,6 +22,7 @@ class TradingPostTransaction {
       this.purchased});
 
   TradingPostTransaction.fromJson(Map<String, dynamic> json) {
+    loading = false;
     id = json['id'];
     itemId = json['item_id'];
     price = json['price'];

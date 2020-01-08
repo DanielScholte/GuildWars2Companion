@@ -15,30 +15,41 @@ class DailyGroup {
       json['pve'].forEach((v) {
         pve.add(new Daily.fromJson(v));
       });
+    } else {
+      pve = [];
     }
+
     if (json['pvp'] != null) {
       pvp = new List<Daily>();
       json['pvp'].forEach((v) {
         pvp.add(new Daily.fromJson(v));
       });
+    } else {
+      pvp = [];
     }
     if (json['wvw'] != null) {
       wvw = new List<Daily>();
       json['wvw'].forEach((v) {
         wvw.add(new Daily.fromJson(v));
       });
+    } else {
+      wvw = [];
     }
     if (json['fractals'] != null) {
       fractals = new List<Daily>();
       json['fractals'].forEach((v) {
         fractals.add(new Daily.fromJson(v));
       });
+    } else {
+      fractals = [];
     }
     if (json['special'] != null) {
       special = new List<Daily>();
       json['special'].forEach((v) {
         special.add(new Daily.fromJson(v));
       });
+    } else {
+      special = [];
     }
   }
 

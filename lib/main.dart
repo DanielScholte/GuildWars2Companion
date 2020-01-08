@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
+import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
 import 'package:guildwars2_companion/blocs/bank/bloc.dart';
 import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/blocs/trading_post/bloc.dart';
@@ -115,6 +116,11 @@ class GuildWars2Companion extends StatelessWidget {
         BlocProvider<AccountBloc>(
           create: (BuildContext context) => AccountBloc(
             accountRepository: RepositoryProvider.of<AccountRepository>(context),
+          ),
+        ),
+        BlocProvider<AchievementBloc>(
+          create: (BuildContext context) => AchievementBloc(
+            achievementRepository: RepositoryProvider.of<AchievementRepository>(context),
           ),
         ),
         BlocProvider<BankBloc>(

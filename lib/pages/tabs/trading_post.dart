@@ -361,7 +361,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
           color: Colors.white,
           foregroundColor: Colors.black,
           onTap: () {
-            if (!state.listingsLoading && t.listing == null) {
+            if (!t.loading && t.listing == null) {
               BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostListingsEvent(
                 buying: state.buying,
                 selling: state.selling,

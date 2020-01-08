@@ -14,6 +14,7 @@ class Achievement {
   List<AchievementRewards> rewards;
   AchievementProgress progress;
   int pointCap;
+  bool loading;
 
   Achievement(
       {this.id,
@@ -28,6 +29,7 @@ class Achievement {
       this.pointCap});
 
   Achievement.fromJson(Map<String, dynamic> json) {
+    loading = false;
     id = json['id'];
     icon = json['icon'];
     name = json['name'];
@@ -52,13 +54,14 @@ class Achievement {
         rewards.add(new AchievementRewards.fromJson(v));
       });
     }
-    if (json['prerequisites' != null]) {
+    if (json['prerequisites'] != null) {
       prerequisites = json['prerequisites'].cast<int>();
     }
     pointCap = json['point_cap'];
   }
 
   Achievement.fromDb(Map<String, dynamic> item) {
+    loading = false;
     id =  item['id'];
     icon = item['icon'];
     name = item['name'];
@@ -100,8 +103,8 @@ class Achievement {
     data['name'] = this.name;
     data['description'] = this.description;
     data['requirement'] = this.requirement;
-    data['locked_text'] = this.lockedText;
-    data['point_cap'] = this.pointCap;
+    data['lockedText'] = this.lockedText;
+    data['pointCap'] = this.pointCap;
     if (this.prerequisites != null && this.prerequisites.isNotEmpty) {
       data['prerequisites'] = this.prerequisites.join(';');
     }

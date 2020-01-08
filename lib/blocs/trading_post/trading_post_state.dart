@@ -14,14 +14,11 @@ class LoadedTradingPostState extends TradingPostState {
   final List<TradingPostTransaction> sold;
   final TradingPostDelivery tradingPostDelivery;
 
-  final bool listingsLoading;
-
   LoadedTradingPostState({
     @required this.buying,
     @required this.selling,
     @required this.bought,
     @required this.sold,
     @required this.tradingPostDelivery,
-    this.listingsLoading = false,
   });
 }
