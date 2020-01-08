@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
+import 'package:guildwars2_companion/pages/progression/achievement_categories.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
@@ -41,7 +42,9 @@ class ProgressionPage extends StatelessWidget {
             children: <Widget>[
               CompanionFullButton(
                 color: Colors.orange,
-                onTap: () {},
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => AchievementCategoriesPage()
+                )),
                 title: 'Achievements',
                 leading: Icon(
                   GuildWarsIcons.achievement,
@@ -50,7 +53,7 @@ class ProgressionPage extends StatelessWidget {
                 ),
               ),
               CompanionFullButton(
-                color: Colors.blue,
+                color: Colors.indigo,
                 onTap: () {},
                 title: 'Dailies',
                 leading: Icon(

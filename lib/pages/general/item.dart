@@ -398,11 +398,11 @@ class ItemPage extends StatelessWidget {
                   widget: CompanionCoin(item.vendorValue)
                 ),
                 InfoRow(
-                  header: 'TP Buy',
+                  header: 'Trading Post Buy',
                   text: '-'
                 ),
                 InfoRow(
-                  header: 'TP Sell',
+                  header: 'Trading Post Sell',
                   text: '-'
                 ),
               ],
@@ -428,7 +428,7 @@ class ItemPage extends StatelessWidget {
                   widget: CompanionCoin(item.vendorValue)
                 ),
                 InfoRow(
-                  header: 'TP Buy',
+                  header: 'Trading Post Buy',
                   widget: Container(
                     width: 16.0,
                     height: 16.0,
@@ -438,7 +438,7 @@ class ItemPage extends StatelessWidget {
                   ),
                 ),
                 InfoRow(
-                  header: 'TP Sell',
+                  header: 'Trading Post Sell',
                   widget: Container(
                     width: 16.0,
                     height: 16.0,

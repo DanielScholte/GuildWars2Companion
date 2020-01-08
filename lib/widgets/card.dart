@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 class CompanionCard extends StatelessWidget {
 
   final Widget child;
+  final EdgeInsets padding;
+  final double borderRadius;
 
   CompanionCard({
-    @required this.child
+    @required this.child,
+    this.padding = const EdgeInsets.all(8.0),
+    this.borderRadius = 12.0
   });
 
   @override
@@ -13,9 +17,9 @@ class CompanionCard extends StatelessWidget {
     return Container(
       width: double.infinity,
       margin: EdgeInsets.all(8.0),
-      padding: EdgeInsets.all(8.0),
+      padding: padding,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(6.0),
+        borderRadius: BorderRadius.circular(borderRadius),
         color: Colors.white,
         boxShadow: [
           BoxShadow(

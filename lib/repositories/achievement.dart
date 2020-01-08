@@ -111,6 +111,7 @@ class AchievementRepository {
       achievement.tiers = tiers.where((t) => t.achievementId == achievement.id).toList();
       achievement.rewards = rewards.where((r) => r.achievementId == achievement.id).toList();
     });
+
     return;
   }
 
