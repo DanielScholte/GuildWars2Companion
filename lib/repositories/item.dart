@@ -116,9 +116,9 @@ class ItemRepository {
   Future<List<Item>> _getNewItems(List<int> itemIds) async {
     List<String> itemIdsList = Urls.divideIdLists(itemIds);
     List<Item> items = [];
-    for (var itemIds in itemIdsList) {
+    for (var itemIdsString in itemIdsList) {
       final response = await http.get(
-        Urls.itemsUrl + itemIds,
+        Urls.itemsUrl + itemIdsString,
         headers: {
           'Authorization': 'Bearer ${await TokenUtil.getToken()}',
         }
@@ -141,8 +141,16 @@ class ItemRepository {
     List<Item> nonCachedItems = items.where((i) => !_cachedItems.any((ci) => ci.id == i.id)).toList();
     _cachedItems.addAll(nonCachedItems);
 
+    String expirationDate = DateFormat('yyyyMMdd')
+      .format(
+        DateTime
+        .now()
+        .add(Duration(days: 31))
+        .toUtc()
+      );
+
     Batch batch = database.batch();
-    nonCachedItems.forEach((item) => batch.insert('items', item.toDb(), conflictAlgorithm: ConflictAlgorithm.ignore));
+    nonCachedItems.forEach((item) => batch.insert('items', item.toDb(expirationDate), conflictAlgorithm: ConflictAlgorithm.ignore));
     await batch.commit(noResult: true);
 
     return;
@@ -197,8 +205,16 @@ class ItemRepository {
     List<Skin> nonCachedSkins = skins.where((s) => !_cachedSkins.any((cs) => cs.id == s.id)).toList();
     _cachedSkins.addAll(nonCachedSkins);
 
+    String expirationDate = DateFormat('yyyyMMdd')
+      .format(
+        DateTime
+        .now()
+        .add(Duration(days: 31))
+        .toUtc()
+      );
+
     Batch batch = database.batch();
-    nonCachedSkins.forEach((skin) => batch.insert('skins', skin.toDb(), conflictAlgorithm: ConflictAlgorithm.ignore));
+    nonCachedSkins.forEach((skin) => batch.insert('skins', skin.toDb(expirationDate), conflictAlgorithm: ConflictAlgorithm.ignore));
     await batch.commit(noResult: true);
 
     return;

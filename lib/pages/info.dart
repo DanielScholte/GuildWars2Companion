@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guildwars2_companion/repositories/achievement.dart';
 import 'package:guildwars2_companion/repositories/item.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:package_info/package_info.dart';
@@ -60,6 +61,7 @@ class InfoPage extends StatelessWidget {
 
   Widget _buildDebugInfo(BuildContext context) {
     ItemRepository itemRepository = RepositoryProvider.of<ItemRepository>(context);
+    AchievementRepository achievementRepository = RepositoryProvider.of<AchievementRepository>(context);
 
     return Column(
       children: <Widget>[
@@ -74,7 +76,13 @@ class InfoPage extends StatelessWidget {
           style: TextStyle(
             fontSize: 16.0
           ),
-        )
+        ),
+        Text(
+          'Achievements cached: ${achievementRepository.getCachedAchievementsCount()}',
+          style: TextStyle(
+            fontSize: 16.0
+          ),
+        ),
       ],
     );
   }

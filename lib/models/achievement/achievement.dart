@@ -7,6 +7,8 @@ class Achievement {
   String description;
   String requirement;
   String lockedText;
+  List<int> prerequisites;
+  List<Achievement> prerequisitesInfo;
   List<AchievementBits> bits;
   List<AchievementTiers> tiers;
   List<AchievementRewards> rewards;
@@ -50,7 +52,24 @@ class Achievement {
         rewards.add(new AchievementRewards.fromJson(v));
       });
     }
+    if (json['prerequisites' != null]) {
+      prerequisites = json['prerequisites'].cast<int>();
+    }
     pointCap = json['point_cap'];
+  }
+
+  Achievement.fromDb(Map<String, dynamic> item) {
+    id =  item['id'];
+    icon = item['icon'];
+    name = item['name'];
+    description = item['description'];
+    requirement = item['requirement'];
+    lockedText = item['lockedText'];
+    String pre = item['prerequisites'];
+    if (pre != null) {
+      prerequisites = pre.split(';').map((p) => int.parse(p)).toList();
+    }
+    pointCap = item['pointCap'];
   }
 
   Map<String, dynamic> toJson() {
@@ -73,16 +92,40 @@ class Achievement {
     data['point_cap'] = this.pointCap;
     return data;
   }
+
+  Map<String, dynamic> toDb(String expirationDate) {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['icon'] = this.icon;
+    data['name'] = this.name;
+    data['description'] = this.description;
+    data['requirement'] = this.requirement;
+    data['locked_text'] = this.lockedText;
+    data['point_cap'] = this.pointCap;
+    if (this.prerequisites != null && this.prerequisites.isNotEmpty) {
+      data['prerequisites'] = this.prerequisites.join(';');
+    }
+    data['expiration_date'] = expirationDate;
+    return data;
+  }
 }
 
 class AchievementBits {
   String type;
+  String text;
   int id;
 
   AchievementBits({this.type, this.id});
 
   AchievementBits.fromJson(Map<String, dynamic> json) {
     type = json['type'];
+    text = json['text'];
+    id = json['id'];
+  }
+
+  AchievementBits.fromDb(Map<String, dynamic> json) {
+    type = json['type'];
+    text = json['text'];
     id = json['id'];
   }
 
@@ -90,6 +133,16 @@ class AchievementBits {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['type'] = this.type;
     data['id'] = this.id;
+    return data;
+  }
+
+  Map<String, dynamic> toDb(String expirationDate, int achievementId) {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['type'] = this.type;
+    data['text'] = this.text;
+    data['id'] = this.id;
+    data['achievement_id'] = achievementId;
+    data['expiration_date'] = expirationDate;
     return data;
   }
 }
@@ -105,10 +158,24 @@ class AchievementTiers {
     points = json['points'];
   }
 
+  AchievementTiers.fromDb(Map<String, dynamic> json) {
+    count = json['count'];
+    points = json['points'];
+  }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['count'] = this.count;
     data['points'] = this.points;
+    return data;
+  }
+
+  Map<String, dynamic> toDb(String expirationDate, int achievementId) {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['count'] = this.count;
+    data['points'] = this.points;
+    data['achievement_id'] = achievementId;
+    data['expiration_date'] = expirationDate;
     return data;
   }
 }
@@ -117,6 +184,7 @@ class AchievementRewards {
   String type;
   int id;
   int count;
+  String region;
 
   AchievementRewards({this.type, this.id, this.count});
 
@@ -124,6 +192,14 @@ class AchievementRewards {
     type = json['type'];
     id = json['id'];
     count = json['count'];
+    region = json['region'];
+  }
+
+  AchievementRewards.fromDb(Map<String, dynamic> json) {
+    type = json['type'];
+    id = json['id'];
+    count = json['count'];
+    region = json['region'];
   }
 
   Map<String, dynamic> toJson() {
@@ -131,6 +207,17 @@ class AchievementRewards {
     data['type'] = this.type;
     data['id'] = this.id;
     data['count'] = this.count;
+    return data;
+  }
+
+  Map<String, dynamic> toDb(String expirationDate, int achievementId) {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['type'] = this.type;
+    data['id'] = this.id;
+    data['count'] = this.count;
+    data['region'] = this.region;
+    data['achievement_id'] = achievementId;
+    data['expiration_date'] = expirationDate;
     return data;
   }
 }

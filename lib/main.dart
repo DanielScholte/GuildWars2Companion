@@ -10,6 +10,7 @@ import 'package:guildwars2_companion/blocs/world_bosses/bloc.dart';
 import 'package:guildwars2_companion/pages/tab.dart';
 import 'package:guildwars2_companion/pages/token.dart';
 import 'package:guildwars2_companion/repositories/account.dart';
+import 'package:guildwars2_companion/repositories/achievement.dart';
 import 'package:guildwars2_companion/repositories/bank.dart';
 import 'package:guildwars2_companion/repositories/character.dart';
 import 'package:guildwars2_companion/repositories/dungeon.dart';
@@ -27,21 +28,28 @@ Future main() async {
   ItemRepository itemRepository = ItemRepository();
   await itemRepository.loadCachedData();
 
+  AchievementRepository achievementRepository = AchievementRepository();
+  await achievementRepository.loadCachedData();
+
   bool tokenPresent = await TokenUtil.tokenPresent();
 
   runApp(GuildWars2Companion(
     itemRepository: itemRepository,
+    achievementRepository: achievementRepository,
     isAuthenticated: tokenPresent,
   ));
 }
 
 class GuildWars2Companion extends StatelessWidget {
   final ItemRepository itemRepository;
+  final AchievementRepository achievementRepository;
+
   final bool isAuthenticated;
 
   GuildWars2Companion({
     @required this.isAuthenticated,
-    @required this.itemRepository
+    @required this.itemRepository,
+    @required this.achievementRepository,
   });
 
   @override
@@ -71,6 +79,9 @@ class GuildWars2Companion extends StatelessWidget {
       providers: [
         RepositoryProvider<AccountRepository>(
           create: (BuildContext context) => AccountRepository(),
+        ),
+        RepositoryProvider<AchievementRepository>(
+          create: (BuildContext context) => achievementRepository,
         ),
         RepositoryProvider<BankRepository>(
           create: (BuildContext context) => BankRepository(),

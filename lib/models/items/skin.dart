@@ -1,5 +1,3 @@
-import 'package:intl/intl.dart';
-
 class Skin {
   String name;
   String type;
@@ -35,20 +33,14 @@ class Skin {
     return data;
   }
 
-  Map<String, dynamic> toDb() {
+  Map<String, dynamic> toDb(String expirationDate) {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['name'] = this.name;
     data['type'] = this.type;
     data['rarity'] = this.rarity;
     data['id'] = this.id;
     data['icon'] = this.icon;
-    data['expiration_date'] = DateFormat('yyyyMMdd')
-      .format(
-        DateTime
-        .now()
-        .add(Duration(days: 31))
-        .toUtc()
-      );
+    data['expiration_date'] = expirationDate;
     return data;
   }
 }
