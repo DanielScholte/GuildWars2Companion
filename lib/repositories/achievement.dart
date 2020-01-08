@@ -29,33 +29,9 @@ class AchievementRepository {
             lockedText TEXT,
             prerequisites TEXT,
             pointCap INTEGER,
-            expiration_date DATE
-          )
-        ''');
-        await db.execute('''
-          CREATE TABLE bits(
-            type TEXT,
-            text TEXT,
-            id INTEGER,
-            achievement_id INTEGER,
-            expiration_date DATE
-          )
-        ''');
-        await db.execute('''
-          CREATE TABLE tiers(
-            count INTEGER,
-            points INTEGER,
-            achievement_id INTEGER,
-            expiration_date DATE
-          )
-        ''');
-        await db.execute('''
-          CREATE TABLE rewards(
-            type TEXT,
-            id INTEGER,
-            count INTEGER,
-            region TEXT,
-            achievement_id INTEGER,
+            bits TEXT,
+            tiers TEXT,
+            rewards TEXT,
             expiration_date DATE
           )
         ''');
@@ -76,41 +52,8 @@ class AchievementRepository {
       whereArgs: [DateFormat('yyyyMMdd').format(now)],
     );
 
-    await database.delete(
-      'bits',
-      where: "expiration_date <= ?",
-      whereArgs: [DateFormat('yyyyMMdd').format(now)],
-    );
-
-    await database.delete(
-      'tiers',
-      where: "expiration_date <= ?",
-      whereArgs: [DateFormat('yyyyMMdd').format(now)],
-    );
-
-    await database.delete(
-      'rewards',
-      where: "expiration_date <= ?",
-      whereArgs: [DateFormat('yyyyMMdd').format(now)],
-    );
-
     final List<Map<String, dynamic>> achievements = await database.query('achievements');
     _cachedAchievements = List.generate(achievements.length, (i) => Achievement.fromDb(achievements[i]));
-
-    final List<Map<String, dynamic>> bitsMap = await database.query('bits');
-    List<AchievementBits> bits = List.generate(bitsMap.length, (i) => AchievementBits.fromDb(bitsMap[i]));
-
-    final List<Map<String, dynamic>> tiersMap = await database.query('tiers');
-    List<AchievementTiers> tiers = List.generate(tiersMap.length, (i) => AchievementTiers.fromDb(tiersMap[i]));
-
-    final List<Map<String, dynamic>> rewardsMap = await database.query('rewards');
-    List<AchievementRewards> rewards = List.generate(rewardsMap.length, (i) => AchievementRewards.fromDb(rewardsMap[i]));
-
-    _cachedAchievements.forEach((achievement) {
-      achievement.bits = bits.where((b) => b.achievementId == achievement.id).toList();
-      achievement.tiers = tiers.where((t) => t.achievementId == achievement.id).toList();
-      achievement.rewards = rewards.where((r) => r.achievementId == achievement.id).toList();
-    });
 
     return;
   }
@@ -177,24 +120,8 @@ class AchievementRepository {
       );
 
     Batch batch = database.batch();
-    nonCachedItems.forEach((achievement) {
-      batch.insert('achievements', achievement.toDb(expirationDate), conflictAlgorithm: ConflictAlgorithm.ignore);
-
-      if (achievement.bits != null && achievement.bits.isNotEmpty) {
-        achievement.bits.forEach((bit) =>
-          batch.insert('bits', bit.toDb(expirationDate, achievement.id), conflictAlgorithm: ConflictAlgorithm.ignore));
-      }
-
-      if (achievement.tiers != null && achievement.tiers.isNotEmpty) {
-        achievement.tiers.forEach((tier) =>
-          batch.insert('tiers', tier.toDb(expirationDate, achievement.id), conflictAlgorithm: ConflictAlgorithm.ignore));
-      }
-
-      if (achievement.rewards != null && achievement.rewards.isNotEmpty) {
-        achievement.rewards.forEach((reward) =>
-          batch.insert('rewards', reward.toDb(expirationDate, achievement.id), conflictAlgorithm: ConflictAlgorithm.ignore));
-      }
-    });
+    nonCachedItems.forEach((achievement) =>
+      batch.insert('achievements', achievement.toDb(expirationDate), conflictAlgorithm: ConflictAlgorithm.ignore));
     await batch.commit(noResult: true);
 
     return;
