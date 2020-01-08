@@ -54,10 +54,9 @@ class CompanionFullButton extends StatelessWidget {
               children: <Widget>[
                 _buildLeading(context),
                 _buildTitle(),
-                if (trailing == null)
-                  _buildArrow()
-                else
-                  trailing
+                if (trailing != null)
+                  trailing,
+                _buildArrow()
               ],
             ),
           ),
@@ -65,10 +64,8 @@ class CompanionFullButton extends StatelessWidget {
           children: <Widget>[
             _buildLeading(context),
             _buildTitle(),
-            if (trailing == null)
-              _buildArrow()
-            else
-              trailing
+            if (trailing != null)
+              trailing,
           ],
         ),
       ),

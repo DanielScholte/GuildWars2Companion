@@ -129,7 +129,7 @@ class AchievementRepository {
 
   Future<List<AchievementProgress>> getAchievementProgress() async {
     final response = await http.get(
-      Urls.inventoryUrl,
+      Urls.achievementProgressUrl,
       headers: {
         'Authorization': 'Bearer ${await TokenUtil.getToken()}',
       }

@@ -7,10 +7,12 @@ class CompanionCoin extends StatelessWidget {
   final int coin;
   final double innerPadding;
   final Color color;
+  final bool includeZero;
 
   CompanionCoin(this.coin, {
     this.innerPadding = 4.0,
     this.color = Colors.black,
+    this.includeZero = true,
   });
 
   @override
@@ -56,17 +58,18 @@ class CompanionCoin extends StatelessWidget {
           value: gold,
           icon: 'assets/coin/gold_coin.png'
         ),
-      if (silver > 0 || gold > 0)
+      if (silver > 0 || (gold > 0 && includeZero))
         Currency(
           name: 'Silver',
           value: silver,
           icon: 'assets/coin/silver_coin.png'
         ),
-      Currency(
-        name: 'Copper',
-        value: copper,
-        icon: 'assets/coin/copper_coin.png'
-      ),
+      if (includeZero || copper > 0)
+        Currency(
+          name: 'Copper',
+          value: copper,
+          icon: 'assets/coin/copper_coin.png'
+        ),
     ];
   }
 }

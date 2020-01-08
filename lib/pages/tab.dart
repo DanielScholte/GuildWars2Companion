@@ -144,7 +144,9 @@ class _TabPageState extends State<TabPage> {
       tabs.add(TabEntry(TradingPostPage(), "Trading", FontAwesomeIcons.balanceScaleLeft, 20.0, Colors.green));
     }
 
-    BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent());
+    BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
+      includeProgress: state.tokenInfo.permissions.contains('progression')
+    ));
     tabs.add(TabEntry(ProgressionPage(), "Progression", GuildWarsIcons.achievement, 24.0, Colors.orange));
 
     if (state.tokenInfo.permissions.contains('wallet')) {

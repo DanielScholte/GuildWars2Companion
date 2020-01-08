@@ -10,9 +10,11 @@ class LoadingAchievementsState extends AchievementState {}
 class LoadedAchievementsState extends AchievementState {
   final List<AchievementGroup> achievementGroups;
   final DailyGroup dailyGroup;
+  final bool includesProgress;
 
   LoadedAchievementsState({
     @required this.achievementGroups,
-    @required this.dailyGroup
+    @required this.dailyGroup,
+    @required this.includesProgress,
   });
 }

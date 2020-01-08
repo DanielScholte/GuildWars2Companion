@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
 import 'package:guildwars2_companion/models/achievement/achievement_group.dart';
+import 'package:guildwars2_companion/pages/progression/achievements.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/expandable_header.dart';
@@ -26,7 +27,7 @@ class AchievementCategoriesPage extends StatelessWidget {
             if (state is LoadedAchievementsState) {
               return ListView(
                 children: state.achievementGroups
-                  .map((g) => _buildGroup(g))
+                  .map((g) => _buildGroup(context, g))
                   .toList(),
               );
             }
@@ -40,7 +41,7 @@ class AchievementCategoriesPage extends StatelessWidget {
     );
   }
 
-  Widget _buildGroup(AchievementGroup group) {
+  Widget _buildGroup(BuildContext context, AchievementGroup group) {
     return CompanionCard(
       padding: EdgeInsets.zero,
       child: CompanionExpandableHeader(
@@ -51,10 +52,12 @@ class AchievementCategoriesPage extends StatelessWidget {
             .map((c) => CompanionFullButton(
               title: c.name,
               height: 64.0,
-              color: Colors.blue,
-              onTap: () {},
+              color: Colors.blueGrey,
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => AchievementsPage(c)
+              )),
               leading: CachedNetworkImage(
-                height: 64.0,
+                height: 48.0,
                 imageUrl: c.icon,
                 placeholder: (context, url) => Center(child: CircularProgressIndicator()),
                 errorWidget: (context, url, error) => Center(child: Icon(

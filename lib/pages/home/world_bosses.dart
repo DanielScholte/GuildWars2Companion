@@ -112,7 +112,7 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
         worldBoss.location,
       ],
       trailing: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        padding: EdgeInsets.only(left: 8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.end,

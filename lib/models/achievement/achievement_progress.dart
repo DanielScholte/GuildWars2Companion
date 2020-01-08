@@ -9,7 +9,9 @@ class AchievementProgress {
 
   AchievementProgress.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    bits = json['bits'].cast<int>();
+    if (json['bits'] != null) {
+      bits = json['bits'].cast<int>();
+    }
     current = json['current'];
     max = json['max'];
     done = json['done'];

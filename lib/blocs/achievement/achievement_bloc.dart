@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:guildwars2_companion/models/achievement/achievement.dart';
 import 'package:guildwars2_companion/models/achievement/achievement_category.dart';
 import 'package:guildwars2_companion/models/achievement/achievement_group.dart';
+import 'package:guildwars2_companion/models/achievement/achievement_progress.dart';
 import 'package:guildwars2_companion/models/achievement/daily.dart';
 import 'package:guildwars2_companion/repositories/achievement.dart';
 import './bloc.dart';
@@ -23,11 +24,11 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
     AchievementEvent event,
   ) async* {
     if (event is LoadAchievementsEvent) {
-      yield* _loadAchievements();
+      yield* _loadAchievements(event.includeProgress);
     }
   }
 
-  Stream<AchievementState> _loadAchievements() async* {
+  Stream<AchievementState> _loadAchievements(bool includeProgress) async* {
     yield LoadingAchievementsState();
 
     await achievementRepository.loadCachedData();
@@ -44,6 +45,11 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
     dailyGroups.fractals.forEach((c) => achievementIds.add(c.id));
 
     List<Achievement> achievements = await achievementRepository.getAchievements(achievementIds.toSet().toList());
+
+    if (includeProgress) {
+      List<AchievementProgress> progress = await achievementRepository.getAchievementProgress();
+      achievements.forEach((a) => a.progress = progress.firstWhere((p) => p.id == a.id, orElse: () => null));
+    }
 
     achievementCategories.forEach((c) {
       c.achievementsInfo = [];
@@ -78,7 +84,8 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
 
     yield LoadedAchievementsState(
       achievementGroups: achievementGroups,
-      dailyGroup: dailyGroups
+      dailyGroup: dailyGroups,
+      includesProgress: includeProgress
     );
   }
 }
