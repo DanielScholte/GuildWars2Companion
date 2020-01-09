@@ -4,6 +4,7 @@ class AchievementProgress {
   int current;
   int max;
   bool done;
+  bool unlocked;
 
   AchievementProgress({this.id, this.bits, this.current, this.max, this.done});
 
@@ -15,6 +16,7 @@ class AchievementProgress {
     current = json['current'];
     max = json['max'];
     done = json['done'];
+    unlocked = json['unlocked'];
   }
 
   Map<String, dynamic> toJson() {

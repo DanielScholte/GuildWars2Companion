@@ -134,17 +134,24 @@ class CompanionAchievementButton extends StatelessWidget {
             achievement.progress != null && !achievement.progress.done
             ? MainAxisAlignment.spaceBetween : MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            CachedNetworkImage(
-              height: 42.0,
-              imageUrl: achievement.icon != null ? achievement.icon : categoryIcon,
-              placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-              errorWidget: (context, url, error) => Center(child: Icon(
-                FontAwesomeIcons.dizzy,
-                size: 28,
-                color: Colors.black,
-              )),
-              fit: BoxFit.fill,
-            ),
+            if (achievement.progress != null && achievement.progress.unlocked != null && !achievement.progress.unlocked)
+              Icon(
+                FontAwesomeIcons.check,
+                color: Colors.black87,
+                size: 28.0,
+              )
+            else
+              CachedNetworkImage(
+                height: 42.0,
+                imageUrl: achievement.icon != null ? achievement.icon : categoryIcon,
+                placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => Center(child: Icon(
+                  FontAwesomeIcons.dizzy,
+                  size: 28,
+                  color: Colors.black,
+                )),
+                fit: BoxFit.fill,
+              ),
             if (achievement.progress != null && achievement.progress.current != null && achievement.progress.max != null)
               Column(
                 children: <Widget>[

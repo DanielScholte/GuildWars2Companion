@@ -6,6 +6,7 @@ class AchievementGroup {
   String description;
   int order;
   List<int> categories;
+  List<String> regions;
   List<AchievementCategory> categoriesInfo;
 
   AchievementGroup(

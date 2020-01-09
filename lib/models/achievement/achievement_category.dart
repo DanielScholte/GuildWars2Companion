@@ -7,6 +7,7 @@ class AchievementCategory {
   int order;
   String icon;
   List<int> achievements;
+  List<String> regions;
   List<Achievement> achievementsInfo;
 
   AchievementCategory(

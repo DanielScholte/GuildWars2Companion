@@ -4,12 +4,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class CompanionExpandableHeader extends StatefulWidget {
 
   final String header;
+  final Widget trailing;
   final Widget child;
   final Color foreground;
 
   const CompanionExpandableHeader({
     @required this.header,
     @required this.child,
+    this.trailing,
     this.foreground = Colors.black
   });
 
@@ -65,6 +67,8 @@ class _CompanionExpandableHeaderState extends State<CompanionExpandableHeader> w
                           ),
                         ),
                       ),
+                      if (widget.trailing != null)
+                        widget.trailing,
                       RotationTransition(
                         turns: Tween(begin: 0.0, end: 0.5).animate(_rotationController),
                         child: Icon(

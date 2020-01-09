@@ -53,13 +53,19 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
 
     achievementCategories.forEach((c) {
       c.achievementsInfo = [];
+      c.regions = [];
       c.achievements.forEach((i) {
         Achievement achievement = achievements.firstWhere((a) => a.id == i);
 
         if (achievement != null) {
           c.achievementsInfo.add(achievement);
+          if (achievement.rewards != null && (achievement.progress == null || !achievement.progress.done)
+            && achievement.rewards.any((r) => r.type == 'Mastery')) {
+            c.regions.addAll(achievement.rewards.where((r) => r.type == 'Mastery').map((r) => r.region).toList());
+          }
         }
       });
+      c.regions = c.regions.toSet().toList();
     });
 
     dailyGroups.pve.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
@@ -69,15 +75,18 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
 
     achievementGroups.forEach((g) {
       g.categoriesInfo = [];
+      g.regions = [];
 
       g.categories.forEach((c) {
         AchievementCategory category = achievementCategories.firstWhere((ac) => ac.id == c, orElse: () => null);
 
         if (category != null) {
           g.categoriesInfo.add(category);
+          g.regions.addAll(category.regions);
         }
       });
 
+      g.regions = g.regions.toSet().toList();
       g.categoriesInfo.sort((a, b) => a.order.compareTo(b.order));
     });
     achievementGroups.sort((a, b) => a.order.compareTo(b.order));

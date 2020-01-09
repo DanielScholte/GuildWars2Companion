@@ -44,15 +44,30 @@ class AchievementCategoriesPage extends StatelessWidget {
   Widget _buildGroup(BuildContext context, AchievementGroup group) {
     return CompanionCard(
       padding: EdgeInsets.zero,
+      backgroundColor: Colors.blueGrey,
       child: CompanionExpandableHeader(
         header: group.name,
+        foreground: Colors.white,
+        trailing: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Row(
+            children: group.regions
+              .map((r) => Image.asset(
+                'assets/progression/mastery_${r.toLowerCase()}.png',
+                height: 24.0,
+                width: 24.0,
+              ))
+              .toList(),
+          ),
+        ),
         child: Column(
           children: group.categoriesInfo
             .where((c) => c.achievementsInfo.isNotEmpty)
             .map((c) => CompanionFullButton(
               title: c.name,
               height: 64.0,
-              color: Colors.blueGrey,
+              color: Colors.white,
+              foregroundColor: Colors.black,
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => AchievementsPage(c)
               )),
@@ -66,6 +81,15 @@ class AchievementCategoriesPage extends StatelessWidget {
                   color: Colors.black,
                 )),
                 fit: BoxFit.fill,
+              ),
+              trailing: Row(
+                children: c.regions
+                  .map((r) => Image.asset(
+                    'assets/progression/mastery_${r.toLowerCase()}.png',
+                    height: 28.0,
+                    width: 28.0,
+                  ))
+                  .toList(),
               ),
             ))
             .toList()
