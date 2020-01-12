@@ -149,7 +149,6 @@ class ItemPage extends StatelessWidget {
             children: items
             .where((i) => i != null)
             .map((i) => Row(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 CompanionItemBox(
                   item: i,

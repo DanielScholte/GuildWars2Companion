@@ -71,6 +71,12 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
 
         if (achievement != null) {
           c.achievementsInfo.add(achievement);
+          achievement.categoryName = c.name;
+
+          if (achievement.icon == null) {
+            achievement.icon = c.icon;
+          }
+
           if (achievement.rewards != null && (achievement.progress == null || !achievement.progress.done)
             && achievement.rewards.any((r) => r.type == 'Mastery')) {
             c.regions.addAll(achievement.rewards.where((r) => r.type == 'Mastery').map((r) => r.region).toList());
@@ -115,21 +121,23 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
     Achievement achievement = event.achievements.firstWhere((a) => a.id == event.achievementId);
     achievement.loading = true;
 
-    LoadedAchievementsState(
+    yield LoadedAchievementsState(
       achievementGroups: event.achievementGroups,
       dailyGroup: event.dailyGroup,
       achievements: event.achievements,
       includesProgress: event.includeProgress
     );
 
-    achievement.prerequisitesInfo = [];
-    achievement.prerequisites.forEach((id) {
-      Achievement prerequisite = event.achievements.firstWhere((a) => a.id == id, orElse: () => null);
+    if (achievement.prerequisites != null) {
+      achievement.prerequisitesInfo = [];
+      achievement.prerequisites.forEach((id) {
+        Achievement prerequisite = event.achievements.firstWhere((a) => a.id == id, orElse: () => null);
 
-      if (prerequisite != null) {
-        achievement.prerequisitesInfo.add(prerequisite);
-      }
-    });
+        if (prerequisite != null) {
+          achievement.prerequisitesInfo.add(prerequisite);
+        }
+      });
+    }
 
     List<int> itemIds = [];
     List<int> skinIds = [];
@@ -196,7 +204,7 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
     achievement.loading = false;
     achievement.loaded = true;
 
-    LoadedAchievementsState(
+    yield LoadedAchievementsState(
       achievementGroups: event.achievementGroups,
       dailyGroup: event.dailyGroup,
       achievements: event.achievements,

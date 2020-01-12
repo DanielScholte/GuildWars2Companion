@@ -12,6 +12,7 @@ class CompanionItemBox extends StatelessWidget {
   final Skin skin;
   final int quantity;
   final bool displayEmpty;
+  final bool markCompleted;
   final bool includeMargin;
   final double size;
   final bool enablePopup;
@@ -28,6 +29,7 @@ class CompanionItemBox extends StatelessWidget {
     this.displayEmpty = false,
     this.includeMargin = false,
     this.enablePopup = true,
+    this.markCompleted = false,
   });
 
   @override
@@ -65,9 +67,24 @@ class CompanionItemBox extends StatelessWidget {
             if (quantity == 0)
               _buildGreyOverlay(),
             if (enablePopup && !displayEmpty)
-              _buildInkwell(context)
+              _buildInkwell(context),
+            if (markCompleted)
+              _buildCompleted()
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildCompleted() {
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      color: Colors.white60,
+      alignment: Alignment.center,
+      child: Icon(
+        FontAwesomeIcons.check,
+        size: 20.0,
       ),
     );
   }
@@ -141,6 +158,8 @@ class CompanionItemBox extends StatelessWidget {
 
     if (skin != null) {
       return CachedNetworkImage(
+        height: size,
+        width: size,
         imageUrl: skin.icon,
         placeholder: (context, url) => Theme(
           data: Theme.of(context).copyWith(accentColor: Colors.white),
@@ -156,6 +175,8 @@ class CompanionItemBox extends StatelessWidget {
     }
 
     return CachedNetworkImage(
+      height: size,
+      width: size,
       imageUrl: item.icon,
       placeholder: (context, url) => Theme(
         data: Theme.of(context).copyWith(accentColor: Colors.white),

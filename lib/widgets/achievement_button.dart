@@ -1,19 +1,23 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:guildwars2_companion/blocs/achievement/achievement_state.dart';
+import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
 import 'package:guildwars2_companion/models/achievement/achievement.dart';
+import 'package:guildwars2_companion/pages/progression/achievement.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
 
 import 'full_button.dart';
 
 class CompanionAchievementButton extends StatelessWidget {
+  final LoadedAchievementsState state;
   final Achievement achievement;
   final String categoryIcon;
-  final bool includeProgress;
 
   CompanionAchievementButton({
+    @required this.state,
     @required this.achievement,
-    this.includeProgress = false,
     this.categoryIcon
   });
 
@@ -23,15 +27,32 @@ class CompanionAchievementButton extends StatelessWidget {
       title: achievement.name,
       height: 64.0,
       color: Colors.blueGrey,
-      onTap: () {},
+      onTap: () {
+        if (!achievement.loaded && !achievement.loading) {
+          BlocProvider.of<AchievementBloc>(context).add(LoadAchievementDetailsEvent(
+            achievementGroups: state.achievementGroups,
+            achievements: state.achievements,
+            dailyGroup: state.dailyGroup,
+            includeProgress: state.includesProgress,
+            achievementId: achievement.id,
+          ));
+        }
+
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => AchievementPage(
+            achievement: achievement,
+            categoryIcon: categoryIcon,
+          )
+        ));
+      },
       leading: _buildLeading(context),
       trailing: _buildTrailing(),
     );
   }
 
   Widget _buildTrailing() {
-    achievement.tiers.sort((a, b) => a.points.compareTo(b.points));
-    int points = achievement.tiers.last.points;
+    int points = 0;
+    achievement.tiers.forEach((t) => points += t.points);
 
     int coin = 0;
     bool item = false;
@@ -122,7 +143,7 @@ class CompanionAchievementButton extends StatelessWidget {
   }
 
   Widget _buildLeading(BuildContext context) {
-    if (!includeProgress) {
+    if (!state.includesProgress) {
       return _buildIcon();
     }
 
@@ -136,7 +157,7 @@ class CompanionAchievementButton extends StatelessWidget {
           children: <Widget>[
             if (achievement.progress != null && achievement.progress.unlocked != null && !achievement.progress.unlocked)
               Icon(
-                FontAwesomeIcons.check,
+                FontAwesomeIcons.lock,
                 color: Colors.black87,
                 size: 28.0,
               )
@@ -148,7 +169,7 @@ class CompanionAchievementButton extends StatelessWidget {
                 errorWidget: (context, url, error) => Center(child: Icon(
                   FontAwesomeIcons.dizzy,
                   size: 28,
-                  color: Colors.black,
+                  color: Colors.white,
                 )),
                 fit: BoxFit.fill,
               ),

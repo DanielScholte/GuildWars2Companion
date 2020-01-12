@@ -30,9 +30,9 @@ class AchievementsPage extends StatelessWidget {
               return ListView(
                 children: _achievementCategory.achievementsInfo
                   .map((a) => CompanionAchievementButton(
+                    state: state,
                     achievement: a,
                     categoryIcon: _achievementCategory.icon,
-                    includeProgress: state.includesProgress,
                   ))
                   .toList(),
               );

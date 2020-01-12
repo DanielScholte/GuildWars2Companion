@@ -22,6 +22,7 @@ class Achievement {
   int pointCap;
   bool loading;
   bool loaded;
+  String categoryName;
 
   Achievement(
       {this.id,
