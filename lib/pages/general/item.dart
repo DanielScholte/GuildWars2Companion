@@ -5,7 +5,6 @@ import 'package:guildwars2_companion/models/items/skin.dart';
 import 'package:guildwars2_companion/models/trading_post/price.dart';
 import 'package:guildwars2_companion/repositories/trading_post.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
-import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
@@ -29,11 +28,6 @@ class ItemPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CompanionAppBar(
-        title: '',
-        color: Colors.red,
-        foregroundColor: Colors.white,
-      ),
       body: Column(
         children: <Widget>[
           _buildHeader(),
@@ -64,6 +58,7 @@ class ItemPage extends StatelessWidget {
 
   Widget _buildHeader() {
     return CompanionHeader(
+      includeBack: true,
       child: Column(
         children: <Widget>[
           Padding(
@@ -71,7 +66,7 @@ class ItemPage extends StatelessWidget {
             child: CompanionItemBox(
               item: item,
               skin: skin,
-              size: 60.0,
+              size: 55.0,
               enablePopup: false,
             ),
           ),

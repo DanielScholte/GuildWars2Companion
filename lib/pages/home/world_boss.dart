@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/models/other/world_boss.dart';
-import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_row.dart';
@@ -19,11 +18,6 @@ class WorldBossPage extends StatelessWidget {
     return Theme(
       data: Theme.of(context).copyWith(accentColor: worldBoss.color),
       child: Scaffold(
-        appBar: CompanionAppBar(
-          title: '',
-          color: worldBoss.color,
-          foregroundColor: Colors.white,
-        ),
         body: Column(
           children: <Widget>[
             _buildHeader(),
@@ -45,6 +39,7 @@ class WorldBossPage extends StatelessWidget {
   Widget _buildHeader() {
     return CompanionHeader(
       color: worldBoss.color,
+      includeBack: true,
       child: Column(
         children: <Widget>[
           Container(
