@@ -6,7 +6,13 @@ import 'package:guildwars2_companion/models/achievement/achievement_category.dar
 import 'package:guildwars2_companion/models/achievement/achievement_group.dart';
 import 'package:guildwars2_companion/models/achievement/achievement_progress.dart';
 import 'package:guildwars2_companion/models/achievement/daily.dart';
+import 'package:guildwars2_companion/models/character/title.dart';
+import 'package:guildwars2_companion/models/items/item.dart';
+import 'package:guildwars2_companion/models/items/skin.dart';
+import 'package:guildwars2_companion/models/other/mini.dart';
 import 'package:guildwars2_companion/repositories/achievement.dart';
+import 'package:guildwars2_companion/repositories/character.dart';
+import 'package:guildwars2_companion/repositories/item.dart';
 import './bloc.dart';
 
 class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
@@ -14,9 +20,13 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
   AchievementState get initialState => LoadingAchievementsState();
 
   final AchievementRepository achievementRepository;
+  final CharacterRepository characterRepository;
+  final ItemRepository itemRepository;
 
   AchievementBloc({
-    @required this.achievementRepository
+    @required this.achievementRepository,
+    @required this.characterRepository,
+    @required this.itemRepository,
   });
 
   @override
@@ -25,6 +35,8 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
   ) async* {
     if (event is LoadAchievementsEvent) {
       yield* _loadAchievements(event.includeProgress);
+    } else if (event is LoadAchievementDetailsEvent) {
+      yield* _loadAchievementDetails(event);
     }
   }
 
@@ -35,14 +47,14 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
 
     List<AchievementGroup> achievementGroups = await achievementRepository.getAchievementGroups();
     List<AchievementCategory> achievementCategories = await achievementRepository.getAchievementCategories();
-    DailyGroup dailyGroups = await achievementRepository.getDailies();
+    DailyGroup dailyGroup = await achievementRepository.getDailies();
 
     List<int> achievementIds = [];
     achievementCategories.forEach((c) => achievementIds.addAll(c.achievements));
-    dailyGroups.pve.forEach((c) => achievementIds.add(c.id));
-    dailyGroups.pvp.forEach((c) => achievementIds.add(c.id));
-    dailyGroups.wvw.forEach((c) => achievementIds.add(c.id));
-    dailyGroups.fractals.forEach((c) => achievementIds.add(c.id));
+    dailyGroup.pve.forEach((c) => achievementIds.add(c.id));
+    dailyGroup.pvp.forEach((c) => achievementIds.add(c.id));
+    dailyGroup.wvw.forEach((c) => achievementIds.add(c.id));
+    dailyGroup.fractals.forEach((c) => achievementIds.add(c.id));
 
     List<Achievement> achievements = await achievementRepository.getAchievements(achievementIds.toSet().toList());
 
@@ -68,10 +80,10 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
       c.regions = c.regions.toSet().toList();
     });
 
-    dailyGroups.pve.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
-    dailyGroups.pvp.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
-    dailyGroups.wvw.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
-    dailyGroups.fractals.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
+    dailyGroup.pve.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
+    dailyGroup.pvp.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
+    dailyGroup.wvw.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
+    dailyGroup.fractals.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
 
     achievementGroups.forEach((g) {
       g.categoriesInfo = [];
@@ -93,8 +105,102 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
 
     yield LoadedAchievementsState(
       achievementGroups: achievementGroups,
-      dailyGroup: dailyGroups,
+      dailyGroup: dailyGroup,
+      achievements: achievements,
       includesProgress: includeProgress
+    );
+  }
+
+  Stream<AchievementState> _loadAchievementDetails(LoadAchievementDetailsEvent event) async* {
+    Achievement achievement = event.achievements.firstWhere((a) => a.id == event.achievementId);
+    achievement.loading = true;
+
+    LoadedAchievementsState(
+      achievementGroups: event.achievementGroups,
+      dailyGroup: event.dailyGroup,
+      achievements: event.achievements,
+      includesProgress: event.includeProgress
+    );
+
+    achievement.prerequisitesInfo = [];
+    achievement.prerequisites.forEach((id) {
+      Achievement prerequisite = event.achievements.firstWhere((a) => a.id == id, orElse: () => null);
+
+      if (prerequisite != null) {
+        achievement.prerequisitesInfo.add(prerequisite);
+      }
+    });
+
+    List<int> itemIds = [];
+    List<int> skinIds = [];
+    List<int> miniIds = [];
+
+    if (achievement.bits != null) {
+      achievement.bits.forEach((bit) {
+        switch (bit.type) {
+          case 'Item':
+            itemIds.add(bit.id);
+            break;
+          case 'Skin':
+            skinIds.add(bit.id);
+            break;
+          case 'Minipet':
+            miniIds.add(bit.id);
+            break;
+        }
+      });
+    }
+    
+    if (achievement.rewards != null) {
+      achievement.rewards.forEach((reward) {
+        if (reward.type == 'Item') {
+          itemIds.add(reward.id);
+        }
+      });
+    }
+
+    List<Item> items = itemIds.isEmpty ? [] : await itemRepository.getItems(itemIds);
+    List<Skin> skins = skinIds.isEmpty ? [] : await itemRepository.getSkins(skinIds);
+    List<Mini> minis = miniIds.isEmpty ? [] : await itemRepository.getMinis(miniIds);
+    List<AccountTitle> titles = await characterRepository.getTitles();
+
+    if (achievement.bits != null) {
+      achievement.bits.forEach((bit) {
+        switch (bit.type) {
+          case 'Item':
+            bit.item = items.firstWhere((i) => i.id == bit.id, orElse: () => null);
+            break;
+          case 'Skin':
+            bit.skin = skins.firstWhere((i) => i.id == bit.id, orElse: () => null);
+            break;
+          case 'Minipet':
+            bit.mini = minis.firstWhere((i) => i.id == bit.id, orElse: () => null);
+            break;
+        }
+      });
+    }
+
+    if (achievement.rewards != null) {
+      achievement.rewards.forEach((reward) {
+        switch (reward.type) {
+          case 'Item':
+            reward.item = items.firstWhere((i) => i.id == reward.id, orElse: () => null);
+            break;
+          case 'Title':
+            reward.title = titles.firstWhere((i) => i.id == reward.id, orElse: () => null);
+            break;
+        }
+      });
+    }
+
+    achievement.loading = false;
+    achievement.loaded = true;
+
+    LoadedAchievementsState(
+      achievementGroups: event.achievementGroups,
+      dailyGroup: event.dailyGroup,
+      achievements: event.achievements,
+      includesProgress: event.includeProgress
     );
   }
 }

@@ -14,11 +14,11 @@ class AchievementsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.blue),
+      data: Theme.of(context).copyWith(accentColor: Colors.blueGrey),
       child: Scaffold(
         appBar: CompanionAppBar(
           title: achievementCategory.name,
-          color: Colors.blue,
+          color: Colors.blueGrey,
           foregroundColor: Colors.white,
           elevation: 4.0,
         ),

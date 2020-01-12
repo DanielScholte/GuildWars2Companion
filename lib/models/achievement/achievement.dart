@@ -1,6 +1,10 @@
 import 'dart:convert';
 
 import 'package:guildwars2_companion/models/achievement/achievement_progress.dart';
+import 'package:guildwars2_companion/models/character/title.dart';
+import 'package:guildwars2_companion/models/items/item.dart';
+import 'package:guildwars2_companion/models/items/skin.dart';
+import 'package:guildwars2_companion/models/other/mini.dart';
 
 class Achievement {
   int id;
@@ -17,6 +21,7 @@ class Achievement {
   AchievementProgress progress;
   int pointCap;
   bool loading;
+  bool loaded;
 
   Achievement(
       {this.id,
@@ -32,6 +37,7 @@ class Achievement {
 
   Achievement.fromJson(Map<String, dynamic> json) {
     loading = false;
+    loaded = false;
     id = json['id'];
     icon = json['icon'];
     name = json['name'];
@@ -64,6 +70,7 @@ class Achievement {
 
   Achievement.fromDb(Map<String, dynamic> item) {
     loading = false;
+    loaded = false;
     id =  item['id'];
     icon = item['icon'];
     name = item['name'];
@@ -151,6 +158,10 @@ class AchievementBits {
   String text;
   int id;
 
+  Item item;
+  Skin skin;
+  Mini mini;
+
   AchievementBits({this.type, this.id});
 
   AchievementBits.fromJson(Map<String, dynamic> json) {
@@ -192,6 +203,8 @@ class AchievementRewards {
   int id;
   int count;
   String region;
+  Item item;
+  AccountTitle title;
 
   AchievementRewards({this.type, this.id, this.count});
 

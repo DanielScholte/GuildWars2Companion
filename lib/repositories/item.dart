@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/models/items/skin.dart';
+import 'package:guildwars2_companion/models/other/mini.dart';
 import 'package:guildwars2_companion/utils/token.dart';
 import 'package:guildwars2_companion/utils/urls.dart';
 
@@ -14,6 +15,7 @@ import 'package:sqflite/sqlite_api.dart';
 class ItemRepository {
   List<Item> _cachedItems;
   List<Skin> _cachedSkins;
+  List<Mini> _cachedMinis;
 
   Future<Database> _getDatabase() async {
     return await openDatabase(
@@ -52,6 +54,16 @@ class ItemRepository {
             details_maxPower INTEGER
           )
         ''');
+        await db.execute('''
+          CREATE TABLE minis(
+            id INTEGER PRIMARY KEY,
+            name TEXT,
+            icon TEXT,
+            display_order INTEGER,
+            itemId INTEGER,
+            expiration_date DATE
+          )
+        ''');
         return;
       },
       version: 1,
@@ -75,11 +87,20 @@ class ItemRepository {
       whereArgs: [DateFormat('yyyyMMdd').format(now)],
     );
 
+    await database.delete(
+      'minis',
+      where: "expiration_date <= ?",
+      whereArgs: [DateFormat('yyyyMMdd').format(now)],
+    );
+
     final List<Map<String, dynamic>> items = await database.query('items');
     _cachedItems = List.generate(items.length, (i) => Item.fromDb(items[i]));
 
     final List<Map<String, dynamic>> skins = await database.query('skins');
     _cachedSkins = List.generate(skins.length, (i) => Skin.fromDb(skins[i]));
+
+    final List<Map<String, dynamic>> minis = await database.query('minis');
+    _cachedMinis = List.generate(minis.length, (i) => Mini.fromDb(minis[i]));
 
     return;
   }
@@ -90,6 +111,10 @@ class ItemRepository {
 
   int getCachedSkinsCount() {
     return _cachedSkins.length;
+  }
+
+  int getCachedMinisCount() {
+    return _cachedMinis.length;
   }
 
   Future<List<Item>> getItems(List<int> itemIds) async {
@@ -215,6 +240,70 @@ class ItemRepository {
 
     Batch batch = database.batch();
     nonCachedSkins.forEach((skin) => batch.insert('skins', skin.toDb(expirationDate), conflictAlgorithm: ConflictAlgorithm.ignore));
+    await batch.commit(noResult: true);
+
+    return;
+  }
+
+  Future<List<Mini>> getMinis(List<int> miniIds) async {
+    List<Mini> minis = [];
+    List<int> newMiniIds = [];
+
+    miniIds.forEach((miniId) {
+      Mini mini = _cachedMinis.firstWhere((i) => i.id == miniId, orElse: () => null);
+
+      if (mini != null) {
+        minis.add(mini);
+      } else {
+        newMiniIds.add(miniId);
+      }
+    });
+
+    if (newMiniIds.isNotEmpty) {
+      minis.addAll(await _getNewMinis(newMiniIds));
+    }
+
+    return minis;
+  }
+
+  Future<List<Mini>> _getNewMinis(List<int> miniIds) async {
+    List<String> miniIdsList = Urls.divideIdLists(miniIds);
+    List<Mini> minis = [];
+    for (var skinIds in miniIdsList) {
+      final response = await http.get(
+        Urls.minisUrl + skinIds,
+        headers: {
+          'Authorization': 'Bearer ${await TokenUtil.getToken()}',
+        }
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 206) {
+        List reponseMinis = json.decode(response.body);
+        minis.addAll(reponseMinis.map((a) => Mini.fromJson(a)).toList());
+      }
+    }
+
+    await _cacheMinis(minis);
+
+    return minis;
+  }
+
+  Future<void> _cacheMinis(List<Mini> minis) async {
+    Database database = await _getDatabase();
+
+    List<Mini> nonCachedMinis = minis.where((m) => !_cachedMinis.any((cm) => cm.id == m.id)).toList();
+    _cachedMinis.addAll(nonCachedMinis);
+
+    String expirationDate = DateFormat('yyyyMMdd')
+      .format(
+        DateTime
+        .now()
+        .add(Duration(days: 31))
+        .toUtc()
+      );
+
+    Batch batch = database.batch();
+    nonCachedMinis.forEach((mini) => batch.insert('minis', mini.toDb(expirationDate), conflictAlgorithm: ConflictAlgorithm.ignore));
     await batch.commit(noResult: true);
 
     return;

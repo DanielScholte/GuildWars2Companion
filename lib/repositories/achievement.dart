@@ -42,6 +42,10 @@ class AchievementRepository {
   }
 
   Future<void> loadCachedData() async {
+    if (_cachedAchievements.isNotEmpty) {
+      return;
+    }
+
     Database database = await _getDatabase();
 
     DateTime now = DateTime.now().toUtc();

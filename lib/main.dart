@@ -115,6 +115,8 @@ class GuildWars2Companion extends StatelessWidget {
         BlocProvider<AchievementBloc>(
           create: (BuildContext context) => AchievementBloc(
             achievementRepository: RepositoryProvider.of<AchievementRepository>(context),
+            characterRepository: RepositoryProvider.of<CharacterRepository>(context),
+            itemRepository: RepositoryProvider.of<ItemRepository>(context),
           ),
         ),
         BlocProvider<BankBloc>(

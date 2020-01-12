@@ -16,6 +16,7 @@ class Urls {
 
   static final String itemsUrl = '$baseUrl/items?ids=';
   static final String skinsUrl = '$baseUrl/skins?ids=';
+  static final String minisUrl = '$baseUrl/minis?ids=';
 
   static final String inventoryUrl = '$baseUrl/account/inventory';
   static final String bankUrl = '$baseUrl/account/bank';

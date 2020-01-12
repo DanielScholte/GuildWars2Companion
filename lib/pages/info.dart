@@ -51,8 +51,6 @@ class InfoPage extends StatelessWidget {
             ),
             if (Foundation.kDebugMode || true)
               _buildDebugInfo(context)
-            else
-              Container()
           ],
         ),
       ),
@@ -73,6 +71,12 @@ class InfoPage extends StatelessWidget {
         ),
         Text(
           'Skins cached: ${itemRepository.getCachedSkinsCount()}',
+          style: TextStyle(
+            fontSize: 16.0
+          ),
+        ),
+        Text(
+          'Minis cached: ${itemRepository.getCachedMinisCount()}',
           style: TextStyle(
             fontSize: 16.0
           ),
