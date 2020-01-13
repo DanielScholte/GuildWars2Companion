@@ -7,10 +7,12 @@ class CompanionExpandableHeader extends StatefulWidget {
   final Widget trailing;
   final Widget child;
   final Color foreground;
+  final Duration duration;
 
   const CompanionExpandableHeader({
     @required this.header,
     @required this.child,
+    this.duration = const Duration(milliseconds: 250),
     this.trailing,
     this.foreground = Colors.black
   });
@@ -27,7 +29,7 @@ class _CompanionExpandableHeaderState extends State<CompanionExpandableHeader> w
   @override
   void initState() {
     _rotationController = AnimationController(
-      duration: const Duration(milliseconds: 250),
+      duration: widget.duration,
       vsync: this,
     );
     super.initState();
@@ -88,7 +90,7 @@ class _CompanionExpandableHeaderState extends State<CompanionExpandableHeader> w
         ],
       ),
       alignment: Alignment.topCenter,
-      duration:  Duration(milliseconds: 250),
+      duration: widget.duration,
       vsync: this,
     );
   }

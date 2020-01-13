@@ -60,19 +60,14 @@ class AchievementPage extends StatelessWidget {
                           Theme(
                             data: Theme.of(context).copyWith(accentColor: Colors.white),
                             child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.white,
-                                  width: 2.0
-                                ),
-                                borderRadius: BorderRadius.circular(4.0)
-                              ),
+                              margin: EdgeInsets.all(4.0),
                               width: 128.0,
+                              height: 8.0,
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(2.0),
+                                borderRadius: BorderRadius.circular(4.0),
                                 child: LinearProgressIndicator(
                                   value: achievement.progress.current / achievement.progress.max,
-                                  backgroundColor: Colors.transparent,
+                                  backgroundColor: Colors.white24
                                 ),
                               ),
                             ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
+import 'package:guildwars2_companion/models/achievement/achievement_category.dart';
 import 'package:guildwars2_companion/models/achievement/achievement_group.dart';
 import 'package:guildwars2_companion/pages/progression/achievements.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
@@ -42,6 +43,9 @@ class AchievementCategoriesPage extends StatelessWidget {
   }
 
   Widget _buildGroup(BuildContext context, AchievementGroup group) {
+    List<AchievementCategory> categories = group.categoriesInfo
+      .where((c) => c.achievementsInfo.isNotEmpty)
+      .toList();
     return CompanionCard(
       padding: EdgeInsets.zero,
       backgroundColor: Colors.blueGrey,
@@ -61,8 +65,7 @@ class AchievementCategoriesPage extends StatelessWidget {
           ),
         ),
         child: Column(
-          children: group.categoriesInfo
-            .where((c) => c.achievementsInfo.isNotEmpty)
+          children: categories
             .map((c) => CompanionFullButton(
               title: c.name,
               height: 64.0,
