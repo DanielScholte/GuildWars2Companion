@@ -49,6 +49,7 @@ class Item {
       weightClass: item['details_weightClass'],
       unlockType : item['details_unlockType'],
       name : item['details_name'],
+      description: item['details_description'],
       defense : item['details_defense'],
       size : item['details_size'],
       durationMs : item['details_durationMs'],
@@ -90,6 +91,7 @@ class Item {
       data['details_weightClass'] = details.weightClass;
       data['details_unlockType'] = details.unlockType;
       data['details_name'] = details.name;
+      data['details_description'] = details.description;
       data['details_defense'] = details.defense;
       data['details_size'] = details.size;
       data['details_durationMs'] = details.durationMs;
@@ -101,6 +103,7 @@ class Item {
       data['details_weightClass'] = null;
       data['details_unlockType'] = null;
       data['details_name'] = null;
+      data['details_description'] = null;
       data['details_defense'] = null;
       data['details_size'] = null;
       data['details_durationMs'] = null;

@@ -43,6 +43,7 @@ class ItemRepository {
             vendorValue INTEGER,
             expiration_date DATE,
             details_type TEXT,
+            details_description TEXT,
             details_weightClass TEXT,
             details_unlockType TEXT,
             details_name TEXT,

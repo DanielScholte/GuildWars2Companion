@@ -83,6 +83,7 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
           }
         }
       });
+      c.achievementsInfo.sort((a, b) => -_getProgressionRate(a.progress).compareTo(_getProgressionRate(b.progress)));
       c.regions = c.regions.toSet().toList();
     });
 
@@ -115,6 +116,22 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
       achievements: achievements,
       includesProgress: includeProgress
     );
+  }
+
+  int _getProgressionRate(AchievementProgress progress) {
+    if (progress == null) {
+      return 0;
+    }
+
+    if (progress.done) {
+      return -1;
+    }
+
+    if (progress.current == null || progress.max == null) {
+      return 0;
+    }
+
+    return ((progress.current / progress.max) * 100).round();
   }
 
   Stream<AchievementState> _loadAchievementDetails(LoadAchievementDetailsEvent event) async* {

@@ -6,6 +6,7 @@ class ItemDetails {
   int durationMs;
   String unlockType;
   String name;
+  String description;
   int charges;
   int minPower;
   int maxPower;
@@ -18,6 +19,7 @@ class ItemDetails {
       this.durationMs,
       this.unlockType,
       this.name,
+      this.description,
       this.charges,
       this.minPower,
       this.maxPower});
@@ -30,6 +32,7 @@ class ItemDetails {
     durationMs = json['duration_ms'];
     unlockType = json['unlock_type'];
     name = json['name'];
+    description = json['description'];
     charges = json['charges'];
     minPower = json['min_power'];
     maxPower = json['max_power'];

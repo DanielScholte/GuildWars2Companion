@@ -66,10 +66,10 @@ class CompanionItemBox extends StatelessWidget {
               _buildQuantity(),
             if (quantity == 0)
               _buildGreyOverlay(),
+            if (markCompleted)
+              _buildCompleted(),
             if (enablePopup && !displayEmpty)
               _buildInkwell(context),
-            if (markCompleted)
-              _buildCompleted()
           ],
         ),
       ),

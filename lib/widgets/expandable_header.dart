@@ -45,7 +45,7 @@ class _CompanionExpandableHeaderState extends State<CompanionExpandableHeader> w
       child: Column(
         children: <Widget>[
           Container(
-            height: 40.0,
+            height: 56.0,
             child: Material(
               color: Colors.transparent,
               child: InkWell(
@@ -55,7 +55,7 @@ class _CompanionExpandableHeaderState extends State<CompanionExpandableHeader> w
                   _rotationController.animateTo(_expanded ? 1.0 : 0.0);
                 }),
                 child: Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(16.0),
                   child: Row(
                     children: <Widget>[
                       Expanded(

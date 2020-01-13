@@ -43,6 +43,8 @@ class ItemPage extends StatelessWidget {
                   _buildItemDetails()
                 else
                   _buildRarityOnlyDetails(),
+                if (item.type == 'Consumable' && item.details != null && item.details.description != null && item.details.description.isNotEmpty)
+                  _buildConsumableDescription(),
                 if (upgradesInfo != null && upgradesInfo.where((up) => up != null).toList().isNotEmpty)
                   _buildItemList('Upgrades', upgradesInfo),
                 if (infusionsInfo != null && infusionsInfo.where((inf) => inf != null).toList().isNotEmpty)
@@ -189,6 +191,30 @@ class ItemPage extends StatelessWidget {
           ),
           Text(
             removeAllHtmlTags(item.description),
+            style: TextStyle(
+              fontSize: 16.0
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildConsumableDescription() {
+    return CompanionCard(
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(bottom: 8.0),
+            child: Text(
+              'Effect description',
+              style: TextStyle(
+                fontSize: 18.0
+              ),
+            ),
+          ),
+          Text(
+            removeAllHtmlTags(item.details.description),
             style: TextStyle(
               fontSize: 16.0
             ),
