@@ -33,6 +33,7 @@ class Urls {
   static final String achievementCategoriesUrl = '$baseUrl/achievements/categories?ids=all';
   static final String achievementGroupsUrl = '$baseUrl/achievements/groups?ids=all';
   static final String dailiesUrl = '$baseUrl/achievements/daily';
+  static final String dailiesTomorrowUrl = '$baseUrl/achievements/daily/tomorrow';
 
   static List<String> divideIdLists(List<int> ids) {
     List<List<int>> output = [[]];

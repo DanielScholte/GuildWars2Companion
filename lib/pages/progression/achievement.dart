@@ -32,17 +32,20 @@ class AchievementPage extends StatelessWidget {
               color: Colors.blueGrey,
               child: Column(
                 children: <Widget>[
-                  CachedNetworkImage(
-                    height: 42.0,
-                    imageUrl: achievement.icon != null ? achievement.icon : categoryIcon,
-                    placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                    errorWidget: (context, url, error) => Center(child: Icon(
-                      FontAwesomeIcons.dizzy,
-                      size: 28,
-                      color: Colors.white,
-                    )),
-                    fit: BoxFit.fill,
-                  ),
+                  if (achievement.icon == null && categoryIcon != null && categoryIcon.contains('assets'))
+                    Image.asset(categoryIcon, height: 42.0,)
+                  else
+                    CachedNetworkImage(
+                      height: 42.0,
+                      imageUrl: achievement.icon != null ? achievement.icon : categoryIcon,
+                      placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) => Center(child: Icon(
+                        FontAwesomeIcons.dizzy,
+                        size: 28,
+                        color: Colors.white,
+                      )),
+                      fit: BoxFit.fill,
+                    ),
                   if (achievement.progress != null)
                     _buildProgress(),
                   if (achievement.progress != null && achievement.progress.current != null && achievement.progress.max != null)

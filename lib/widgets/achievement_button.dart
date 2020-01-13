@@ -14,11 +14,13 @@ class CompanionAchievementButton extends StatelessWidget {
   final LoadedAchievementsState state;
   final Achievement achievement;
   final String categoryIcon;
+  final String levels;
 
   CompanionAchievementButton({
     @required this.state,
     @required this.achievement,
-    this.categoryIcon
+    this.categoryIcon,
+    this.levels,
   });
 
   @override
@@ -32,7 +34,8 @@ class CompanionAchievementButton extends StatelessWidget {
           BlocProvider.of<AchievementBloc>(context).add(LoadAchievementDetailsEvent(
             achievementGroups: state.achievementGroups,
             achievements: state.achievements,
-            dailyGroup: state.dailyGroup,
+            dialies: state.dailies,
+            dialiesTomorrow: state.dailiesTomorrow,
             includeProgress: state.includesProgress,
             achievementId: achievement.id,
           ));
@@ -47,6 +50,9 @@ class CompanionAchievementButton extends StatelessWidget {
       },
       leading: _buildLeading(context),
       trailing: _buildTrailing(),
+      subtitles: this.levels != null ? [
+        this.levels
+      ] : null,
     );
   }
 
@@ -162,17 +168,7 @@ class CompanionAchievementButton extends StatelessWidget {
                 size: 28.0,
               )
             else
-              CachedNetworkImage(
-                height: 42.0,
-                imageUrl: achievement.icon != null ? achievement.icon : categoryIcon,
-                placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) => Center(child: Icon(
-                  FontAwesomeIcons.dizzy,
-                  size: 28,
-                  color: Colors.white,
-                )),
-                fit: BoxFit.fill,
-              ),
+              _buildIcon(height: 42.0),
             if (achievement.progress != null && achievement.progress.current != null && achievement.progress.max != null)
               Column(
                 children: <Widget>[
@@ -209,16 +205,20 @@ class CompanionAchievementButton extends StatelessWidget {
     );
   }
 
-  Widget _buildIcon() {
+  Widget _buildIcon({height = 48.0}) {
+    if (achievement.icon == null && categoryIcon != null && categoryIcon.contains('assets')) {
+      return Image.asset(categoryIcon, height: height,);
+    }
+
     if (achievement.icon != null || categoryIcon != null) {
       return CachedNetworkImage(
-        height: 48.0,
+        height: height,
         imageUrl: achievement.icon != null ? achievement.icon : categoryIcon,
         placeholder: (context, url) => Center(child: CircularProgressIndicator()),
         errorWidget: (context, url, error) => Center(child: Icon(
           FontAwesomeIcons.dizzy,
           size: 28,
-          color: Colors.black,
+          color: Colors.white,
         )),
         fit: BoxFit.fill,
       );

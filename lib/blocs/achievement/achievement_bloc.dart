@@ -47,14 +47,19 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
 
     List<AchievementGroup> achievementGroups = await achievementRepository.getAchievementGroups();
     List<AchievementCategory> achievementCategories = await achievementRepository.getAchievementCategories();
-    DailyGroup dailyGroup = await achievementRepository.getDailies();
+    DailyGroup dailies = await achievementRepository.getDailies();
+    DailyGroup dailiesTomorrow = await achievementRepository.getDailies(tomorrow: true);
 
     List<int> achievementIds = [];
     achievementCategories.forEach((c) => achievementIds.addAll(c.achievements));
-    dailyGroup.pve.forEach((c) => achievementIds.add(c.id));
-    dailyGroup.pvp.forEach((c) => achievementIds.add(c.id));
-    dailyGroup.wvw.forEach((c) => achievementIds.add(c.id));
-    dailyGroup.fractals.forEach((c) => achievementIds.add(c.id));
+    dailies.pve.forEach((c) => achievementIds.add(c.id));
+    dailies.pvp.forEach((c) => achievementIds.add(c.id));
+    dailies.wvw.forEach((c) => achievementIds.add(c.id));
+    dailies.fractals.forEach((c) => achievementIds.add(c.id));
+    dailiesTomorrow.pve.forEach((c) => achievementIds.add(c.id));
+    dailiesTomorrow.pvp.forEach((c) => achievementIds.add(c.id));
+    dailiesTomorrow.wvw.forEach((c) => achievementIds.add(c.id));
+    dailiesTomorrow.fractals.forEach((c) => achievementIds.add(c.id));
 
     List<Achievement> achievements = await achievementRepository.getAchievements(achievementIds.toSet().toList());
 
@@ -87,10 +92,14 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
       c.regions = c.regions.toSet().toList();
     });
 
-    dailyGroup.pve.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
-    dailyGroup.pvp.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
-    dailyGroup.wvw.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
-    dailyGroup.fractals.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
+    dailies.pve.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
+    dailies.pvp.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
+    dailies.wvw.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
+    dailies.fractals.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
+    dailiesTomorrow.pve.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
+    dailiesTomorrow.pvp.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
+    dailiesTomorrow.wvw.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
+    dailiesTomorrow.fractals.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
 
     achievementGroups.forEach((g) {
       g.categoriesInfo = [];
@@ -112,7 +121,8 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
 
     yield LoadedAchievementsState(
       achievementGroups: achievementGroups,
-      dailyGroup: dailyGroup,
+      dailies: dailies,
+      dailiesTomorrow: dailiesTomorrow,
       achievements: achievements,
       includesProgress: includeProgress
     );
@@ -140,7 +150,8 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
 
     yield LoadedAchievementsState(
       achievementGroups: event.achievementGroups,
-      dailyGroup: event.dailyGroup,
+      dailies: event.dialies,
+      dailiesTomorrow: event.dialiesTomorrow,
       achievements: event.achievements,
       includesProgress: event.includeProgress
     );
@@ -223,7 +234,8 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
 
     yield LoadedAchievementsState(
       achievementGroups: event.achievementGroups,
-      dailyGroup: event.dailyGroup,
+      dailies: event.dialies,
+      dailiesTomorrow: event.dialiesTomorrow,
       achievements: event.achievements,
       includesProgress: event.includeProgress
     );

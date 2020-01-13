@@ -16,14 +16,16 @@ class LoadAchievementsEvent extends AchievementEvent {
 
 class LoadAchievementDetailsEvent extends AchievementEvent {
   final List<AchievementGroup> achievementGroups;
-  final DailyGroup dailyGroup;
+  final DailyGroup dialies;
+  final DailyGroup dialiesTomorrow;
   final List<Achievement> achievements;
   final bool includeProgress;
   final int achievementId;
 
   LoadAchievementDetailsEvent({
     @required this.achievementGroups,
-    @required this.dailyGroup,
+    @required this.dialies,
+    @required this.dialiesTomorrow,
     @required this.achievements,
     @required this.includeProgress,
     @required this.achievementId

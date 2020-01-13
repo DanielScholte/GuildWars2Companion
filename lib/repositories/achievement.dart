@@ -179,9 +179,9 @@ class AchievementRepository {
     }
   }
 
-  Future<DailyGroup> getDailies() async {
+  Future<DailyGroup> getDailies({bool tomorrow = false}) async {
     final response = await http.get(
-      Urls.dailiesUrl,
+      tomorrow ? Urls.dailiesTomorrowUrl : Urls.dailiesUrl,
       headers: {
         'Authorization': 'Bearer ${await TokenUtil.getToken()}',
       }
