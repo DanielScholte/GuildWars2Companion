@@ -63,10 +63,41 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
 
     List<Achievement> achievements = await achievementRepository.getAchievements(achievementIds.toSet().toList());
 
-    if (includeProgress) {
-      List<AchievementProgress> progress = await achievementRepository.getAchievementProgress();
-      achievements.forEach((a) => a.progress = progress.firstWhere((p) => p.id == a.id, orElse: () => null));
-    }
+    int achievementPoints = 0;
+
+    List<AchievementProgress> progress = await achievementRepository.getAchievementProgress();
+
+    achievements.forEach((a) {
+      if (includeProgress) {
+        a.progress = progress.firstWhere((p) => p.id == a.id, orElse: () => null);
+      }
+      
+      int maxPoints = 0;
+      a.tiers.forEach((t) {
+        maxPoints += t.points;
+
+        if (a.progress != null) {
+          if ((a.progress.current != null && a.progress.current >= t.count) || a.progress.done) {
+            a.progress.points += t.points;
+          }
+        }
+      });
+
+      if (a.progress != null && a.progress.repeated != null) {
+        a.progress.points += maxPoints * a.progress.repeated;
+        if (a.pointCap != null && a.progress.points > a.pointCap) {
+          a.progress.points = a.pointCap;
+        }
+      }
+
+      if (a.pointCap == null) {
+        a.pointCap = maxPoints;
+      }
+
+      if (a.progress != null) {
+        achievementPoints += a.progress.points;
+      }
+    });
 
     achievementCategories.forEach((c) {
       c.achievementsInfo = [];
@@ -88,7 +119,7 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
           }
         }
       });
-      c.achievementsInfo.sort((a, b) => -_getProgressionRate(a.progress).compareTo(_getProgressionRate(b.progress)));
+      c.achievementsInfo.sort((a, b) => -_getProgressionRate(a, a.progress).compareTo(_getProgressionRate(b, b.progress)));
       c.regions = c.regions.toSet().toList();
     });
 
@@ -124,11 +155,12 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
       dailies: dailies,
       dailiesTomorrow: dailiesTomorrow,
       achievements: achievements,
-      includesProgress: includeProgress
+      includesProgress: includeProgress,
+      achievementPoints: achievementPoints,
     );
   }
 
-  int _getProgressionRate(AchievementProgress progress) {
+  int _getProgressionRate(Achievement achievement, AchievementProgress progress) {
     if (progress == null) {
       return 0;
     }
@@ -153,7 +185,8 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
       dailies: event.dialies,
       dailiesTomorrow: event.dialiesTomorrow,
       achievements: event.achievements,
-      includesProgress: event.includeProgress
+      includesProgress: event.includeProgress,
+      achievementPoints: event.achievementPoints
     );
 
     if (achievement.prerequisites != null) {
@@ -237,7 +270,8 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
       dailies: event.dialies,
       dailiesTomorrow: event.dialiesTomorrow,
       achievements: event.achievements,
-      includesProgress: event.includeProgress
+      includesProgress: event.includeProgress,
+      achievementPoints: event.achievementPoints
     );
   }
 }

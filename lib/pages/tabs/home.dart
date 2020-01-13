@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
+import 'package:guildwars2_companion/blocs/achievement/achievement_bloc.dart';
+import 'package:guildwars2_companion/blocs/achievement/achievement_state.dart';
 import 'package:guildwars2_companion/blocs/dungeon/bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/pages/home/dungeons.dart';
@@ -82,11 +84,7 @@ class HomePage extends StatelessWidget {
                                 loading: false,
                               ),
                             if (state.tokenInfo.permissions.contains('progression'))
-                              CompanionInfoBox(
-                                header: 'Achievements',
-                                text: '30.000?',
-                                loading: false,
-                              ),
+                              _buildAchievementsBox(context, state.account.dailyAp + state.account.monthlyAp),
                           ],
                         ),
                       )
@@ -115,6 +113,24 @@ class HomePage extends StatelessWidget {
         }
 
         return Container();
+      },
+    );
+  }
+
+  Widget _buildAchievementsBox(BuildContext context, int dailies) {
+    return BlocBuilder<AchievementBloc, AchievementState>(
+      builder: (context, state) {
+        if (state is LoadedAchievementsState) {
+          return CompanionInfoBox(
+            header: 'Achievements',
+            text: GuildWarsUtil.intToString(state.achievementPoints + dailies),
+            loading: false,
+          );
+        }
+
+        return CompanionInfoBox(
+          header: 'Achievements',
+        );
       },
     );
   }

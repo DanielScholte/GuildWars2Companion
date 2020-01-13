@@ -3,12 +3,15 @@ class AchievementProgress {
   List<int> bits;
   int current;
   int max;
+  int repeated;
   bool done;
   bool unlocked;
+  int points;
 
   AchievementProgress({this.id, this.bits, this.current, this.max, this.done});
 
   AchievementProgress.fromJson(Map<String, dynamic> json) {
+    points = 0;
     id = json['id'];
     if (json['bits'] != null) {
       bits = json['bits'].cast<int>();
@@ -17,6 +20,7 @@ class AchievementProgress {
     max = json['max'];
     done = json['done'];
     unlocked = json['unlocked'];
+    repeated = json['repeated'];
   }
 
   Map<String, dynamic> toJson() {

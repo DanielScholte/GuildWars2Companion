@@ -148,25 +148,11 @@ class AchievementPage extends StatelessWidget {
   }
 
   Widget _buildProgress() {
-    int max = 0;
-    int points = 0;
-    achievement.tiers.forEach((t) {
-      max += t.points;
-
-      if (achievement.progress.current != null && achievement.progress.current >= t.count) {
-        points = max;
-      }
-    });
-
-    if (achievement.progress.done) {
-      points = max;
-    }
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          '$points / $max',
+          '${achievement.progress.points} / ${achievement.pointCap}',
           style: TextStyle(
             fontSize: 16.0,
             color: Colors.white
@@ -419,6 +405,19 @@ class AchievementPage extends StatelessWidget {
   }
 
   Widget _buildItemBit(Achievement _achievement, AchievementBits bit, bool includeProgress) {
+    if (bit.item == null) {
+      return Row(
+        children: <Widget>[
+          Text(
+            'Unknown item',
+            style: TextStyle(
+              fontSize: 16.0
+            ),
+          ),
+        ],
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.all(2.0),
       child: Row(

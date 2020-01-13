@@ -14,6 +14,7 @@ class LoadedAchievementsState extends AchievementState {
   final DailyGroup dailiesTomorrow;
   final List<Achievement> achievements;
   final bool includesProgress;
+  final int achievementPoints;
 
   LoadedAchievementsState({
     @required this.achievementGroups,
@@ -21,5 +22,6 @@ class LoadedAchievementsState extends AchievementState {
     @required this.dailiesTomorrow,
     @required this.achievements,
     @required this.includesProgress,
+    @required this.achievementPoints,
   });
 }

@@ -21,6 +21,7 @@ class LoadAchievementDetailsEvent extends AchievementEvent {
   final List<Achievement> achievements;
   final bool includeProgress;
   final int achievementId;
+  final int achievementPoints;
 
   LoadAchievementDetailsEvent({
     @required this.achievementGroups,
@@ -28,6 +29,7 @@ class LoadAchievementDetailsEvent extends AchievementEvent {
     @required this.dialiesTomorrow,
     @required this.achievements,
     @required this.includeProgress,
+    @required this.achievementPoints,
     @required this.achievementId
   });
 }

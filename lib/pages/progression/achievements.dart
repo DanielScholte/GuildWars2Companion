@@ -26,7 +26,7 @@ class AchievementsPage extends StatelessWidget {
           builder: (context, state) {
             if (state is LoadedAchievementsState) {
               AchievementCategory _achievementCategory = _getAchievementsCategory(state);
-              
+
               return ListView(
                 children: _achievementCategory.achievementsInfo
                   .map((a) => CompanionAchievementButton(

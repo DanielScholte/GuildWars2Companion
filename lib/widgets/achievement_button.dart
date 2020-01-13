@@ -37,6 +37,7 @@ class CompanionAchievementButton extends StatelessWidget {
             dialies: state.dailies,
             dialiesTomorrow: state.dailiesTomorrow,
             includeProgress: state.includesProgress,
+            achievementPoints: state.achievementPoints,
             achievementId: achievement.id,
           ));
         }
@@ -59,6 +60,10 @@ class CompanionAchievementButton extends StatelessWidget {
   Widget _buildTrailing() {
     int points = 0;
     achievement.tiers.forEach((t) => points += t.points);
+
+    if (achievement.pointCap != null) {
+      points = achievement.pointCap;
+    }
 
     int coin = 0;
     bool item = false;
@@ -153,6 +158,9 @@ class CompanionAchievementButton extends StatelessWidget {
       return _buildIcon();
     }
 
+    int points = 0;
+    achievement.tiers.forEach((t) => points += t.points);
+
     return Stack(
       alignment: Alignment.center,
       children: <Widget>[
@@ -189,7 +197,10 @@ class CompanionAchievementButton extends StatelessWidget {
               )
           ],
         ),
-        if (achievement.progress != null && achievement.progress.done)
+        if (achievement.progress != null && achievement.progress.done || (
+          achievement.pointCap != null && achievement.progress != null &&
+          achievement.progress.repeated != null && achievement.progress.repeated * points >= achievement.pointCap
+        ))
           Container(
             width: double.infinity,
             height: double.infinity,
