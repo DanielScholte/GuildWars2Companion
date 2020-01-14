@@ -6,6 +6,7 @@ import 'package:guildwars2_companion/blocs/achievement/achievement_state.dart';
 import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
 import 'package:guildwars2_companion/models/achievement/achievement.dart';
 import 'package:guildwars2_companion/pages/progression/achievement.dart';
+import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
 
 import 'full_button.dart';
@@ -119,7 +120,7 @@ class CompanionAchievementButton extends StatelessWidget {
             children: <Widget>[
               if (region != null)
                 Image.asset(
-                  'assets/progression/mastery_${region.toLowerCase()}.png',
+                  GuildWarsUtil.masteryIcon(region),
                   height: 16.0,
                   width: 16.0,
                 ),

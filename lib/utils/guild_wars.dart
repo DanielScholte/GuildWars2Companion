@@ -9,6 +9,19 @@ class GuildWarsUtil {
     return (playTime / 60 / 60).round();
   }
 
+  static String masteryIcon(String region) {
+    switch (region) {
+      case 'Desert':
+        return 'assets/progression/mastery_desert.png';
+      case 'Maguuma':
+        return 'assets/progression/mastery_maguuma.png';
+      case 'Tyria':
+        return 'assets/progression/mastery_tyria.png';
+      default:
+        return 'assets/progression/mastery_unknown.png';
+    }
+  }
+
   static Color getProfessionColor(String professionId) {
     switch (professionId) {
       case 'Guardian':

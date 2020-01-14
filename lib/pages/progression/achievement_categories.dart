@@ -6,6 +6,7 @@ import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
 import 'package:guildwars2_companion/models/achievement/achievement_category.dart';
 import 'package:guildwars2_companion/models/achievement/achievement_group.dart';
 import 'package:guildwars2_companion/pages/progression/achievements.dart';
+import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/expandable_header.dart';
@@ -57,7 +58,7 @@ class AchievementCategoriesPage extends StatelessWidget {
           child: Row(
             children: group.regions
               .map((r) => Image.asset(
-                'assets/progression/mastery_${r.toLowerCase()}.png',
+                GuildWarsUtil.masteryIcon(r),
                 height: 24.0,
                 width: 24.0,
               ))
@@ -88,7 +89,7 @@ class AchievementCategoriesPage extends StatelessWidget {
               trailing: Row(
                 children: c.regions
                   .map((r) => Image.asset(
-                    'assets/progression/mastery_${r.toLowerCase()}.png',
+                    GuildWarsUtil.masteryIcon(r),
                     height: 28.0,
                     width: 28.0,
                   ))

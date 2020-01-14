@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
 import 'package:guildwars2_companion/models/achievement/achievement.dart';
+import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/achievement_button.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
@@ -247,7 +248,7 @@ class AchievementPage extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Image.asset(
-                            'assets/progression/mastery_${r.region.toLowerCase()}.png',
+                            GuildWarsUtil.masteryIcon(r.region),
                             height: 32.0,
                             width: 32.0,
                           ),
