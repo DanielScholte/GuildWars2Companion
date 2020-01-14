@@ -5,6 +5,8 @@ import 'package:guildwars2_companion/models/achievement/achievement_category.dar
 import 'package:guildwars2_companion/models/achievement/achievement_group.dart';
 import 'package:guildwars2_companion/models/achievement/achievement_progress.dart';
 import 'package:guildwars2_companion/models/achievement/daily.dart';
+import 'package:guildwars2_companion/models/mastery/mastery.dart';
+import 'package:guildwars2_companion/models/mastery/mastery_progress.dart';
 import 'package:guildwars2_companion/utils/token.dart';
 import 'package:guildwars2_companion/utils/urls.dart';
 import 'package:http/http.dart' as http;
@@ -189,8 +191,40 @@ class AchievementRepository {
 
     if (response.statusCode == 200) {
       return DailyGroup.fromJson(json.decode(response.body));
-    } else {
-      return DailyGroup();
     }
+
+    return DailyGroup();
+  }
+
+  Future<List<Mastery>> getMasteries() async {
+    final response = await http.get(
+      Urls.masteriesUrl,
+      headers: {
+        'Authorization': 'Bearer ${await TokenUtil.getToken()}',
+      }
+    );
+
+    if (response.statusCode == 200) {
+      List masteries = json.decode(response.body);
+      return masteries.map((a) => Mastery.fromJson(a)).toList();
+    }
+
+    return [];
+  }
+
+  Future<List<MasteryProgress>> getMasteryProgress() async {
+    final response = await http.get(
+      Urls.masteryProgressUrl,
+      headers: {
+        'Authorization': 'Bearer ${await TokenUtil.getToken()}',
+      }
+    );
+
+    if (response.statusCode == 200) {
+      List masteries = json.decode(response.body);
+      return masteries.map((a) => MasteryProgress.fromJson(a)).toList();
+    }
+
+    return [];
   }
 }

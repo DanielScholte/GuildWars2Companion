@@ -9,6 +9,8 @@ import 'package:guildwars2_companion/models/achievement/daily.dart';
 import 'package:guildwars2_companion/models/character/title.dart';
 import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/models/items/skin.dart';
+import 'package:guildwars2_companion/models/mastery/mastery.dart';
+import 'package:guildwars2_companion/models/mastery/mastery_progress.dart';
 import 'package:guildwars2_companion/models/other/mini.dart';
 import 'package:guildwars2_companion/repositories/achievement.dart';
 import 'package:guildwars2_companion/repositories/character.dart';
@@ -49,6 +51,24 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
     List<AchievementCategory> achievementCategories = await achievementRepository.getAchievementCategories();
     DailyGroup dailies = await achievementRepository.getDailies();
     DailyGroup dailiesTomorrow = await achievementRepository.getDailies(tomorrow: true);
+    List<Mastery> masteries = await achievementRepository.getMasteries();
+
+    if (includeProgress) {
+      List<MasteryProgress> masteryProgress = await achievementRepository.getMasteryProgress();
+
+      masteries.forEach((mastery) {
+        MasteryProgress progress = masteryProgress.firstWhere((m) => m.id == mastery.id, orElse: () => null);
+
+        if (progress != null) {
+          mastery.level = progress.level;
+          mastery.levels.where((l) => mastery.levels.indexOf(l) <= progress.level).forEach((l) => l.done = true);
+        } else {
+          mastery.level = 0;
+        }
+      });
+    }
+
+    masteries.sort((a, b) => _getMasteryRate(a).compareTo(_getMasteryRate(b)));
 
     List<int> achievementIds = [];
     achievementCategories.forEach((c) => achievementIds.addAll(c.achievements));
@@ -153,6 +173,7 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
     yield LoadedAchievementsState(
       achievementGroups: achievementGroups,
       dailies: dailies,
+      masteries: masteries,
       dailiesTomorrow: dailiesTomorrow,
       achievements: achievements,
       includesProgress: includeProgress,
@@ -176,6 +197,26 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
     return ((progress.current / progress.max) * 100).round();
   }
 
+  int _getMasteryRate(Mastery mastery) {
+    int region = 0;
+
+    switch (mastery.region) {
+      case 'Desert':
+        region = 20;
+        break;
+      case 'Maguuma':
+        region = 10;
+        break;
+      case 'Tyria':
+        break;
+      default:
+        region = 30;
+        break;
+    }
+
+    return region + mastery.order;
+  }
+
   Stream<AchievementState> _loadAchievementDetails(LoadAchievementDetailsEvent event) async* {
     Achievement achievement = event.achievements.firstWhere((a) => a.id == event.achievementId);
     achievement.loading = true;
@@ -185,6 +226,7 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
       dailies: event.dialies,
       dailiesTomorrow: event.dialiesTomorrow,
       achievements: event.achievements,
+      masteries: event.masteries,
       includesProgress: event.includeProgress,
       achievementPoints: event.achievementPoints
     );
@@ -270,6 +312,7 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
       dailies: event.dialies,
       dailiesTomorrow: event.dialiesTomorrow,
       achievements: event.achievements,
+      masteries: event.masteries,
       includesProgress: event.includeProgress,
       achievementPoints: event.achievementPoints
     );

@@ -35,6 +35,9 @@ class Urls {
   static final String dailiesUrl = '$baseUrl/achievements/daily';
   static final String dailiesTomorrowUrl = '$baseUrl/achievements/daily/tomorrow';
 
+  static final String masteriesUrl = '$baseUrl/masteries?ids=all';
+  static final String masteryProgressUrl = '$baseUrl/account/masteries';
+
   static List<String> divideIdLists(List<int> ids) {
     List<List<int>> output = [[]];
     ids.forEach((id) {

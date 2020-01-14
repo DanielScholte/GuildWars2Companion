@@ -35,6 +35,7 @@ class CompanionAchievementButton extends StatelessWidget {
           BlocProvider.of<AchievementBloc>(context).add(LoadAchievementDetailsEvent(
             achievementGroups: state.achievementGroups,
             achievements: state.achievements,
+            masteries: state.masteries,
             dialies: state.dailies,
             dialiesTomorrow: state.dailiesTomorrow,
             includeProgress: state.includesProgress,

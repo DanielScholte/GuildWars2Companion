@@ -4,6 +4,7 @@ import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
 import 'package:guildwars2_companion/pages/progression/achievement_categories.dart';
 import 'package:guildwars2_companion/pages/progression/daily_categories.dart';
+import 'package:guildwars2_companion/pages/progression/masteries.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
@@ -67,7 +68,9 @@ class ProgressionPage extends StatelessWidget {
               ),
               CompanionFullButton(
                 color: Colors.red,
-                onTap: () {},
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => MasteriesPage()
+                )),
                 title: 'Masteries',
                 leading: Icon(
                   GuildWarsIcons.mastery,

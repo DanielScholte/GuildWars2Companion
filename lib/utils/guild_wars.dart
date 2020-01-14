@@ -22,6 +22,32 @@ class GuildWarsUtil {
     }
   }
 
+  static String regionIcon(String region) {
+    switch (region) {
+      case 'Desert':
+        return 'assets/expansions/desert.png';
+      case 'Maguuma':
+        return 'assets/expansions/maguuma.png';
+      case 'Tyria':
+        return 'assets/expansions/tyria.png';
+      default:
+        return 'assets/expansions/unknown.png';
+    }
+  }
+
+  static Color regionColor(String region) {
+    switch (region) {
+      case 'Desert':
+        return Color(0xFF80066E);
+      case 'Maguuma':
+        return Colors.green[600];
+      case 'Tyria':
+        return Colors.red[600];
+      default:
+        return Colors.blueAccent;
+    }
+  }
+
   static Color getProfessionColor(String professionId) {
     switch (professionId) {
       case 'Guardian':
