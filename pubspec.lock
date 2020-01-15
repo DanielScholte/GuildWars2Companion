@@ -322,6 +322,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.11"
+  timer_builder:
+    dependency: "direct main"
+    description:
+      name: timer_builder
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.3.0"
   typed_data:
     dependency: transitive
     description:

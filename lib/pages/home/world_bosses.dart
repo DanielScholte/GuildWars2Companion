@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,6 +8,7 @@ import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
 import 'package:intl/intl.dart';
+import 'package:timer_builder/timer_builder.dart';
 
 class WorldBossesPage extends StatefulWidget {
   @override
@@ -20,30 +19,16 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
 
   final DateFormat timeFormat = DateFormat.Hm();
 
-  Timer _timer;
   int _refreshTimeout = 0;
 
   @override
   void initState() {
     super.initState();
-
     BlocProvider.of<WorldBossesBloc>(context).add(LoadWorldbossesEvent(true));
-
-    _timer = Timer.periodic(
-      Duration(seconds: 1),
-      (Timer timer) {
-        if (_refreshTimeout > 0) {
-          _refreshTimeout--;
-        }
-
-        setState(() {});
-      },
-    );
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
     super.dispose();
   }
 
@@ -61,14 +46,6 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
         body: BlocBuilder<WorldBossesBloc, WorldBossesState>(
           builder: (context, state) {
             if (state is LoadedWorldbossesState) {
-              DateTime now = DateTime.now();
-
-              if (state.worldBosses.any((w) => w.refreshTime.toLocal().isBefore(now))
-                && _refreshTimeout == 0) {
-                _refreshTimeout = 30;
-                BlocProvider.of<WorldBossesBloc>(context).add(LoadWorldbossesEvent(false));
-              }
-
               return ListView(
                 children: state.worldBosses
                   .map((w) => _buildWorldbossRow(context, w))
@@ -86,8 +63,6 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
   }
               
   Widget _buildWorldbossRow(BuildContext context, WorldBoss worldBoss) {
-    bool isActive = worldBoss.dateTime.toLocal().isBefore(DateTime.now());
-
     return CompanionFullButton(
       color: worldBoss.color,
       title: worldBoss.name,
@@ -117,24 +92,38 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            if (isActive)
-              Text(
-                'Active',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white
-                ),
-              )
-            else
-              Text(
-                GuildWarsUtil.durationToString(worldBoss.dateTime.toLocal().difference(DateTime.now())),
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white
-                ),
-              ),
+            TimerBuilder.periodic(Duration(seconds: 1),
+              builder: (context) {
+                DateTime now = DateTime.now();
+
+                bool isActive = worldBoss.dateTime.toLocal().isBefore(now);
+
+                if (worldBoss.refreshTime.toLocal().isBefore(now) && _refreshTimeout == 0) {
+                  _refreshTimeout = 30;
+                  BlocProvider.of<WorldBossesBloc>(context).add(LoadWorldbossesEvent(false));
+                }
+
+                if (isActive) {
+                  return Text(
+                    'Active',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white
+                    ),
+                  );
+                }
+                  
+                return Text(
+                  GuildWarsUtil.durationToString(worldBoss.dateTime.toLocal().difference(DateTime.now())),
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white
+                  ),
+                );
+              },
+            ),
             Text(
               timeFormat.format(worldBoss.dateTime.toLocal()),
               style: TextStyle(
