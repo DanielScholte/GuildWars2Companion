@@ -110,7 +110,7 @@ class ItemPage extends StatelessWidget {
             ),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               CompanionItemBox(
                 item: item,

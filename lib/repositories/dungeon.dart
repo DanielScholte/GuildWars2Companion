@@ -1,23 +1,22 @@
-import 'dart:convert';
-
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/models/other/dungeon.dart';
-import 'package:guildwars2_companion/utils/token.dart';
+import 'package:guildwars2_companion/utils/dio.dart';
 import 'package:guildwars2_companion/utils/urls.dart';
 
-import 'package:http/http.dart' as http;
-
 class DungeonRepository {
+
+  Dio _dio;
+
+  DungeonRepository() {
+    _dio = DioUtil.getDioInstance();
+  }
+
   Future<List<String>> getCompletedDungeons() async {
-    final response = await http.get(
-      Urls.completedDungeonsUrl,
-      headers: {
-        'Authorization': 'Bearer ${await TokenUtil.getToken()}',
-      }
-    );
+    final response = await _dio.get(Urls.completedDungeonsUrl);
 
     if (response.statusCode == 200) {
-      List dungeons = json.decode(response.body);
+      List dungeons = response.data;
       return dungeons.map((a) => a.toString()).toList();
     } else {
       return [];

@@ -1,42 +1,42 @@
 class Urls {
   static final String baseUrl = 'https://api.guildwars2.com/v2';
 
-  static final String tokenInfoUrl = '$baseUrl/tokeninfo';
-  static final String accountUrl = '$baseUrl/account';
+  static final String tokenInfoUrl = '/tokeninfo';
+  static final String accountUrl = '/account';
 
-  static final String currencyUrl = '$baseUrl/currencies?ids=all';
-  static final String walletUrl = '$baseUrl/account/wallet';
+  static final String currencyUrl = '/currencies?ids=all';
+  static final String walletUrl = '/account/wallet';
 
-  static final String completedWorldBossesUrl = '$baseUrl/account/worldbosses';
-  static final String completedDungeonsUrl = '$baseUrl/account/dungeons';
+  static final String completedWorldBossesUrl = '/account/worldbosses';
+  static final String completedDungeonsUrl = '/account/dungeons';
 
-  static final String charactersUrl = '$baseUrl/characters?ids=all';
-  static final String titlesUrl = '$baseUrl/titles?ids=all';
-  static final String professionsUrl = '$baseUrl/professions?ids=all';
+  static final String charactersUrl = '/characters?ids=all';
+  static final String titlesUrl = '/titles?ids=all';
+  static final String professionsUrl = '/professions?ids=all';
 
-  static final String itemsUrl = '$baseUrl/items?ids=';
-  static final String skinsUrl = '$baseUrl/skins?ids=';
-  static final String minisUrl = '$baseUrl/minis?ids=';
+  static final String itemsUrl = '/items?ids=';
+  static final String skinsUrl = '/skins?ids=';
+  static final String minisUrl = '/minis?ids=';
 
-  static final String inventoryUrl = '$baseUrl/account/inventory';
-  static final String bankUrl = '$baseUrl/account/bank';
-  static final String materialUrl = '$baseUrl/account/materials';
-  static final String materialCategoryUrl = '$baseUrl/materials?ids=all';
+  static final String inventoryUrl = '/account/inventory';
+  static final String bankUrl = '/account/bank';
+  static final String materialUrl = '/account/materials';
+  static final String materialCategoryUrl = '/materials?ids=all';
 
-  static final String tradingPostPriceUrl = '$baseUrl/commerce/prices/';
-  static final String tradingPostDeliveryUrl = '$baseUrl/commerce/delivery';
-  static final String tradingPostTransactionsUrl = '$baseUrl/commerce/transactions/';
-  static final String tradingPostListingsUrl = '$baseUrl/commerce/listings/';
+  static final String tradingPostPriceUrl = '/commerce/prices/';
+  static final String tradingPostDeliveryUrl = '/commerce/delivery';
+  static final String tradingPostTransactionsUrl = '/commerce/transactions/';
+  static final String tradingPostListingsUrl = '/commerce/listings/';
 
-  static final String achievementsUrl = '$baseUrl/achievements?ids=';
-  static final String achievementProgressUrl = '$baseUrl/account/achievements';
-  static final String achievementCategoriesUrl = '$baseUrl/achievements/categories?ids=all';
-  static final String achievementGroupsUrl = '$baseUrl/achievements/groups?ids=all';
-  static final String dailiesUrl = '$baseUrl/achievements/daily';
-  static final String dailiesTomorrowUrl = '$baseUrl/achievements/daily/tomorrow';
+  static final String achievementsUrl = '/achievements?ids=';
+  static final String achievementProgressUrl = '/account/achievements';
+  static final String achievementCategoriesUrl = '/achievements/categories?ids=all';
+  static final String achievementGroupsUrl = '/achievements/groups?ids=all';
+  static final String dailiesUrl = '/achievements/daily';
+  static final String dailiesTomorrowUrl = '/achievements/daily/tomorrow';
 
-  static final String masteriesUrl = '$baseUrl/masteries?ids=all';
-  static final String masteryProgressUrl = '$baseUrl/account/masteries';
+  static final String masteriesUrl = '/masteries?ids=all';
+  static final String masteryProgressUrl = '/account/masteries';
 
   static List<String> divideIdLists(List<int> ids) {
     List<List<int>> output = [[]];

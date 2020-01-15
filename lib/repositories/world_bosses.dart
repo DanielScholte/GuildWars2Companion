@@ -1,22 +1,22 @@
-import 'dart:convert';
-
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/models/other/world_boss.dart';
-import 'package:guildwars2_companion/utils/token.dart';
+import 'package:guildwars2_companion/utils/dio.dart';
 import 'package:guildwars2_companion/utils/urls.dart';
-import 'package:http/http.dart' as http;
 
 class WorldBossesRepository {
+
+  Dio _dio;
+
+  WorldBossesRepository() {
+    _dio = DioUtil.getDioInstance();
+  }
+
   Future<List<String>> getCompletedWorldBosses() async {
-    final response = await http.get(
-      Urls.completedWorldBossesUrl,
-      headers: {
-        'Authorization': 'Bearer ${await TokenUtil.getToken()}',
-      }
-    );
+    final response = await _dio.get(Urls.completedWorldBossesUrl);
 
     if (response.statusCode == 200) {
-      List worldBosses = json.decode(response.body);
+      List worldBosses = response.data;
       // return worldBosses;
       return worldBosses.map((a) => a.toString()).toList();
     } else {

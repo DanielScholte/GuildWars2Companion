@@ -90,6 +90,8 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
     achievements.forEach((a) {
       if (includeProgress) {
         a.progress = progress.firstWhere((p) => p.id == a.id, orElse: () => null);
+      } else {
+        a.progress = null;
       }
       
       int maxPoints = 0;

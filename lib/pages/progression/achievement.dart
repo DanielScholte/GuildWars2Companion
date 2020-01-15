@@ -333,8 +333,8 @@ class AchievementPage extends StatelessWidget {
                     if (state.includesProgress &&
                       _achievement.progress != null &&
                       ((_achievement.progress.bits != null &&
-                      _achievement.progress.bits.contains(_achievement.bits.indexOf(i))))
-                      || _achievement.progress.done)
+                      _achievement.progress.bits.contains(_achievement.bits.indexOf(i)))
+                      || _achievement.progress.done))
                       Icon(
                         FontAwesomeIcons.check,
                         size: 20.0,
@@ -429,8 +429,8 @@ class AchievementPage extends StatelessWidget {
             markCompleted: includeProgress &&
               _achievement.progress != null &&
               ((_achievement.progress.bits != null &&
-              _achievement.progress.bits.contains(_achievement.bits.indexOf(bit)))
-              || _achievement.progress.done),
+              _achievement.progress.bits.contains(_achievement.bits.indexOf(bit))
+              || _achievement.progress.done)),
           ),
           Expanded(
             child: Padding(

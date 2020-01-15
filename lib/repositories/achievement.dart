@@ -1,5 +1,4 @@
-import 'dart:convert';
-
+import 'package:dio/dio.dart';
 import 'package:guildwars2_companion/models/achievement/achievement.dart';
 import 'package:guildwars2_companion/models/achievement/achievement_category.dart';
 import 'package:guildwars2_companion/models/achievement/achievement_group.dart';
@@ -7,15 +6,20 @@ import 'package:guildwars2_companion/models/achievement/achievement_progress.dar
 import 'package:guildwars2_companion/models/achievement/daily.dart';
 import 'package:guildwars2_companion/models/mastery/mastery.dart';
 import 'package:guildwars2_companion/models/mastery/mastery_progress.dart';
-import 'package:guildwars2_companion/utils/token.dart';
+import 'package:guildwars2_companion/utils/dio.dart';
 import 'package:guildwars2_companion/utils/urls.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class AchievementRepository {
   List<Achievement> _cachedAchievements = [];
+
+  Dio _dio;
+
+  AchievementRepository() {
+    _dio = DioUtil.getDioInstance();
+  }
 
   Future<Database> _getDatabase() async {
     return await openDatabase(
@@ -93,15 +97,10 @@ class AchievementRepository {
     List<String> achievementIdsList = Urls.divideIdLists(achievementIds);
     List<Achievement> achievements = [];
     for (var achievementIdsString in achievementIdsList) {
-      final response = await http.get(
-        Urls.achievementsUrl + achievementIdsString,
-        headers: {
-          'Authorization': 'Bearer ${await TokenUtil.getToken()}',
-        }
-      );
+      final response = await _dio.get(Urls.achievementsUrl + achievementIdsString);
 
       if (response.statusCode == 200 || response.statusCode == 206) {
-        List responseAchievements = json.decode(response.body);
+        List responseAchievements = response.data;
         achievements.addAll(responseAchievements.map((a) => Achievement.fromJson(a)).toList());
       }
     }
@@ -134,15 +133,10 @@ class AchievementRepository {
   }
 
   Future<List<AchievementProgress>> getAchievementProgress() async {
-    final response = await http.get(
-      Urls.achievementProgressUrl,
-      headers: {
-        'Authorization': 'Bearer ${await TokenUtil.getToken()}',
-      }
-    );
+    final response = await _dio.get(Urls.achievementProgressUrl);
 
     if (response.statusCode == 200) {
-      List progress = json.decode(response.body);
+      List progress = response.data;
       return progress.where((a) => a != null).map((a) => AchievementProgress.fromJson(a)).toList();
     } else {
       return [];
@@ -150,15 +144,10 @@ class AchievementRepository {
   }
 
   Future<List<AchievementCategory>> getAchievementCategories() async {
-    final response = await http.get(
-      Urls.achievementCategoriesUrl,
-      headers: {
-        'Authorization': 'Bearer ${await TokenUtil.getToken()}',
-      }
-    );
+    final response = await _dio.get(Urls.achievementCategoriesUrl);
 
     if (response.statusCode == 200) {
-      List categories = json.decode(response.body);
+      List categories = response.data;
       return categories.where((a) => a != null).map((a) => AchievementCategory.fromJson(a)).toList();
     } else {
       return [];
@@ -166,15 +155,10 @@ class AchievementRepository {
   }
 
   Future<List<AchievementGroup>> getAchievementGroups() async {
-    final response = await http.get(
-      Urls.achievementGroupsUrl,
-      headers: {
-        'Authorization': 'Bearer ${await TokenUtil.getToken()}',
-      }
-    );
+    final response = await _dio.get(Urls.achievementGroupsUrl);
 
     if (response.statusCode == 200) {
-      List groups = json.decode(response.body);
+      List groups = response.data;
       return groups.where((a) => a != null).map((a) => AchievementGroup.fromJson(a)).toList();
     } else {
       return [];
@@ -182,30 +166,20 @@ class AchievementRepository {
   }
 
   Future<DailyGroup> getDailies({bool tomorrow = false}) async {
-    final response = await http.get(
-      tomorrow ? Urls.dailiesTomorrowUrl : Urls.dailiesUrl,
-      headers: {
-        'Authorization': 'Bearer ${await TokenUtil.getToken()}',
-      }
-    );
+    final response = await _dio.get(tomorrow ? Urls.dailiesTomorrowUrl : Urls.dailiesUrl);
 
     if (response.statusCode == 200) {
-      return DailyGroup.fromJson(json.decode(response.body));
+      return DailyGroup.fromJson(response.data);
     }
 
     return DailyGroup();
   }
 
   Future<List<Mastery>> getMasteries() async {
-    final response = await http.get(
-      Urls.masteriesUrl,
-      headers: {
-        'Authorization': 'Bearer ${await TokenUtil.getToken()}',
-      }
-    );
+    final response = await _dio.get(Urls.masteriesUrl);
 
     if (response.statusCode == 200) {
-      List masteries = json.decode(response.body);
+      List masteries = response.data;
       return masteries.map((a) => Mastery.fromJson(a)).toList();
     }
 
@@ -213,15 +187,10 @@ class AchievementRepository {
   }
 
   Future<List<MasteryProgress>> getMasteryProgress() async {
-    final response = await http.get(
-      Urls.masteryProgressUrl,
-      headers: {
-        'Authorization': 'Bearer ${await TokenUtil.getToken()}',
-      }
-    );
+    final response = await _dio.get(Urls.masteryProgressUrl);
 
     if (response.statusCode == 200) {
-      List masteries = json.decode(response.body);
+      List masteries = response.data;
       return masteries.map((a) => MasteryProgress.fromJson(a)).toList();
     }
 

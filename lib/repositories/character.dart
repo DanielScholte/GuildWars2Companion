@@ -1,25 +1,24 @@
-import 'dart:convert';
-
+import 'package:dio/dio.dart';
 import 'package:guildwars2_companion/models/character/character.dart';
 import 'package:guildwars2_companion/models/character/profession.dart';
 import 'package:guildwars2_companion/models/character/title.dart';
-import 'package:guildwars2_companion/utils/token.dart';
+import 'package:guildwars2_companion/utils/dio.dart';
 import 'package:guildwars2_companion/utils/urls.dart';
-import 'package:http/http.dart' as http;
 
 class CharacterRepository {
   List<AccountTitle> _titles;
 
+  Dio _dio;
+
+  CharacterRepository() {
+    _dio = DioUtil.getDioInstance();
+  }
+
   Future<List<Character>> getCharacters() async {
-    final response = await http.get(
-      Urls.charactersUrl,
-      headers: {
-        'Authorization': 'Bearer ${await TokenUtil.getToken()}',
-      }
-    );
+    final response = await _dio.get(Urls.charactersUrl);
 
     if (response.statusCode == 200) {
-      List characters = json.decode(response.body);
+      List characters = response.data;
       return characters.map((a) => Character.fromJson(a)).toList();
     } else {
       return [];
@@ -31,15 +30,10 @@ class CharacterRepository {
       return _titles;
     }
 
-    final response = await http.get(
-      Urls.titlesUrl,
-      headers: {
-        'Authorization': 'Bearer ${await TokenUtil.getToken()}',
-      }
-    );
+    final response = await _dio.get(Urls.titlesUrl);
 
     if (response.statusCode == 200) {
-      List titles = json.decode(response.body);
+      List titles = response.data;
       _titles = titles.map((a) => AccountTitle.fromJson(a)).toList();
       return _titles;
     } else {
@@ -48,15 +42,10 @@ class CharacterRepository {
   }
 
   Future<List<Profession>> getProfessions() async {
-    final response = await http.get(
-      Urls.professionsUrl,
-      headers: {
-        'Authorization': 'Bearer ${await TokenUtil.getToken()}',
-      }
-    );
+    final response = await _dio.get(Urls.professionsUrl);
 
     if (response.statusCode == 200) {
-      List professions = json.decode(response.body);
+      List professions = response.data;
       return professions.map((a) => Profession.fromJson(a)).toList();
     } else {
       return [];

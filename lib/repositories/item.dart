@@ -1,12 +1,10 @@
-import 'dart:convert';
-
+import 'package:dio/dio.dart';
 import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/models/items/skin.dart';
 import 'package:guildwars2_companion/models/other/mini.dart';
-import 'package:guildwars2_companion/utils/token.dart';
+import 'package:guildwars2_companion/utils/dio.dart';
 import 'package:guildwars2_companion/utils/urls.dart';
 
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -16,6 +14,12 @@ class ItemRepository {
   List<Item> _cachedItems;
   List<Skin> _cachedSkins;
   List<Mini> _cachedMinis;
+
+  Dio _dio;
+
+  ItemRepository() {
+    _dio = DioUtil.getDioInstance();
+  }
 
   Future<Database> _getDatabase() async {
     return await openDatabase(
@@ -143,15 +147,10 @@ class ItemRepository {
     List<String> itemIdsList = Urls.divideIdLists(itemIds);
     List<Item> items = [];
     for (var itemIdsString in itemIdsList) {
-      final response = await http.get(
-        Urls.itemsUrl + itemIdsString,
-        headers: {
-          'Authorization': 'Bearer ${await TokenUtil.getToken()}',
-        }
-      );
+      final response = await _dio.get(Urls.itemsUrl + itemIdsString);
 
       if (response.statusCode == 200 || response.statusCode == 206) {
-        List reponseItems = json.decode(response.body);
+        List reponseItems = response.data;
         items.addAll(reponseItems.map((a) => Item.fromJson(a)).toList());
       }
     }
@@ -207,15 +206,10 @@ class ItemRepository {
     List<String> skinIdsList = Urls.divideIdLists(skinIds);
     List<Skin> skins = [];
     for (var skinIds in skinIdsList) {
-      final response = await http.get(
-        Urls.skinsUrl + skinIds,
-        headers: {
-          'Authorization': 'Bearer ${await TokenUtil.getToken()}',
-        }
-      );
+      final response = await _dio.get(Urls.skinsUrl + skinIds);
 
       if (response.statusCode == 200 || response.statusCode == 206) {
-        List reponseSkins = json.decode(response.body);
+        List reponseSkins = response.data;
         skins.addAll(reponseSkins.map((a) => Skin.fromJson(a)).toList());
       }
     }
@@ -271,15 +265,10 @@ class ItemRepository {
     List<String> miniIdsList = Urls.divideIdLists(miniIds);
     List<Mini> minis = [];
     for (var skinIds in miniIdsList) {
-      final response = await http.get(
-        Urls.minisUrl + skinIds,
-        headers: {
-          'Authorization': 'Bearer ${await TokenUtil.getToken()}',
-        }
-      );
+      final response = await _dio.get(Urls.minisUrl + skinIds);
 
       if (response.statusCode == 200 || response.statusCode == 206) {
-        List reponseMinis = json.decode(response.body);
+        List reponseMinis = response.data;
         minis.addAll(reponseMinis.map((a) => Mini.fromJson(a)).toList());
       }
     }
