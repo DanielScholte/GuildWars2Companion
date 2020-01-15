@@ -40,6 +40,7 @@ class CompanionAchievementButton extends StatelessWidget {
             dialiesTomorrow: state.dailiesTomorrow,
             includeProgress: state.includesProgress,
             achievementPoints: state.achievementPoints,
+            masteryLevel: state.masteryLevel,
             achievementId: achievement.id,
           ));
         }

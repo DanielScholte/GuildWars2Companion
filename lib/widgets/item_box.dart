@@ -156,31 +156,19 @@ class CompanionItemBox extends StatelessWidget {
       return Container();
     }
 
-    if (skin != null) {
-      return CachedNetworkImage(
-        height: size,
-        width: size,
-        imageUrl: skin.icon,
-        placeholder: (context, url) => Theme(
-          data: Theme.of(context).copyWith(accentColor: Colors.white),
-          child: Center(child: CircularProgressIndicator()),
-        ),
-        errorWidget: (context, url, error) => Center(child: Icon(
-          FontAwesomeIcons.dizzy,
-          size: this.size / 1.5,
-          color: Colors.white,
-        )),
-        fit: BoxFit.cover,
-      );
-    }
-
     return CachedNetworkImage(
       height: size,
       width: size,
-      imageUrl: item.icon,
+      imageUrl: skin != null ? skin.icon : item.icon,
       placeholder: (context, url) => Theme(
         data: Theme.of(context).copyWith(accentColor: Colors.white),
-        child: Center(child: CircularProgressIndicator()),
+        child: Center(
+          child: Container(
+            height: this.size / 1.5,
+            width: this.size / 1.5,
+            child: CircularProgressIndicator()
+          )
+        ),
       ),
       errorWidget: (context, url, error) => Center(child: Icon(
         FontAwesomeIcons.dizzy,

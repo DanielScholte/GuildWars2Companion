@@ -53,6 +53,8 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
     DailyGroup dailiesTomorrow = await achievementRepository.getDailies(tomorrow: true);
     List<Mastery> masteries = await achievementRepository.getMasteries();
 
+    int masteryLevel = 0;
+
     if (includeProgress) {
       List<MasteryProgress> masteryProgress = await achievementRepository.getMasteryProgress();
 
@@ -60,8 +62,12 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
         MasteryProgress progress = masteryProgress.firstWhere((m) => m.id == mastery.id, orElse: () => null);
 
         if (progress != null) {
-          mastery.level = progress.level;
-          mastery.levels.where((l) => mastery.levels.indexOf(l) <= progress.level).forEach((l) => l.done = true);
+          mastery.level = progress.level + 1;
+          mastery.levels.where((l) => mastery.levels.indexOf(l) <= progress.level)
+            .forEach((l) {
+              l.done = true;
+              masteryLevel += l.pointCost;
+            });
         } else {
           mastery.level = 0;
         }
@@ -180,6 +186,7 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
       achievements: achievements,
       includesProgress: includeProgress,
       achievementPoints: achievementPoints,
+      masteryLevel: masteryLevel,
     );
   }
 
@@ -230,7 +237,8 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
       achievements: event.achievements,
       masteries: event.masteries,
       includesProgress: event.includeProgress,
-      achievementPoints: event.achievementPoints
+      achievementPoints: event.achievementPoints,
+      masteryLevel: event.masteryLevel,
     );
 
     if (achievement.prerequisites != null) {
@@ -316,7 +324,8 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
       achievements: event.achievements,
       masteries: event.masteries,
       includesProgress: event.includeProgress,
-      achievementPoints: event.achievementPoints
+      achievementPoints: event.achievementPoints,
+      masteryLevel: event.masteryLevel,
     );
   }
 }

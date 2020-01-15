@@ -58,7 +58,7 @@ class MasteriesPage extends StatelessWidget {
           Column(
             children: <Widget>[
               Text(
-                '${mastery.level + 1} / ${mastery.levels.length}',
+                '${mastery.level} / ${mastery.levels.length}',
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -66,7 +66,7 @@ class MasteriesPage extends StatelessWidget {
               Theme(
                 data: Theme.of(context).copyWith(accentColor: Colors.white),
                 child: LinearProgressIndicator(
-                  value: (mastery.level + 1) / mastery.levels.length,
+                  value: (mastery.level) / mastery.levels.length,
                   backgroundColor: Colors.transparent,
                 ),
               )

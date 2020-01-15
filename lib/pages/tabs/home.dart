@@ -78,11 +78,7 @@ class HomePage extends StatelessWidget {
                           children: <Widget>[
                             _buildPlaytimeBox(context),
                             if (state.tokenInfo.permissions.contains('progression'))
-                              CompanionInfoBox(
-                                header: 'Mastery level',
-                                text: '298?',
-                                loading: false,
-                              ),
+                              _buildMasteryLevelBox(context),
                             if (state.tokenInfo.permissions.contains('progression'))
                               _buildAchievementsBox(context, state.account.dailyAp + state.account.monthlyAp),
                           ],
@@ -113,6 +109,24 @@ class HomePage extends StatelessWidget {
         }
 
         return Container();
+      },
+    );
+  }
+
+  Widget _buildMasteryLevelBox(BuildContext context) {
+    return BlocBuilder<AchievementBloc, AchievementState>(
+      builder: (context, state) {
+        if (state is LoadedAchievementsState) {
+          return CompanionInfoBox(
+            header: 'Mastery level',
+            text: GuildWarsUtil.intToString(state.masteryLevel),
+            loading: false,
+          );
+        }
+
+        return CompanionInfoBox(
+          header: 'Mastery level',
+        );
       },
     );
   }

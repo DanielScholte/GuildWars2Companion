@@ -24,6 +24,7 @@ class LoadAchievementDetailsEvent extends AchievementEvent {
   final bool includeProgress;
   final int achievementId;
   final int achievementPoints;
+  final int masteryLevel;
 
   LoadAchievementDetailsEvent({
     @required this.achievementGroups,
@@ -33,6 +34,7 @@ class LoadAchievementDetailsEvent extends AchievementEvent {
     @required this.masteries,
     @required this.includeProgress,
     @required this.achievementPoints,
-    @required this.achievementId
+    @required this.achievementId,
+    @required this.masteryLevel,
   });
 }
