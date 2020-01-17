@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -19,12 +21,28 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
 
   final DateFormat timeFormat = DateFormat.Hm();
 
+  Timer _timer;
   int _refreshTimeout = 0;
 
   @override
   void initState() {
     super.initState();
     BlocProvider.of<WorldBossesBloc>(context).add(LoadWorldbossesEvent(true));
+
+    _timer = Timer.periodic(	
+      Duration(seconds: 1),	
+      (Timer timer) {	
+        if (_refreshTimeout > 0) {	
+          _refreshTimeout--;	
+        }
+      },	
+    );
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
