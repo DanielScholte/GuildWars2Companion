@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/bank/bloc.dart';
 import 'package:guildwars2_companion/models/bank/material_category.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
+import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
 
 class MaterialPage extends StatelessWidget {
@@ -19,6 +20,16 @@ class MaterialPage extends StatelessWidget {
         ),
         body: BlocBuilder<BankBloc, BankState>(
           builder: (context, state) {
+            if (state is ErrorBankState) {
+              return Center(
+                child: CompanionError(
+                  title: 'the material storage',
+                  onTryAgain: () =>
+                    BlocProvider.of<BankBloc>(context).add(LoadBankEvent()),
+                ),
+              );
+            }
+
             if (state is LoadedBankState) {
               return ListView(
                 children: state.materialCategories

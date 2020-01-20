@@ -11,6 +11,7 @@ import 'package:guildwars2_companion/pages/character/inventory.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
+import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_box.dart';
@@ -56,11 +57,27 @@ class CharacterPage extends StatelessWidget {
         ),
         body: BlocBuilder<CharacterBloc, CharacterState>(
           builder: (BuildContext context, CharacterState state) {
+            if (state is ErrorCharactersState) {
+              return Center(
+                child: CompanionError(
+                  title: 'the character',
+                  onTryAgain: () =>
+                    BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent()),
+                ),
+              );
+            }
+
             if (state is LoadedCharactersState) {
               Character character = state.characters.firstWhere((c) => c.name == _character.name);
 
               if (character == null) {
-                return Container();
+                return Center(
+                  child: CompanionError(
+                    title: 'the character',
+                    onTryAgain: () =>
+                      BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent()),
+                  ),
+                );
               }
 
               return Column(

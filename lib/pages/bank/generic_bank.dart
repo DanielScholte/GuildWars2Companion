@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/bank/bloc.dart';
 import 'package:guildwars2_companion/models/items/inventory.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
+import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
 
 class GenericBankPage extends StatelessWidget {
@@ -26,6 +27,16 @@ class GenericBankPage extends StatelessWidget {
         ),
         body: BlocBuilder<BankBloc, BankState>(
           builder: (context, state) {
+            if (state is ErrorBankState) {
+              return Center(
+                child: CompanionError(
+                  title: bankType == BankType.bank ? 'the bank' : 'the shared inventory',
+                  onTryAgain: () =>
+                    BlocProvider.of<BankBloc>(context).add(LoadBankEvent()),
+                ),
+              );
+            }
+
             if (state is LoadedBankState) {
               List<InventoryItem> inventory = bankType == BankType.bank 
                 ? state.bank : state.inventory;

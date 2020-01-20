@@ -6,6 +6,7 @@ import 'package:guildwars2_companion/models/character/character.dart';
 import 'package:guildwars2_companion/models/items/inventory.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
+import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
 
 class InventoryPage extends StatelessWidget {
@@ -27,11 +28,37 @@ class InventoryPage extends StatelessWidget {
         ),
         body: BlocBuilder<CharacterBloc, CharacterState>(
           builder: (context, state) {
+            if (state is ErrorCharactersState) {
+              return Center(
+                child: CompanionError(
+                  title: 'the character',
+                  onTryAgain: () =>
+                    BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent()),
+                ),
+              );
+            }
+
+            if (state is LoadedCharactersState && state.hasError) {
+              return Center(
+                child: CompanionError(
+                  title: 'the character items',
+                  onTryAgain: () =>
+                    BlocProvider.of<CharacterBloc>(context).add(LoadCharacterItemsEvent(state.characters)),
+                ),
+              );
+            }
+
             if (state is LoadedCharactersState && state.itemsLoaded) {
               Character character = state.characters.firstWhere((c) => c.name == _character.name);
 
               if (character == null) {
-                return Container();
+                return Center(
+                  child: CompanionError(
+                    title: 'the character',
+                    onTryAgain: () =>
+                      BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent()),
+                  ),
+                );
               }
 
               return ListView(
