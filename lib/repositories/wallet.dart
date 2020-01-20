@@ -18,9 +18,9 @@ class WalletRepository {
     if (response.statusCode == 200) {
       List currencies = response.data;
       return currencies.map((a) => Currency.fromJson(a)).toList();
-    } else {
-      return [];
     }
+
+    throw Exception();
   }
 
   Future<List<WalletEntry>> getWallet() async {
@@ -29,8 +29,8 @@ class WalletRepository {
     if (response.statusCode == 200) {
       List walletEntries = response.data;
       return walletEntries.map((a) => WalletEntry.fromJson(a)).toList();
-    } else {
-      return [];
     }
+
+    throw Exception();
   }
 }

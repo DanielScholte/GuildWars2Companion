@@ -18,9 +18,9 @@ class BankRepository {
     if (response.statusCode == 200) {
       List items = response.data;
       return items.where((a) => a != null).map((a) => InventoryItem.fromJson(a)).toList();
-    } else {
-      return [];
     }
+
+    throw Exception();
   }
 
   Future<List<InventoryItem>> getBank() async {
@@ -29,9 +29,9 @@ class BankRepository {
     if (response.statusCode == 200) {
       List items = response.data;
       return items.where((a) => a != null).map((a) => InventoryItem.fromJson(a)).toList();
-    } else {
-      return [];
     }
+
+    throw Exception();
   }
 
   Future<List<Material>> getMaterials() async {
@@ -40,9 +40,9 @@ class BankRepository {
     if (response.statusCode == 200) {
       List items = response.data;
       return items.where((a) => a != null).map((a) => Material.fromJson(a)).toList();
-    } else {
-      return [];
     }
+
+    throw Exception();
   }
 
   Future<List<MaterialCategory>> getMaterialCategories() async {
@@ -51,8 +51,8 @@ class BankRepository {
     if (response.statusCode == 200) {
       List items = response.data;
       return items.where((a) => a != null).map((a) => MaterialCategory.fromJson(a)).toList();
-    } else {
-      return [];
     }
+
+    throw Exception();
   }
 }

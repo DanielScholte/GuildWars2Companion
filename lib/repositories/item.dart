@@ -153,6 +153,10 @@ class ItemRepository {
         List reponseItems = response.data;
         items.addAll(reponseItems.map((a) => Item.fromJson(a)).toList());
       }
+
+      if (response.statusCode != 404) {
+        throw Exception();
+      }
     }
 
     await _cacheItems(items);
@@ -212,6 +216,10 @@ class ItemRepository {
         List reponseSkins = response.data;
         skins.addAll(reponseSkins.map((a) => Skin.fromJson(a)).toList());
       }
+
+      if (response.statusCode != 404) {
+        throw Exception();
+      }
     }
 
     await _cacheSkins(skins);
@@ -270,6 +278,10 @@ class ItemRepository {
       if (response.statusCode == 200 || response.statusCode == 206) {
         List reponseMinis = response.data;
         minis.addAll(reponseMinis.map((a) => Mini.fromJson(a)).toList());
+      }
+
+      if (response.statusCode != 404) {
+        throw Exception();
       }
     }
 

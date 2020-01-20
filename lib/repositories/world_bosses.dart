@@ -17,11 +17,10 @@ class WorldBossesRepository {
 
     if (response.statusCode == 200) {
       List worldBosses = response.data;
-      // return worldBosses;
       return worldBosses.map((a) => a.toString()).toList();
-    } else {
-      return [];
     }
+
+    throw Exception();
   }
 
   List<WorldBoss> getWorldBosses() {

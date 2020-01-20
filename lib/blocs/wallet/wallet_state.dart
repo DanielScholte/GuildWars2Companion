@@ -11,3 +11,5 @@ class LoadedWalletState extends WalletState {
 
   LoadedWalletState(this.currencies);
 }
+
+class ErrorWalletState extends WalletState {}

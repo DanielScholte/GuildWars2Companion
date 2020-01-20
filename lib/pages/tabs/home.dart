@@ -7,6 +7,7 @@ import 'package:guildwars2_companion/blocs/achievement/achievement_bloc.dart';
 import 'package:guildwars2_companion/blocs/achievement/achievement_state.dart';
 import 'package:guildwars2_companion/blocs/dungeon/bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
+import 'package:guildwars2_companion/blocs/world_bosses/bloc.dart';
 import 'package:guildwars2_companion/pages/home/dungeons.dart';
 import 'package:guildwars2_companion/pages/home/wallet_page.dart';
 import 'package:guildwars2_companion/pages/home/world_bosses.dart';
@@ -96,9 +97,9 @@ class HomePage extends StatelessWidget {
                       children: <Widget>[
                         if (state.tokenInfo.permissions.contains('wallet'))
                           _buildWallet(context),
-                        _buildWorldBosses(context),
+                        _buildWorldBosses(context, state.tokenInfo.permissions.contains('progression')),
                         _buildRaids(),
-                        _buildDungeons(context)
+                        _buildDungeons(context, state.tokenInfo.permissions.contains('progression'))
                       ],
                     ),
                   ),
@@ -261,23 +262,26 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildWorldBosses(BuildContext context) {
+  Widget _buildWorldBosses(BuildContext context, bool includeProgress) {
     return CompanionFullButton(
       color: Colors.deepPurple,
       title: 'World bosses',
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => WorldBossesPage()
-      )),
+      onTap: () {
+        BlocProvider.of<WorldBossesBloc>(context).add(LoadWorldbossesEvent(true, includeProgress));
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => WorldBossesPage()
+        ));
+      },
       leading: Image.asset('assets/button_headers/world_bosses.jpg'),
     );
   }
 
-  Widget _buildDungeons(BuildContext context) {
+  Widget _buildDungeons(BuildContext context, bool includeProgress) {
     return CompanionFullButton(
       color: Colors.deepOrange,
       title: 'Dungeons',
       onTap: () {
-        BlocProvider.of<DungeonBloc>(context).add(LoadDungeonsEvent());
+        BlocProvider.of<DungeonBloc>(context).add(LoadDungeonsEvent(includeProgress));
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => DungeonsPage()
         ));

@@ -103,6 +103,10 @@ class AchievementRepository {
         List responseAchievements = response.data;
         achievements.addAll(responseAchievements.map((a) => Achievement.fromJson(a)).toList());
       }
+
+      if (response.statusCode != 404) {
+        throw Exception();
+      }
     }
 
     await _cacheAchievements(achievements);
@@ -138,9 +142,9 @@ class AchievementRepository {
     if (response.statusCode == 200) {
       List progress = response.data;
       return progress.where((a) => a != null).map((a) => AchievementProgress.fromJson(a)).toList();
-    } else {
-      return [];
     }
+
+    throw Exception();
   }
 
   Future<List<AchievementCategory>> getAchievementCategories() async {
@@ -149,9 +153,9 @@ class AchievementRepository {
     if (response.statusCode == 200) {
       List categories = response.data;
       return categories.where((a) => a != null).map((a) => AchievementCategory.fromJson(a)).toList();
-    } else {
-      return [];
     }
+
+    throw Exception();
   }
 
   Future<List<AchievementGroup>> getAchievementGroups() async {
@@ -160,9 +164,9 @@ class AchievementRepository {
     if (response.statusCode == 200) {
       List groups = response.data;
       return groups.where((a) => a != null).map((a) => AchievementGroup.fromJson(a)).toList();
-    } else {
-      return [];
     }
+
+    throw Exception();
   }
 
   Future<DailyGroup> getDailies({bool tomorrow = false}) async {
@@ -172,7 +176,7 @@ class AchievementRepository {
       return DailyGroup.fromJson(response.data);
     }
 
-    return DailyGroup();
+    throw Exception();
   }
 
   Future<List<Mastery>> getMasteries() async {
@@ -183,7 +187,7 @@ class AchievementRepository {
       return masteries.map((a) => Mastery.fromJson(a)).toList();
     }
 
-    return [];
+    throw Exception();
   }
 
   Future<List<MasteryProgress>> getMasteryProgress() async {
@@ -194,6 +198,6 @@ class AchievementRepository {
       return masteries.map((a) => MasteryProgress.fromJson(a)).toList();
     }
 
-    return [];
+    throw Exception();
   }
 }

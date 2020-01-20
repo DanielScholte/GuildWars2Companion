@@ -28,7 +28,7 @@ class AccountRepository {
       return Account.fromJson(response.data);
     }
 
-    return null;
+    throw Exception();
   }
 
   Future<TokenInfo> getTokenInfo(String token) async {
@@ -45,6 +45,6 @@ class AccountRepository {
       return TokenInfo.fromJson(response.data);
     }
 
-    return null;
+    throw Exception();
   }
 }

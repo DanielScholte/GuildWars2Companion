@@ -14,3 +14,5 @@ class LoadedBankState extends BankState {
 
   LoadedBankState(this.bank, this.inventory, this.materialCategories);
 }
+
+class ErrorBankState extends BankState {}

@@ -21,21 +21,25 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     WalletEvent event,
   ) async* {
     if (event is LoadWalletEvent) {
-      yield LoadingWalletState();
+      try {
+        yield LoadingWalletState();
 
-      List<Currency> currencies = await walletRepository.getCurrency();
-      List<WalletEntry> walletEntries = await walletRepository.getWallet();
+        List<Currency> currencies = await walletRepository.getCurrency();
+        List<WalletEntry> walletEntries = await walletRepository.getWallet();
 
-      currencies.forEach((c) {
-        WalletEntry walletEntry = walletEntries.firstWhere((w) => w.id == c.id, orElse: () => null);
-        if (walletEntry != null) {
-          c.value = walletEntry.value;
-        } else {
-          c.value = 0;
-        }
-      });
+        currencies.forEach((c) {
+          WalletEntry walletEntry = walletEntries.firstWhere((w) => w.id == c.id, orElse: () => null);
+          if (walletEntry != null) {
+            c.value = walletEntry.value;
+          } else {
+            c.value = 0;
+          }
+        });
 
-      yield LoadedWalletState(currencies);
+        yield LoadedWalletState(currencies);
+      } catch (_) {
+        yield ErrorWalletState();
+      }
     }
   }
 }

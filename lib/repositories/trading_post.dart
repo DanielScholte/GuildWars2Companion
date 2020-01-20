@@ -31,10 +31,7 @@ class TradingPostRepository {
       return TradingPostDelivery.fromJson(response.data);
     }
 
-    return TradingPostDelivery(
-      coins: 0,
-      items: []
-    );
+    throw Exception();
   }
 
   Future<List<TradingPostTransaction>> getTransactions(String time, String type) async {
@@ -45,7 +42,7 @@ class TradingPostRepository {
       return transactions.map((a) => TradingPostTransaction.fromJson(a)).toList();
     }
 
-    return [];
+    throw Exception();
   }
 
   Future<TradingPostListing> getListing(int itemId) async {
@@ -55,6 +52,6 @@ class TradingPostRepository {
       return TradingPostListing.fromJson(response.data);
     }
 
-    return null;
+    throw Exception();
   }
 }

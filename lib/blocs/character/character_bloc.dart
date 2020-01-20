@@ -37,47 +37,55 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
   }
   
   Stream<CharacterState> _loadCharacters() async* {
-    yield LoadingCharactersState();
+    try {
+      yield LoadingCharactersState();
 
-    List<Character> characters = await characterRepository.getCharacters();
-    List<AccountTitle> titles = await characterRepository.getTitles();
-    List<Profession> professions = await characterRepository.getProfessions();
+      List<Character> characters = await characterRepository.getCharacters();
+      List<AccountTitle> titles = await characterRepository.getTitles();
+      List<Profession> professions = await characterRepository.getProfessions();
 
-    characters.forEach((c) {
-      c.titleName = titles.firstWhere((t) => t.id == c.title, orElse: () => AccountTitle(name: '')).name;
-      c.professionInfo = professions.firstWhere((p) => p.id == c.profession, orElse: () => null);
-      c.professionColor = GuildWarsUtil.getProfessionColor(c.profession);
-    });
+      characters.forEach((c) {
+        c.titleName = titles.firstWhere((t) => t.id == c.title, orElse: () => AccountTitle(name: '')).name;
+        c.professionInfo = professions.firstWhere((p) => p.id == c.profession, orElse: () => null);
+        c.professionColor = GuildWarsUtil.getProfessionColor(c.profession);
+      });
 
-    yield LoadedCharactersState(characters);
+      yield LoadedCharactersState(characters);
+    } catch (_) {
+      yield ErrorCharactersState();
+    }
   }
 
   Stream<CharacterState> _loadCharacterItems(List<Character> characters) async* {
-    yield LoadedCharactersState(characters, itemsLoading: true);
+    try {
+      yield LoadedCharactersState(characters, itemsLoading: true);
 
-    List<int> itemIds = _getItemIds(characters);
-    List<int> skinIds = _getSkinIds(characters);
+      List<int> itemIds = _getItemIds(characters);
+      List<int> skinIds = _getSkinIds(characters);
 
-    List<Item> items = await itemRepository.getItems(itemIds);
-    List<Skin> skins = await itemRepository.getSkins(skinIds);
-    
-    characters.forEach((c) {
-      if (c.bags != null) {
-        c.bags.forEach((b) {
-          b.itemInfo = items.firstWhere((i) => i.id == b.id, orElse: () => null);
-          b.inventory.where((i) => i.id != -1).forEach((inventory) {
-            _fillInventoryItemInfo(inventory, items, skins);
+      List<Item> items = await itemRepository.getItems(itemIds);
+      List<Skin> skins = await itemRepository.getSkins(skinIds);
+      
+      characters.forEach((c) {
+        if (c.bags != null) {
+          c.bags.forEach((b) {
+            b.itemInfo = items.firstWhere((i) => i.id == b.id, orElse: () => null);
+            b.inventory.where((i) => i.id != -1).forEach((inventory) {
+              _fillInventoryItemInfo(inventory, items, skins);
+            });
           });
-        });
-      }
-      if (c.equipment != null) {
-        c.equipment.forEach((e) {
-          _fillEquipmentInfo(e, items, skins);
-        });
-      }
-    });
+        }
+        if (c.equipment != null) {
+          c.equipment.forEach((e) {
+            _fillEquipmentInfo(e, items, skins);
+          });
+        }
+      });
 
-    yield LoadedCharactersState(characters, itemsLoaded: true);
+      yield LoadedCharactersState(characters, itemsLoaded: true);
+    } catch(_) {
+      yield LoadedCharactersState(characters, hasError: true);
+    }
   }
 
   List<int> _getItemIds(List<Character> characters) {

@@ -18,6 +18,7 @@ class LoadedAchievementsState extends AchievementState {
   final bool includesProgress;
   final int achievementPoints;
   final int masteryLevel;
+  final bool hasError;
 
   LoadedAchievementsState({
     @required this.achievementGroups,
@@ -28,5 +29,8 @@ class LoadedAchievementsState extends AchievementState {
     @required this.includesProgress,
     @required this.achievementPoints,
     @required this.masteryLevel,
+    this.hasError = false,
   });
 }
+
+class ErrorAchievementsState extends AchievementState {}

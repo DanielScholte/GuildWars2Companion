@@ -13,6 +13,7 @@ class LoadedTradingPostState extends TradingPostState {
   final List<TradingPostTransaction> bought;
   final List<TradingPostTransaction> sold;
   final TradingPostDelivery tradingPostDelivery;
+  final bool hasError;
 
   LoadedTradingPostState({
     @required this.buying,
@@ -20,5 +21,8 @@ class LoadedTradingPostState extends TradingPostState {
     @required this.bought,
     @required this.sold,
     @required this.tradingPostDelivery,
+    this.hasError = false
   });
 }
+
+class ErrorTradingPostState extends TradingPostState {}

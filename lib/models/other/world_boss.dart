@@ -19,7 +19,7 @@ class WorldBoss {
     @required this.location,
     this.id,
     this.dateTime,
-    this.completed,
+    this.completed = false,
     this.refreshTime,
     this.times,
     this.color,

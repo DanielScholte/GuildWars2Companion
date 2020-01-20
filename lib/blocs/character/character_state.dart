@@ -11,6 +11,13 @@ class LoadedCharactersState extends CharacterState {
 
   final bool itemsLoaded;
   final bool itemsLoading;
+  final bool hasError;
 
-  LoadedCharactersState(this.characters, {this.itemsLoaded = false, this.itemsLoading = false});
+  LoadedCharactersState(this.characters, {
+    this.itemsLoaded = false,
+    this.itemsLoading = false,
+    this.hasError = false,
+  });
 }
+
+class ErrorCharactersState extends CharacterState {}

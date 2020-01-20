@@ -18,9 +18,9 @@ class DungeonRepository {
     if (response.statusCode == 200) {
       List dungeons = response.data;
       return dungeons.map((a) => a.toString()).toList();
-    } else {
-      return [];
     }
+
+    throw Exception();
   }
 
   List<Dungeon> getDungeons() {

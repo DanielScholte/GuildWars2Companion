@@ -18,6 +18,6 @@ class Dungeon {
     this.coin,
     this.level,
     this.color,
-    this.completed
+    this.completed = false,
   });
 }

@@ -27,7 +27,6 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<WorldBossesBloc>(context).add(LoadWorldbossesEvent(true));
 
     _timer = Timer.periodic(	
       Duration(seconds: 1),	
@@ -61,7 +60,7 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
             if (state is LoadedWorldbossesState) {
               return ListView(
                 children: state.worldBosses
-                  .map((w) => _buildWorldbossRow(context, w))
+                  .map((w) => _buildWorldbossRow(context, w, state.includeProgress))
                   .toList(),
               );
             }
@@ -75,7 +74,7 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
     );
   }
               
-  Widget _buildWorldbossRow(BuildContext context, WorldBoss worldBoss) {
+  Widget _buildWorldbossRow(BuildContext context, WorldBoss worldBoss, bool includeProgress) {
     return CompanionFullButton(
       color: worldBoss.color,
       title: worldBoss.name,
@@ -113,7 +112,7 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
 
                 if (worldBoss.refreshTime.toLocal().isBefore(now) && _refreshTimeout == 0) {
                   _refreshTimeout = 30;
-                  BlocProvider.of<WorldBossesBloc>(context).add(LoadWorldbossesEvent(false));
+                  BlocProvider.of<WorldBossesBloc>(context).add(LoadWorldbossesEvent(false, includeProgress));
                 }
 
                 if (isActive) {

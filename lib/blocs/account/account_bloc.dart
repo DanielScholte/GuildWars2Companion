@@ -47,28 +47,28 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   }
 
   Stream<AccountState> _authenticate(String token) async* {
-    TokenInfo tokenInfo = await accountRepository.getTokenInfo(token);
+    try {
+      TokenInfo tokenInfo = await accountRepository.getTokenInfo(token);
 
-    if (tokenInfo != null) {
       await TokenUtil.setToken(token);
       yield AuthenticatedState(
         await accountRepository.getAccount(token),
         tokenInfo
       );
-    } else {
+    } catch (_) {
       yield await _getUnauthenticated("Invalid token");
     }
   }
 
   Stream<AccountState> _addToken(String token) async* {
-    Account account = await accountRepository.getAccount(token);
-    if (account == null) {
-      yield await _getUnauthenticated("Invalid token");
-      return;
-    }
+    try {
+      Account account = await accountRepository.getAccount(token);
 
-    await TokenUtil.addToTokenList('$token;${account.name};${DateTime.now()}');
-    yield await _getUnauthenticated("Token added");
+      await TokenUtil.addToTokenList('$token;${account.name};${DateTime.now()}');
+      yield await _getUnauthenticated("Token added");
+    } catch (_) {
+      yield await _getUnauthenticated("Invalid token");
+    }
   }
 
   Stream<AccountState> _removeToken(String token) async* {

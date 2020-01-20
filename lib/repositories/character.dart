@@ -20,9 +20,9 @@ class CharacterRepository {
     if (response.statusCode == 200) {
       List characters = response.data;
       return characters.map((a) => Character.fromJson(a)).toList();
-    } else {
-      return [];
     }
+
+    throw Exception();
   }
 
   Future<List<AccountTitle>> getTitles() async {
@@ -36,9 +36,9 @@ class CharacterRepository {
       List titles = response.data;
       _titles = titles.map((a) => AccountTitle.fromJson(a)).toList();
       return _titles;
-    } else {
-      return [];
     }
+
+    throw Exception();
   }
 
   Future<List<Profession>> getProfessions() async {
@@ -47,8 +47,8 @@ class CharacterRepository {
     if (response.statusCode == 200) {
       List professions = response.data;
       return professions.map((a) => Profession.fromJson(a)).toList();
-    } else {
-      return [];
     }
+
+    throw Exception();
   }
 }

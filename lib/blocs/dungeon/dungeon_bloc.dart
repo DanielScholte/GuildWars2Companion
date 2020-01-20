@@ -19,12 +19,18 @@ class DungeonBloc extends Bloc<DungeonEvent, DungeonState> {
     DungeonEvent event,
   ) async* {
     if (event is LoadDungeonsEvent) {
-      List<Dungeon> dungeons = dungeonsRepository.getDungeons();
+      try {
+        List<Dungeon> dungeons = dungeonsRepository.getDungeons();
 
-      List<String> completedDungeons = await dungeonsRepository.getCompletedDungeons();
-      dungeons.forEach((d) => d.completed = completedDungeons.contains(d.pathId));
+        if (event.includeProgress) {
+          List<String> completedDungeons = await dungeonsRepository.getCompletedDungeons();
+          dungeons.forEach((d) => d.completed = completedDungeons.contains(d.pathId));
+        }
 
-      yield LoadedDungeonsState(dungeons);
+        yield LoadedDungeonsState(dungeons, event.includeProgress);
+      } catch(_) {
+        yield ErrorDungeonsState();
+      }
     }
   }
 }
