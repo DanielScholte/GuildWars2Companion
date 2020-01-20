@@ -7,6 +7,7 @@ import 'package:guildwars2_companion/models/character/character.dart';
 import 'package:guildwars2_companion/pages/character/character.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
+import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
 
 class CharactersPage extends StatelessWidget {
@@ -23,6 +24,16 @@ class CharactersPage extends StatelessWidget {
         ),
         body: BlocBuilder<CharacterBloc, CharacterState>(
           builder: (context, state) {
+            if (state is ErrorCharactersState) {
+              return Center(
+                child: CompanionError(
+                  title: 'the characters',
+                  onTryAgain: () =>
+                    BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent()),
+                ),
+              );
+            }
+
             if (state is LoadedCharactersState) {
               return ListView(
                 children: state.characters.map((c) => _buildCharacterRow(context, c)).toList(),

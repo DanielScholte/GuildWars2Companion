@@ -5,6 +5,7 @@ import 'package:guildwars2_companion/blocs/dungeon/bloc.dart';
 import 'package:guildwars2_companion/models/other/dungeon.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
+import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
 
 class DungeonsPage extends StatelessWidget {
@@ -20,21 +21,30 @@ class DungeonsPage extends StatelessWidget {
           elevation: 4.0,
         ),
         body: BlocBuilder<DungeonBloc, DungeonState>(
-            builder: (context, state) {
-              if (state is LoadedDungeonsState) {
-
-                return ListView(
-                  children: state.dungeons
-                    .map((d) => _buildDungeonRow(context, d))
-                    .toList(),
-                );
-              }
-
+          builder: (context, state) {
+            if (state is ErrorDungeonsState) {
               return Center(
-                child: CircularProgressIndicator(),
+                child: CompanionError(
+                  title: 'the dungeons',
+                  onTryAgain: () =>
+                    BlocProvider.of<DungeonBloc>(context).add(LoadDungeonsEvent(state.includeProgress)),
+                ),
               );
-            },
-          ),
+            }
+
+            if (state is LoadedDungeonsState) {
+              return ListView(
+                children: state.dungeons
+                  .map((d) => _buildDungeonRow(context, d))
+                  .toList(),
+              );
+            }
+
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        ),
       ),
     );
   }

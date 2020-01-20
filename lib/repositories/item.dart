@@ -152,6 +152,7 @@ class ItemRepository {
       if (response.statusCode == 200 || response.statusCode == 206) {
         List reponseItems = response.data;
         items.addAll(reponseItems.map((a) => Item.fromJson(a)).toList());
+        continue;
       }
 
       if (response.statusCode != 404) {
@@ -215,6 +216,7 @@ class ItemRepository {
       if (response.statusCode == 200 || response.statusCode == 206) {
         List reponseSkins = response.data;
         skins.addAll(reponseSkins.map((a) => Skin.fromJson(a)).toList());
+        continue;
       }
 
       if (response.statusCode != 404) {
@@ -278,6 +280,7 @@ class ItemRepository {
       if (response.statusCode == 200 || response.statusCode == 206) {
         List reponseMinis = response.data;
         minis.addAll(reponseMinis.map((a) => Mini.fromJson(a)).toList());
+        continue;
       }
 
       if (response.statusCode != 404) {

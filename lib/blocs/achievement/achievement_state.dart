@@ -33,4 +33,8 @@ class LoadedAchievementsState extends AchievementState {
   });
 }
 
-class ErrorAchievementsState extends AchievementState {}
+class ErrorAchievementsState extends AchievementState {
+  final bool includesProgress;
+
+  ErrorAchievementsState(this.includesProgress);
+}

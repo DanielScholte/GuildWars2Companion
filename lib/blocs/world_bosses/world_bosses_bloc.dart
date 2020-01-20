@@ -54,7 +54,7 @@ class WorldBossesBloc extends Bloc<WorldBossesEvent, WorldBossesState> {
 
         yield LoadedWorldbossesState(worldBosses, event.includeProgress);
       } catch (_) {
-        yield ErrorWorldbossesState();
+        yield ErrorWorldbossesState(event.includeProgress);
       }
     }
   }

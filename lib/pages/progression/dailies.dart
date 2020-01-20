@@ -4,6 +4,7 @@ import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
 import 'package:guildwars2_companion/models/achievement/daily.dart';
 import 'package:guildwars2_companion/widgets/achievement_button.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
+import 'package:guildwars2_companion/widgets/error.dart';
 
 class DailiesPage extends StatelessWidget {
 
@@ -53,8 +54,19 @@ class DailiesPage extends StatelessWidget {
               Expanded(
                 child: BlocBuilder<AchievementBloc, AchievementState>(
                   builder: (context, state) {
-                    if (state is LoadedAchievementsState) {
+                    if (state is ErrorAchievementsState) {
+                      return Center(
+                        child: CompanionError(
+                          title: 'the achievements',
+                          onTryAgain: () =>
+                            BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
+                              includeProgress: state.includesProgress
+                            )),
+                        ),
+                      );
+                    }
 
+                    if (state is LoadedAchievementsState) {
                       return TabBarView(
                         children: <Widget>[
                           _buildDailyTab(state, _getDailies(state.dailies)),

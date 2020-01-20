@@ -9,6 +9,7 @@ import 'package:guildwars2_companion/pages/progression/achievements.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
+import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/expandable_header.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
 
@@ -26,6 +27,18 @@ class AchievementCategoriesPage extends StatelessWidget {
         ),
         body: BlocBuilder<AchievementBloc, AchievementState>(
           builder: (context, state) {
+            if (state is ErrorAchievementsState) {
+              return Center(
+                child: CompanionError(
+                  title: 'the achievements',
+                  onTryAgain: () =>
+                    BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
+                      includeProgress: state.includesProgress
+                    )),
+                ),
+              );
+            }
+
             if (state is LoadedAchievementsState) {
               return ListView(
                 children: state.achievementGroups

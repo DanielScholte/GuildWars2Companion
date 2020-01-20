@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
+import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
 
 import 'dailies.dart';
@@ -20,6 +21,18 @@ class DailyCategoriesPage extends StatelessWidget {
         ),
         body: BlocBuilder<AchievementBloc, AchievementState>(
           builder: (context, state) {
+            if (state is ErrorAchievementsState) {
+              return Center(
+                child: CompanionError(
+                  title: 'the achievements',
+                  onTryAgain: () =>
+                    BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
+                      includeProgress: state.includesProgress
+                    )),
+                ),
+              );
+            }
+
             if (state is LoadedAchievementsState) {
               return ListView(
                 children: [

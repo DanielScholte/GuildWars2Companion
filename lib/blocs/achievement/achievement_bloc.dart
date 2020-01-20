@@ -193,7 +193,7 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
         masteryLevel: masteryLevel,
       );
     } catch (_) {
-      yield ErrorAchievementsState();
+      yield ErrorAchievementsState(includeProgress);
     }
   }
 
@@ -336,6 +336,13 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
         masteryLevel: event.masteryLevel,
       );
     } catch (_) {
+      Achievement achievement = event.achievements.firstWhere((a) => a.id == event.achievementId, orElse: () => null);
+
+      if (achievement != null) {
+        achievement.loading = false;
+        achievement.loaded = false;
+      }
+
       yield LoadedAchievementsState(
         achievementGroups: event.achievementGroups,
         dailies: event.dialies,

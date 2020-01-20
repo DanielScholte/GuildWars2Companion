@@ -9,6 +9,7 @@ import 'package:guildwars2_companion/models/trading_post/transaction.dart';
 import 'package:guildwars2_companion/pages/general/item.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
+import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/info_row.dart';
 
 class TradingPostItemPage extends StatelessWidget {
@@ -111,6 +112,33 @@ class TradingPostItemPage extends StatelessWidget {
               Expanded(
                 child: BlocBuilder<TradingPostBloc, TradingPostState>(
                   builder: (context, state) {
+                    if (state is ErrorTradingPostState) {
+                      return Center(
+                        child: CompanionError(
+                          title: 'the listings',
+                          onTryAgain: () =>
+                            BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostEvent()),
+                        ),
+                      );
+                    }
+
+                    if (state is LoadedTradingPostState && state.hasError) {
+                      return Center(
+                        child: CompanionError(
+                          title: 'the listings',
+                          onTryAgain: () =>
+                            BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostListingsEvent(
+                              buying: state.buying,
+                              selling: state.selling,
+                              bought: state.bought,
+                              sold: state.sold,
+                              tradingPostDelivery: state.tradingPostDelivery,
+                              itemId: item.id,
+                            )),
+                        ),
+                      );
+                    }
+
                     if (state is LoadedTradingPostState) {
                       TradingPostTransaction tradingPostTransaction = _getTradingPostTransaction(state);
 

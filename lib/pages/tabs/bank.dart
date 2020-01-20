@@ -6,6 +6,7 @@ import 'package:guildwars2_companion/pages/bank/generic_bank.dart';
 import 'package:guildwars2_companion/pages/bank/material.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
+import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
 
 class BankPage extends StatelessWidget {
@@ -22,6 +23,16 @@ class BankPage extends StatelessWidget {
         ),
         body: BlocBuilder<BankBloc, BankState>(
           builder: (context, state) {
+            if (state is ErrorBankState) {
+              return Center(
+                child: CompanionError(
+                  title: 'the bank',
+                  onTryAgain: () =>
+                    BlocProvider.of<BankBloc>(context).add(LoadBankEvent()),
+                ),
+              );
+            }
+
             if (state is LoadedBankState) {
               return ListView(
                 children: <Widget>[

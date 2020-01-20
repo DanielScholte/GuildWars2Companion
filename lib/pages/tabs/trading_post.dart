@@ -9,6 +9,7 @@ import 'package:guildwars2_companion/pages/trading_post/trading_post_item.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
+import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
 
@@ -104,6 +105,16 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
               Expanded(
                 child: BlocBuilder<TradingPostBloc, TradingPostState>(
                   builder: (context, state) {
+                    if (state is ErrorTradingPostState) {
+                      return Center(
+                        child: CompanionError(
+                          title: 'the trading post',
+                          onTryAgain: () =>
+                            BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostEvent()),
+                        ),
+                      );
+                    }
+
                     if (state is LoadedTradingPostState) {
                       return Stack(
                         children: <Widget>[

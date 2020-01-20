@@ -55,7 +55,7 @@ class CompanionError extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            onPressed: () => onTryAgain,
+            onPressed: () => onTryAgain(),
           ),
         ),
       ],

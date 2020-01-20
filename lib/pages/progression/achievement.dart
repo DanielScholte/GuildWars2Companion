@@ -8,6 +8,7 @@ import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/achievement_button.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
+import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
 
@@ -108,8 +109,52 @@ class AchievementPage extends StatelessWidget {
             Expanded(
               child: BlocBuilder<AchievementBloc, AchievementState>(
                 builder: (context, state) {
+                  if (state is ErrorAchievementsState) {
+                    return Center(
+                      child: CompanionError(
+                        title: 'the achievement',
+                        onTryAgain: () =>
+                          BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
+                            includeProgress: state.includesProgress
+                          )),
+                      ),
+                    );
+                  }
+
+                  if (state is LoadedAchievementsState && state.hasError) {
+                    return Center(
+                      child: CompanionError(
+                        title: 'the achievement',
+                        onTryAgain: () =>
+                          BlocProvider.of<AchievementBloc>(context).add(LoadAchievementDetailsEvent(
+                          achievementGroups: state.achievementGroups,
+                          achievements: state.achievements,
+                          masteries: state.masteries,
+                          dialies: state.dailies,
+                          dialiesTomorrow: state.dailiesTomorrow,
+                          includeProgress: state.includesProgress,
+                          achievementPoints: state.achievementPoints,
+                          masteryLevel: state.masteryLevel,
+                          achievementId: achievement.id,
+                        )),
+                      ),
+                    );
+                  }
+
                   if (state is LoadedAchievementsState) {
                     Achievement _achievement = state.achievements.firstWhere((a) => a.id == achievement.id);
+
+                    if (_achievement == null) {
+                      return Center(
+                        child: CompanionError(
+                          title: 'the achievement',
+                          onTryAgain: () =>
+                            BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
+                              includeProgress: state.includesProgress
+                            )),
+                        ),
+                      );
+                    }
 
                     if (_achievement != null && _achievement.loaded) {
                       return _buildContent(_achievement, state);

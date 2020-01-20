@@ -13,6 +13,8 @@ import 'package:guildwars2_companion/pages/home/wallet_page.dart';
 import 'package:guildwars2_companion/pages/home/world_bosses.dart';
 import 'package:guildwars2_companion/pages/info.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/utils/token.dart';
+import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_box.dart';
@@ -21,7 +23,13 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AccountBloc, AccountState>(
-      condition: (previous, current) => current is AuthenticatedState,
+      condition: (previous, current) {
+        if (previous is AuthenticatedState && current is UnauthenticatedState) {
+          return false;
+        }
+
+        return true;
+      },
       builder: (context, state) {
         if (state is AuthenticatedState) {
           return Scaffold(
@@ -109,7 +117,15 @@ class HomePage extends StatelessWidget {
           );
         }
 
-        return Container();
+        return Scaffold(
+          body: Center(
+            child: CompanionError(
+              title: 'the account',
+              onTryAgain: () async =>
+                BlocProvider.of<AccountBloc>(context).add(AuthenticateEvent(await TokenUtil.getToken())),
+            ),
+          ),
+        );
       },
     );
   }

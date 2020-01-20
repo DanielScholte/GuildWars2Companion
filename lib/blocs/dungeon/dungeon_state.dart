@@ -13,4 +13,8 @@ class LoadedDungeonsState extends DungeonState {
   LoadedDungeonsState(this.dungeons, this.includeProgress);
 }
 
-class ErrorDungeonsState extends DungeonState {}
+class ErrorDungeonsState extends DungeonState {
+  final bool includeProgress;
+
+  ErrorDungeonsState(this.includeProgress);
+}

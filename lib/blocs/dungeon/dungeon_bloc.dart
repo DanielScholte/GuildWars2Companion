@@ -29,7 +29,7 @@ class DungeonBloc extends Bloc<DungeonEvent, DungeonState> {
 
         yield LoadedDungeonsState(dungeons, event.includeProgress);
       } catch(_) {
-        yield ErrorDungeonsState();
+        yield ErrorDungeonsState(event.includeProgress);
       }
     }
   }

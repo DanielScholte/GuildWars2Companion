@@ -17,6 +17,8 @@ import 'package:guildwars2_companion/pages/tabs/progression.dart';
 import 'package:guildwars2_companion/pages/tabs/trading_post.dart';
 import 'package:guildwars2_companion/pages/token.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
+import 'package:guildwars2_companion/utils/token.dart';
+import 'package:guildwars2_companion/widgets/error.dart';
 
 class TabPage extends StatefulWidget {
   @override
@@ -69,6 +71,18 @@ class _TabPageState extends State<TabPage> {
         child: BlocBuilder<AccountBloc, AccountState>(
           condition: (previous, current) => current is LoadingAccountState || current is AuthenticatedState,
           builder: (BuildContext context, state) {
+            if (state is UnauthenticatedState) {
+              return Scaffold(
+                body: Center(
+                  child: CompanionError(
+                    title: 'the account',
+                    onTryAgain: () async =>
+                      BlocProvider.of<AccountBloc>(context).add(AuthenticateEvent(await TokenUtil.getToken())),
+                  ),
+                ),
+              );
+            }
+
             if (state is LoadingAccountState) {
               return Scaffold(
                 body: Center(

@@ -102,6 +102,7 @@ class AchievementRepository {
       if (response.statusCode == 200 || response.statusCode == 206) {
         List responseAchievements = response.data;
         achievements.addAll(responseAchievements.map((a) => Achievement.fromJson(a)).toList());
+        continue;
       }
 
       if (response.statusCode != 404) {

@@ -7,6 +7,7 @@ import 'package:guildwars2_companion/models/mastery/mastery.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
+import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
 
 import 'mastery_level.dart';
@@ -30,6 +31,18 @@ class MasteryLevelsPage extends StatelessWidget {
         ),
         body: BlocBuilder<AchievementBloc, AchievementState>(
           builder: (context, state) {
+            if (state is ErrorAchievementsState) {
+              return Center(
+                child: CompanionError(
+                  title: 'the masteries',
+                  onTryAgain: () =>
+                    BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
+                      includeProgress: state.includesProgress
+                    )),
+                ),
+              );
+            }
+
             if (state is LoadedAchievementsState) {
               Mastery _mastery = state.masteries.firstWhere((m) => m.id == mastery.id, orElse: () => null);
               
@@ -96,6 +109,18 @@ class MasteryLevelsPage extends StatelessWidget {
                       )),
                     ))
                     .toList()
+                );
+              }
+
+              if (state is ErrorAchievementsState) {
+                return Center(
+                  child: CompanionError(
+                    title: 'the masteries',
+                    onTryAgain: () =>
+                      BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
+                        includeProgress: state.includesProgress
+                      )),
+                  ),
                 );
               }
             }

@@ -6,6 +6,7 @@ import 'package:guildwars2_companion/pages/progression/mastery_levels.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
+import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
 
 class MasteriesPage extends StatelessWidget {
@@ -22,6 +23,18 @@ class MasteriesPage extends StatelessWidget {
         ),
         body: BlocBuilder<AchievementBloc, AchievementState>(
           builder: (context, state) {
+            if (state is ErrorAchievementsState) {
+              return Center(
+                child: CompanionError(
+                  title: 'the masteries',
+                  onTryAgain: () =>
+                    BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
+                      includeProgress: state.includesProgress
+                    )),
+                ),
+              );
+            }
+
             if (state is LoadedAchievementsState) {
               return ListView(
                 children: state.masteries
