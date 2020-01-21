@@ -33,6 +33,8 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
       yield* _loadCharacters();
     } else if (event is LoadCharacterItemsEvent) {
       yield* _loadCharacterItems(event.characters);
+    } else if (event is RefreshCharacterItemsEvent) {
+      yield* _refreshCharacterItems();
     }
   }
   
@@ -60,31 +62,57 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
     try {
       yield LoadedCharactersState(characters, itemsLoading: true);
 
-      List<int> itemIds = _getItemIds(characters);
-      List<int> skinIds = _getSkinIds(characters);
-
-      List<Item> items = await itemRepository.getItems(itemIds);
-      List<Skin> skins = await itemRepository.getSkins(skinIds);
-      
-      characters.forEach((c) {
-        if (c.bags != null) {
-          c.bags.forEach((b) {
-            b.itemInfo = items.firstWhere((i) => i.id == b.id, orElse: () => null);
-            b.inventory.where((i) => i.id != -1).forEach((inventory) {
-              _fillInventoryItemInfo(inventory, items, skins);
-            });
-          });
-        }
-        if (c.equipment != null) {
-          c.equipment.forEach((e) {
-            _fillEquipmentInfo(e, items, skins);
-          });
-        }
-      });
-
-      yield LoadedCharactersState(characters, itemsLoaded: true);
+      yield LoadedCharactersState(await _fillCharacterItems(characters), itemsLoaded: true);
     } catch(_) {
       yield LoadedCharactersState(characters, hasError: true);
+    }
+  }
+
+  Future<List<Character>> _fillCharacterItems(List<Character> characterList) async {
+    List<Character> characters = characterList;
+    
+    List<int> itemIds = _getItemIds(characters);
+    List<int> skinIds = _getSkinIds(characters);
+
+    List<Item> items = await itemRepository.getItems(itemIds);
+    List<Skin> skins = await itemRepository.getSkins(skinIds);
+    
+    characters.forEach((c) {
+      if (c.bags != null) {
+        c.bags.forEach((b) {
+          b.itemInfo = items.firstWhere((i) => i.id == b.id, orElse: () => null);
+          b.inventory.where((i) => i.id != -1).forEach((inventory) {
+            _fillInventoryItemInfo(inventory, items, skins);
+          });
+        });
+      }
+      if (c.equipment != null) {
+        c.equipment.forEach((e) {
+          _fillEquipmentInfo(e, items, skins);
+        });
+      }
+    });
+
+    return characters;
+  }
+
+  Stream<CharacterState> _refreshCharacterItems() async* {
+    try {
+      yield LoadingCharactersState();
+
+      List<Character> characters = await characterRepository.getCharacters();
+      List<AccountTitle> titles = await characterRepository.getTitles();
+      List<Profession> professions = await characterRepository.getProfessions();
+
+      characters.forEach((c) {
+        c.titleName = titles.firstWhere((t) => t.id == c.title, orElse: () => AccountTitle(name: '')).name;
+        c.professionInfo = professions.firstWhere((p) => p.id == c.profession, orElse: () => null);
+        c.professionColor = GuildWarsUtil.getProfessionColor(c.profession);
+      });
+
+      yield LoadedCharactersState(await _fillCharacterItems(characters), itemsLoaded: true);
+    } catch (_) {
+      yield ErrorCharactersState();
     }
   }
 

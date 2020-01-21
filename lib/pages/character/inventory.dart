@@ -26,50 +26,62 @@ class InventoryPage extends StatelessWidget {
           foregroundColor: Colors.white,
           elevation: 4.0,
         ),
-        body: BlocBuilder<CharacterBloc, CharacterState>(
-          builder: (context, state) {
-            if (state is ErrorCharactersState) {
-              return Center(
-                child: CompanionError(
-                  title: 'the character',
-                  onTryAgain: () =>
-                    BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent()),
-                ),
-              );
-            }
-
-            if (state is LoadedCharactersState && state.hasError) {
-              return Center(
-                child: CompanionError(
-                  title: 'the character items',
-                  onTryAgain: () =>
-                    BlocProvider.of<CharacterBloc>(context).add(LoadCharacterItemsEvent(state.characters)),
-                ),
-              );
-            }
-
-            if (state is LoadedCharactersState && state.itemsLoaded) {
-              Character character = state.characters.firstWhere((c) => c.name == _character.name);
-
-              if (character == null) {
+        body: BlocListener<CharacterBloc, CharacterState>(
+          condition: (previous, current) => current is ErrorCharactersState,
+          listener: (context, state) => Navigator.of(context).pop(),
+          child: BlocBuilder<CharacterBloc, CharacterState>(
+            builder: (context, state) {
+              if (state is ErrorCharactersState) {
                 return Center(
                   child: CompanionError(
                     title: 'the character',
                     onTryAgain: () =>
-                      BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent()),
+                      BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterItemsEvent()),
                   ),
                 );
               }
 
-              return ListView(
-                children: character.bags.map((b) => _buildBag(b)).toList(),
-              );
-            }
+              if (state is LoadedCharactersState && state.hasError) {
+                return Center(
+                  child: CompanionError(
+                    title: 'the character items',
+                    onTryAgain: () =>
+                      BlocProvider.of<CharacterBloc>(context).add(LoadCharacterItemsEvent(state.characters)),
+                  ),
+                );
+              }
 
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          },
+              if (state is LoadedCharactersState && state.itemsLoaded) {
+                Character character = state.characters.firstWhere((c) => c.name == _character.name);
+
+                if (character == null) {
+                  return Center(
+                    child: CompanionError(
+                      title: 'the character',
+                      onTryAgain: () =>
+                        BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterItemsEvent()),
+                    ),
+                  );
+                }
+
+                return RefreshIndicator(
+                  backgroundColor: Theme.of(context).accentColor,
+                  color: Colors.white,
+                  onRefresh: () async {
+                    BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterItemsEvent());
+                    await Future.delayed(Duration(milliseconds: 200), () {});
+                  },
+                  child: ListView(
+                    children: character.bags.map((b) => _buildBag(b)).toList(),
+                  ),
+                );
+              }
+
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          ),
         ),
       ),
     );

@@ -169,7 +169,7 @@ class TradingPostItemPage extends StatelessWidget {
   Widget _buildListingTab(BuildContext context, LoadedTradingPostState state, List<ListingOffer> offers, String type, String error) {
     if (offers.isEmpty) {
       return RefreshIndicator(
-        backgroundColor: Colors.green,
+        backgroundColor: Theme.of(context).accentColor,
         color: Colors.white,
         onRefresh: () async {
           BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostListingsEvent(
@@ -202,7 +202,7 @@ class TradingPostItemPage extends StatelessWidget {
     }
 
     return RefreshIndicator(
-      backgroundColor: Colors.green,
+      backgroundColor: Theme.of(context).accentColor,
       color: Colors.white,
       onRefresh: () async {
         BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostListingsEvent(

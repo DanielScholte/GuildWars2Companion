@@ -11,3 +11,5 @@ class LoadCharacterItemsEvent extends CharacterEvent {
 
   LoadCharacterItemsEvent(this.characters);
 }
+
+class RefreshCharacterItemsEvent extends CharacterEvent {}
