@@ -31,10 +31,18 @@ class MaterialPage extends StatelessWidget {
             }
 
             if (state is LoadedBankState) {
-              return ListView(
-                children: state.materialCategories
-                  .map((c) => _buildMaterialCategory(c))
-                  .toList(),
+              return RefreshIndicator(
+                backgroundColor: Theme.of(context).accentColor,
+                color: Colors.white,
+                onRefresh: () async {
+                  BlocProvider.of<BankBloc>(context).add(LoadBankEvent());
+                  await Future.delayed(Duration(milliseconds: 200), () {});
+                },
+                child: ListView(
+                  children: state.materialCategories
+                    .map((c) => _buildMaterialCategory(c))
+                    .toList(),
+                ),
               );
             }
 

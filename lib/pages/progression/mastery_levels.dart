@@ -47,68 +47,78 @@ class MasteryLevelsPage extends StatelessWidget {
               Mastery _mastery = state.masteries.firstWhere((m) => m.id == mastery.id, orElse: () => null);
               
               if (_mastery != null) {
-                return ListView(
-                  children: _mastery.levels
-                    .map((l) => CompanionFullButton(
-                      title: l.name,
-                      height: 64.0,
-                      color: GuildWarsUtil.regionColor(_mastery.region),
-                      leading: Stack(
-                        children: <Widget>[
-                          CachedNetworkImage(
-                            imageUrl: l.icon,
-                            placeholder: (context, url) => Center(child: Theme(
-                              data: Theme.of(context).copyWith(accentColor: Colors.white),
-                              child: CircularProgressIndicator()
-                            )),
-                            errorWidget: (context, url, error) => Center(child: Icon(
-                              FontAwesomeIcons.dizzy,
-                              size: 28,
-                              color: Colors.white,
-                            )),
-                            fit: BoxFit.fill,
-                          ),
-                          if (l.done)
-                            Container(
-                              width: double.infinity,
-                              height: double.infinity,
-                              color: Colors.white60,
-                              alignment: Alignment.center,
-                              child: Icon(
-                                FontAwesomeIcons.check,
-                                color: Colors.black87,
-                                size: 28.0,
-                              ),
-                            ),
-                        ],
-                      ),
-                      trailing: Padding(
-                        padding: EdgeInsets.only(top: 2.0),
-                        child: Row(
+                return RefreshIndicator(
+                  backgroundColor: Theme.of(context).accentColor,
+                  color: Colors.white,
+                  onRefresh: () async {
+                    BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
+                      includeProgress: state.includesProgress
+                    ));
+                    await Future.delayed(Duration(milliseconds: 200), () {});
+                  },
+                  child: ListView(
+                    children: _mastery.levels
+                      .map((l) => CompanionFullButton(
+                        title: l.name,
+                        height: 64.0,
+                        color: GuildWarsUtil.regionColor(_mastery.region),
+                        leading: Stack(
                           children: <Widget>[
-                            Text(
-                              l.pointCost.toString(),
-                              style: TextStyle(
+                            CachedNetworkImage(
+                              imageUrl: l.icon,
+                              placeholder: (context, url) => Center(child: Theme(
+                                data: Theme.of(context).copyWith(accentColor: Colors.white),
+                                child: CircularProgressIndicator()
+                              )),
+                              errorWidget: (context, url, error) => Center(child: Icon(
+                                FontAwesomeIcons.dizzy,
+                                size: 28,
                                 color: Colors.white,
-                                fontSize: 18.0,
-                              ),
+                              )),
+                              fit: BoxFit.fill,
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 4.0),
-                              child: Icon(
-                                GuildWarsIcons.mastery,
-                                size: 18.0,
-                                color: Colors.white,
+                            if (l.done)
+                              Container(
+                                width: double.infinity,
+                                height: double.infinity,
+                                color: Colors.white60,
+                                alignment: Alignment.center,
+                                child: Icon(
+                                  FontAwesomeIcons.check,
+                                  color: Colors.black87,
+                                  size: 28.0,
+                                ),
                               ),
-                            )
                           ],
                         ),
-                      ),
-                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => MasteryLevelPage(_mastery, l)
-                      )),
-                    ))
-                    .toList()
+                        trailing: Padding(
+                          padding: EdgeInsets.only(top: 2.0),
+                          child: Row(
+                            children: <Widget>[
+                              Text(
+                                l.pointCost.toString(),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 4.0),
+                                child: Icon(
+                                  GuildWarsIcons.mastery,
+                                  size: 18.0,
+                                  color: Colors.white,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => MasteryLevelPage(_mastery, l)
+                        )),
+                      ))
+                      .toList()
+                  ),
                 );
               }
 

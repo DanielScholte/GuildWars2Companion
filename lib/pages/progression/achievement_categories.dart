@@ -40,10 +40,20 @@ class AchievementCategoriesPage extends StatelessWidget {
             }
 
             if (state is LoadedAchievementsState) {
-              return ListView(
-                children: state.achievementGroups
-                  .map((g) => _buildGroup(context, g))
-                  .toList(),
+              return RefreshIndicator(
+                backgroundColor: Theme.of(context).accentColor,
+                color: Colors.white,
+                onRefresh: () async {
+                  BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
+                    includeProgress: state.includesProgress
+                  ));
+                  await Future.delayed(Duration(milliseconds: 200), () {});
+                },
+                child: ListView(
+                  children: state.achievementGroups
+                    .map((g) => _buildGroup(context, g))
+                    .toList(),
+                ),
               );
             }
 

@@ -35,8 +35,16 @@ class CharactersPage extends StatelessWidget {
             }
 
             if (state is LoadedCharactersState) {
-              return ListView(
-                children: state.characters.map((c) => _buildCharacterRow(context, c)).toList(),
+              return RefreshIndicator(
+                backgroundColor: Theme.of(context).accentColor,
+                color: Colors.white,
+                onRefresh: () async {
+                  BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent());
+                  await Future.delayed(Duration(milliseconds: 200), () {});
+                },
+                child: ListView(
+                  children: state.characters.map((c) => _buildCharacterRow(context, c)).toList(),
+                ),
               );
             }
 

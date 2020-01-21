@@ -9,7 +9,7 @@ import 'package:guildwars2_companion/blocs/dungeon/bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/blocs/world_bosses/bloc.dart';
 import 'package:guildwars2_companion/pages/home/dungeons.dart';
-import 'package:guildwars2_companion/pages/home/wallet_page.dart';
+import 'package:guildwars2_companion/pages/home/wallet.dart';
 import 'package:guildwars2_companion/pages/home/world_bosses.dart';
 import 'package:guildwars2_companion/pages/info.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';

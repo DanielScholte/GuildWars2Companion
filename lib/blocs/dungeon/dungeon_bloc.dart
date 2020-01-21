@@ -20,6 +20,8 @@ class DungeonBloc extends Bloc<DungeonEvent, DungeonState> {
   ) async* {
     if (event is LoadDungeonsEvent) {
       try {
+        yield LoadingDungeonsState();
+
         List<Dungeon> dungeons = dungeonsRepository.getDungeons();
 
         if (event.includeProgress) {

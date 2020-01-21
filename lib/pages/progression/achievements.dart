@@ -40,15 +40,27 @@ class AchievementsPage extends StatelessWidget {
             if (state is LoadedAchievementsState) {
               AchievementCategory _achievementCategory = _getAchievementsCategory(state);
 
-              return ListView(
-                children: _achievementCategory.achievementsInfo
-                  .map((a) => CompanionAchievementButton(
-                    state: state,
-                    achievement: a,
-                    categoryIcon: _achievementCategory.icon,
-                  ))
-                  .toList(),
-              );
+              if (_achievementCategory != null) {
+                return RefreshIndicator(
+                  backgroundColor: Theme.of(context).accentColor,
+                  color: Colors.white,
+                  onRefresh: () async {
+                    BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
+                      includeProgress: state.includesProgress
+                    ));
+                    await Future.delayed(Duration(milliseconds: 200), () {});
+                  },
+                  child: ListView(
+                    children: _achievementCategory.achievementsInfo
+                      .map((a) => CompanionAchievementButton(
+                        state: state,
+                        achievement: a,
+                        categoryIcon: _achievementCategory.icon,
+                      ))
+                      .toList(),
+                  ),
+                );
+              }
             }
 
             return Center(

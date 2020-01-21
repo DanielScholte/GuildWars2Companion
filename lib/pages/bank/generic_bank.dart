@@ -40,29 +40,36 @@ class GenericBankPage extends StatelessWidget {
             if (state is LoadedBankState) {
               List<InventoryItem> inventory = bankType == BankType.bank 
                 ? state.bank : state.inventory;
-
-              return ListView(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Wrap(
-                      alignment: WrapAlignment.center,
-                      spacing: 4.0,
-                      runSpacing: 4.0,
-                      children: inventory
-                        .where((i) => i.id != -1)
-                        .map((i) => CompanionItemBox(
-                          item: i.itemInfo,
-                          skin: i.skinInfo,
-                          upgradesInfo: i.upgradesInfo,
-                          infusionsInfo: i.infusionsInfo,
-                          quantity: i.charges != null ? i.charges : i.count,
-                          includeMargin: false,
-                        ))
-                        .toList(),
+              return RefreshIndicator(
+                backgroundColor: Theme.of(context).accentColor,
+                color: Colors.white,
+                onRefresh: () async {
+                  BlocProvider.of<BankBloc>(context).add(LoadBankEvent());
+                  await Future.delayed(Duration(milliseconds: 200), () {});
+                },
+                child: ListView(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Wrap(
+                        alignment: WrapAlignment.center,
+                        spacing: 4.0,
+                        runSpacing: 4.0,
+                        children: inventory
+                          .where((i) => i.id != -1)
+                          .map((i) => CompanionItemBox(
+                            item: i.itemInfo,
+                            skin: i.skinInfo,
+                            upgradesInfo: i.upgradesInfo,
+                            infusionsInfo: i.infusionsInfo,
+                            quantity: i.charges != null ? i.charges : i.count,
+                            includeMargin: false,
+                          ))
+                          .toList(),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               );
             }
 

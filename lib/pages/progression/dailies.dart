@@ -69,8 +69,8 @@ class DailiesPage extends StatelessWidget {
                     if (state is LoadedAchievementsState) {
                       return TabBarView(
                         children: <Widget>[
-                          _buildDailyTab(state, _getDailies(state.dailies)),
-                          _buildDailyTab(state, _getDailies(state.dailiesTomorrow)),
+                          _buildDailyTab(context, state, _getDailies(state.dailies)),
+                          _buildDailyTab(context, state, _getDailies(state.dailiesTomorrow)),
                         ],
                       );
                     }
@@ -88,16 +88,26 @@ class DailiesPage extends StatelessWidget {
     );
   }
 
-  Widget _buildDailyTab(LoadedAchievementsState state, List<Daily> dailies) {
-    return ListView(
-      children: dailies
-        .map((d) => CompanionAchievementButton(
-          achievement: d.achievementInfo,
-          state: state,
-          levels: d.level.min == 80 ? 'Level 80' : 'Level ${d.level.min} - ${d.level.max}',
-          categoryIcon: _getIcon(),
-        ))
-        .toList(),
+  Widget _buildDailyTab(BuildContext context, LoadedAchievementsState state, List<Daily> dailies) {
+    return RefreshIndicator(
+      backgroundColor: Theme.of(context).accentColor,
+      color: Colors.white,
+      onRefresh: () async {
+        BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
+          includeProgress: state.includesProgress
+        ));
+        await Future.delayed(Duration(milliseconds: 200), () {});
+      },
+      child: ListView(
+        children: dailies
+          .map((d) => CompanionAchievementButton(
+            achievement: d.achievementInfo,
+            state: state,
+            levels: d.level.min == 80 ? 'Level 80' : 'Level ${d.level.min} - ${d.level.max}',
+            categoryIcon: _getIcon(),
+          ))
+          .toList(),
+      )
     );
   }
 

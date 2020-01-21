@@ -36,7 +36,17 @@ class ProgressionPage extends StatelessWidget {
             }
 
             if (state is LoadedAchievementsState) {
-              return _buildButtonList(context);
+              return RefreshIndicator(
+                backgroundColor: Theme.of(context).accentColor,
+                color: Colors.white,
+                onRefresh: () async {
+                  BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
+                    includeProgress: state.includesProgress
+                  ));
+                  await Future.delayed(Duration(milliseconds: 200), () {});
+                },
+                child: _buildButtonList(context),
+              );
             }
 
             return Center(

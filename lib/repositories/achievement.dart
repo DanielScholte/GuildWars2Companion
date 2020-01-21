@@ -13,11 +13,14 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class AchievementRepository {
+  bool cacheLoaded;
+
   List<Achievement> _cachedAchievements = [];
 
   Dio _dio;
 
   AchievementRepository() {
+    cacheLoaded = false;
     _dio = DioUtil.getDioInstance();
   }
 
@@ -64,6 +67,8 @@ class AchievementRepository {
 
     final List<Map<String, dynamic>> achievements = await database.query('achievements');
     _cachedAchievements = List.generate(achievements.length, (i) => Achievement.fromDb(achievements[i]));
+
+    cacheLoaded = true;
 
     return;
   }

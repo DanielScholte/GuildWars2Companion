@@ -46,7 +46,9 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
     try {
       yield LoadingAchievementsState();
 
-      await achievementRepository.loadCachedData();
+      if (!achievementRepository.cacheLoaded) {
+        await achievementRepository.loadCachedData();
+      }
 
       List<AchievementGroup> achievementGroups = await achievementRepository.getAchievementGroups();
       List<AchievementCategory> achievementCategories = await achievementRepository.getAchievementCategories();

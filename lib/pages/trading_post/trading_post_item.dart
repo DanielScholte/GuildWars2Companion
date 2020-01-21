@@ -145,8 +145,8 @@ class TradingPostItemPage extends StatelessWidget {
                       if (tradingPostTransaction != null && !tradingPostTransaction.loading && tradingPostTransaction.listing != null) {
                         return TabBarView(
                           children: <Widget>[
-                            _buildListingTab(tradingPostTransaction.listing.buys, 'Ordered', 'No orders found'),
-                            _buildListingTab(tradingPostTransaction.listing.sells, 'Available', 'No items found'),
+                            _buildListingTab(context, state, tradingPostTransaction.listing.buys, 'Ordered', 'No orders found'),
+                            _buildListingTab(context, state, tradingPostTransaction.listing.sells, 'Available', 'No items found'),
                           ],
                         );
                       }
@@ -166,29 +166,66 @@ class TradingPostItemPage extends StatelessWidget {
     );
   }
 
-  Widget _buildListingTab(List<ListingOffer> offers, String type, String error) {
+  Widget _buildListingTab(BuildContext context, LoadedTradingPostState state, List<ListingOffer> offers, String type, String error) {
     if (offers.isEmpty) {
-      return Center(
-        child: Text(
-          error,
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 18.0
-          ),
+      return RefreshIndicator(
+        backgroundColor: Colors.green,
+        color: Colors.white,
+        onRefresh: () async {
+          BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostListingsEvent(
+            buying: state.buying,
+            selling: state.selling,
+            bought: state.bought,
+            sold: state.sold,
+            tradingPostDelivery: state.tradingPostDelivery,
+            itemId: item.id,
+          ));
+          await Future.delayed(Duration(milliseconds: 200), () {});
+        },
+        child: ListView(
+          children: <Widget>[
+            Center(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                  error,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18.0
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       );
     }
 
-    return ListView(
-      children: offers.map((o) => Container(
-        color: o.unitPrice == orderValue ? Colors.red[100] : Colors.transparent,
-        padding: EdgeInsets.symmetric(horizontal: 8.0),
-        child: InfoRow(
-          header: '${GuildWarsUtil.intToString(o.quantity)} $type',
-          widget: CompanionCoin(o.unitPrice),
-        ),
-      ))
-      .toList(),
+    return RefreshIndicator(
+      backgroundColor: Colors.green,
+      color: Colors.white,
+      onRefresh: () async {
+        BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostListingsEvent(
+          buying: state.buying,
+          selling: state.selling,
+          bought: state.bought,
+          sold: state.sold,
+          tradingPostDelivery: state.tradingPostDelivery,
+          itemId: item.id,
+        ));
+        await Future.delayed(Duration(milliseconds: 200), () {});
+      },
+      child: ListView(
+        children: offers.map((o) => Container(
+          color: o.unitPrice == orderValue ? Colors.red[100] : Colors.transparent,
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
+          child: InfoRow(
+            header: '${GuildWarsUtil.intToString(o.quantity)} $type',
+            widget: CompanionCoin(o.unitPrice),
+          ),
+        ))
+        .toList(),
+      ),
     );
   }
 

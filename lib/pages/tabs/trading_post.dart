@@ -308,90 +308,113 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
 
   Widget _buildTransactionTab(List<TradingPostTransaction> transactions, LoadedTradingPostState state) {
     if (transactions.where((t) => t.itemInfo != null).isEmpty) {
-      return Center(
-        child: Text(
-          'No items found',
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 18.0
-          ),
+      return RefreshIndicator(
+        backgroundColor: Colors.green,
+        color: Colors.white,
+        onRefresh: () async {
+          BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostEvent());
+          await Future.delayed(Duration(milliseconds: 200), () {});
+        },
+        child: ListView(
+          children: <Widget>[
+            Center(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                  'No items found',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18.0
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       );
     }
 
-    return ListView(
-      children: transactions
-        .where((t) => t.itemInfo != null)
-        .map((t) => CompanionFullButton(
-          leading: Stack(
-            alignment: Alignment.topRight,
-            children: <Widget>[
-              CachedNetworkImage(
-                height: 64.0,
-                imageUrl: t.itemInfo.icon,
-                placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) => Center(child: Icon(
-                  FontAwesomeIcons.dizzy,
-                  size: 28,
-                  color: Colors.black,
-                )),
-                fit: BoxFit.fill,
-              ),
-              if (t.quantity > 1)
-                Padding(
-                  padding: EdgeInsets.only(right: 2.0),
-                  child: Text(
-                    t.quantity.toString(),
-                    style: TextStyle(
-                      color: Color(0xFFe3e0b5),
-                      fontSize: 18.0,
-                      shadows: [
-                        BoxShadow(
-                          color: Colors.black,
-                          blurRadius: 6.0,
-                        ),
-                        BoxShadow(
-                          color: Colors.black,
-                          blurRadius: 2.0,
-                        ),
-                        BoxShadow(
-                          color: Colors.black,
-                          blurRadius: 4.0,
-                        ),
-                      ],
+    return RefreshIndicator(
+      backgroundColor: Colors.green,
+      color: Colors.white,
+      onRefresh: () async {
+        BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostEvent());
+        await Future.delayed(Duration(milliseconds: 200), () {});
+      },
+      child: ListView(
+        children: transactions
+          .where((t) => t.itemInfo != null)
+          .map((t) => CompanionFullButton(
+            leading: Stack(
+              alignment: Alignment.topRight,
+              children: <Widget>[
+                CachedNetworkImage(
+                  height: 64.0,
+                  imageUrl: t.itemInfo.icon,
+                  placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => Center(child: Icon(
+                    FontAwesomeIcons.dizzy,
+                    size: 28,
+                    color: Colors.black,
+                  )),
+                  fit: BoxFit.fill,
+                ),
+                if (t.quantity > 1)
+                  Padding(
+                    padding: EdgeInsets.only(right: 2.0),
+                    child: Text(
+                      t.quantity.toString(),
+                      style: TextStyle(
+                        color: Color(0xFFe3e0b5),
+                        fontSize: 18.0,
+                        shadows: [
+                          BoxShadow(
+                            color: Colors.black,
+                            blurRadius: 6.0,
+                          ),
+                          BoxShadow(
+                            color: Colors.black,
+                            blurRadius: 2.0,
+                          ),
+                          BoxShadow(
+                            color: Colors.black,
+                            blurRadius: 4.0,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
+              ],
+            ),
+            subtitleWidgets: <Widget>[
+              CompanionCoin(t.price)
             ],
-          ),
-          subtitleWidgets: <Widget>[
-            CompanionCoin(t.price)
-          ],
-          height: 64.0,
-          title: t.itemInfo.name,
-          color: Colors.white,
-          foregroundColor: Colors.black,
-          onTap: () {
-            if (!t.loading && t.listing == null) {
-              BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostListingsEvent(
-                buying: state.buying,
-                selling: state.selling,
-                bought: state.bought,
-                sold: state.sold,
-                tradingPostDelivery: state.tradingPostDelivery,
-                itemId: t.itemId
-              ));
-            }
+            height: 64.0,
+            title: t.itemInfo.name,
+            color: Colors.white,
+            foregroundColor: Colors.black,
+            onTap: () {
+              if (!t.loading && t.listing == null) {
+                BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostListingsEvent(
+                  buying: state.buying,
+                  selling: state.selling,
+                  bought: state.bought,
+                  sold: state.sold,
+                  tradingPostDelivery: state.tradingPostDelivery,
+                  itemId: t.itemId
+                ));
+              }
 
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => TradingPostItemPage(
-                item: t.itemInfo,
-                orderValue: t.purchased == null ? t.price : null,
-              ),
-            ));
-          },
-        ))
-        .toList(),
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => TradingPostItemPage(
+                  item: t.itemInfo,
+                  orderValue: t.purchased == null ? t.price : null,
+                ),
+              ));
+            },
+          ))
+          .toList(),
+      ),
     );
   }
 }

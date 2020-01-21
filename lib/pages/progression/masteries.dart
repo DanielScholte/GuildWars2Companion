@@ -36,10 +36,20 @@ class MasteriesPage extends StatelessWidget {
             }
 
             if (state is LoadedAchievementsState) {
-              return ListView(
-                children: state.masteries
-                  .map((g) => _buildMastery(context, g))
-                  .toList(),
+              return RefreshIndicator(
+                backgroundColor: Theme.of(context).accentColor,
+                color: Colors.white,
+                onRefresh: () async {
+                  BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
+                    includeProgress: state.includesProgress
+                  ));
+                  await Future.delayed(Duration(milliseconds: 200), () {});
+                },
+                child: ListView(
+                  children: state.masteries
+                    .map((g) => _buildMastery(context, g))
+                    .toList(),
+                ),
               );
             }
 

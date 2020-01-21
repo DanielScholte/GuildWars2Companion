@@ -35,7 +35,7 @@ class EquipmentPage extends StatelessWidget {
               );
             }
 
-            if (state is LoadedCharactersState && state.hasError) {
+            if ((state is LoadedCharactersState && state.hasError)) {
               return Center(
                 child: CompanionError(
                   title: 'the character items',

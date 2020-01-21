@@ -20,6 +20,10 @@ class WorldBossesBloc extends Bloc<WorldBossesEvent, WorldBossesState> {
   ) async* {
     if (event is LoadWorldbossesEvent)  {
       try {
+        if (event.showLoading) {
+          yield LoadingWorldbossesState();
+        }
+
         List<WorldBoss> worldBosses = worldBossesRepository.getWorldBosses();
 
         DateTime now = DateTime.now().toUtc();

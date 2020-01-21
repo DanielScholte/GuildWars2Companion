@@ -33,10 +33,18 @@ class DungeonsPage extends StatelessWidget {
             }
 
             if (state is LoadedDungeonsState) {
-              return ListView(
-                children: state.dungeons
-                  .map((d) => _buildDungeonRow(context, d))
-                  .toList(),
+              return RefreshIndicator(
+                backgroundColor: Theme.of(context).accentColor,
+                color: Colors.white,
+                onRefresh: () async {
+                  BlocProvider.of<DungeonBloc>(context).add(LoadDungeonsEvent(state.includeProgress));
+                  await Future.delayed(Duration(milliseconds: 200), () {});
+                },
+                child: ListView(
+                  children: state.dungeons
+                    .map((d) => _buildDungeonRow(context, d))
+                    .toList(),
+                ),
               );
             }
 

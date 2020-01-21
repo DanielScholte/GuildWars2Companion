@@ -69,10 +69,18 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
             }
 
             if (state is LoadedWorldbossesState) {
-              return ListView(
-                children: state.worldBosses
-                  .map((w) => _buildWorldbossRow(context, w, state.includeProgress))
-                  .toList(),
+              return RefreshIndicator(
+                backgroundColor: Theme.of(context).accentColor,
+                color: Colors.white,
+                onRefresh: () async {
+                  BlocProvider.of<WorldBossesBloc>(context).add(LoadWorldbossesEvent(true, state.includeProgress));
+                  await Future.delayed(Duration(milliseconds: 200), () {});
+                },
+                child: ListView(
+                  children: state.worldBosses
+                    .map((w) => _buildWorldbossRow(context, w, state.includeProgress))
+                    .toList(),
+                ),
               );
             }
 

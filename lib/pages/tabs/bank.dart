@@ -34,51 +34,59 @@ class BankPage extends StatelessWidget {
             }
 
             if (state is LoadedBankState) {
-              return ListView(
-                children: <Widget>[
-                  CompanionFullButton(
-                    color: Colors.blueGrey,
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => GenericBankPage(BankType.bank),
-                      ));
-                    },
-                    title: 'Bank',
-                    leading: Icon(
-                      FontAwesomeIcons.archive,
-                      size: 42.0,
-                      color: Colors.white,
+              return RefreshIndicator(
+                backgroundColor: Theme.of(context).accentColor,
+                color: Colors.white,
+                onRefresh: () async {
+                  BlocProvider.of<BankBloc>(context).add(LoadBankEvent());
+                  await Future.delayed(Duration(milliseconds: 200), () {});
+                },
+                child: ListView(
+                  children: <Widget>[
+                    CompanionFullButton(
+                      color: Colors.blueGrey,
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => GenericBankPage(BankType.bank),
+                        ));
+                      },
+                      title: 'Bank',
+                      leading: Icon(
+                        FontAwesomeIcons.archive,
+                        size: 42.0,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                  CompanionFullButton(
-                    color: Colors.deepOrange,
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => MaterialPage(),
-                      ));
-                    },
-                    title: 'Materials',
-                    leading: Icon(
-                      FontAwesomeIcons.th,
-                      size: 42.0,
-                      color: Colors.white,
+                    CompanionFullButton(
+                      color: Colors.deepOrange,
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => MaterialPage(),
+                        ));
+                      },
+                      title: 'Materials',
+                      leading: Icon(
+                        FontAwesomeIcons.th,
+                        size: 42.0,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                  CompanionFullButton(
-                    color: Colors.blue,
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => GenericBankPage(BankType.inventory),
-                      ));
-                    },
-                    title: 'Shared inventory',
-                    leading: Icon(
-                      GuildWarsIcons.inventory,
-                      size: 48.0,
-                      color: Colors.white,
+                    CompanionFullButton(
+                      color: Colors.blue,
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => GenericBankPage(BankType.inventory),
+                        ));
+                      },
+                      title: 'Shared inventory',
+                      leading: Icon(
+                        GuildWarsIcons.inventory,
+                        size: 48.0,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               );
             }
 
