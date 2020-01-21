@@ -15,7 +15,7 @@ import 'package:guildwars2_companion/pages/tabs/characters.dart';
 import 'package:guildwars2_companion/pages/tabs/home.dart';
 import 'package:guildwars2_companion/pages/tabs/progression.dart';
 import 'package:guildwars2_companion/pages/tabs/trading_post.dart';
-import 'package:guildwars2_companion/pages/token.dart';
+import 'package:guildwars2_companion/pages/token/token.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
 import 'package:guildwars2_companion/utils/token.dart';
 import 'package:guildwars2_companion/widgets/error.dart';

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
+import 'package:guildwars2_companion/pages/tab.dart';
+import 'package:guildwars2_companion/pages/token/qr_code.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
 import 'package:intl/intl.dart';
-
-import 'tab.dart';
 
 class TokenPage extends StatelessWidget {
 
@@ -140,12 +141,34 @@ class TokenPage extends StatelessWidget {
         floatingActionButton: BlocBuilder<AccountBloc, AccountState>(
           builder: (BuildContext context, state) {
             if (state is UnauthenticatedState) {
-              return FloatingActionButton(
+
+              return SpeedDial(
+                animatedIcon: AnimatedIcons.menu_close,
+                animatedIconTheme: IconThemeData(size: 26.0),
                 backgroundColor: Theme.of(context).primaryColor,
                 foregroundColor: Colors.white,
-                splashColor: Color(0x10FFFFFF),
-                child: Icon(Icons.add),
-                onPressed: () => _addToken(context),
+                children: [
+                  SpeedDialChild(
+                    child: Icon(
+                      FontAwesomeIcons.qrcode,
+                      size: 18.0,
+                    ),
+                    backgroundColor: Theme.of(context).primaryColor,
+                    label: 'Enter token by Qr Code',
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => QrCodePage()
+                    )),
+                  ),
+                  SpeedDialChild(
+                    child: Icon(
+                      FontAwesomeIcons.solidEdit,
+                      size: 18.0,
+                    ),
+                    backgroundColor: Theme.of(context).primaryColor,
+                    label: 'Enter token by text',
+                    onTap: () => _addTokenByText(context),
+                  )
+                ],
               );
             }
 
@@ -174,7 +197,7 @@ class TokenPage extends StatelessWidget {
     );
   }
 
-  Future<void> _addToken(BuildContext context) async {
+  Future<void> _addTokenByText(BuildContext context) async {
     TextEditingController tokenFieldController = TextEditingController();
 
     showDialog(
