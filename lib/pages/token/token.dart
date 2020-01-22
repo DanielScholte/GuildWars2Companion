@@ -66,7 +66,7 @@ class TokenPage extends StatelessWidget {
                                 padding: EdgeInsets.only(top: 8.0),
                                 child: Image.asset(
                                   'assets/token_header_logo.png',
-                                  height: 64.0,
+                                  height: 72.0,
                                 ),
                               ),
                             ),
@@ -194,7 +194,7 @@ class TokenPage extends StatelessWidget {
                               padding: EdgeInsets.only(top: 8.0),
                               child: Image.asset(
                                 'assets/token_header_logo.png',
-                                height: 64.0,
+                                height: 72.0,
                               ),
                             ),
                           ),
