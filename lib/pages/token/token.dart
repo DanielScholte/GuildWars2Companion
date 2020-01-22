@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
+import 'package:guildwars2_companion/pages/info.dart';
 import 'package:guildwars2_companion/pages/tab.dart';
 import 'package:guildwars2_companion/pages/token/qr_code.dart';
 import 'package:guildwars2_companion/widgets/full_button.dart';
@@ -43,44 +44,92 @@ class TokenPage extends StatelessWidget {
               return Stack(
                 children: <Widget>[
                   Align(
-                    child: Image.asset('assets/token_footer.png'),
+                    child: Image.asset(
+                      'assets/token_footer.jpg',
+                    ),
                     alignment: Alignment.bottomCenter,
                   ),
                   Column(
                     children: <Widget>[
-                      Image.asset('assets/token_header.png'),
-                      if (state.tokens.isNotEmpty)
-                        Expanded(
-                          child: ListView(
-                            children: state.tokens.map((t) => 
-                              Dismissible(
-                                child: _tokenCard(context, t),
-                                key: ValueKey(t),
-                                direction: DismissDirection.startToEnd,
-                                onDismissed: (_) => BlocProvider.of<AccountBloc>(context).add(RemoveTokenEvent(t)),
-                                background: Container(
-                                  color: Colors.red,
-                                  child: Row(
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Icon(
-                                          Icons.delete,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      Text(
-                                        'Delete token',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18.0
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                      Stack(
+                        children: <Widget>[
+                          Image.asset(
+                            'assets/token_header.jpg',
+                            height: 170.0,
+                            fit: BoxFit.fitHeight,
+                            alignment: Alignment.topCenter,
+                          ),
+                          SafeArea(
+                            child: Center(
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 8.0),
+                                child: Image.asset(
+                                  'assets/token_header_logo.png',
+                                  height: 64.0,
                                 ),
-                              )
-                            ).toList(),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      if (state.tokens.isNotEmpty)
+                        MediaQuery.removePadding(
+                          removeTop: true,
+                          context: context,
+                          child: Expanded(
+                            child: ListView(
+                              children: state.tokens.map((t) => 
+                                Dismissible(
+                                  child: _tokenCard(context, t),
+                                  key: ValueKey(t),
+                                  // direction: DismissDirection.startToEnd,
+                                  onDismissed: (_) => BlocProvider.of<AccountBloc>(context).add(RemoveTokenEvent(t)),
+                                  secondaryBackground: Container(
+                                    color: Colors.red,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: <Widget>[
+                                        Text(
+                                          'Delete token',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18.0
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Icon(
+                                            Icons.delete,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  background: Container(
+                                    color: Colors.red,
+                                    child: Row(
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Icon(
+                                            Icons.delete,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Delete token',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18.0
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ).toList(),
+                            ),
                           ),
                         ),
                       if (state.tokens.isEmpty)
@@ -109,11 +158,11 @@ class TokenPage extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                Container()
+                                
                               ],
                             ),
                           ),
-                        )
+                        ),
                     ],
                   ),
                 ],
@@ -123,13 +172,33 @@ class TokenPage extends StatelessWidget {
             return Stack(
               children: <Widget>[
                 Align(
-                  child: Image.asset('assets/token_footer.png'),
+                  child: Image.asset('assets/token_footer.jpg'),
                   alignment: Alignment.bottomCenter,
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Image.asset('assets/token_header.png'),
+                    Stack(
+                      children: <Widget>[
+                        Image.asset(
+                          'assets/token_header.jpg',
+                          height: 170.0,
+                          fit: BoxFit.fitHeight,
+                          alignment: Alignment.topCenter,
+                        ),
+                        SafeArea(
+                          child: Center(
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 8.0),
+                              child: Image.asset(
+                                'assets/token_header_logo.png',
+                                height: 64.0,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                     CircularProgressIndicator(),
                     Container()
                   ],
@@ -145,7 +214,10 @@ class TokenPage extends StatelessWidget {
               return SpeedDial(
                 animatedIcon: AnimatedIcons.menu_close,
                 animatedIconTheme: IconThemeData(size: 26.0),
-                backgroundColor: Theme.of(context).primaryColor,
+                overlayColor: Colors.black,
+                overlayOpacity: .6,
+                backgroundColor: Colors.blue,
+                // backgroundColor: Theme.of(context).primaryColor,
                 foregroundColor: Colors.white,
                 children: [
                   SpeedDialChild(
@@ -153,7 +225,11 @@ class TokenPage extends StatelessWidget {
                       FontAwesomeIcons.qrcode,
                       size: 18.0,
                     ),
-                    backgroundColor: Theme.of(context).primaryColor,
+                    labelStyle: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w500
+                    ),
+                    backgroundColor: Colors.blue,
                     label: 'Enter token by Qr Code',
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => QrCodePage()
@@ -164,10 +240,42 @@ class TokenPage extends StatelessWidget {
                       FontAwesomeIcons.solidEdit,
                       size: 18.0,
                     ),
-                    backgroundColor: Theme.of(context).primaryColor,
+                    labelStyle: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w500
+                    ),
+                    backgroundColor: Colors.blue,
                     label: 'Enter token by text',
                     onTap: () => _addTokenByText(context),
-                  )
+                  ),
+                  SpeedDialChild(
+                    child: Icon(
+                      FontAwesomeIcons.question,
+                      size: 18.0,
+                    ),
+                    labelStyle: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w500
+                    ),
+                    backgroundColor: Colors.deepOrange,
+                    label: 'How to get a token?',
+                    onTap: () {},
+                  ),
+                  SpeedDialChild(
+                    child: Icon(
+                      FontAwesomeIcons.info,
+                      size: 18.0,
+                    ),
+                    backgroundColor: Colors.deepOrange,
+                    label: 'App information',
+                    labelStyle: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w500
+                    ),
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => InfoPage()
+                    )),
+                  ),
                 ],
               );
             }

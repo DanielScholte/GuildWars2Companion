@@ -32,6 +32,12 @@ class _TabPageState extends State<TabPage> {
   @override
   void initState() {
     super.initState();
+
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor: Color(0xFFEEEEEE),
+      systemNavigationBarIconBrightness: Brightness.dark
+    ));
+
     if (BlocProvider.of<AccountBloc>(context).state is AuthenticatedState) {
       _handleAuth(context, BlocProvider.of<AccountBloc>(context).state);
     }
@@ -44,11 +50,6 @@ class _TabPageState extends State<TabPage> {
  
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
-      systemNavigationBarIconBrightness: Brightness.dark
-    ));
-
     return WillPopScope(
       onWillPop: () async {
         if (_currentIndex != 0) {
@@ -64,7 +65,11 @@ class _TabPageState extends State<TabPage> {
             await _handleAuth(context, state);
             return;
           }
-
+          
+          SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+            systemNavigationBarColor: Colors.black,
+            systemNavigationBarIconBrightness: Brightness.light
+          ));
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (BuildContext context) => TokenPage()));
         },
