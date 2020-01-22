@@ -56,8 +56,9 @@ class TokenPage extends StatelessWidget {
                           Image.asset(
                             'assets/token_header.jpg',
                             height: 170.0,
-                            fit: BoxFit.fitHeight,
-                            alignment: Alignment.topCenter,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                            alignment: Alignment.bottomCenter,
                           ),
                           SafeArea(
                             child: Center(
@@ -183,8 +184,9 @@ class TokenPage extends StatelessWidget {
                         Image.asset(
                           'assets/token_header.jpg',
                           height: 170.0,
-                          fit: BoxFit.fitHeight,
-                          alignment: Alignment.topCenter,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          alignment: Alignment.bottomCenter,
                         ),
                         SafeArea(
                           child: Center(
