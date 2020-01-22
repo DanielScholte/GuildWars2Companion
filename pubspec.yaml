@@ -46,6 +46,10 @@ dependencies:
 
   dio: ^3.0.8
 
+  flutter_speed_dial: ^1.2.5
+
+  qr_code_scanner: ^0.0.12
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -65,7 +65,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       Account account = await accountRepository.getAccount(token);
 
       await TokenUtil.addToTokenList('$token;${account.name};${DateTime.now()}');
-      yield await _getUnauthenticated("Token added");
+      yield await _getUnauthenticated("Token added", tokenAdded: true);
     } catch (_) {
       yield await _getUnauthenticated("Invalid token");
     }
@@ -76,10 +76,11 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     yield await _getUnauthenticated("Token removed");
   }  
 
-  Future<UnauthenticatedState> _getUnauthenticated(String message) async {
+  Future<UnauthenticatedState> _getUnauthenticated(String message, { bool tokenAdded = false }) async {
     return UnauthenticatedState(
       await TokenUtil.getTokenList(),
-      message
+      message,
+      tokenAdded
     );
   }
 }

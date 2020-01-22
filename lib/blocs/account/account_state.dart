@@ -8,8 +8,9 @@ abstract class AccountState {}
 class UnauthenticatedState extends AccountState {
   final String message;
   final List<String> tokens;
+  final bool tokenAdded;
 
-  UnauthenticatedState(this.tokens, this.message);
+  UnauthenticatedState(this.tokens, this.message, this.tokenAdded);
 }
 
 class LoadingAccountState extends AccountState {}

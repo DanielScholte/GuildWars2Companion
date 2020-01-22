@@ -9,7 +9,7 @@ import 'package:guildwars2_companion/blocs/trading_post/bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/blocs/world_bosses/bloc.dart';
 import 'package:guildwars2_companion/pages/tab.dart';
-import 'package:guildwars2_companion/pages/token.dart';
+import 'package:guildwars2_companion/pages/token/token.dart';
 import 'package:guildwars2_companion/repositories/account.dart';
 import 'package:guildwars2_companion/repositories/achievement.dart';
 import 'package:guildwars2_companion/repositories/bank.dart';
