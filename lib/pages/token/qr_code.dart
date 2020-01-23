@@ -44,8 +44,22 @@ class _QrCodePageState extends State<QrCodePage> {
         ),
         body: Stack(
           children: <Widget>[
-            Center(
-              child: CircularProgressIndicator(),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                CircularProgressIndicator(),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Taking too long? The app might not have permission to use the camera.',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w300
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                )
+              ],
             ),
             QRView(
               key: qrKey,
