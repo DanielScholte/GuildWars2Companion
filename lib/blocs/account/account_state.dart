@@ -1,4 +1,5 @@
 import 'package:guildwars2_companion/models/account/account.dart';
+import 'package:guildwars2_companion/models/account/token_entry.dart';
 import 'package:guildwars2_companion/models/account/token_info.dart';
 import 'package:meta/meta.dart';
 
@@ -7,7 +8,7 @@ abstract class AccountState {}
 
 class UnauthenticatedState extends AccountState {
   final String message;
-  final List<String> tokens;
+  final List<TokenEntry> tokens;
   final bool tokenAdded;
 
   UnauthenticatedState(this.tokens, this.message, this.tokenAdded);

@@ -24,28 +24,4 @@ class TokenUtil {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.remove("token");
   }
-
-  static Future<List<String>> getTokenList() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (!prefs.containsKey("tokens")) {
-      prefs.setStringList("tokens", []);
-    }
-    return prefs.getStringList("tokens");
-  }
-
-  static Future<void> addToTokenList(String token) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> tokens = prefs.getStringList("tokens");
-    tokens.add(token);
-    prefs.setStringList("tokens", tokens);
-    return;
-  }
-
-  static Future<void> removeFromTokenList(String token) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> tokens = prefs.getStringList("tokens");
-    tokens.remove(token);
-    prefs.setStringList("tokens", tokens);
-    return;
-  }
 }

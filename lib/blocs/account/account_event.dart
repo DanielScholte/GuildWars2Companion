@@ -18,9 +18,9 @@ class AddTokenEvent extends AccountEvent {
 }
 
 class RemoveTokenEvent extends AccountEvent {
-  final String token;
+  final int tokenId;
 
-  RemoveTokenEvent(this.token);
+  RemoveTokenEvent(this.tokenId);
 }
 
 class UnauthenticateEvent extends AccountEvent {}

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
+import 'package:guildwars2_companion/models/account/token_entry.dart';
 import 'package:guildwars2_companion/pages/info.dart';
 import 'package:guildwars2_companion/pages/tab.dart';
 import 'package:guildwars2_companion/pages/token/qr_code.dart';
@@ -84,7 +85,7 @@ class TokenPage extends StatelessWidget {
                                   child: _tokenCard(context, t),
                                   key: ValueKey(t),
                                   // direction: DismissDirection.startToEnd,
-                                  onDismissed: (_) => BlocProvider.of<AccountBloc>(context).add(RemoveTokenEvent(t)),
+                                  onDismissed: (_) => BlocProvider.of<AccountBloc>(context).add(RemoveTokenEvent(t.id)),
                                   secondaryBackground: Container(
                                     color: Colors.red,
                                     child: Row(
@@ -289,9 +290,8 @@ class TokenPage extends StatelessWidget {
     );
   }
 
-  Widget _tokenCard(BuildContext context, String token) {
-    List<String> tokenParts = token.split(';');
-    DateTime added = DateTime.tryParse(tokenParts[2]);
+  Widget _tokenCard(BuildContext context, TokenEntry token) {
+    DateTime added = DateTime.tryParse(token.date);
 
     return CompanionFullButton(
       color: Colors.blue,
@@ -299,11 +299,11 @@ class TokenPage extends StatelessWidget {
         FontAwesomeIcons.key,
         color: Colors.white,
       ),
-      title: tokenParts[1],
+      title: token.name,
       subtitles: added != null ? [
-        'Added: ${DateFormat('yyyy-MM-dd - kk:mm').format(added)}'
+        'Added: ${DateFormat('yyyy-MM-dd').format(added)}'
       ] : null,
-      onTap: () => BlocProvider.of<AccountBloc>(context).add(AuthenticateEvent(tokenParts[0])),
+      onTap: () => BlocProvider.of<AccountBloc>(context).add(AuthenticateEvent(token.token)),
     );
   }
 
