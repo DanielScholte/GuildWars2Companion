@@ -7,7 +7,7 @@ import 'package:guildwars2_companion/blocs/achievement/achievement_bloc.dart';
 import 'package:guildwars2_companion/blocs/achievement/achievement_state.dart';
 import 'package:guildwars2_companion/blocs/dungeon/bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
-import 'package:guildwars2_companion/blocs/world_bosses/bloc.dart';
+import 'package:guildwars2_companion/blocs/world_boss/bloc.dart';
 import 'package:guildwars2_companion/pages/home/dungeons.dart';
 import 'package:guildwars2_companion/pages/home/wallet.dart';
 import 'package:guildwars2_companion/pages/home/world_bosses.dart';
@@ -283,7 +283,7 @@ class HomePage extends StatelessWidget {
       color: Colors.deepPurple,
       title: 'World bosses',
       onTap: () {
-        BlocProvider.of<WorldBossesBloc>(context).add(LoadWorldbossesEvent(true, includeProgress));
+        BlocProvider.of<WorldBossBloc>(context).add(LoadWorldbossesEvent(true, includeProgress));
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => WorldBossesPage()
         ));

@@ -3,7 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:guildwars2_companion/models/account/account.dart';
 import 'package:guildwars2_companion/models/account/token_info.dart';
-import 'package:guildwars2_companion/services/account.dart';
+import 'package:guildwars2_companion/repositories/account.dart';
 import 'package:guildwars2_companion/utils/token.dart';
 import './bloc.dart';
 
@@ -12,7 +12,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   @override
   AccountState get initialState => LoadingAccountState();
 
-  final AccountService accountRepository;
+  final AccountRepository accountRepository;
 
   AccountBloc({
     @required this.accountRepository
@@ -50,7 +50,6 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     try {
       TokenInfo tokenInfo = await accountRepository.getTokenInfo(token);
 
-      await TokenUtil.setToken(token);
       yield AuthenticatedState(
         await accountRepository.getAccount(token),
         tokenInfo

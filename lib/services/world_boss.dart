@@ -4,11 +4,11 @@ import '../models/other/world_boss.dart';
 import '../utils/dio.dart';
 import '../utils/urls.dart';
 
-class WorldBossesService {
+class WorldBossService {
 
   Dio _dio;
 
-  WorldBossesService() {
+  WorldBossService() {
     _dio = DioUtil.getDioInstance();
   }
 

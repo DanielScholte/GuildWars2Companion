@@ -1,17 +1,16 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:guildwars2_companion/models/other/dungeon.dart';
-import 'package:guildwars2_companion/services/dungeon.dart';
+import 'package:guildwars2_companion/repositories/dungeon.dart';
 import './bloc.dart';
 
 class DungeonBloc extends Bloc<DungeonEvent, DungeonState> {
   @override
   DungeonState get initialState => LoadingDungeonsState();
 
-  final DungeonService dungeonsRepository;
+  final DungeonRepository dungeonRepository;
 
   DungeonBloc({
-    this.dungeonsRepository
+    this.dungeonRepository
   });
 
   @override
@@ -22,14 +21,7 @@ class DungeonBloc extends Bloc<DungeonEvent, DungeonState> {
       try {
         yield LoadingDungeonsState();
 
-        List<Dungeon> dungeons = dungeonsRepository.getDungeons();
-
-        if (event.includeProgress) {
-          List<String> completedDungeons = await dungeonsRepository.getCompletedDungeons();
-          dungeons.forEach((d) => d.completed = completedDungeons.contains(d.pathId));
-        }
-
-        yield LoadedDungeonsState(dungeons, event.includeProgress);
+        yield LoadedDungeonsState(await dungeonRepository.getDungeons(event.includeProgress), event.includeProgress);
       } catch(_) {
         yield ErrorDungeonsState(event.includeProgress);
       }
