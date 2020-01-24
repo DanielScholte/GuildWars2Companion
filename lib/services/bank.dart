@@ -1,14 +1,14 @@
 import 'package:dio/dio.dart';
-import 'package:guildwars2_companion/models/bank/material.dart';
-import 'package:guildwars2_companion/models/bank/material_category.dart';
-import 'package:guildwars2_companion/models/items/inventory.dart';
-import 'package:guildwars2_companion/utils/dio.dart';
-import 'package:guildwars2_companion/utils/urls.dart';
+import '../models/bank/material.dart';
+import '../models/bank/material_category.dart';
+import '../models/items/inventory.dart';
+import '../utils/dio.dart';
+import '../utils/urls.dart';
 
-class BankRepository {
+class BankService {
   Dio _dio;
 
-  BankRepository() {
+  BankService() {
     _dio = DioUtil.getDioInstance();
   }
 

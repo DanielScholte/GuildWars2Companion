@@ -1,14 +1,14 @@
 import 'package:dio/dio.dart';
-import 'package:guildwars2_companion/models/wallet/currency.dart';
-import 'package:guildwars2_companion/models/wallet/wallet.dart';
-import 'package:guildwars2_companion/utils/dio.dart';
-import 'package:guildwars2_companion/utils/urls.dart';
+import '../models/wallet/currency.dart';
+import '../models/wallet/wallet.dart';
+import '../utils/dio.dart';
+import '../utils/urls.dart';
 
-class WalletRepository {
+class WalletService {
 
   Dio _dio;
 
-  WalletRepository() {
+  WalletService() {
     _dio = DioUtil.getDioInstance();
   }
 

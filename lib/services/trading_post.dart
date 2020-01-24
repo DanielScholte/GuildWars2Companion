@@ -1,16 +1,16 @@
 import 'package:dio/dio.dart';
-import 'package:guildwars2_companion/models/trading_post/delivery.dart';
-import 'package:guildwars2_companion/models/trading_post/listing.dart';
-import 'package:guildwars2_companion/models/trading_post/price.dart';
-import 'package:guildwars2_companion/models/trading_post/transaction.dart';
-import 'package:guildwars2_companion/utils/dio.dart';
-import 'package:guildwars2_companion/utils/urls.dart';
+import '../models/trading_post/delivery.dart';
+import '../models/trading_post/listing.dart';
+import '../models/trading_post/price.dart';
+import '../models/trading_post/transaction.dart';
+import '../utils/dio.dart';
+import '../utils/urls.dart';
 
-class TradingPostRepository {
+class TradingPostService {
 
   Dio _dio;
 
-  TradingPostRepository() {
+  TradingPostService() {
     _dio = DioUtil.getDioInstance();
   }
 

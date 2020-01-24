@@ -12,18 +12,18 @@ import 'package:guildwars2_companion/models/items/skin.dart';
 import 'package:guildwars2_companion/models/mastery/mastery.dart';
 import 'package:guildwars2_companion/models/mastery/mastery_progress.dart';
 import 'package:guildwars2_companion/models/other/mini.dart';
-import 'package:guildwars2_companion/repositories/achievement.dart';
-import 'package:guildwars2_companion/repositories/character.dart';
-import 'package:guildwars2_companion/repositories/item.dart';
+import 'package:guildwars2_companion/services/achievement.dart';
+import 'package:guildwars2_companion/services/character.dart';
+import 'package:guildwars2_companion/services/item.dart';
 import './bloc.dart';
 
 class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
   @override
   AchievementState get initialState => LoadingAchievementsState();
 
-  final AchievementRepository achievementRepository;
-  final CharacterRepository characterRepository;
-  final ItemRepository itemRepository;
+  final AchievementService achievementRepository;
+  final CharacterService characterRepository;
+  final ItemService itemRepository;
 
   AchievementBloc({
     @required this.achievementRepository,

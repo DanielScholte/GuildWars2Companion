@@ -1,14 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:guildwars2_companion/models/other/world_boss.dart';
-import 'package:guildwars2_companion/utils/dio.dart';
-import 'package:guildwars2_companion/utils/urls.dart';
+import '../models/other/world_boss.dart';
+import '../utils/dio.dart';
+import '../utils/urls.dart';
 
-class WorldBossesRepository {
+class WorldBossesService {
 
   Dio _dio;
 
-  WorldBossesRepository() {
+  WorldBossesService() {
     _dio = DioUtil.getDioInstance();
   }
 

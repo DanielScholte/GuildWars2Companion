@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
-import 'package:guildwars2_companion/models/account/account.dart';
-import 'package:guildwars2_companion/models/account/token_info.dart';
-import 'package:guildwars2_companion/utils/dio.dart';
-import 'package:guildwars2_companion/utils/urls.dart';
+import '../models/account/account.dart';
+import '../models/account/token_info.dart';
+import '../utils/dio.dart';
+import '../utils/urls.dart';
 
-class AccountRepository {
+class AccountService {
   Dio _dio;
 
-  AccountRepository() {
+  AccountService() {
     _dio = DioUtil.getDioInstance(
       includeTokenInterceptor: false
     );

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/models/items/skin.dart';
 import 'package:guildwars2_companion/models/trading_post/price.dart';
-import 'package:guildwars2_companion/repositories/trading_post.dart';
+import 'package:guildwars2_companion/services/trading_post.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
@@ -398,7 +398,7 @@ class ItemPage extends StatelessWidget {
 
   Widget _buildValue(BuildContext context) {
     return FutureBuilder<TradingPostPrice>(
-      future: RepositoryProvider.of<TradingPostRepository>(context).getItemPrice(item.id),
+      future: RepositoryProvider.of<TradingPostService>(context).getItemPrice(item.id),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return CompanionCard(

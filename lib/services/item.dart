@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
-import 'package:guildwars2_companion/migrations/item.dart';
-import 'package:guildwars2_companion/migrations/mini.dart';
-import 'package:guildwars2_companion/migrations/skin.dart';
-import 'package:guildwars2_companion/models/items/item.dart';
-import 'package:guildwars2_companion/models/items/skin.dart';
-import 'package:guildwars2_companion/models/other/mini.dart';
-import 'package:guildwars2_companion/utils/dio.dart';
-import 'package:guildwars2_companion/utils/urls.dart';
+import '../migrations/item.dart';
+import '../migrations/mini.dart';
+import '../migrations/skin.dart';
+import '../models/items/item.dart';
+import '../models/items/skin.dart';
+import '../models/other/mini.dart';
+import '../utils/dio.dart';
+import '../utils/urls.dart';
 
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
@@ -14,14 +14,14 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:sqflite_migration/sqflite_migration.dart';
 
-class ItemRepository {
+class ItemService {
   List<Item> _cachedItems;
   List<Skin> _cachedSkins;
   List<Mini> _cachedMinis;
 
   Dio _dio;
 
-  ItemRepository() {
+  ItemService() {
     _dio = DioUtil.getDioInstance();
   }
 

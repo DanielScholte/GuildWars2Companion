@@ -1,14 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:guildwars2_companion/models/other/dungeon.dart';
-import 'package:guildwars2_companion/utils/dio.dart';
-import 'package:guildwars2_companion/utils/urls.dart';
+import '../models/other/dungeon.dart';
+import '../utils/dio.dart';
+import '../utils/urls.dart';
 
-class DungeonRepository {
+class DungeonService {
 
   Dio _dio;
 
-  DungeonRepository() {
+  DungeonService() {
     _dio = DioUtil.getDioInstance();
   }
 

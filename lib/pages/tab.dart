@@ -4,21 +4,21 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:guildwars2_companion/blocs/account/bloc.dart';
-import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
-import 'package:guildwars2_companion/blocs/bank/bloc.dart';
-import 'package:guildwars2_companion/blocs/character/bloc.dart';
-import 'package:guildwars2_companion/blocs/trading_post/bloc.dart';
-import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
-import 'package:guildwars2_companion/pages/tabs/bank.dart';
-import 'package:guildwars2_companion/pages/tabs/characters.dart';
-import 'package:guildwars2_companion/pages/tabs/home.dart';
-import 'package:guildwars2_companion/pages/tabs/progression.dart';
-import 'package:guildwars2_companion/pages/tabs/trading_post.dart';
-import 'package:guildwars2_companion/pages/token/token.dart';
-import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
-import 'package:guildwars2_companion/utils/token.dart';
-import 'package:guildwars2_companion/widgets/error.dart';
+import '../blocs/account/bloc.dart';
+import '../blocs/achievement/bloc.dart';
+import '../blocs/bank/bloc.dart';
+import '../blocs/character/bloc.dart';
+import '../blocs/trading_post/bloc.dart';
+import '../blocs/wallet/bloc.dart';
+import 'tabs/bank.dart';
+import 'tabs/characters.dart';
+import 'tabs/home.dart';
+import 'tabs/progression.dart';
+import 'tabs/trading_post.dart';
+import 'token/token.dart';
+import '../utils/guild_wars_icons.dart';
+import '../utils/token.dart';
+import '../widgets/error.dart';
 
 class TabPage extends StatefulWidget {
   @override

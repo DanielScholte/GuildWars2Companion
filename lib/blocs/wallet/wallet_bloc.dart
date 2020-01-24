@@ -3,14 +3,14 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:guildwars2_companion/models/wallet/currency.dart';
 import 'package:guildwars2_companion/models/wallet/wallet.dart';
-import 'package:guildwars2_companion/repositories/wallet.dart';
+import 'package:guildwars2_companion/services/wallet.dart';
 import './bloc.dart';
 
 class WalletBloc extends Bloc<WalletEvent, WalletState> {
   @override
   WalletState get initialState => LoadingWalletState();
 
-  final WalletRepository walletRepository;
+  final WalletService walletRepository;
 
   WalletBloc({
     @required this.walletRepository

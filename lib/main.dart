@@ -10,15 +10,15 @@ import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/blocs/world_bosses/bloc.dart';
 import 'package:guildwars2_companion/pages/tab.dart';
 import 'package:guildwars2_companion/pages/token/token.dart';
-import 'package:guildwars2_companion/repositories/account.dart';
-import 'package:guildwars2_companion/repositories/achievement.dart';
-import 'package:guildwars2_companion/repositories/bank.dart';
-import 'package:guildwars2_companion/repositories/character.dart';
-import 'package:guildwars2_companion/repositories/dungeon.dart';
-import 'package:guildwars2_companion/repositories/item.dart';
-import 'package:guildwars2_companion/repositories/trading_post.dart';
-import 'package:guildwars2_companion/repositories/wallet.dart';
-import 'package:guildwars2_companion/repositories/world_bosses.dart';
+import 'package:guildwars2_companion/services/account.dart';
+import 'package:guildwars2_companion/services/achievement.dart';
+import 'package:guildwars2_companion/services/bank.dart';
+import 'package:guildwars2_companion/services/character.dart';
+import 'package:guildwars2_companion/services/dungeon.dart';
+import 'package:guildwars2_companion/services/item.dart';
+import 'package:guildwars2_companion/services/trading_post.dart';
+import 'package:guildwars2_companion/services/wallet.dart';
+import 'package:guildwars2_companion/services/world_bosses.dart';
 import 'package:guildwars2_companion/utils/token.dart';
 
 import 'blocs/dungeon/bloc.dart';
@@ -26,19 +26,17 @@ import 'blocs/dungeon/bloc.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  ItemRepository itemRepository = ItemRepository();
+  ItemService itemRepository = ItemService();
   await itemRepository.loadCachedData();
-
-  bool tokenPresent = await TokenUtil.tokenPresent();
 
   runApp(GuildWars2Companion(
     itemRepository: itemRepository,
-    isAuthenticated: tokenPresent,
+    isAuthenticated: await TokenUtil.tokenPresent(),
   ));
 }
 
 class GuildWars2Companion extends StatelessWidget {
-  final ItemRepository itemRepository;
+  final ItemService itemRepository;
 
   final bool isAuthenticated;
 
@@ -72,32 +70,32 @@ class GuildWars2Companion extends StatelessWidget {
     return MultiRepositoryProvider(
       child: child,
       providers: [
-        RepositoryProvider<AccountRepository>(
-          create: (BuildContext context) => AccountRepository(),
+        RepositoryProvider<AccountService>(
+          create: (BuildContext context) => AccountService(),
         ),
-        RepositoryProvider<AchievementRepository>(
-          create: (BuildContext context) => AchievementRepository(),
+        RepositoryProvider<AchievementService>(
+          create: (BuildContext context) => AchievementService(),
         ),
-        RepositoryProvider<BankRepository>(
-          create: (BuildContext context) => BankRepository(),
+        RepositoryProvider<BankService>(
+          create: (BuildContext context) => BankService(),
         ),
-        RepositoryProvider<CharacterRepository>(
-          create: (BuildContext context) => CharacterRepository(),
+        RepositoryProvider<CharacterService>(
+          create: (BuildContext context) => CharacterService(),
         ),
-        RepositoryProvider<DungeonRepository>(
-          create: (BuildContext context) => DungeonRepository(),
+        RepositoryProvider<DungeonService>(
+          create: (BuildContext context) => DungeonService(),
         ),
-        RepositoryProvider<ItemRepository>(
+        RepositoryProvider<ItemService>(
           create: (BuildContext context) => itemRepository,
         ),
-        RepositoryProvider<TradingPostRepository>(
-          create: (BuildContext context) => TradingPostRepository(),
+        RepositoryProvider<TradingPostService>(
+          create: (BuildContext context) => TradingPostService(),
         ),
-        RepositoryProvider<WalletRepository>(
-          create: (BuildContext context) => WalletRepository(),
+        RepositoryProvider<WalletService>(
+          create: (BuildContext context) => WalletService(),
         ),
-        RepositoryProvider<WorldBossesRepository>(
-          create: (BuildContext context) => WorldBossesRepository(),
+        RepositoryProvider<WorldBossesService>(
+          create: (BuildContext context) => WorldBossesService(),
         ),
       ],
     );
@@ -109,47 +107,47 @@ class GuildWars2Companion extends StatelessWidget {
       providers: [
         BlocProvider<AccountBloc>(
           create: (BuildContext context) => AccountBloc(
-            accountRepository: RepositoryProvider.of<AccountRepository>(context),
+            accountRepository: RepositoryProvider.of<AccountService>(context),
           ),
         ),
         BlocProvider<AchievementBloc>(
           create: (BuildContext context) => AchievementBloc(
-            achievementRepository: RepositoryProvider.of<AchievementRepository>(context),
-            characterRepository: RepositoryProvider.of<CharacterRepository>(context),
-            itemRepository: RepositoryProvider.of<ItemRepository>(context),
+            achievementRepository: RepositoryProvider.of<AchievementService>(context),
+            characterRepository: RepositoryProvider.of<CharacterService>(context),
+            itemRepository: RepositoryProvider.of<ItemService>(context),
           ),
         ),
         BlocProvider<BankBloc>(
           create: (BuildContext context) => BankBloc(
-            bankRepository: RepositoryProvider.of<BankRepository>(context),
-            itemRepository: RepositoryProvider.of<ItemRepository>(context),
+            bankRepository: RepositoryProvider.of<BankService>(context),
+            itemRepository: RepositoryProvider.of<ItemService>(context),
           ),
         ),
         BlocProvider<CharacterBloc>(
           create: (BuildContext context) => CharacterBloc(
-            characterRepository: RepositoryProvider.of<CharacterRepository>(context),
-            itemRepository: RepositoryProvider.of<ItemRepository>(context),
+            characterRepository: RepositoryProvider.of<CharacterService>(context),
+            itemRepository: RepositoryProvider.of<ItemService>(context),
           ),
         ),
         BlocProvider<DungeonBloc>(
           create: (BuildContext context) => DungeonBloc(
-            dungeonsRepository: RepositoryProvider.of<DungeonRepository>(context),
+            dungeonsRepository: RepositoryProvider.of<DungeonService>(context),
           ),
         ),
         BlocProvider<TradingPostBloc>(
           create: (BuildContext context) => TradingPostBloc(
-            itemRepository: RepositoryProvider.of<ItemRepository>(context),
-            tradingPostRepository: RepositoryProvider.of<TradingPostRepository>(context)
+            itemRepository: RepositoryProvider.of<ItemService>(context),
+            tradingPostRepository: RepositoryProvider.of<TradingPostService>(context)
           ),
         ),
         BlocProvider<WalletBloc>(
           create: (BuildContext context) => WalletBloc(
-            walletRepository: RepositoryProvider.of<WalletRepository>(context),
+            walletRepository: RepositoryProvider.of<WalletService>(context),
           ),
         ),
         BlocProvider<WorldBossesBloc>(
           create: (BuildContext context) => WorldBossesBloc(
-            worldBossesRepository: RepositoryProvider.of<WorldBossesRepository>(context),
+            worldBossesRepository: RepositoryProvider.of<WorldBossesService>(context),
           ),
         ),
       ],

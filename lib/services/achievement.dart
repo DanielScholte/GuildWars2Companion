@@ -1,25 +1,25 @@
 import 'package:dio/dio.dart';
-import 'package:guildwars2_companion/migrations/achievement.dart';
-import 'package:guildwars2_companion/models/achievement/achievement.dart';
-import 'package:guildwars2_companion/models/achievement/achievement_category.dart';
-import 'package:guildwars2_companion/models/achievement/achievement_group.dart';
-import 'package:guildwars2_companion/models/achievement/achievement_progress.dart';
-import 'package:guildwars2_companion/models/achievement/daily.dart';
-import 'package:guildwars2_companion/models/mastery/mastery.dart';
-import 'package:guildwars2_companion/models/mastery/mastery_progress.dart';
-import 'package:guildwars2_companion/utils/dio.dart';
-import 'package:guildwars2_companion/utils/urls.dart';
+import '../migrations/achievement.dart';
+import '../models/achievement/achievement.dart';
+import '../models/achievement/achievement_category.dart';
+import '../models/achievement/achievement_group.dart';
+import '../models/achievement/achievement_progress.dart';
+import '../models/achievement/daily.dart';
+import '../models/mastery/mastery.dart';
+import '../models/mastery/mastery_progress.dart';
+import '../utils/dio.dart';
+import '../utils/urls.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_migration/sqflite_migration.dart';
 
-class AchievementRepository {
+class AchievementService {
   List<Achievement> _cachedAchievements = [];
 
   Dio _dio;
 
-  AchievementRepository() {
+  AchievementService() {
     _dio = DioUtil.getDioInstance();
   }
 

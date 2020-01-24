@@ -2,13 +2,13 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/models/other/world_boss.dart';
-import 'package:guildwars2_companion/repositories/world_bosses.dart';
+import 'package:guildwars2_companion/services/world_bosses.dart';
 import './bloc.dart';
 class WorldBossesBloc extends Bloc<WorldBossesEvent, WorldBossesState> {
   @override
   WorldBossesState get initialState => LoadingWorldbossesState();
 
-  final WorldBossesRepository worldBossesRepository;
+  final WorldBossesService worldBossesRepository;
 
   WorldBossesBloc({
     @required this.worldBossesRepository

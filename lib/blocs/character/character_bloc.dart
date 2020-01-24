@@ -8,8 +8,8 @@ import 'package:guildwars2_companion/models/character/title.dart';
 import 'package:guildwars2_companion/models/items/inventory.dart';
 import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/models/items/skin.dart';
-import 'package:guildwars2_companion/repositories/character.dart';
-import 'package:guildwars2_companion/repositories/item.dart';
+import 'package:guildwars2_companion/services/character.dart';
+import 'package:guildwars2_companion/services/item.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import './bloc.dart';
 
@@ -17,8 +17,8 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
   @override
   CharacterState get initialState => LoadingCharactersState();
 
-  final CharacterRepository characterRepository;
-  final ItemRepository itemRepository;
+  final CharacterService characterRepository;
+  final ItemService itemRepository;
 
   CharacterBloc({
     @required this.characterRepository,

@@ -6,16 +6,16 @@ import 'package:guildwars2_companion/models/bank/material_category.dart';
 import 'package:guildwars2_companion/models/items/inventory.dart';
 import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/models/items/skin.dart';
-import 'package:guildwars2_companion/repositories/bank.dart';
-import 'package:guildwars2_companion/repositories/item.dart';
+import 'package:guildwars2_companion/services/bank.dart';
+import 'package:guildwars2_companion/services/item.dart';
 import './bloc.dart';
 
 class BankBloc extends Bloc<BankEvent, BankState> {
   @override
   BankState get initialState => LoadingBankState();
 
-  final BankRepository bankRepository;
-  final ItemRepository itemRepository;
+  final BankService bankRepository;
+  final ItemService itemRepository;
 
   BankBloc({
     @required this.bankRepository,

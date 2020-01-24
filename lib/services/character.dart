@@ -1,16 +1,16 @@
 import 'package:dio/dio.dart';
-import 'package:guildwars2_companion/models/character/character.dart';
-import 'package:guildwars2_companion/models/character/profession.dart';
-import 'package:guildwars2_companion/models/character/title.dart';
-import 'package:guildwars2_companion/utils/dio.dart';
-import 'package:guildwars2_companion/utils/urls.dart';
+import '../models/character/character.dart';
+import '../models/character/profession.dart';
+import '../models/character/title.dart';
+import '../utils/dio.dart';
+import '../utils/urls.dart';
 
-class CharacterRepository {
+class CharacterService {
   List<AccountTitle> _titles;
 
   Dio _dio;
 
-  CharacterRepository() {
+  CharacterService() {
     _dio = DioUtil.getDioInstance();
   }
 

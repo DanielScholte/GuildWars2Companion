@@ -5,16 +5,16 @@ import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/models/trading_post/delivery.dart';
 import 'package:guildwars2_companion/models/trading_post/listing.dart';
 import 'package:guildwars2_companion/models/trading_post/transaction.dart';
-import 'package:guildwars2_companion/repositories/item.dart';
-import 'package:guildwars2_companion/repositories/trading_post.dart';
+import 'package:guildwars2_companion/services/item.dart';
+import 'package:guildwars2_companion/services/trading_post.dart';
 import './bloc.dart';
 
 class TradingPostBloc extends Bloc<TradingPostEvent, TradingPostState> {
   @override
   TradingPostState get initialState => LoadingTradingPostState();
 
-  final TradingPostRepository tradingPostRepository;
-  final ItemRepository itemRepository;
+  final TradingPostService tradingPostRepository;
+  final ItemService itemRepository;
 
   TradingPostBloc({
     @required this.tradingPostRepository,
