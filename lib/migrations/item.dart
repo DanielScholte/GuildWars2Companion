@@ -28,12 +28,12 @@ class ItemMigrations {
     '''
   ];
 
-  static final List<String> _migrations = [
+  static final List<String> _migrationScripts = [
 
   ];
 
   static final MigrationConfig config = MigrationConfig(
     initializationScript: _initializationScripts,
-    migrationScripts: _migrations,
+    migrationScripts: _migrationScripts,
   );
 }
