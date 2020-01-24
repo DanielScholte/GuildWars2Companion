@@ -1,4 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:guildwars2_companion/migrations/item.dart';
+import 'package:guildwars2_companion/migrations/mini.dart';
+import 'package:guildwars2_companion/migrations/skin.dart';
 import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/models/items/skin.dart';
 import 'package:guildwars2_companion/models/other/mini.dart';
@@ -9,6 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
+import 'package:sqflite_migration/sqflite_migration.dart';
 
 class ItemRepository {
   List<Item> _cachedItems;
@@ -21,90 +25,59 @@ class ItemRepository {
     _dio = DioUtil.getDioInstance();
   }
 
-  Future<Database> _getDatabase() async {
-    return await openDatabase(
+  Future<Database> _getItemDatabase() async {
+    return await openDatabaseWithMigration(
       join(await getDatabasesPath(), 'items.db'),
-      onCreate: (db, version) async {
-        await db.execute('''
-          CREATE TABLE skins(
-            id INTEGER PRIMARY KEY,
-            name TEXT,
-            type TEXT,
-            rarity TEXT,
-            icon TEXT,
-            expiration_date DATE
-          )
-        ''');
-        await db.execute('''
-          CREATE TABLE items(
-            id INTEGER PRIMARY KEY,
-            name TEXT,
-            description TEXT,
-            type TEXT,
-            rarity TEXT,
-            icon TEXT,
-            level INTEGER,
-            vendorValue INTEGER,
-            expiration_date DATE,
-            details_type TEXT,
-            details_description TEXT,
-            details_weightClass TEXT,
-            details_unlockType TEXT,
-            details_name TEXT,
-            details_defense INTEGER,
-            details_size INTEGER,
-            details_durationMs INTEGER,
-            details_charges INTEGER,
-            details_minPower INTEGER,
-            details_maxPower INTEGER
-          )
-        ''');
-        await db.execute('''
-          CREATE TABLE minis(
-            id INTEGER PRIMARY KEY,
-            name TEXT,
-            icon TEXT,
-            display_order INTEGER,
-            itemId INTEGER,
-            expiration_date DATE
-          )
-        ''');
-        return;
-      },
-      version: 1,
+      ItemMigrations.config
+    );
+  }
+
+  Future<Database> _getSkinDatabase() async {
+    return await openDatabaseWithMigration(
+      join(await getDatabasesPath(), 'skins.db'),
+      SkinMigrations.config
+    );
+  }
+
+  Future<Database> _getMiniDatabase() async {
+    return await openDatabaseWithMigration(
+      join(await getDatabasesPath(), 'minis.db'),
+      MiniMigrations.config
     );
   }
 
   Future<void> loadCachedData() async {
-    Database database = await _getDatabase();
+    Database itemDatabase = await _getItemDatabase();
+    Database skinDatabase = await _getSkinDatabase();
+    Database miniDatabase = await _getMiniDatabase();
 
     DateTime now = DateTime.now().toUtc();
 
-    await database.delete(
+    await itemDatabase.delete(
       'items',
       where: "expiration_date <= ?",
       whereArgs: [DateFormat('yyyyMMdd').format(now)],
     );
 
-    await database.delete(
+    await skinDatabase.delete(
       'skins',
       where: "expiration_date <= ?",
       whereArgs: [DateFormat('yyyyMMdd').format(now)],
     );
 
-    await database.delete(
+    await miniDatabase.delete(
       'minis',
       where: "expiration_date <= ?",
       whereArgs: [DateFormat('yyyyMMdd').format(now)],
     );
 
-    final List<Map<String, dynamic>> items = await database.query('items');
+    final List<Map<String, dynamic>> items = await itemDatabase.query('items');
     _cachedItems = List.generate(items.length, (i) => Item.fromDb(items[i]));
 
-    final List<Map<String, dynamic>> skins = await database.query('skins');
+    final List<Map<String, dynamic>> skins = await skinDatabase.query('skins');
     _cachedSkins = List.generate(skins.length, (i) => Skin.fromDb(skins[i]));
 
-    final List<Map<String, dynamic>> minis = await database.query('minis');
+    final List<Map<String, dynamic>> minis = await miniDatabase.query('minis');
     _cachedMinis = List.generate(minis.length, (i) => Mini.fromDb(minis[i]));
 
     return;
@@ -166,7 +139,7 @@ class ItemRepository {
   }
 
   Future<void> _cacheItems(List<Item> items) async {
-    Database database = await _getDatabase();
+    Database database = await _getItemDatabase();
 
     List<Item> nonCachedItems = items.where((i) => !_cachedItems.any((ci) => ci.id == i.id)).toList();
     _cachedItems.addAll(nonCachedItems);
@@ -230,7 +203,7 @@ class ItemRepository {
   }
 
   Future<void> _cacheSkins(List<Skin> skins) async {
-    Database database = await _getDatabase();
+    Database database = await _getSkinDatabase();
 
     List<Skin> nonCachedSkins = skins.where((s) => !_cachedSkins.any((cs) => cs.id == s.id)).toList();
     _cachedSkins.addAll(nonCachedSkins);
@@ -294,7 +267,7 @@ class ItemRepository {
   }
 
   Future<void> _cacheMinis(List<Mini> minis) async {
-    Database database = await _getDatabase();
+    Database database = await _getMiniDatabase();
 
     List<Mini> nonCachedMinis = minis.where((m) => !_cachedMinis.any((cm) => cm.id == m.id)).toList();
     _cachedMinis.addAll(nonCachedMinis);

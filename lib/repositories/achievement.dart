@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:guildwars2_companion/migrations/achievement.dart';
 import 'package:guildwars2_companion/models/achievement/achievement.dart';
 import 'package:guildwars2_companion/models/achievement/achievement_category.dart';
 import 'package:guildwars2_companion/models/achievement/achievement_group.dart';
@@ -11,6 +12,7 @@ import 'package:guildwars2_companion/utils/urls.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_migration/sqflite_migration.dart';
 
 class AchievementRepository {
   bool cacheLoaded;
@@ -25,28 +27,9 @@ class AchievementRepository {
   }
 
   Future<Database> _getDatabase() async {
-    return await openDatabase(
+    return await openDatabaseWithMigration(
       join(await getDatabasesPath(), 'achievements.db'),
-      onCreate: (db, version) async {
-        await db.execute('''
-          CREATE TABLE achievements(
-            id INTEGER PRIMARY KEY,
-            icon TEXT,
-            name TEXT,
-            description TEXT,
-            requirement TEXT,
-            lockedText TEXT,
-            prerequisites TEXT,
-            pointCap INTEGER,
-            bits TEXT,
-            tiers TEXT,
-            rewards TEXT,
-            expiration_date DATE
-          )
-        ''');
-        return;
-      },
-      version: 1,
+      AchievementMigrations.config
     );
   }
 

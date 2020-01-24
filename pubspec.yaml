@@ -38,6 +38,8 @@ dependencies:
 
   sqflite: ^1.2.0
 
+  sqflite_migration: ^0.1.2
+
   path: ^1.6.4
 
   package_info: ^0.4.0+13
