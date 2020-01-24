@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../services/achievement.dart';
-import '../services/item.dart';
 import '../widgets/appbar.dart';
 import 'package:package_info/package_info.dart';
-import 'package:flutter/foundation.dart' as Foundation;
 
 class InfoPage extends StatelessWidget {
   @override
@@ -49,45 +45,9 @@ class InfoPage extends StatelessWidget {
                 fontSize: 16.0
               ),
             ),
-            if (Foundation.kDebugMode || true)
-              _buildDebugInfo(context)
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildDebugInfo(BuildContext context) {
-    ItemService itemRepository = RepositoryProvider.of<ItemService>(context);
-    AchievementService achievementRepository = RepositoryProvider.of<AchievementService>(context);
-
-    return Column(
-      children: <Widget>[
-        Text(
-          'Items cached: ${itemRepository.getCachedItemsCount()}',
-          style: TextStyle(
-            fontSize: 16.0
-          ),
-        ),
-        Text(
-          'Skins cached: ${itemRepository.getCachedSkinsCount()}',
-          style: TextStyle(
-            fontSize: 16.0
-          ),
-        ),
-        Text(
-          'Minis cached: ${itemRepository.getCachedMinisCount()}',
-          style: TextStyle(
-            fontSize: 16.0
-          ),
-        ),
-        Text(
-          'Achievements cached: ${achievementRepository.getCachedAchievementsCount()}',
-          style: TextStyle(
-            fontSize: 16.0
-          ),
-        ),
-      ],
     );
   }
 
