@@ -1,187 +1,299 @@
-import 'package:dio/dio.dart';
-import 'package:guildwars2_companion/migrations/achievement.dart';
+import 'package:flutter/widgets.dart';
 import 'package:guildwars2_companion/models/achievement/achievement.dart';
 import 'package:guildwars2_companion/models/achievement/achievement_category.dart';
+import 'package:guildwars2_companion/models/achievement/achievement_data.dart';
 import 'package:guildwars2_companion/models/achievement/achievement_group.dart';
 import 'package:guildwars2_companion/models/achievement/achievement_progress.dart';
 import 'package:guildwars2_companion/models/achievement/daily.dart';
+import 'package:guildwars2_companion/models/character/title.dart';
+import 'package:guildwars2_companion/models/items/item.dart';
+import 'package:guildwars2_companion/models/items/skin.dart';
 import 'package:guildwars2_companion/models/mastery/mastery.dart';
+import 'package:guildwars2_companion/models/mastery/mastery_data.dart';
 import 'package:guildwars2_companion/models/mastery/mastery_progress.dart';
-import 'package:guildwars2_companion/utils/dio.dart';
-import 'package:guildwars2_companion/utils/urls.dart';
-import 'package:intl/intl.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:sqflite_migration/sqflite_migration.dart';
+import 'package:guildwars2_companion/models/other/mini.dart';
+import 'package:guildwars2_companion/services/achievement.dart';
+import 'package:guildwars2_companion/services/character.dart';
+import 'package:guildwars2_companion/services/item.dart';
 
 class AchievementRepository {
-  List<Achievement> _cachedAchievements = [];
+  final AchievementService achievementService;
+  final CharacterService characterService;
+  final ItemService itemService;
 
-  Dio _dio;
+  AchievementRepository({
+    @required this.achievementService,
+    @required this.characterService,
+    @required this.itemService,
+  });
 
-  AchievementRepository() {
-    _dio = DioUtil.getDioInstance();
-  }
+  Future<AchievementData> getAchievements(bool includeProgress) async {
+    await achievementService.loadCachedData();
 
-  Future<Database> _getDatabase() async {
-    return await openDatabaseWithMigration(
-      join(await getDatabasesPath(), 'achievements.db'),
-      AchievementMigrations.config
-    );
-  }
+    List<AchievementGroup> achievementGroups = await achievementService.getAchievementGroups();
+    List<AchievementCategory> achievementCategories = await achievementService.getAchievementCategories();
+    DailyGroup dailies = await achievementService.getDailies();
+    DailyGroup dailiesTomorrow = await achievementService.getDailies(tomorrow: true);
 
-  Future<void> loadCachedData() async {
-    if (_cachedAchievements.isNotEmpty) {
-      return;
+    List<int> achievementIds = [];
+    achievementCategories.forEach((c) => achievementIds.addAll(c.achievements));
+    dailies.pve.forEach((c) => achievementIds.add(c.id));
+    dailies.pvp.forEach((c) => achievementIds.add(c.id));
+    dailies.wvw.forEach((c) => achievementIds.add(c.id));
+    dailies.fractals.forEach((c) => achievementIds.add(c.id));
+    dailiesTomorrow.pve.forEach((c) => achievementIds.add(c.id));
+    dailiesTomorrow.pvp.forEach((c) => achievementIds.add(c.id));
+    dailiesTomorrow.wvw.forEach((c) => achievementIds.add(c.id));
+    dailiesTomorrow.fractals.forEach((c) => achievementIds.add(c.id));
+
+    List<Achievement> achievements = await achievementService.getAchievements(achievementIds.toSet().toList());
+
+    int achievementPoints = 0;
+
+    List<AchievementProgress> progress;
+    if (includeProgress) {
+      progress = await achievementService.getAchievementProgress();
     }
 
-    Database database = await _getDatabase();
-
-    DateTime now = DateTime.now().toUtc();
-
-    await database.delete(
-      'achievements',
-      where: "expiration_date <= ?",
-      whereArgs: [DateFormat('yyyyMMdd').format(now)],
-    );
-
-    final List<Map<String, dynamic>> achievements = await database.query('achievements');
-    _cachedAchievements = List.generate(achievements.length, (i) => Achievement.fromDb(achievements[i]));
-
-    return;
-  }
-
-  int getCachedAchievementsCount() {
-    return _cachedAchievements.length;
-  }
-
-  Future<List<Achievement>> getAchievements(List<int> achievementIds) async {
-    List<Achievement> achievements = [];
-    List<int> newAchievementIds = [];
-
-    achievementIds.forEach((achievementId) {
-      Achievement item = _cachedAchievements.firstWhere((i) => i.id == achievementId, orElse: () => null);
-
-      if (item != null) {
-        achievements.add(item);
+    achievements.forEach((a) {
+      if (includeProgress) {
+        a.progress = progress.firstWhere((p) => p.id == a.id, orElse: () => null);
       } else {
-        newAchievementIds.add(achievementId);
+        a.progress = null;
+      }
+      
+      int maxPoints = 0;
+      a.tiers.forEach((t) {
+        maxPoints += t.points;
+
+        if (a.progress != null) {
+          if ((a.progress.current != null && a.progress.current >= t.count) || a.progress.done) {
+            a.progress.points += t.points;
+          }
+        }
+      });
+
+      if (a.progress != null && a.progress.repeated != null) {
+        a.progress.points += maxPoints * a.progress.repeated;
+        if (a.pointCap != null && a.progress.points > a.pointCap) {
+          a.progress.points = a.pointCap;
+        }
+      }
+
+      if (a.pointCap == null) {
+        a.pointCap = maxPoints;
+      }
+
+      if (a.progress != null) {
+        achievementPoints += a.progress.points;
       }
     });
 
-    if (newAchievementIds.isNotEmpty) {
-      achievements.addAll(await _getNewAchievements(newAchievementIds));
-    }
+    achievementCategories.forEach((c) {
+      c.achievementsInfo = [];
+      c.regions = [];
+      c.achievements.forEach((i) {
+        Achievement achievement = achievements.firstWhere((a) => a.id == i);
 
-    return achievements;
+        if (achievement != null) {
+          c.achievementsInfo.add(achievement);
+          achievement.categoryName = c.name;
+
+          if (achievement.icon == null) {
+            achievement.icon = c.icon;
+          }
+
+          if (achievement.rewards != null && (achievement.progress == null || !achievement.progress.done)
+            && achievement.rewards.any((r) => r.type == 'Mastery')) {
+            c.regions.addAll(achievement.rewards.where((r) => r.type == 'Mastery').map((r) => r.region).toList());
+          }
+        }
+      });
+      c.achievementsInfo.sort((a, b) => -_getProgressionRate(a, a.progress).compareTo(_getProgressionRate(b, b.progress)));
+      c.regions = c.regions.toSet().toList();
+    });
+
+    dailies.pve.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
+    dailies.pvp.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
+    dailies.wvw.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
+    dailies.fractals.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
+    dailiesTomorrow.pve.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
+    dailiesTomorrow.pvp.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
+    dailiesTomorrow.wvw.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
+    dailiesTomorrow.fractals.forEach((d) => d.achievementInfo = achievements.firstWhere((a) => a.id == d.id, orElse: () => null));
+
+    achievementGroups.forEach((g) {
+      g.categoriesInfo = [];
+      g.regions = [];
+
+      g.categories.forEach((c) {
+        AchievementCategory category = achievementCategories.firstWhere((ac) => ac.id == c, orElse: () => null);
+
+        if (category != null) {
+          g.categoriesInfo.add(category);
+          g.regions.addAll(category.regions);
+        }
+      });
+
+      g.regions = g.regions.toSet().toList();
+      g.categoriesInfo.sort((a, b) => a.order.compareTo(b.order));
+    });
+    achievementGroups.sort((a, b) => a.order.compareTo(b.order));
+
+    return AchievementData(
+      achievementGroups: achievementGroups,
+      achievementPoints: achievementPoints,
+      achievements: achievements,
+      dailies: dailies,
+      dailiesTomorrow: dailiesTomorrow
+    );
   }
 
-  Future<List<Achievement>> _getNewAchievements(List<int> achievementIds) async {
-    List<String> achievementIdsList = Urls.divideIdLists(achievementIds);
-    List<Achievement> achievements = [];
-    for (var achievementIdsString in achievementIdsList) {
-      final response = await _dio.get(Urls.achievementsUrl + achievementIdsString);
+  Future<MasteryData> getMasteries(bool includeProgress) async {
+    List<Mastery> masteries = await achievementService.getMasteries();
 
-      if (response.statusCode == 200 || response.statusCode == 206) {
-        List responseAchievements = response.data;
-        achievements.addAll(responseAchievements.map((a) => Achievement.fromJson(a)).toList());
-        continue;
-      }
+    int masteryLevel = 0;
 
-      if (response.statusCode != 404) {
-        throw Exception();
-      }
+    if (includeProgress) {
+      List<MasteryProgress> masteryProgress = await achievementService.getMasteryProgress();
+
+      masteries.forEach((mastery) {
+        MasteryProgress progress = masteryProgress.firstWhere((m) => m.id == mastery.id, orElse: () => null);
+
+        if (progress != null) {
+          mastery.level = progress.level + 1;
+          mastery.levels.where((l) => mastery.levels.indexOf(l) <= progress.level)
+            .forEach((l) {
+              l.done = true;
+              masteryLevel += l.pointCost;
+            });
+        } else {
+          mastery.level = 0;
+        }
+      });
     }
 
-    await _cacheAchievements(achievements);
+    masteries.sort((a, b) => _getMasteryRate(a).compareTo(_getMasteryRate(b)));
 
-    return achievements;
+    return MasteryData(
+      masteries: masteries,
+      masteryLevel: masteryLevel
+    );
   }
 
-  Future<void> _cacheAchievements(List<Achievement> achievements) async {
-    Database database = await _getDatabase();
+  Future<void> loadAchievementDetails(Achievement achievement, List<Achievement> achievements) async {
+    if (achievement.prerequisites != null) {
+      achievement.prerequisitesInfo = [];
+      achievement.prerequisites.forEach((id) {
+        Achievement prerequisite = achievements.firstWhere((a) => a.id == id, orElse: () => null);
 
-    List<Achievement> nonCachedItems = achievements.where((i) => !_cachedAchievements.any((ca) => ca.id == i.id)).toList();
-    _cachedAchievements.addAll(nonCachedItems);
+        if (prerequisite != null) {
+          achievement.prerequisitesInfo.add(prerequisite);
+        }
+      });
+    }
 
-    String expirationDate = DateFormat('yyyyMMdd')
-      .format(
-        DateTime
-        .now()
-        .add(Duration(days: 31))
-        .toUtc()
-      );
+    List<int> itemIds = [];
+    List<int> skinIds = [];
+    List<int> miniIds = [];
 
-    Batch batch = database.batch();
-    nonCachedItems.forEach((achievement) =>
-      batch.insert('achievements', achievement.toDb(expirationDate), conflictAlgorithm: ConflictAlgorithm.ignore));
-    await batch.commit(noResult: true);
+    if (achievement.bits != null) {
+      achievement.bits.forEach((bit) {
+        switch (bit.type) {
+          case 'Item':
+            itemIds.add(bit.id);
+            break;
+          case 'Skin':
+            skinIds.add(bit.id);
+            break;
+          case 'Minipet':
+            miniIds.add(bit.id);
+            break;
+        }
+      });
+    }
+    
+    if (achievement.rewards != null) {
+      achievement.rewards.forEach((reward) {
+        if (reward.type == 'Item') {
+          itemIds.add(reward.id);
+        }
+      });
+    }
+
+    List<Item> items = itemIds.isEmpty ? [] : await itemService.getItems(itemIds);
+    List<Skin> skins = skinIds.isEmpty ? [] : await itemService.getSkins(skinIds);
+    List<Mini> minis = miniIds.isEmpty ? [] : await itemService.getMinis(miniIds);
+    List<AccountTitle> titles = await characterService.getTitles();
+
+    if (achievement.bits != null) {
+      achievement.bits.forEach((bit) {
+        switch (bit.type) {
+          case 'Item':
+            bit.item = items.firstWhere((i) => i.id == bit.id, orElse: () => null);
+            break;
+          case 'Skin':
+            bit.skin = skins.firstWhere((i) => i.id == bit.id, orElse: () => null);
+            break;
+          case 'Minipet':
+            bit.mini = minis.firstWhere((i) => i.id == bit.id, orElse: () => null);
+            break;
+        }
+      });
+    }
+
+    if (achievement.rewards != null) {
+      achievement.rewards.forEach((reward) {
+        switch (reward.type) {
+          case 'Item':
+            reward.item = items.firstWhere((i) => i.id == reward.id, orElse: () => null);
+            break;
+          case 'Title':
+            reward.title = titles.firstWhere((i) => i.id == reward.id, orElse: () => null);
+            break;
+        }
+      });
+    }
+
+    achievement.loading = false;
+    achievement.loaded = true;
 
     return;
   }
 
-  Future<List<AchievementProgress>> getAchievementProgress() async {
-    final response = await _dio.get(Urls.achievementProgressUrl);
-
-    if (response.statusCode == 200) {
-      List progress = response.data;
-      return progress.where((a) => a != null).map((a) => AchievementProgress.fromJson(a)).toList();
+  int _getProgressionRate(Achievement achievement, AchievementProgress progress) {
+    if (progress == null) {
+      return 0;
     }
 
-    throw Exception();
+    if (progress.done) {
+      return -1;
+    }
+
+    if (progress.current == null || progress.max == null) {
+      return 0;
+    }
+
+    return ((progress.current / progress.max) * 100).round();
   }
 
-  Future<List<AchievementCategory>> getAchievementCategories() async {
-    final response = await _dio.get(Urls.achievementCategoriesUrl);
+  int _getMasteryRate(Mastery mastery) {
+    int region = 0;
 
-    if (response.statusCode == 200) {
-      List categories = response.data;
-      return categories.where((a) => a != null).map((a) => AchievementCategory.fromJson(a)).toList();
+    switch (mastery.region) {
+      case 'Desert':
+        region = 20;
+        break;
+      case 'Maguuma':
+        region = 10;
+        break;
+      case 'Tyria':
+        break;
+      default:
+        region = 30;
+        break;
     }
 
-    throw Exception();
-  }
-
-  Future<List<AchievementGroup>> getAchievementGroups() async {
-    final response = await _dio.get(Urls.achievementGroupsUrl);
-
-    if (response.statusCode == 200) {
-      List groups = response.data;
-      return groups.where((a) => a != null).map((a) => AchievementGroup.fromJson(a)).toList();
-    }
-
-    throw Exception();
-  }
-
-  Future<DailyGroup> getDailies({bool tomorrow = false}) async {
-    final response = await _dio.get(tomorrow ? Urls.dailiesTomorrowUrl : Urls.dailiesUrl);
-
-    if (response.statusCode == 200) {
-      return DailyGroup.fromJson(response.data);
-    }
-
-    throw Exception();
-  }
-
-  Future<List<Mastery>> getMasteries() async {
-    final response = await _dio.get(Urls.masteriesUrl);
-
-    if (response.statusCode == 200) {
-      List masteries = response.data;
-      return masteries.map((a) => Mastery.fromJson(a)).toList();
-    }
-
-    throw Exception();
-  }
-
-  Future<List<MasteryProgress>> getMasteryProgress() async {
-    final response = await _dio.get(Urls.masteryProgressUrl);
-
-    if (response.statusCode == 200) {
-      List masteries = response.data;
-      return masteries.map((a) => MasteryProgress.fromJson(a)).toList();
-    }
-
-    throw Exception();
+    return region + mastery.order;
   }
 }

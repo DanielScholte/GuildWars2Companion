@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:guildwars2_companion/repositories/achievement.dart';
-import 'package:guildwars2_companion/repositories/item.dart';
-import 'package:guildwars2_companion/widgets/appbar.dart';
+import '../services/achievement.dart';
+import '../services/item.dart';
+import '../widgets/appbar.dart';
 import 'package:package_info/package_info.dart';
 import 'package:flutter/foundation.dart' as Foundation;
 
@@ -58,8 +58,8 @@ class InfoPage extends StatelessWidget {
   }
 
   Widget _buildDebugInfo(BuildContext context) {
-    ItemRepository itemRepository = RepositoryProvider.of<ItemRepository>(context);
-    AchievementRepository achievementRepository = RepositoryProvider.of<AchievementRepository>(context);
+    ItemService itemRepository = RepositoryProvider.of<ItemService>(context);
+    AchievementService achievementRepository = RepositoryProvider.of<AchievementService>(context);
 
     return Column(
       children: <Widget>[

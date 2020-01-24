@@ -1,9 +1,9 @@
 import 'package:meta/meta.dart';
 
 @immutable
-abstract class WorldBossesEvent {}
+abstract class WorldBossEvent {}
 
-class LoadWorldbossesEvent extends WorldBossesEvent {
+class LoadWorldbossesEvent extends WorldBossEvent {
   final bool showLoading;
   final bool includeProgress;
 

@@ -50,7 +50,6 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     try {
       TokenInfo tokenInfo = await accountRepository.getTokenInfo(token);
 
-      await TokenUtil.setToken(token);
       yield AuthenticatedState(
         await accountRepository.getAccount(token),
         tokenInfo
