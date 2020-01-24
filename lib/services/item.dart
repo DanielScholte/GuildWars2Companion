@@ -87,6 +87,10 @@ class ItemService {
       print('Cached minis: ${_cachedMinis.length}');
     }
 
+    itemDatabase.close();
+    skinDatabase.close();
+    miniDatabase.close();
+
     return;
   }
 
@@ -163,6 +167,8 @@ class ItemService {
     nonCachedItems.forEach((item) => batch.insert('items', item.toDb(expirationDate), conflictAlgorithm: ConflictAlgorithm.ignore));
     await batch.commit(noResult: true);
 
+    database.close();
+
     return;
   }
 
@@ -227,6 +233,8 @@ class ItemService {
     nonCachedSkins.forEach((skin) => batch.insert('skins', skin.toDb(expirationDate), conflictAlgorithm: ConflictAlgorithm.ignore));
     await batch.commit(noResult: true);
 
+    database.close();
+
     return;
   }
 
@@ -290,6 +298,8 @@ class ItemService {
     Batch batch = database.batch();
     nonCachedMinis.forEach((mini) => batch.insert('minis', mini.toDb(expirationDate), conflictAlgorithm: ConflictAlgorithm.ignore));
     await batch.commit(noResult: true);
+
+    database.close();
 
     return;
   }

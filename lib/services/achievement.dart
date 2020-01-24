@@ -53,6 +53,8 @@ class AchievementService {
       print('Cached achievements: ${_cachedAchievements.length}');
     }
 
+    database.close();
+
     return;
   }
 
@@ -121,6 +123,8 @@ class AchievementService {
     nonCachedItems.forEach((achievement) =>
       batch.insert('achievements', achievement.toDb(expirationDate), conflictAlgorithm: ConflictAlgorithm.ignore));
     await batch.commit(noResult: true);
+
+    database.close();
 
     return;
   }
