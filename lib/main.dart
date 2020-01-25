@@ -5,6 +5,7 @@ import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
 import 'package:guildwars2_companion/blocs/bank/bloc.dart';
 import 'package:guildwars2_companion/blocs/character/bloc.dart';
+import 'package:guildwars2_companion/blocs/raid/raid_bloc.dart';
 import 'package:guildwars2_companion/blocs/trading_post/bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/blocs/world_boss/bloc.dart';
@@ -15,6 +16,7 @@ import 'package:guildwars2_companion/repositories/achievement.dart';
 import 'package:guildwars2_companion/repositories/bank.dart';
 import 'package:guildwars2_companion/repositories/character.dart';
 import 'package:guildwars2_companion/repositories/dungeon.dart';
+import 'package:guildwars2_companion/repositories/raid.dart';
 import 'package:guildwars2_companion/repositories/trading_post.dart';
 import 'package:guildwars2_companion/repositories/wallet.dart';
 import 'package:guildwars2_companion/repositories/world_boss.dart';
@@ -24,6 +26,7 @@ import 'package:guildwars2_companion/services/bank.dart';
 import 'package:guildwars2_companion/services/character.dart';
 import 'package:guildwars2_companion/services/dungeon.dart';
 import 'package:guildwars2_companion/services/item.dart';
+import 'package:guildwars2_companion/services/raid.dart';
 import 'package:guildwars2_companion/services/trading_post.dart';
 import 'package:guildwars2_companion/services/wallet.dart';
 import 'package:guildwars2_companion/services/world_boss.dart';
@@ -44,6 +47,7 @@ Future main() async {
     characterService: CharacterService(),
     dungeonService: DungeonService(),
     itemService: itemService,
+    raidService: RaidService(),
     tradingPostService: TradingPostService(),
     walletService: WalletService(),
     worldBossService: WorldBossService(),
@@ -58,6 +62,7 @@ class GuildWars2Companion extends StatelessWidget {
   final CharacterService characterService;
   final DungeonService dungeonService;
   final ItemService itemService;
+  final RaidService raidService;
   final TradingPostService tradingPostService;
   final WalletService walletService;
   final WorldBossService worldBossService;
@@ -71,6 +76,7 @@ class GuildWars2Companion extends StatelessWidget {
     @required this.characterService,
     @required this.dungeonService,
     @required this.itemService,
+    @required this.raidService,
     @required this.tradingPostService,
     @required this.walletService,
     @required this.worldBossService,
@@ -131,6 +137,11 @@ class GuildWars2Companion extends StatelessWidget {
             dungeonService: dungeonService,
           ),
         ),
+        RepositoryProvider<RaidRepository>(
+          create: (BuildContext context) => RaidRepository(
+            raidService: raidService,
+          ),
+        ),
         RepositoryProvider<TradingPostRepository>(
           create: (BuildContext context) => TradingPostRepository(
             itemService: itemService,
@@ -178,6 +189,11 @@ class GuildWars2Companion extends StatelessWidget {
         BlocProvider<DungeonBloc>(
           create: (BuildContext context) => DungeonBloc(
             dungeonRepository: RepositoryProvider.of<DungeonRepository>(context),
+          ),
+        ),
+        BlocProvider<RaidBloc>(
+          create: (BuildContext context) => RaidBloc(
+            raidRepository: RepositoryProvider.of<RaidRepository>(context),
           ),
         ),
         BlocProvider<TradingPostBloc>(

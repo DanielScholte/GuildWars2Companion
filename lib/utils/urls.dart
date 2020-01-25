@@ -8,6 +8,7 @@ class Urls {
   static final String walletUrl = '/account/wallet';
 
   static final String completedWorldBossesUrl = '/account/worldbosses';
+  static final String completedRaidsUrl = '/account/raids';
   static final String completedDungeonsUrl = '/account/dungeons';
 
   static final String charactersUrl = '/characters?ids=all';
