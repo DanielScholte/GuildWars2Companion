@@ -6,9 +6,11 @@ import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/blocs/achievement/achievement_bloc.dart';
 import 'package:guildwars2_companion/blocs/achievement/achievement_state.dart';
 import 'package:guildwars2_companion/blocs/dungeon/bloc.dart';
+import 'package:guildwars2_companion/blocs/raid/raid_bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/blocs/world_boss/bloc.dart';
 import 'package:guildwars2_companion/pages/home/dungeons.dart';
+import 'package:guildwars2_companion/pages/home/raids.dart';
 import 'package:guildwars2_companion/pages/home/wallet.dart';
 import 'package:guildwars2_companion/pages/home/world_bosses.dart';
 import 'package:guildwars2_companion/pages/info.dart';
@@ -106,7 +108,7 @@ class HomePage extends StatelessWidget {
                         if (state.tokenInfo.permissions.contains('wallet'))
                           _buildWallet(context),
                         _buildWorldBosses(context, state.tokenInfo.permissions.contains('progression')),
-                        _buildRaids(),
+                        _buildRaids(context, state.tokenInfo.permissions.contains('progression')),
                         _buildDungeons(context, state.tokenInfo.permissions.contains('progression'))
                       ],
                     ),
@@ -306,11 +308,16 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildRaids() {
+  Widget _buildRaids(BuildContext context, bool includeProgress) {
     return CompanionFullButton(
       color: Colors.blue,
       title: 'Raids',
-      onTap: () {},
+      onTap: () {
+        BlocProvider.of<RaidBloc>(context).add(LoadRaidsEvent(includeProgress));
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => RaidsPage()
+        ));
+      },
       leading: Image.asset('assets/button_headers/raids.jpg'),
     );
   }

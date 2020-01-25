@@ -78,7 +78,6 @@ flutter:
    - assets/dungeons/
    - assets/progression/
    - assets/raids/
-   - assets/raids/checkpoints/
   #  - images/a_dot_ham.jpeg
 
   fonts:

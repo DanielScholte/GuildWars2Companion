@@ -40,7 +40,7 @@ class GuildWarsUtil {
       case 'Desert':
         return Color(0xFF80066E);
       case 'Maguuma':
-        return Colors.green[600];
+        return Colors.green;
       case 'Tyria':
         return Colors.red[600];
       default:

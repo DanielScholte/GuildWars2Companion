@@ -74,7 +74,7 @@ class CompanionFullButton extends StatelessWidget {
 
   Widget _buildLeading(BuildContext context) {
     return Container(
-      width: height,
+      width: height == null ? 80.0 : height,
       height: height,
       color: Colors.black12,
       margin: EdgeInsets.only(right: 12.0),
