@@ -29,20 +29,21 @@ class CompanionHeader extends StatelessWidget {
         ],
       ),
       width: double.infinity,
-      child: includeBack ? Stack(
+      child: Stack(
         alignment: Alignment.topCenter,
         children: <Widget>[
-          SafeArea(
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: EdgeInsets.all(4.0),
-                child: BackButton(
-                  color: Colors.white,
+          if (includeBack)
+            SafeArea(
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: EdgeInsets.all(4.0),
+                  child: BackButton(
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
-          ),
           if (wikiName != null)
             SafeArea(
               child: Align(
@@ -67,10 +68,7 @@ class CompanionHeader extends StatelessWidget {
             )
           ),
         ],
-      ) : SafeArea(
-        minimum: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-        child: child
-      ),
+      )
     );
   }
 }
