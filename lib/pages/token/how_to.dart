@@ -53,6 +53,13 @@ class HowToTokenPage extends StatelessWidget {
             ),
           ),
           Text(
+            "We recommend to select all the options to get the optimal experience.",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 16.0
+            ),
+          ),
+          Text(
             "Keep in mind, the app can only retrieve the selected information. The app cannot make any changes to your account, and the retrieved information will stay on your phone and won't be shared.",
             textAlign: TextAlign.center,
             style: TextStyle(
