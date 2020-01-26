@@ -47,7 +47,7 @@ class Character {
 		}
 		if (json['bags'] != null) {
 			bags = new List<Bags>();
-			json['bags'].forEach((v) { bags.add(new Bags.fromJson(v)); });
+			json['bags'].where((b) => b != null).forEach((v) { bags.add(new Bags.fromJson(v)); });
 		}
 	}
 
