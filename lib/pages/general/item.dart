@@ -61,6 +61,7 @@ class ItemPage extends StatelessWidget {
   Widget _buildHeader() {
     return CompanionHeader(
       includeBack: true,
+      wikiName: item.name,
       child: Column(
         children: <Widget>[
           Padding(

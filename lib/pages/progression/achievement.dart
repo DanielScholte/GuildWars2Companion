@@ -31,6 +31,7 @@ class AchievementPage extends StatelessWidget {
           children: <Widget>[
             CompanionHeader(
               includeBack: true,
+              wikiName: achievement.name,
               color: Colors.blueGrey,
               child: Column(
                 children: <Widget>[

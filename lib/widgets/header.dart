@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:guildwars2_companion/utils/urls.dart';
 
 class CompanionHeader extends StatelessWidget {
 
   final Color color;
   final Widget child;
   final bool includeBack;
+  final String wikiName;
 
   CompanionHeader({
     @required this.child,
     this.color = Colors.red,
-    this.includeBack = false
+    this.includeBack = false,
+    this.wikiName
   });
 
   @override
@@ -39,6 +43,23 @@ class CompanionHeader extends StatelessWidget {
               ),
             ),
           ),
+          if (wikiName != null)
+            SafeArea(
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: EdgeInsets.all(4.0),
+                  child: IconButton(
+                    icon: Icon(
+                      FontAwesomeIcons.wikipediaW,
+                      color: Colors.white,
+                      size: 20.0,
+                    ),
+                    onPressed: () => Urls.launchUrl('https://wiki.guildwars2.com/index.php?search=${wikiName.replaceAll(' ', '+')}'),
+                  )
+                ),
+              ),
+            ),
           SafeArea(
             child: Padding(
               padding: EdgeInsets.all(16.0),
