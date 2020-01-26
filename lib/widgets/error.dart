@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:guildwars2_companion/widgets/simple_button.dart';
 
 class CompanionError extends StatelessWidget {
 
@@ -38,26 +39,10 @@ class CompanionError extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          width: 400,
-          padding: EdgeInsets.all(8.0),
-          child: RaisedButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(12.0),
-            ),
-            color: Theme.of(context).accentColor,
-            child: Text(
-              'Click here to try again',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16.0,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            onPressed: () => onTryAgain(),
-          ),
-        ),
+        CompanionSimpleButton(
+          text: 'Click here to try again',
+          onPressed: () => onTryAgain(),
+        )
       ],
     );
   }
