@@ -53,7 +53,7 @@ class GuildWarsUtil {
       case 'Guardian':
         return Color(0xFF1d95b3);
       case 'Revenant':
-        return Color(0xFFb64444);
+        return Color(0xFF636363);
       case 'Warrior':
         return Color(0xFFcea64b);
       case 'Engineer':
