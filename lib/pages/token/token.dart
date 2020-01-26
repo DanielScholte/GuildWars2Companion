@@ -7,6 +7,7 @@ import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/models/account/token_entry.dart';
 import 'package:guildwars2_companion/pages/info.dart';
 import 'package:guildwars2_companion/pages/tab.dart';
+import 'package:guildwars2_companion/pages/token/how_to.dart';
 import 'package:guildwars2_companion/pages/token/qr_code.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:intl/intl.dart';
@@ -261,8 +262,10 @@ class TokenPage extends StatelessWidget {
                       fontWeight: FontWeight.w500
                     ),
                     backgroundColor: Colors.deepOrange,
-                    label: 'How to get a token?',
-                    onTap: () {},
+                    label: 'How do I get a token?',
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => HowToTokenPage()
+                    )),
                   ),
                   SpeedDialChild(
                     child: Icon(
