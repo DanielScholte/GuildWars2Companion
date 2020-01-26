@@ -257,7 +257,7 @@ class ItemPage extends StatelessWidget {
                 ),
               ),
             ),
-            InfoRow(
+            CompanionInfoRow(
               header: 'Rarity',
               text: item.rarity
             ),
@@ -284,15 +284,15 @@ class ItemPage extends StatelessWidget {
   Widget _buildArmorDetails() {
     return Column(
       children: <Widget>[
-        InfoRow(
+        CompanionInfoRow(
           header: 'Type',
           text: typeToName(item.details.type)
         ),
-        InfoRow(
+        CompanionInfoRow(
           header: 'Weight Class',
           text: item.details.weightClass
         ),
-        InfoRow(
+        CompanionInfoRow(
           header: 'Defense',
           text: GuildWarsUtil.intToString(item.details.defense)
         ),
@@ -303,7 +303,7 @@ class ItemPage extends StatelessWidget {
   Widget _buildBagDetails() {
     return Column(
       children: <Widget>[
-        InfoRow(
+        CompanionInfoRow(
           header: 'Size',
           text: GuildWarsUtil.intToString(item.details.size)
         ),
@@ -314,17 +314,17 @@ class ItemPage extends StatelessWidget {
   Widget _buildConsumableDetails() {
     return Column(
       children: <Widget>[
-        InfoRow(
+        CompanionInfoRow(
           header: 'Type',
           text: typeToName(item.details.type)
         ),
         if (item.details.durationMs != null)
-          InfoRow(
+          CompanionInfoRow(
             header: 'Duration',
             text: GuildWarsUtil.durationToTextString(Duration(milliseconds: item.details.durationMs)),
           ),
         if (item.details.name != null)
-          InfoRow(
+          CompanionInfoRow(
             header: 'Effect Type',
             text: item.details.name
           ),
@@ -335,7 +335,7 @@ class ItemPage extends StatelessWidget {
   Widget _buildTypeOnlyDetails() {
     return Column(
       children: <Widget>[
-        InfoRow(
+        CompanionInfoRow(
           header: 'Type',
           text: item.details.type
         ),
@@ -346,7 +346,7 @@ class ItemPage extends StatelessWidget {
   Widget _buildToolDetails() {
     return Column(
       children: <Widget>[
-        InfoRow(
+        CompanionInfoRow(
           header: 'Charges',
           text: GuildWarsUtil.intToString(item.details.charges)
         ),
@@ -367,7 +367,7 @@ class ItemPage extends StatelessWidget {
               ),
             ),
           ),
-          InfoRow(
+          CompanionInfoRow(
             header: 'Rarity',
             text: item.rarity
           ),
@@ -379,16 +379,16 @@ class ItemPage extends StatelessWidget {
   Widget _buildWeaponDetails() {
     return Column(
       children: <Widget>[
-        InfoRow(
+        CompanionInfoRow(
           header: 'Type',
           text: item.details.type
         ),
-        InfoRow(
+        CompanionInfoRow(
           header: 'Weapon Strength',
           text: '${GuildWarsUtil.intToString(item.details.minPower)} - ${GuildWarsUtil.intToString(item.details.maxPower)}'
         ),
         if (item.details.defense != null && item.details.defense > 0)
-          InfoRow(
+          CompanionInfoRow(
             header: 'Defense',
             text: GuildWarsUtil.intToString(item.details.defense)
           ),
@@ -413,15 +413,15 @@ class ItemPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                InfoRow(
+                CompanionInfoRow(
                   header: 'Vendor',
                   widget: CompanionCoin(item.vendorValue)
                 ),
-                InfoRow(
+                CompanionInfoRow(
                   header: 'Trading Post Buy',
                   text: '-'
                 ),
-                InfoRow(
+                CompanionInfoRow(
                   header: 'Trading Post Sell',
                   text: '-'
                 ),
@@ -443,11 +443,11 @@ class ItemPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                InfoRow(
+                CompanionInfoRow(
                   header: 'Vendor',
                   widget: CompanionCoin(item.vendorValue)
                 ),
-                InfoRow(
+                CompanionInfoRow(
                   header: 'Trading Post Buy',
                   widget: Container(
                     width: 16.0,
@@ -457,7 +457,7 @@ class ItemPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                InfoRow(
+                CompanionInfoRow(
                   header: 'Trading Post Sell',
                   widget: Container(
                     width: 16.0,
@@ -484,15 +484,15 @@ class ItemPage extends StatelessWidget {
                   ),
                 ),
               ),
-              InfoRow(
+              CompanionInfoRow(
                 header: 'Vendor',
                 widget: CompanionCoin(item.vendorValue)
               ),
-              InfoRow(
+              CompanionInfoRow(
                 header: 'Trading Post Buy',
                 widget: CompanionCoin(snapshot.data.buys.unitPrice)
               ),
-              InfoRow(
+              CompanionInfoRow(
                 header: 'Trading Post Sell',
                 widget: CompanionCoin(snapshot.data.sells.unitPrice)
               ),

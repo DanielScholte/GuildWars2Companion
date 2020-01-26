@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class CompanionFullButton extends StatelessWidget {
+class CompanionButton extends StatelessWidget {
   final bool loading;
   final Widget leading;
   final Widget trailing;
@@ -13,7 +13,7 @@ class CompanionFullButton extends StatelessWidget {
   final Color color;
   final Color foregroundColor;
 
-  CompanionFullButton({
+  CompanionButton({
     @required this.title,
     @required this.color,
     this.onTap,

@@ -5,7 +5,7 @@ import 'package:guildwars2_companion/blocs/raid/raid_bloc.dart';
 import 'package:guildwars2_companion/models/other/raid.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
-import 'package:guildwars2_companion/widgets/full_button.dart';
+import 'package:guildwars2_companion/widgets/button.dart';
 
 class RaidsPage extends StatelessWidget {
   @override
@@ -57,7 +57,7 @@ class RaidsPage extends StatelessWidget {
   }
 
   Widget _buildRaidRow(BuildContext context, Raid raid) {
-    return CompanionFullButton(
+    return CompanionButton(
       color: raid.color,
       title: raid.name,
       height: null,

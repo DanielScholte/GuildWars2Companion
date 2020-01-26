@@ -96,15 +96,15 @@ class WorldBossPage extends StatelessWidget {
               ),
             ),
           ),
-          InfoRow(
+          CompanionInfoRow(
             header: 'Level',
             text: worldBoss.level.toString()
           ),
-          InfoRow(
+          CompanionInfoRow(
             header: 'Map',
             text: worldBoss.location
           ),
-          InfoRow(
+          CompanionInfoRow(
             header: 'Waypoint',
             text: worldBoss.waypoint
           ),

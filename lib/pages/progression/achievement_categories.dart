@@ -11,7 +11,7 @@ import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/expandable_header.dart';
-import 'package:guildwars2_companion/widgets/full_button.dart';
+import 'package:guildwars2_companion/widgets/button.dart';
 
 class AchievementCategoriesPage extends StatelessWidget {
   @override
@@ -90,7 +90,7 @@ class AchievementCategoriesPage extends StatelessWidget {
         ),
         child: Column(
           children: categories
-            .map((c) => CompanionFullButton(
+            .map((c) => CompanionButton(
               title: c.name,
               height: 64.0,
               color: Colors.white,

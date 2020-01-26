@@ -96,15 +96,15 @@ class MasteryLevelPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        InfoRow(
+                        CompanionInfoRow(
                           header: 'Region',
                           text: mastery.region
                         ),
-                        InfoRow(
+                        CompanionInfoRow(
                           header: 'Mastery points',
                           text: level.pointCost.toString()
                         ),
-                        InfoRow(
+                        CompanionInfoRow(
                           header: 'Experience',
                           text: GuildWarsUtil.intToString(level.expCost)
                         ),

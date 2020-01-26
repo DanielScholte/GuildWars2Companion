@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
-import 'package:guildwars2_companion/widgets/full_button.dart';
+import 'package:guildwars2_companion/widgets/button.dart';
 
 import 'dailies.dart';
 
@@ -45,7 +45,7 @@ class DailyCategoriesPage extends StatelessWidget {
                 },
                 child: ListView(
                   children: [
-                    CompanionFullButton(
+                    CompanionButton(
                       title: 'PvE',
                       color: Colors.green[600],
                       leading: Image.asset('assets/button_headers/pve.png'),
@@ -53,7 +53,7 @@ class DailyCategoriesPage extends StatelessWidget {
                         builder: (context) => DailiesPage('PvE')
                       )),
                     ),
-                    CompanionFullButton(
+                    CompanionButton(
                       title: 'PvP',
                       color: Colors.blue,
                       leading: Image.asset('assets/button_headers/pvp.png'),
@@ -61,7 +61,7 @@ class DailyCategoriesPage extends StatelessWidget {
                         builder: (context) => DailiesPage('PvP')
                       )),
                     ),
-                    CompanionFullButton(
+                    CompanionButton(
                       title: 'WvW',
                       color: Colors.red[600],
                       leading: Image.asset('assets/button_headers/wvw.png'),
@@ -69,7 +69,7 @@ class DailyCategoriesPage extends StatelessWidget {
                         builder: (context) => DailiesPage('WvW')
                       )),
                     ),
-                    CompanionFullButton(
+                    CompanionButton(
                       title: 'Fractals',
                       color: Colors.deepPurple,
                       leading: Image.asset('assets/button_headers/fractals.png'),

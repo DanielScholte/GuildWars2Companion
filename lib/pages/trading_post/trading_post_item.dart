@@ -219,7 +219,7 @@ class TradingPostItemPage extends StatelessWidget {
         children: offers.map((o) => Container(
           color: o.unitPrice == orderValue ? Colors.red[100] : Colors.transparent,
           padding: EdgeInsets.symmetric(horizontal: 8.0),
-          child: InfoRow(
+          child: CompanionInfoRow(
             header: '${GuildWarsUtil.intToString(o.quantity)} $type',
             widget: CompanionCoin(o.unitPrice),
           ),

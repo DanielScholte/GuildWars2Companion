@@ -8,7 +8,7 @@ import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
-import 'package:guildwars2_companion/widgets/full_button.dart';
+import 'package:guildwars2_companion/widgets/button.dart';
 
 import 'mastery_level.dart';
 
@@ -58,7 +58,7 @@ class MasteryLevelsPage extends StatelessWidget {
                   },
                   child: ListView(
                     children: _mastery.levels
-                      .map((l) => CompanionFullButton(
+                      .map((l) => CompanionButton(
                         title: l.name,
                         height: 64.0,
                         color: GuildWarsUtil.regionColor(_mastery.region),

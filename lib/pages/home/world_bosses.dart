@@ -9,7 +9,7 @@ import 'package:guildwars2_companion/pages/home/world_boss.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
-import 'package:guildwars2_companion/widgets/full_button.dart';
+import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:intl/intl.dart';
 import 'package:timer_builder/timer_builder.dart';
 
@@ -94,7 +94,7 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
   }
               
   Widget _buildWorldbossRow(BuildContext context, WorldBoss worldBoss, bool includeProgress) {
-    return CompanionFullButton(
+    return CompanionButton(
       color: worldBoss.color,
       title: worldBoss.name,
       leading: Stack(

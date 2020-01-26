@@ -9,7 +9,7 @@ import 'package:guildwars2_companion/pages/progression/achievement.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
 
-import 'full_button.dart';
+import 'button.dart';
 
 class CompanionAchievementButton extends StatelessWidget {
   final LoadedAchievementsState state;
@@ -26,7 +26,7 @@ class CompanionAchievementButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CompanionFullButton(
+    return CompanionButton(
       title: achievement.name,
       height: 64.0,
       color: Colors.blueGrey,

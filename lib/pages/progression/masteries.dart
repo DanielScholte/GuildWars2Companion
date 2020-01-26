@@ -7,7 +7,7 @@ import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
-import 'package:guildwars2_companion/widgets/full_button.dart';
+import 'package:guildwars2_companion/widgets/button.dart';
 
 class MasteriesPage extends StatelessWidget {
   @override
@@ -63,7 +63,7 @@ class MasteriesPage extends StatelessWidget {
   }
 
   Widget _buildMastery(BuildContext context, Mastery mastery) {
-    return CompanionFullButton(
+    return CompanionButton(
       title: mastery.name,
       color: GuildWarsUtil.regionColor(mastery.region),
       height: 64.0,

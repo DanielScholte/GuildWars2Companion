@@ -8,7 +8,7 @@ import 'package:guildwars2_companion/models/account/token_entry.dart';
 import 'package:guildwars2_companion/pages/info.dart';
 import 'package:guildwars2_companion/pages/tab.dart';
 import 'package:guildwars2_companion/pages/token/qr_code.dart';
-import 'package:guildwars2_companion/widgets/full_button.dart';
+import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:intl/intl.dart';
 
 class TokenPage extends StatelessWidget {
@@ -293,7 +293,7 @@ class TokenPage extends StatelessWidget {
   Widget _tokenCard(BuildContext context, TokenEntry token) {
     DateTime added = DateTime.tryParse(token.date);
 
-    return CompanionFullButton(
+    return CompanionButton(
       color: Colors.blue,
       leading: Icon(
         FontAwesomeIcons.key,

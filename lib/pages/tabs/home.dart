@@ -17,7 +17,7 @@ import 'package:guildwars2_companion/pages/info.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/utils/token.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
-import 'package:guildwars2_companion/widgets/full_button.dart';
+import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_box.dart';
 
@@ -190,7 +190,7 @@ class HomePage extends StatelessWidget {
     return BlocBuilder<WalletBloc, WalletState>(
       builder: (BuildContext context, WalletState state) {
         if (state is LoadedWalletState) {
-          return CompanionFullButton(
+          return CompanionButton(
             color: Colors.orange,
             title: 'Wallet',
             onTap: () => Navigator.of(context).push(
@@ -270,7 +270,7 @@ class HomePage extends StatelessWidget {
           );
         }
 
-        return CompanionFullButton(
+        return CompanionButton(
           color: Colors.orange,
           title: 'Wallet',
           onTap: null,
@@ -281,7 +281,7 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildWorldBosses(BuildContext context, bool includeProgress) {
-    return CompanionFullButton(
+    return CompanionButton(
       color: Colors.deepPurple,
       title: 'World bosses',
       onTap: () {
@@ -295,7 +295,7 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildDungeons(BuildContext context, bool includeProgress) {
-    return CompanionFullButton(
+    return CompanionButton(
       color: Colors.deepOrange,
       title: 'Dungeons',
       onTap: () {
@@ -309,7 +309,7 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildRaids(BuildContext context, bool includeProgress) {
-    return CompanionFullButton(
+    return CompanionButton(
       color: Colors.blue,
       title: 'Raids',
       onTap: () {

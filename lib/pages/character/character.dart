@@ -12,7 +12,7 @@ import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
-import 'package:guildwars2_companion/widgets/full_button.dart';
+import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_box.dart';
 
@@ -196,7 +196,7 @@ class CharacterPage extends StatelessWidget {
                   children: <Widget>[
                     if (state.tokenInfo.permissions.contains('inventories')
                       && state.tokenInfo.permissions.contains('builds'))
-                      CompanionFullButton(
+                      CompanionButton(
                         color: Colors.teal,
                         onTap: () {
                           if (!characterState.itemsLoaded && !characterState.itemsLoading) {
@@ -215,7 +215,7 @@ class CharacterPage extends StatelessWidget {
                         ),
                       ),
                     if (state.tokenInfo.permissions.contains('inventories'))
-                      CompanionFullButton(
+                      CompanionButton(
                         color: Colors.indigo,
                         onTap: () {
                           if (!characterState.itemsLoaded && !characterState.itemsLoading) {

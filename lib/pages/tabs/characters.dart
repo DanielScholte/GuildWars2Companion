@@ -8,7 +8,7 @@ import 'package:guildwars2_companion/pages/character/character.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
-import 'package:guildwars2_companion/widgets/full_button.dart';
+import 'package:guildwars2_companion/widgets/button.dart';
 
 class CharactersPage extends StatelessWidget {
   @override
@@ -58,7 +58,7 @@ class CharactersPage extends StatelessWidget {
   }
 
   Widget _buildCharacterRow(BuildContext context, Character character) {
-    return CompanionFullButton(
+    return CompanionButton(
       color: character.professionColor,
       title: character.name,
       leading: Hero(

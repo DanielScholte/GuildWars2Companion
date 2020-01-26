@@ -6,7 +6,7 @@ import 'package:guildwars2_companion/models/other/dungeon.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
-import 'package:guildwars2_companion/widgets/full_button.dart';
+import 'package:guildwars2_companion/widgets/button.dart';
 
 class DungeonsPage extends StatelessWidget {
   @override
@@ -58,7 +58,7 @@ class DungeonsPage extends StatelessWidget {
   }
 
   Widget _buildDungeonRow(BuildContext context, Dungeon dungeon) {
-    return CompanionFullButton(
+    return CompanionButton(
       color: dungeon.color,
       title: dungeon.name,
       leading: Stack(

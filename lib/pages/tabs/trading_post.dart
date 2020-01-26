@@ -10,7 +10,7 @@ import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
-import 'package:guildwars2_companion/widgets/full_button.dart';
+import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
 
 class TradingPostPage extends StatefulWidget {
@@ -344,7 +344,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
       child: ListView(
         children: transactions
           .where((t) => t.itemInfo != null)
-          .map((t) => CompanionFullButton(
+          .map((t) => CompanionButton(
             leading: Stack(
               alignment: Alignment.topRight,
               children: <Widget>[
