@@ -2,23 +2,28 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:guildwars2_companion/blocs/world_boss/bloc.dart';
-import 'package:guildwars2_companion/models/other/world_boss.dart';
-import 'package:guildwars2_companion/pages/home/world_boss.dart';
+import 'package:guildwars2_companion/blocs/event/event_bloc.dart';
+import 'package:guildwars2_companion/models/other/meta_event.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
-import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
+import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:intl/intl.dart';
 import 'package:timer_builder/timer_builder.dart';
 
-class WorldBossesPage extends StatefulWidget {
+import 'event.dart';
+
+class MetaEventPage extends StatefulWidget {
+
+  final MetaEventSequence metaEventSequence;
+
+  MetaEventPage(this.metaEventSequence);
+
   @override
-  _WorldBossesPageState createState() => _WorldBossesPageState();
+  _MetaEventPageState createState() => _MetaEventPageState();
 }
 
-class _WorldBossesPageState extends State<WorldBossesPage> {
+class _MetaEventPageState extends State<MetaEventPage> {
 
   final DateFormat timeFormat = DateFormat.Hm();
 
@@ -48,37 +53,40 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.deepPurple),
+      data: Theme.of(context).copyWith(accentColor: GuildWarsUtil.regionColor(widget.metaEventSequence.region)),
       child: Scaffold(
         appBar: CompanionAppBar(
-          title: 'World Bosses',
-          color: Colors.deepPurple,
+          title: widget.metaEventSequence.name,
+          color: GuildWarsUtil.regionColor(widget.metaEventSequence.region),
           foregroundColor: Colors.white,
           elevation: 4.0,
         ),
-        body: BlocBuilder<WorldBossBloc, WorldBossState>(
+        body: BlocBuilder<EventBloc, EventState>(
           builder: (context, state) {
-            if (state is ErrorWorldbossesState) {
+            if (state is ErrorEventsState) {
               return Center(
                 child: CompanionError(
-                  title: 'the world bosses',
+                  title: 'the meta event',
                   onTryAgain: () =>
-                    BlocProvider.of<WorldBossBloc>(context).add(LoadWorldbossesEvent(true, state.includeProgress)),
+                    BlocProvider.of<EventBloc>(context).add(LoadEventsEvent()),
                 ),
               );
             }
 
-            if (state is LoadedWorldbossesState) {
+            if (state is LoadedEventsState) {
+              MetaEventSequence _sequence = state.events.firstWhere((e) => e.id == widget.metaEventSequence.id);
+
               return RefreshIndicator(
                 backgroundColor: Theme.of(context).accentColor,
                 color: Colors.white,
                 onRefresh: () async {
-                  BlocProvider.of<WorldBossBloc>(context).add(LoadWorldbossesEvent(true, state.includeProgress));
+                  BlocProvider.of<EventBloc>(context).add(LoadEventsEvent(id: widget.metaEventSequence.id));
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
                 child: ListView(
-                  children: state.worldBosses
-                    .map((w) => _buildWorldbossRow(context, w, state.includeProgress))
+                  children: _sequence.segments
+                    .where((e) => e.name != null)
+                    .map((e) => _buildEventButton(context, e))
                     .toList(),
                 ),
               );
@@ -92,31 +100,19 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
       ),
     );
   }
-              
-  Widget _buildWorldbossRow(BuildContext context, WorldBoss worldBoss, bool includeProgress) {
+
+  Widget _buildEventButton(BuildContext context, MetaEventSegment segment) {
+    DateTime time = segment.time.toLocal();
+
     return CompanionButton(
-      color: worldBoss.color,
-      title: worldBoss.name,
-      leading: Stack(
-        children: <Widget>[
-          Image.asset('assets/world_bosses/${worldBoss.id}.jpg'),
-          if (worldBoss.completed)
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              color: Colors.white60,
-              alignment: Alignment.center,
-              child: Icon(
-                FontAwesomeIcons.check,
-                color: Colors.black87,
-                size: 38.0,
-              ),
-            ),
-        ],
+      color: Colors.orange,
+      title: segment.name,
+      height: 64.0,
+      leading: Image.asset(
+        'assets/button_headers/event_icon.png',
+        height: 48.0,
+        width: 48.0,
       ),
-      subtitles: [
-        worldBoss.location,
-      ],
       trailing: Padding(
         padding: EdgeInsets.only(left: 8.0),
         child: Column(
@@ -127,11 +123,11 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
               builder: (context) {
                 DateTime now = DateTime.now();
 
-                bool isActive = worldBoss.dateTime.toLocal().isBefore(now);
+                bool isActive = time.isBefore(now);
 
-                if (worldBoss.refreshTime.toLocal().isBefore(now) && _refreshTimeout == 0) {
+                if (time.add(segment.duration).isBefore(now)) {
                   _refreshTimeout = 30;
-                  BlocProvider.of<WorldBossBloc>(context).add(LoadWorldbossesEvent(false, includeProgress));
+                  BlocProvider.of<EventBloc>(context).add(LoadEventsEvent(id: widget.metaEventSequence.id));
                 }
 
                 if (isActive) {
@@ -146,7 +142,7 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
                 }
                   
                 return Text(
-                  GuildWarsUtil.durationToString(worldBoss.dateTime.toLocal().difference(DateTime.now())),
+                  GuildWarsUtil.durationToString(time.difference(DateTime.now())),
                   style: TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w500,
@@ -156,7 +152,7 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
               },
             ),
             Text(
-              timeFormat.format(worldBoss.dateTime.toLocal()),
+              timeFormat.format(time),
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16.0,
@@ -166,7 +162,10 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
         ),
       ),
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => WorldBossPage(worldBoss)
+        builder: (context) => EventPage(
+          segment: segment,
+          sequence: widget.metaEventSequence,
+        )
       )),
     );
   }

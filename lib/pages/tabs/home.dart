@@ -6,13 +6,15 @@ import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/blocs/achievement/achievement_bloc.dart';
 import 'package:guildwars2_companion/blocs/achievement/achievement_state.dart';
 import 'package:guildwars2_companion/blocs/dungeon/bloc.dart';
+import 'package:guildwars2_companion/blocs/event/event_bloc.dart';
 import 'package:guildwars2_companion/blocs/raid/raid_bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/blocs/world_boss/bloc.dart';
-import 'package:guildwars2_companion/pages/home/dungeons.dart';
-import 'package:guildwars2_companion/pages/home/raids.dart';
-import 'package:guildwars2_companion/pages/home/wallet.dart';
-import 'package:guildwars2_companion/pages/home/world_bosses.dart';
+import 'package:guildwars2_companion/pages/home/dungeons/dungeons.dart';
+import 'package:guildwars2_companion/pages/home/events/meta_events.dart';
+import 'package:guildwars2_companion/pages/home/raids/raids.dart';
+import 'package:guildwars2_companion/pages/home/wallet/wallet.dart';
+import 'package:guildwars2_companion/pages/home/world_bosses/world_bosses.dart';
 import 'package:guildwars2_companion/pages/info.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/utils/token.dart';
@@ -108,6 +110,7 @@ class HomePage extends StatelessWidget {
                         if (state.tokenInfo.permissions.contains('wallet'))
                           _buildWallet(context),
                         _buildWorldBosses(context, state.tokenInfo.permissions.contains('progression')),
+                        _buildEvents(context),
                         _buildRaids(context, state.tokenInfo.permissions.contains('progression')),
                         _buildDungeons(context, state.tokenInfo.permissions.contains('progression'))
                       ],
@@ -291,6 +294,20 @@ class HomePage extends StatelessWidget {
         ));
       },
       leading: Image.asset('assets/button_headers/world_bosses.jpg'),
+    );
+  }
+
+  Widget _buildEvents(BuildContext context) {
+    return CompanionButton(
+      color: Colors.green,
+      title: 'Meta Events',
+      onTap: () {
+        BlocProvider.of<EventBloc>(context).add(LoadEventsEvent());
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => MetaEventsPage()
+        ));
+      },
+      leading: Image.asset('assets/button_headers/events.jpg'),
     );
   }
 
