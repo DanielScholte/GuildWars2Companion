@@ -43,7 +43,8 @@ class EventRepository {
           return;
         }
 
-        List<MetaEventSegment> duplicates = event.segments.where((s) => s.name == segment.name && s != segment).toList();
+        List<MetaEventSegment> duplicates = 
+          event.segments.where((s) => s.name == segment.name && s != segment && s.duration.inMinutes == segment.duration.inMinutes).toList();
 
         if (duplicates.isNotEmpty) {
           duplicates.forEach((d) {
