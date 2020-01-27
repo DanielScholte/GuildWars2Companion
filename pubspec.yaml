@@ -78,6 +78,7 @@ flutter:
    - assets/crafting/
    - assets/world_bosses/
    - assets/dungeons/
+   - assets/dungeons_square/
    - assets/progression/
    - assets/raids/
   #  - images/a_dot_ham.jpeg

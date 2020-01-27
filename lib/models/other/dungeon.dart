@@ -2,22 +2,30 @@ import 'dart:ui';
 
 class Dungeon {
   String name;
-  String pathName;
-  String pathId;
   String id;
-  int coin;
-  int level;
   Color color;
-  bool completed;
+  List<DungeonPath> paths;
 
   Dungeon({
     this.name,
-    this.pathName,
-    this.pathId,
     this.id,
+    this.color,
+    this.paths,
+  });
+}
+
+class DungeonPath {
+  String id;
+  String name;
+  int coin;
+  int level;
+  bool completed;
+
+  DungeonPath({
+    this.id,
+    this.name,
     this.coin,
     this.level,
-    this.color,
     this.completed = false,
   });
 }

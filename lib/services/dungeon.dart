@@ -29,298 +29,255 @@ class DungeonService {
         id: 'ascalonian_catacombs',
         name: 'Ascalonian Catacombs',
         color: Colors.lightBlue,
-        level: 30,
-        coin: 0,
-        pathId: 'ac_story',
-        pathName: 'Story'
-      ),
-      Dungeon(
-        id: 'ascalonian_catacombs',
-        name: 'Ascalonian Catacombs',
-        color: Colors.lightBlue,
-        level: 35,
-        coin: 5000,
-        pathId: 'hodgins',
-        pathName: 'Path 1 - Hodgins'
-      ),
-      Dungeon(
-        id: 'ascalonian_catacombs',
-        name: 'Ascalonian Catacombs',
-        color: Colors.lightBlue,
-        level: 35,
-        coin: 5000,
-        pathId: 'detha',
-        pathName: 'Path 2 - Detha'
-      ),
-      Dungeon(
-        id: 'ascalonian_catacombs',
-        name: 'Ascalonian Catacombs',
-        color: Colors.lightBlue,
-        level: 35,
-        coin: 5000,
-        pathId: 'tzark',
-        pathName: 'Path 3 - Tzark'
+        paths: [
+          DungeonPath(
+            id: 'ac_story',
+            name: 'Story',
+            level: 30,
+            coin: 0,
+          ),
+          DungeonPath(
+            id: 'hodgins',
+            name: 'Path 1 - Hodgins',
+            level: 35,
+            coin: 5000,
+          ),
+          DungeonPath(
+            id: 'detha',
+            name: 'Path 2 - Detha',
+            level: 35,
+            coin: 5000,
+          ),
+          DungeonPath(
+            id: 'tzark',
+            name: 'Path 3 - Tzark',
+            level: 35,
+            coin: 5000,
+          ),
+        ],
       ),
       Dungeon(
         id: 'caudecus_manor',
         name: "Caudecus's Manor",
         color: Colors.green,
-        level: 40,
-        coin: 0,
-        pathId: 'cm_story',
-        pathName: 'Story'
-      ),
-      Dungeon(
-        id: 'caudecus_manor',
-        name: "Caudecus's Manor",
-        color: Colors.green,
-        level: 45,
-        coin: 3500,
-        pathId: 'asura',
-        pathName: 'Path 1 - Asura'
-      ),
-      Dungeon(
-        id: 'caudecus_manor',
-        name: "Caudecus's Manor",
-        color: Colors.green,
-        level: 45,
-        coin: 3500,
-        pathId: 'seraph',
-        pathName: 'Path 2 - Seraph'
-      ),
-      Dungeon(
-        id: 'caudecus_manor',
-        name: "Caudecus's Manor",
-        color: Colors.green,
-        level: 45,
-        coin: 3500,
-        pathId: 'butler',
-        pathName: 'Path 3 - Butler'
+        paths: [
+          DungeonPath(
+            id: 'cm_story',
+            name: 'Story',
+            level: 40,
+            coin: 0,
+          ),
+          DungeonPath(
+            id: 'asura',
+            name: 'Path 1 - Asura',
+            level: 45,
+            coin: 3500,
+          ),
+          DungeonPath(
+            id: 'seraph',
+            name: 'Path 2 - Seraph',
+            level: 45,
+            coin: 3500,
+          ),
+          DungeonPath(
+            id: 'butler',
+            name: 'Path 3 - Butler',
+            level: 45,
+            coin: 3500,
+          ),
+        ],
       ),
       Dungeon(
         id: 'twilight_arbor',
         name: "Twilight Arbor",
         color: Colors.lightGreen,
-        level: 50,
-        coin: 0,
-        pathId: 'ta_story',
-        pathName: 'Story'
-      ),
-      Dungeon(
-        id: 'twilight_arbor',
-        name: "Twilight Arbor",
-        color: Colors.lightGreen,
-        level: 55,
-        coin: 3500,
-        pathId: 'leurent',
-        pathName: 'Path 1 - Leurent (Up)'
-      ),
-      Dungeon(
-        id: 'twilight_arbor',
-        name: "Twilight Arbor",
-        color: Colors.lightGreen,
-        level: 55,
-        coin: 3500,
-        pathId: 'vevina',
-        pathName: 'Path 3 - Vevina (Forward)'
-      ),
-      Dungeon(
-        id: 'twilight_arbor',
-        name: "Twilight Arbor",
-        color: Colors.lightGreen,
-        level: 80,
-        coin: 6600,
-        pathId: 'aetherpath',
-        pathName: 'Path 4 - Aetherpath'
+        paths: [
+          DungeonPath(
+            id: 'ta_story',
+            name: 'Story',
+            level: 50,
+            coin: 0,
+          ),
+          DungeonPath(
+            id: 'leurent',
+            name: 'Path 1 - Leurent (Up)',
+            level: 55,
+            coin: 3500,
+          ),
+          DungeonPath(
+            id: 'vevina',
+            name: 'Path 3 - Vevina (Forward)',
+            level: 55,
+            coin: 3500,
+          ),
+          DungeonPath(
+            id: 'aetherpath',
+            name: 'Path 4 - Aetherpath',
+            level: 80,
+            coin: 6600,
+          ),
+        ],
       ),
       Dungeon(
         id: 'sorrows_embrace',
         name: "Sorrow's Embrace",
         color: Colors.deepOrange,
-        level: 60,
-        coin: 0,
-        pathId: 'se_story',
-        pathName: 'Story'
-      ),
-      Dungeon(
-        id: 'sorrows_embrace',
-        name: "Sorrow's Embrace",
-        color: Colors.deepOrange,
-        level: 65,
-        coin: 3500,
-        pathId: 'fergg',
-        pathName: 'Path 1 - Fergg'
-      ),
-      Dungeon(
-        id: 'sorrows_embrace',
-        name: "Sorrow's Embrace",
-        color: Colors.deepOrange,
-        level: 65,
-        coin: 3500,
-        pathId: 'rasalov',
-        pathName: 'Path 2 - Rasolov'
-      ),
-      Dungeon(
-        id: 'sorrows_embrace',
-        name: "Sorrow's Embrace",
-        color: Colors.deepOrange,
-        level: 65,
-        coin: 3500,
-        pathId: 'koptev',
-        pathName: 'Path 3 - Koptev'
+        paths: [
+          DungeonPath(
+            id: 'se_story',
+            name: 'Story',
+            level: 60,
+            coin: 0,
+          ),
+          DungeonPath(
+            id: 'fergg',
+            name: 'Path 1 - Fergg',
+            level: 65,
+            coin: 3500,
+          ),
+          DungeonPath(
+            id: 'rasalov',
+            name: 'Path 2 - Rasolov',
+            level: 65,
+            coin: 3500,
+          ),
+          DungeonPath(
+            id: 'koptev',
+            name: 'Path 3 - Koptev',
+            level: 65,
+            coin: 3500,
+          ),
+        ],  
       ),
       Dungeon(
         id: 'citadel_of_flame',
         name: "Citadel of Flame",
         color: Colors.red,
-        level: 70,
-        coin: 0,
-        pathId: 'cof_story',
-        pathName: 'Story'
-      ),
-      Dungeon(
-        id: 'citadel_of_flame',
-        name: "Citadel of Flame",
-        color: Colors.red,
-        level: 75,
-        coin: 3500,
-        pathId: 'ferrah',
-        pathName: 'Path 1 - Ferrah'
-      ),
-      Dungeon(
-        id: 'citadel_of_flame',
-        name: "Citadel of Flame",
-        color: Colors.red,
-        level: 75,
-        coin: 3500,
-        pathId: 'magg',
-        pathName: 'Path 2 - Magg'
-      ),
-      Dungeon(
-        id: 'citadel_of_flame',
-        name: "Citadel of Flame",
-        color: Colors.red,
-        level: 75,
-        coin: 3500,
-        pathId: 'rhiannon',
-        pathName: 'Path 3 - Rhiannon'
+        paths: [
+          DungeonPath(
+            id: 'cof_story',
+            name: 'Story',
+            level: 70,
+            coin: 0,
+          ),
+          DungeonPath(
+            id: 'ferrah',
+            name: 'Path 1 - Ferrah',
+            level: 75,
+            coin: 3500,
+          ),
+          DungeonPath(
+            id: 'magg',
+            name: 'Path 2 - Magg',
+            level: 75,
+            coin: 3500,
+          ),
+          DungeonPath(
+            id: 'rhiannon',
+            name: 'Path 3 - Rhiannon',
+            level: 75,
+            coin: 3500,
+          ),
+        ],
       ),
       Dungeon(
         id: 'honor_of_the_waves',
         name: "Honor of the Waves",
         color: Colors.blue,
-        level: 76,
-        coin: 0,
-        pathId: 'hotw_story',
-        pathName: 'Story'
-      ),
-      Dungeon(
-        id: 'honor_of_the_waves',
-        name: "Honor of the Waves",
-        color: Colors.blue,
-        level: 80,
-        coin: 3500,
-        pathId: 'butcher',
-        pathName: 'Path 1 - Butcher'
-      ),
-      Dungeon(
-        id: 'honor_of_the_waves',
-        name: "Honor of the Waves",
-        color: Colors.blue,
-        level: 80,
-        coin: 3500,
-        pathId: 'plunderer',
-        pathName: 'Path 2 - Plunderer'
-      ),
-      Dungeon(
-        id: 'honor_of_the_waves',
-        name: "Honor of the Waves",
-        color: Colors.blue,
-        level: 80,
-        coin: 3500,
-        pathId: 'zealot',
-        pathName: 'Path 3 - Zealot'
+        paths: [
+          DungeonPath(
+            id: 'hotw_story',
+            name: 'Story',
+            level: 76,
+            coin: 0,
+          ),
+          DungeonPath(
+            id: 'butcher',
+            name: 'Path 1 - Butcher',
+            level: 80,
+            coin: 3500,
+          ),
+          DungeonPath(
+            id: 'plunderer',
+            name: 'Path 2 - Plunderer',
+            level: 80,
+            coin: 3500,
+          ),
+          DungeonPath(
+            id: 'zealot',
+            name: 'Path 3 - Zealot',
+            level: 80,
+            coin: 3500,
+          ),
+        ],
       ),
       Dungeon(
         id: 'crucible_of_eternity',
         name: "Crucible of Eternity",
         color: Colors.deepPurple,
-        level: 78,
-        coin: 0,
-        pathId: 'coe_story',
-        pathName: 'Story'
-      ),
-      Dungeon(
-        id: 'crucible_of_eternity',
-        name: "Crucible of Eternity",
-        color: Colors.deepPurple,
-        level: 80,
-        coin: 3500,
-        pathId: 'submarine',
-        pathName: 'Path 1 - Submarine'
-      ),
-      Dungeon(
-        id: 'crucible_of_eternity',
-        name: "Crucible of Eternity",
-        color: Colors.deepPurple,
-        level: 80,
-        coin: 3500,
-        pathId: 'teleporter',
-        pathName: 'Path 2 - Teleporter'
-      ),
-      Dungeon(
-        id: 'crucible_of_eternity',
-        name: "Crucible of Eternity",
-        color: Colors.deepPurple,
-        level: 80,
-        coin: 3500,
-        pathId: 'front_door',
-        pathName: 'Path 3 - Front door'
+        paths: [
+          DungeonPath(
+            id: 'coe_story',
+            name: 'Story',
+            level: 78,
+            coin: 0,
+          ),
+          DungeonPath(
+            id: 'submarine',
+            name: 'Path 1 - Submarine',
+            level: 80,
+            coin: 3500,
+          ),
+          DungeonPath(
+            id: 'teleporter',
+            name: 'Path 2 - Teleporter',
+            level: 80,
+            coin: 3500,
+          ),
+          DungeonPath(
+            id: 'front_door',
+            name: 'Path 3 - Front door',
+            level: 80,
+            coin: 3500,
+          ),
+        ],
       ),
       Dungeon(
         id: 'ruined_city_of_arah',
         name: "The Ruined City of Arah",
         color: Color(0xFF604F3B),
-        level: 80,
-        coin: 0,
-        pathId: 'arah_story',
-        pathName: 'Story'
-      ),
-      Dungeon(
-        id: 'ruined_city_of_arah',
-        name: "The Ruined City of Arah",
-        color: Color(0xFF604F3B),
-        level: 80,
-        coin: 10000,
-        pathId: 'jotun',
-        pathName: 'Path 1 - Jotun'
-      ),
-      Dungeon(
-        id: 'ruined_city_of_arah',
-        name: "The Ruined City of Arah",
-        color: Color(0xFF604F3B),
-        level: 80,
-        coin: 10500,
-        pathId: 'mursaat',
-        pathName: 'Path 2 - Mursaat'
-      ),
-      Dungeon(
-        id: 'ruined_city_of_arah',
-        name: "The Ruined City of Arah",
-        color: Color(0xFF604F3B),
-        level: 80,
-        coin: 5000,
-        pathId: 'forgotten',
-        pathName: 'Path 3 - Forgotten'
-      ),
-      Dungeon(
-        id: 'ruined_city_of_arah',
-        name: "The Ruined City of Arah",
-        color: Color(0xFF604F3B),
-        level: 80,
-        coin: 10000,
-        pathId: 'seer',
-        pathName: 'Path 4 - Seer'
+        paths: [
+          DungeonPath(
+            id: 'arah_story',
+            name: 'Story',
+            level: 80,
+            coin: 0,
+          ),
+          DungeonPath(
+            id: 'jotun',
+            name: 'Path 1 - Jotun',
+            level: 80,
+            coin: 10000,
+          ),
+          DungeonPath(
+            id: 'mursaat',
+            name: 'Path 2 - Mursaat',
+            level: 80,
+            coin: 10500,
+          ),
+          DungeonPath(
+            id: 'forgotten',
+            name: 'Path 3 - Forgotten',
+            level: 80,
+            coin: 5000,
+          ),
+          DungeonPath(
+            id: 'seer',
+            name: 'Path 4 - Seer',
+            level: 80,
+            coin: 10000,
+          ),
+        ],
       ),
     ];
   }

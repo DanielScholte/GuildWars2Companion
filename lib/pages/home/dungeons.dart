@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/dungeon/bloc.dart';
 import 'package:guildwars2_companion/models/other/dungeon.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
-import 'package:guildwars2_companion/widgets/coin.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 
@@ -61,48 +60,48 @@ class DungeonsPage extends StatelessWidget {
     return CompanionButton(
       color: dungeon.color,
       title: dungeon.name,
-      leading: Stack(
-        children: <Widget>[
-          Image.asset('assets/dungeons/${dungeon.id}.jpg'),
-          if (dungeon.completed)
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              color: Colors.white60,
-              alignment: Alignment.center,
-              child: Icon(
-                FontAwesomeIcons.check,
-                color: Colors.black87,
-                size: 38.0,
-              ),
-            ),
-        ],
+      height: null,
+      leading: Image.asset(
+        'assets/dungeons/${dungeon.id}.jpg'
       ),
-      subtitles: [
-        dungeon.pathName,
-      ],
-      trailing: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(top: 2.0),
-              child: CompanionCoin(dungeon.coin,
-                color: Colors.white,
-              ),
-            ),
-            Text(
-              'Level ${dungeon.level}',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16.0,
-              ),
-            )
-          ],
-        ),
-      ),
+      subtitleWidgets: dungeon.paths
+        .map((p) => Padding(
+          padding: EdgeInsets.only(top: 4.0, bottom: 4.0),
+          child: Row(
+            children: <Widget>[
+              if (p.completed)
+                Icon(
+                  FontAwesomeIcons.check,
+                  color: Colors.white,
+                  size: 20.0,
+                )
+              else
+                Container(
+                  width: 20.0,
+                  child: Icon(
+                    FontAwesomeIcons.solidCircle,
+                    color: Colors.white,
+                    size: 6.0,
+                  ),
+                ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 4.0),
+                  child: Text(
+                    p.name,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.0,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ))
+        .toList(),
     );
   }
 }

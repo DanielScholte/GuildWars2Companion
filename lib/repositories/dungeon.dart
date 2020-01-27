@@ -14,7 +14,9 @@ class DungeonRepository {
 
     if (includeProgress) {
       List<String> completedDungeons = await dungeonService.getCompletedDungeons();
-      dungeons.forEach((d) => d.completed = completedDungeons.contains(d.pathId));
+      dungeons.forEach((d) {
+        d.paths.forEach((p) => p.completed = completedDungeons.contains(p.id));
+      });
     }
 
     return dungeons;
