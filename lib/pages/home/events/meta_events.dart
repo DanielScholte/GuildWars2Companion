@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/event/event_bloc.dart';
+import 'package:guildwars2_companion/models/other/meta_event.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
+import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
+import 'package:guildwars2_companion/widgets/expandable_header.dart';
 
 import 'meta_event.dart';
 
@@ -41,24 +44,12 @@ class MetaEventsPage extends StatelessWidget {
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
                 child: ListView(
-                  children: state.events
-                    .map((e) => CompanionButton(
-                      height: 64.0,
-                      title: e.name,
-                      leading: Image.asset(
-                        'assets/button_headers/event_icon.png',
-                        height: 48.0,
-                        width: 48.0,
-                      ),
-                      color: GuildWarsUtil.regionColor(e.region),
-                      onTap: () {
-                        BlocProvider.of<EventBloc>(context).add(LoadEventsEvent(id: e.id));
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => MetaEventPage(e)
-                        ));
-                      },
-                    ))
-                    .toList(),
+                  children: <Widget>[
+                    _buildCategory(context, 'Tyria', 'Tyria', state.events),
+                    _buildCategory(context, 'Heart of Thorns', 'Maguuma', state.events),
+                    _buildCategory(context, 'Path of Fire', 'Desert', state.events),
+                    _buildCategory(context, 'Icebrood Saga', 'Icebrood', state.events),
+                  ],
                 ),
               );
             }
@@ -67,6 +58,39 @@ class MetaEventsPage extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCategory(BuildContext context, String name, String region, List<MetaEventSequence> sequences) {
+    return CompanionCard(
+      padding: EdgeInsets.zero,
+      backgroundColor: GuildWarsUtil.regionColor(region),
+      child: CompanionExpandableHeader(
+        header: name,
+        foreground: Colors.white,
+        child: Column(
+          children: sequences
+            .where((s) => s.region == region)
+            .map((s) => CompanionButton(
+              height: 64.0,
+              title: s.name,
+              leading: Image.asset(
+                'assets/button_headers/event_icon.png',
+                height: 48.0,
+                width: 48.0,
+              ),
+              color: Colors.white,
+              foregroundColor: Colors.black,
+              onTap: () {
+                BlocProvider.of<EventBloc>(context).add(LoadEventsEvent(id: s.id));
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => MetaEventPage(s)
+                ));
+              },
+            ))
+            .toList()
         ),
       ),
     );
