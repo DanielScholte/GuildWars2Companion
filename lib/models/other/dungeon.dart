@@ -3,6 +3,7 @@ import 'dart:ui';
 class Dungeon {
   String name;
   String id;
+  String location;
   Color color;
   List<DungeonPath> paths;
 
@@ -11,6 +12,7 @@ class Dungeon {
     this.id,
     this.color,
     this.paths,
+    this.location,
   });
 }
 

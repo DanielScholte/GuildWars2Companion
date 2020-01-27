@@ -28,6 +28,7 @@ class DungeonService {
       Dungeon(
         id: 'ascalonian_catacombs',
         name: 'Ascalonian Catacombs',
+        location: 'Plains of Ashford',
         color: Colors.lightBlue,
         paths: [
           DungeonPath(
@@ -59,6 +60,7 @@ class DungeonService {
       Dungeon(
         id: 'caudecus_manor',
         name: "Caudecus's Manor",
+        location: 'Queensdale',
         color: Colors.green,
         paths: [
           DungeonPath(
@@ -90,6 +92,7 @@ class DungeonService {
       Dungeon(
         id: 'twilight_arbor',
         name: "Twilight Arbor",
+        location: 'Caledon Forest',
         color: Colors.lightGreen,
         paths: [
           DungeonPath(
@@ -121,6 +124,7 @@ class DungeonService {
       Dungeon(
         id: 'sorrows_embrace',
         name: "Sorrow's Embrace",
+        location: 'Dredgehaunt Cliffs',
         color: Colors.deepOrange,
         paths: [
           DungeonPath(
@@ -152,6 +156,7 @@ class DungeonService {
       Dungeon(
         id: 'citadel_of_flame',
         name: "Citadel of Flame",
+        location: 'Fireheart Rise',
         color: Colors.red,
         paths: [
           DungeonPath(
@@ -183,6 +188,7 @@ class DungeonService {
       Dungeon(
         id: 'honor_of_the_waves',
         name: "Honor of the Waves",
+        location: 'Frostgorge Sound',
         color: Colors.blue,
         paths: [
           DungeonPath(
@@ -214,6 +220,7 @@ class DungeonService {
       Dungeon(
         id: 'crucible_of_eternity',
         name: "Crucible of Eternity",
+        location: 'Mount Maelstrom',
         color: Colors.deepPurple,
         paths: [
           DungeonPath(
@@ -245,6 +252,7 @@ class DungeonService {
       Dungeon(
         id: 'ruined_city_of_arah',
         name: "The Ruined City of Arah",
+        location: 'Cursed Shore',
         color: Color(0xFF604F3B),
         paths: [
           DungeonPath(
