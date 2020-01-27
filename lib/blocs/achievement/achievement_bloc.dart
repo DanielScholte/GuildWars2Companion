@@ -25,6 +25,8 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
       yield* _loadAchievements(event.includeProgress);
     } else if (event is LoadAchievementDetailsEvent) {
       yield* _loadAchievementDetails(event);
+    } else if (event is RefreshAchievementProgressEvent) {
+      yield* _refreshAchievementProgress(event);
     }
   }
 
@@ -84,6 +86,55 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
       if (achievement != null) {
         achievement.loading = false;
         achievement.loaded = false;
+      }
+
+      yield LoadedAchievementsState(
+        achievementGroups: event.achievementGroups,
+        dailies: event.dialies,
+        dailiesTomorrow: event.dialiesTomorrow,
+        achievements: event.achievements,
+        masteries: event.masteries,
+        includesProgress: event.includeProgress,
+        achievementPoints: event.achievementPoints,
+        masteryLevel: event.masteryLevel,
+        hasError: true
+      );
+    }
+  }
+
+  Stream<AchievementState> _refreshAchievementProgress(RefreshAchievementProgressEvent event) async* {
+    try {
+      Achievement achievement = event.achievements.firstWhere((a) => a.id == event.achievementId);
+      achievement.loading = true;
+
+      yield LoadedAchievementsState(
+        achievementGroups: event.achievementGroups,
+        dailies: event.dialies,
+        dailiesTomorrow: event.dialiesTomorrow,
+        achievements: event.achievements,
+        masteries: event.masteries,
+        includesProgress: event.includeProgress,
+        achievementPoints: event.achievementPoints,
+        masteryLevel: event.masteryLevel,
+      );
+
+      await achievementRepository.updateAchievementProgress(achievement);
+
+      yield LoadedAchievementsState(
+        achievementGroups: event.achievementGroups,
+        dailies: event.dialies,
+        dailiesTomorrow: event.dialiesTomorrow,
+        achievements: event.achievements,
+        masteries: event.masteries,
+        includesProgress: event.includeProgress,
+        achievementPoints: event.achievementPoints,
+        masteryLevel: event.masteryLevel,
+      );
+    } catch (_) {
+      Achievement achievement = event.achievements.firstWhere((a) => a.id == event.achievementId, orElse: () => null);
+
+      if (achievement != null) {
+        achievement.loading = false;
       }
 
       yield LoadedAchievementsState(

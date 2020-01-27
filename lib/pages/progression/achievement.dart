@@ -158,6 +158,28 @@ class AchievementPage extends StatelessWidget {
                     }
 
                     if (_achievement != null && _achievement.loaded) {
+                      if (state.includesProgress) {
+                        return RefreshIndicator(
+                          backgroundColor: Theme.of(context).accentColor,
+                          color: Colors.white,
+                          onRefresh: () async {
+                            BlocProvider.of<AchievementBloc>(context).add(RefreshAchievementProgressEvent(
+                              achievementGroups: state.achievementGroups,
+                              achievements: state.achievements,
+                              masteries: state.masteries,
+                              dialies: state.dailies,
+                              dialiesTomorrow: state.dailiesTomorrow,
+                              includeProgress: state.includesProgress,
+                              achievementPoints: state.achievementPoints,
+                              masteryLevel: state.masteryLevel,
+                              achievementId: achievement.id,
+                            ));
+                            await Future.delayed(Duration(milliseconds: 200), () {});
+                          },
+                          child: _buildContent(_achievement, state),
+                        );
+                      }
+
                       return _buildContent(_achievement, state);
                     }
                   }

@@ -38,3 +38,27 @@ class LoadAchievementDetailsEvent extends AchievementEvent {
     @required this.masteryLevel,
   });
 }
+
+class RefreshAchievementProgressEvent extends AchievementEvent {
+  final List<AchievementGroup> achievementGroups;
+  final DailyGroup dialies;
+  final DailyGroup dialiesTomorrow;
+  final List<Achievement> achievements;
+  final List<Mastery> masteries;
+  final bool includeProgress;
+  final int achievementId;
+  final int achievementPoints;
+  final int masteryLevel;
+
+  RefreshAchievementProgressEvent({
+    @required this.achievementGroups,
+    @required this.dialies,
+    @required this.dialiesTomorrow,
+    @required this.achievements,
+    @required this.masteries,
+    @required this.includeProgress,
+    @required this.achievementPoints,
+    @required this.achievementId,
+    @required this.masteryLevel,
+  });
+}

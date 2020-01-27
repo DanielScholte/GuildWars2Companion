@@ -149,6 +149,39 @@ class AchievementRepository {
     );
   }
 
+  Future<void> updateAchievementProgress(Achievement achievement) async {
+    List<AchievementProgress> progress = await achievementService.getAchievementProgress();
+
+    achievement.progress = progress.firstWhere((p) => p.id == achievement.id, orElse: () => null);
+
+      
+    int maxPoints = 0;
+    achievement.tiers.forEach((t) {
+      maxPoints += t.points;
+
+      if (achievement.progress != null) {
+        if ((achievement.progress.current != null && achievement.progress.current >= t.count) || achievement.progress.done) {
+          achievement.progress.points += t.points;
+        }
+      }
+    });
+
+    if (achievement.progress != null && achievement.progress.repeated != null) {
+      achievement.progress.points += maxPoints * achievement.progress.repeated;
+      if (achievement.pointCap != null && achievement.progress.points > achievement.pointCap) {
+        achievement.progress.points = achievement.pointCap;
+      }
+    }
+
+    if (achievement.pointCap == null) {
+      achievement.pointCap = maxPoints;
+    }
+
+    achievement.loading = false;
+
+    return;
+  }
+
   Future<MasteryData> getMasteries(bool includeProgress) async {
     List<Mastery> masteries = await achievementService.getMasteries();
 
