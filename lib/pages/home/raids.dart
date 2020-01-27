@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/raid/raid_bloc.dart';
 import 'package:guildwars2_companion/models/other/raid.dart';
+import 'package:guildwars2_companion/pages/home/raid.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
@@ -102,52 +103,9 @@ class RaidsPage extends StatelessWidget {
           ),
         ))
         .toList(),
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => RaidPage(raid),
+      )),
     );
-    // return CompanionFullButton(
-    //   color: raid.color,
-    //   title: raid.name,
-    //   leading: Stack(
-    //     children: <Widget>[
-    //       Image.asset('assets/dungeons/${raid.id}.jpg'),
-    //       if (raid.completed)
-    //         Container(
-    //           width: double.infinity,
-    //           height: double.infinity,
-    //           color: Colors.white60,
-    //           alignment: Alignment.center,
-    //           child: Icon(
-    //             FontAwesomeIcons.check,
-    //             color: Colors.black87,
-    //             size: 38.0,
-    //           ),
-    //         ),
-    //     ],
-    //   ),
-    //   subtitles: [
-    //     raid.pathName,
-    //   ],
-    //   trailing: Padding(
-    //     padding: EdgeInsets.symmetric(horizontal: 16.0),
-    //     child: Column(
-    //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    //       crossAxisAlignment: CrossAxisAlignment.end,
-    //       children: <Widget>[
-    //         Padding(
-    //           padding: EdgeInsets.only(top: 2.0),
-    //           child: CompanionCoin(raid.coin,
-    //             color: Colors.white,
-    //           ),
-    //         ),
-    //         Text(
-    //           'Level ${raid.level}',
-    //           style: TextStyle(
-    //             color: Colors.white,
-    //             fontSize: 16.0,
-    //           ),
-    //         )
-    //       ],
-    //     ),
-    //   ),
-    // );
   }
 }
