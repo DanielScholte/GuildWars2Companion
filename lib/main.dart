@@ -5,6 +5,7 @@ import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
 import 'package:guildwars2_companion/blocs/bank/bloc.dart';
 import 'package:guildwars2_companion/blocs/character/bloc.dart';
+import 'package:guildwars2_companion/blocs/event/event_bloc.dart';
 import 'package:guildwars2_companion/blocs/raid/raid_bloc.dart';
 import 'package:guildwars2_companion/blocs/trading_post/bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
@@ -199,6 +200,11 @@ class GuildWars2Companion extends StatelessWidget {
         BlocProvider<DungeonBloc>(
           create: (BuildContext context) => DungeonBloc(
             dungeonRepository: RepositoryProvider.of<DungeonRepository>(context),
+          ),
+        ),
+        BlocProvider<EventBloc>(
+          create: (BuildContext context) => EventBloc(
+            eventRepository: RepositoryProvider.of<EventRepository>(context),
           ),
         ),
         BlocProvider<RaidBloc>(

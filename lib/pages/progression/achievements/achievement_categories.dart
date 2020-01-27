@@ -5,13 +5,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
 import 'package:guildwars2_companion/models/achievement/achievement_category.dart';
 import 'package:guildwars2_companion/models/achievement/achievement_group.dart';
-import 'package:guildwars2_companion/pages/progression/achievements.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/expandable_header.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
+
+import 'achievements.dart';
 
 class AchievementCategoriesPage extends StatelessWidget {
   @override

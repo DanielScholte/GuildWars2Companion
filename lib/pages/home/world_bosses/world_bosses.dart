@@ -5,13 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/world_boss/bloc.dart';
 import 'package:guildwars2_companion/models/other/world_boss.dart';
-import 'package:guildwars2_companion/pages/home/world_boss.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:intl/intl.dart';
 import 'package:timer_builder/timer_builder.dart';
+
+import 'world_boss.dart';
 
 class WorldBossesPage extends StatefulWidget {
   @override

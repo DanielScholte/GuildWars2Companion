@@ -1,48 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:guildwars2_companion/blocs/dungeon/bloc.dart';
-import 'package:guildwars2_companion/models/other/dungeon.dart';
-import 'package:guildwars2_companion/pages/home/dungeon.dart';
+import 'package:guildwars2_companion/blocs/raid/raid_bloc.dart';
+import 'package:guildwars2_companion/models/other/raid.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 
-class DungeonsPage extends StatelessWidget {
+import 'raid.dart';
+
+class RaidsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.deepOrange),
+      data: Theme.of(context).copyWith(accentColor: Colors.blue),
       child: Scaffold(
         appBar: CompanionAppBar(
-          title: 'Dungeons',
-          color: Colors.deepOrange,
+          title: 'Raids',
+          color: Colors.blue,
           foregroundColor: Colors.white,
           elevation: 4.0,
         ),
-        body: BlocBuilder<DungeonBloc, DungeonState>(
+        body: BlocBuilder<RaidBloc, RaidState>(
           builder: (context, state) {
-            if (state is ErrorDungeonsState) {
+            if (state is ErrorRaidsState) {
               return Center(
                 child: CompanionError(
-                  title: 'the dungeons',
+                  title: 'the raids',
                   onTryAgain: () =>
-                    BlocProvider.of<DungeonBloc>(context).add(LoadDungeonsEvent(state.includeProgress)),
+                    BlocProvider.of<RaidBloc>(context).add(LoadRaidsEvent(state.includeProgress)),
                 ),
               );
             }
 
-            if (state is LoadedDungeonsState) {
+            if (state is LoadedRaidsState) {
               return RefreshIndicator(
                 backgroundColor: Theme.of(context).accentColor,
                 color: Colors.white,
                 onRefresh: () async {
-                  BlocProvider.of<DungeonBloc>(context).add(LoadDungeonsEvent(state.includeProgress));
+                  BlocProvider.of<RaidBloc>(context).add(LoadRaidsEvent(state.includeProgress));
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
                 child: ListView(
-                  children: state.dungeons
-                    .map((d) => _buildDungeonRow(context, d))
+                  children: state.raids
+                    .map((d) => _buildRaidRow(context, d))
                     .toList(),
                 ),
               );
@@ -57,20 +58,20 @@ class DungeonsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildDungeonRow(BuildContext context, Dungeon dungeon) {
+  Widget _buildRaidRow(BuildContext context, Raid raid) {
     return CompanionButton(
-      color: dungeon.color,
-      title: dungeon.name,
+      color: raid.color,
+      title: raid.name,
       height: null,
       leading: Image.asset(
-        'assets/dungeons/${dungeon.id}.jpg'
+        'assets/raids/${raid.id}.jpg'
       ),
-      subtitleWidgets: dungeon.paths
-        .map((p) => Padding(
+      subtitleWidgets: raid.checkpoints
+        .map((c) => Padding(
           padding: EdgeInsets.only(top: 4.0, bottom: 4.0),
           child: Row(
             children: <Widget>[
-              if (p.completed)
+              if (c.completed)
                 Icon(
                   FontAwesomeIcons.check,
                   color: Colors.white,
@@ -89,7 +90,7 @@ class DungeonsPage extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.only(left: 4.0),
                   child: Text(
-                    p.name,
+                    c.name,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16.0,
@@ -104,7 +105,7 @@ class DungeonsPage extends StatelessWidget {
         ))
         .toList(),
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => DungeonPage(dungeon)
+        builder: (context) => RaidPage(raid),
       )),
     );
   }

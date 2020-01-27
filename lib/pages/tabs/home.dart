@@ -6,16 +6,15 @@ import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/blocs/achievement/achievement_bloc.dart';
 import 'package:guildwars2_companion/blocs/achievement/achievement_state.dart';
 import 'package:guildwars2_companion/blocs/dungeon/bloc.dart';
+import 'package:guildwars2_companion/blocs/event/event_bloc.dart';
 import 'package:guildwars2_companion/blocs/raid/raid_bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/blocs/world_boss/bloc.dart';
-import 'package:guildwars2_companion/models/other/meta_event.dart';
-import 'package:guildwars2_companion/pages/home/dungeons.dart';
-import 'package:guildwars2_companion/pages/home/raids.dart';
-import 'package:guildwars2_companion/pages/home/wallet.dart';
-import 'package:guildwars2_companion/pages/home/world_bosses.dart';
+import 'package:guildwars2_companion/pages/home/dungeons/dungeons.dart';
+import 'package:guildwars2_companion/pages/home/raids/raids.dart';
+import 'package:guildwars2_companion/pages/home/wallet/wallet.dart';
+import 'package:guildwars2_companion/pages/home/world_bosses/world_bosses.dart';
 import 'package:guildwars2_companion/pages/info.dart';
-import 'package:guildwars2_companion/repositories/event.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/utils/token.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
@@ -302,10 +301,9 @@ class HomePage extends StatelessWidget {
       color: Colors.green,
       title: 'Events',
       onTap: () {
-        List<MetaEventSequence> events = RepositoryProvider.of<EventRepository>(context)
-          .getMetaEvents(id: 'jahai');
-        print(events.length);
+        BlocProvider.of<EventBloc>(context).add(LoadEventsEvent());
       },
+      leading: Image.asset('assets/button_headers/events.jpg'),
     );
   }
 
