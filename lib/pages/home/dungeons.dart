@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/dungeon/bloc.dart';
 import 'package:guildwars2_companion/models/other/dungeon.dart';
+import 'package:guildwars2_companion/pages/home/dungeon.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
@@ -102,6 +103,9 @@ class DungeonsPage extends StatelessWidget {
           ),
         ))
         .toList(),
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => DungeonPage(dungeon)
+      )),
     );
   }
 }
