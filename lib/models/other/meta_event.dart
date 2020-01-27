@@ -4,6 +4,7 @@ class MetaEventSequence {
   String id;
   String name;
   String region;
+  Duration offset;
   List<MetaEventSegment> segments;
 
   MetaEventSequence({
@@ -11,6 +12,7 @@ class MetaEventSequence {
     @required this.name,
     @required this.region,
     @required this.segments,
+    this.offset = Duration.zero,
   });
 }
 

@@ -25,11 +25,11 @@ class EventRepository {
       }
 
       DateTime now = DateTime.now().toUtc();
-      DateTime offset = DateTime.utc(now.year, now.month, now.day);
+      DateTime offset = DateTime.utc(now.year, now.month, now.day).subtract(event.offset);
 
-      while(offset.day == now.day) {
+      while(offset.day <= now.day) {
         event.segments.forEach((segment) {
-          if (offset.day != now.day) {
+          if (offset.day > now.day) {
             return;
           }
 
@@ -62,6 +62,8 @@ class EventRepository {
       event.segments.removeWhere((s) => s.times.isEmpty || s.time == null);
 
       event.segments.sort((a, b) => a.time.compareTo(b.time));
+
+      event.segments.forEach((s) => s.times.removeWhere((t) => t.day != now.day));
     });
 
     return events;
