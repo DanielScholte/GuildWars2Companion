@@ -11,6 +11,7 @@ import 'package:guildwars2_companion/blocs/raid/raid_bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/blocs/world_boss/bloc.dart';
 import 'package:guildwars2_companion/pages/home/dungeons/dungeons.dart';
+import 'package:guildwars2_companion/pages/home/events/meta_events.dart';
 import 'package:guildwars2_companion/pages/home/raids/raids.dart';
 import 'package:guildwars2_companion/pages/home/wallet/wallet.dart';
 import 'package:guildwars2_companion/pages/home/world_bosses/world_bosses.dart';
@@ -299,9 +300,12 @@ class HomePage extends StatelessWidget {
   Widget _buildEvents(BuildContext context) {
     return CompanionButton(
       color: Colors.green,
-      title: 'Events',
+      title: 'Meta Events',
       onTap: () {
         BlocProvider.of<EventBloc>(context).add(LoadEventsEvent());
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => MetaEventsPage()
+        ));
       },
       leading: Image.asset('assets/button_headers/events.jpg'),
     );
