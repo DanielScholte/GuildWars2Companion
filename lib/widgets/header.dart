@@ -38,8 +38,11 @@ class CompanionHeader extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: Padding(
                   padding: EdgeInsets.all(4.0),
-                  child: BackButton(
-                    color: Colors.white,
+                  child: Material(
+                    color: Colors.transparent,
+                    child: BackButton(
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
@@ -50,13 +53,16 @@ class CompanionHeader extends StatelessWidget {
                 alignment: Alignment.topRight,
                 child: Padding(
                   padding: EdgeInsets.all(4.0),
-                  child: IconButton(
-                    icon: Icon(
-                      FontAwesomeIcons.wikipediaW,
-                      color: Colors.white,
-                      size: 20.0,
+                  child: Material(
+                    color: Colors.transparent,
+                    child: IconButton(
+                      icon: Icon(
+                        FontAwesomeIcons.wikipediaW,
+                        color: Colors.white,
+                        size: 20.0,
+                      ),
+                      onPressed: () => Urls.launchUrl('https://wiki.guildwars2.com/index.php?search=${wikiName.replaceAll(' ', '+')}'),
                     ),
-                    onPressed: () => Urls.launchUrl('https://wiki.guildwars2.com/index.php?search=${wikiName.replaceAll(' ', '+')}'),
                   )
                 ),
               ),
