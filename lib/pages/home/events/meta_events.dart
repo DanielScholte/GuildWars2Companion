@@ -48,7 +48,7 @@ class MetaEventsPage extends StatelessWidget {
                     _buildCategory(context, 'Tyria', 'Tyria', state.events),
                     _buildCategory(context, 'Heart of Thorns', 'Maguuma', state.events),
                     _buildCategory(context, 'Path of Fire', 'Desert', state.events),
-                    _buildCategory(context, 'Icebrood Saga', 'Icebrood', state.events),
+                    _buildCategory(context, 'The Icebrood Saga', 'Icebrood', state.events),
                   ],
                 ),
               );
