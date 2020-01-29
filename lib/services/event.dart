@@ -45,7 +45,7 @@ class EventService {
         offset: Duration(minutes: 30),
         segments: [
           MetaEventSegment(
-            name: 'Pillars',
+            name: 'Pylons',
             duration: Duration(minutes: 75),
           ),
           MetaEventSegment(
