@@ -9,6 +9,7 @@ GW2 Companion - The unofficial Guild Wars 2 App
 • World boss and Meta event timers
 • World boss, Raid and Dungeon progression since the daily or weekly reset
 • Inventory and Equipment of your characters
+• Detailed item information, including TP prices and Infusions/Signets
 • The bank, including shared inventory and full material storage
 • Trading post history and current listing, with full delivery box (gold and items)
 • All achievements with progress
