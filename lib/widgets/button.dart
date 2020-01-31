@@ -95,8 +95,8 @@ class CompanionButton extends StatelessWidget {
         tag: hero,
         child: ClipRRect(
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(12.0),
-            bottomLeft: Radius.circular(12.0),
+            topLeft: Radius.circular(11.0),
+            bottomLeft: Radius.circular(11.0),
           ),
           child: leading,
         ),
