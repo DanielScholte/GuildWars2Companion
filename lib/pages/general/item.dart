@@ -15,6 +15,7 @@ class ItemPage extends StatelessWidget {
 
   final Item item;
   final Skin skin;
+  final String hero;
   final List<Item> upgradesInfo;
   final List<Item> infusionsInfo;
 
@@ -23,6 +24,7 @@ class ItemPage extends StatelessWidget {
     this.skin,
     this.upgradesInfo,
     this.infusionsInfo,
+    this.hero,
   });
 
   @override
@@ -69,7 +71,7 @@ class ItemPage extends StatelessWidget {
             child: CompanionItemBox(
               item: item,
               skin: skin,
-              size: 55.0,
+              hero: hero,
               enablePopup: false,
             ),
           ),

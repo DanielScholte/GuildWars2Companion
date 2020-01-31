@@ -165,6 +165,7 @@ class EquipmentPage extends StatelessWidget {
       size: small ? 45.0 : 55.0,
       item: equipment.itemInfo,
       skin: equipment.skinInfo,
+      hero: equipment.slot,
       upgradesInfo: equipment.upgradesInfo,
       infusionsInfo: equipment.infusionsInfo,
       includeMargin: true,
