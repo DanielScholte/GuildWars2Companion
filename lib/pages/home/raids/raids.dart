@@ -63,6 +63,7 @@ class RaidsPage extends StatelessWidget {
       color: raid.color,
       title: raid.name,
       height: null,
+      hero: raid.id,
       leading: Image.asset(
         'assets/raids/${raid.id}.jpg'
       ),

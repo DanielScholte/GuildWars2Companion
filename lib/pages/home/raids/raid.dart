@@ -49,9 +49,12 @@ class RaidPage extends StatelessWidget {
                 ),
               ],
             ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(6.0),
-              child: Image.asset('assets/raids_square/${raid.id}.jpg'),
+            child: Hero(
+              tag: raid.id,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(6.0),
+                child: Image.asset('assets/raids_square/${raid.id}.jpg'),
+              ),
             ),
           ),
           Padding(
