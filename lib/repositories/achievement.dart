@@ -80,7 +80,7 @@ class AchievementRepository {
         }
       }
 
-      if (a.pointCap == null) {
+      if (a.pointCap == null || a.pointCap == -1) {
         a.pointCap = maxPoints;
       }
 
