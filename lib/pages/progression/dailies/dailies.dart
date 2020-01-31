@@ -69,8 +69,8 @@ class DailiesPage extends StatelessWidget {
                     if (state is LoadedAchievementsState) {
                       return TabBarView(
                         children: <Widget>[
-                          _buildDailyTab(context, state, _getDailies(state.dailies)),
-                          _buildDailyTab(context, state, _getDailies(state.dailiesTomorrow)),
+                          _buildDailyTab(context, state, _getDailies(state.dailies), 'today'),
+                          _buildDailyTab(context, state, _getDailies(state.dailiesTomorrow), 'tomorrow'),
                         ],
                       );
                     }
@@ -88,7 +88,7 @@ class DailiesPage extends StatelessWidget {
     );
   }
 
-  Widget _buildDailyTab(BuildContext context, LoadedAchievementsState state, List<Daily> dailies) {
+  Widget _buildDailyTab(BuildContext context, LoadedAchievementsState state, List<Daily> dailies, String prefix) {
     return RefreshIndicator(
       backgroundColor: Theme.of(context).accentColor,
       color: Colors.white,
@@ -102,6 +102,7 @@ class DailiesPage extends StatelessWidget {
         children: dailies
           .map((d) => CompanionAchievementButton(
             achievement: d.achievementInfo,
+            hero: '$prefix ${d.id} ${dailies.indexOf(d)}',
             state: state,
             levels: d.level.min == 80 ? 'Level 80' : 'Level ${d.level.min} - ${d.level.max}',
             categoryIcon: _getIcon(),

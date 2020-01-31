@@ -16,10 +16,12 @@ class AchievementPage extends StatelessWidget {
 
   final Achievement achievement;
   final String categoryIcon;
+  final String hero;
 
   AchievementPage({
     this.achievement,
     this.categoryIcon,
+    this.hero,
   });
 
   @override
@@ -37,12 +39,12 @@ class AchievementPage extends StatelessWidget {
                 children: <Widget>[
                   if (achievement.icon == null && categoryIcon != null && categoryIcon.contains('assets'))
                     Hero(
-                      tag: achievement.id.toString(),
+                      tag: hero,
                       child: Image.asset(categoryIcon, height: 42.0,)
                     )
                   else
                     Hero(
-                      tag: achievement.id.toString(),
+                      tag: hero,
                       child: CachedNetworkImage(
                         height: 42.0,
                         imageUrl: achievement.icon != null ? achievement.icon : categoryIcon,

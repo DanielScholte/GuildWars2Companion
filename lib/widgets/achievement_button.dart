@@ -16,12 +16,14 @@ class CompanionAchievementButton extends StatelessWidget {
   final Achievement achievement;
   final String categoryIcon;
   final String levels;
+  final String hero;
 
   CompanionAchievementButton({
     @required this.state,
     @required this.achievement,
     this.categoryIcon,
     this.levels,
+    this.hero,
   });
 
   @override
@@ -49,6 +51,7 @@ class CompanionAchievementButton extends StatelessWidget {
           builder: (context) => AchievementPage(
             achievement: achievement,
             categoryIcon: categoryIcon,
+            hero: hero != null ? hero : achievement.id.toString(),
           )
         ));
       },
@@ -222,14 +225,14 @@ class CompanionAchievementButton extends StatelessWidget {
   Widget _buildIcon({height = 48.0}) {
     if (achievement.icon == null && categoryIcon != null && categoryIcon.contains('assets')) {
       return Hero(
-        tag: achievement.id.toString(),
+        tag: hero != null ? hero : achievement.id.toString(),
         child: Image.asset(categoryIcon, height: height,),
       );
     }
 
     if (achievement.icon != null || categoryIcon != null) {
       return Hero(
-        tag: achievement.id.toString(),
+        tag: hero != null ? hero : achievement.id.toString(),
         child: CachedNetworkImage(
           height: height,
           imageUrl: achievement.icon != null ? achievement.icon : categoryIcon,
