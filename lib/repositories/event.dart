@@ -27,9 +27,9 @@ class EventRepository {
       DateTime now = DateTime.now().toUtc();
       DateTime offset = DateTime.utc(now.year, now.month, now.day).subtract(event.offset);
 
-      while(offset.day <= now.day && offset.month <= now.month) {
+      while(offset.day <= now.day && offset.month <= now.month && offset.year <= now.year) {
         event.segments.forEach((segment) {
-          if (offset.day > now.day || offset.month > now.month) {
+          if (offset.day > now.day || offset.month > now.month || offset.year > now.year) {
             return;
           }
 
