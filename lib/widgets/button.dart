@@ -12,6 +12,7 @@ class CompanionButton extends StatelessWidget {
   final double height;
   final Color color;
   final Color foregroundColor;
+  final String hero;
 
   CompanionButton({
     @required this.title,
@@ -24,6 +25,7 @@ class CompanionButton extends StatelessWidget {
     this.leading,
     this.trailing,
     this.loading = false,
+    this.hero,
   });
 
   @override
@@ -52,7 +54,7 @@ class CompanionButton extends StatelessWidget {
             onTap: () => onTap(),
             child: Row(
               children: <Widget>[
-                _buildLeading(context),
+                _buildLeadingContainer(context),
                 _buildTitle(),
                 if (trailing != null)
                   trailing,
@@ -62,7 +64,7 @@ class CompanionButton extends StatelessWidget {
           ),
         ) : Row(
           children: <Widget>[
-            _buildLeading(context),
+            _buildLeadingContainer(context),
             _buildTitle(),
             if (trailing != null)
               trailing,
@@ -72,7 +74,7 @@ class CompanionButton extends StatelessWidget {
     );
   }
 
-  Widget _buildLeading(BuildContext context) {
+  Widget _buildLeadingContainer(BuildContext context) {
     return Container(
       width: height == null ? 80.0 : height,
       height: height,
@@ -83,9 +85,25 @@ class CompanionButton extends StatelessWidget {
         Theme(
           data: Theme.of(context).copyWith(accentColor: Colors.white),
           child: CircularProgressIndicator(),
-        ) :
-        this.leading,
+        ) : _buildLeading(context),
     );
+  }
+
+  Widget _buildLeading(BuildContext context) {
+    if (hero != null) {
+      return Hero(
+        tag: hero,
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(12.0),
+            bottomLeft: Radius.circular(12.0),
+          ),
+          child: leading,
+        ),
+      );
+    }
+
+    return leading;
   }
 
   Widget _buildTitle() {
