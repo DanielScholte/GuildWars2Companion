@@ -55,9 +55,12 @@ class WorldBossPage extends StatelessWidget {
                 ),
               ],
             ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(6.0),
-              child: Image.asset('assets/world_bosses/${worldBoss.id}.jpg'),
+            child: Hero(
+              tag: worldBoss.id,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(6.0),
+                child: Image.asset('assets/world_bosses/${worldBoss.id}.jpg'),
+              ),
             ),
           ),
           Padding(

@@ -98,6 +98,7 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
     return CompanionButton(
       color: worldBoss.color,
       title: worldBoss.name,
+      hero: worldBoss.id,
       leading: Stack(
         children: <Widget>[
           Image.asset('assets/world_bosses/${worldBoss.id}.jpg'),
