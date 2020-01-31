@@ -138,6 +138,31 @@ class ItemPage extends StatelessWidget {
   }
 
   Widget _buildItemList(String header, List<Item> items) {
+    List<Widget> itemWidgets = [];
+
+    for (var i = 0; i < items.length; i++) {
+      itemWidgets.add(Row(
+        children: <Widget>[
+          CompanionItemBox(
+            item: items[i],
+            hero: '$header $i ${items[i].id}',
+            size: 45.0,
+            includeMargin: true,
+          ),
+          Padding(
+            padding: EdgeInsets.all(4.0),
+            child: Text(
+              items[i].name,
+              style: TextStyle(
+                fontSize: 16.0
+              ),
+              textAlign: TextAlign.center,
+            ),
+          )
+        ],
+      ));
+    }
+
     return CompanionCard(
       child: Column(
         children: <Widget>[
@@ -151,28 +176,7 @@ class ItemPage extends StatelessWidget {
             ),
           ),
           Column(
-            children: items
-            .where((i) => i != null)
-            .map((i) => Row(
-              children: <Widget>[
-                CompanionItemBox(
-                  item: i,
-                  size: 45.0,
-                  includeMargin: true,
-                ),
-                Padding(
-                  padding: EdgeInsets.all(4.0),
-                  child: Text(
-                    i.name,
-                    style: TextStyle(
-                      fontSize: 16.0
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                )
-              ],
-            ))
-            .toList(),
+            children: itemWidgets,
           )
         ],
       ),

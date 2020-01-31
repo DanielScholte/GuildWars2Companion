@@ -295,6 +295,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
                 .where((i) => i.id != -1)
                 .map((i) => CompanionItemBox(
                   item: i.itemInfo,
+                  hero: '${i.id} ${items.indexOf(i)}',
                   quantity: i.count,
                   includeMargin: false,
                 ))

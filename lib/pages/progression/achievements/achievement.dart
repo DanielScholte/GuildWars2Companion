@@ -302,6 +302,7 @@ class AchievementPage extends StatelessWidget {
                       children: <Widget>[
                         CompanionItemBox(
                           item: r.item,
+                          hero: '${r.id} ${_achievement.rewards.indexOf(r)}',
                           quantity: r.count,
                           size: 40.0,
                         ),
@@ -462,7 +463,7 @@ class AchievementPage extends StatelessWidget {
               .map((i) {
                 switch (i.type) {
                   case 'Item':
-                    return _buildItemBit(_achievement, i, state.includesProgress);
+                    return _buildItemBit(_achievement, i, state.includesProgress, _achievement.bits.indexOf(i));
                     break;
                   case 'Skin':
                     return _buildSkinMiniBit(_achievement, i, state.includesProgress);
@@ -481,7 +482,7 @@ class AchievementPage extends StatelessWidget {
     );
   }
 
-  Widget _buildItemBit(Achievement _achievement, AchievementBits bit, bool includeProgress) {
+  Widget _buildItemBit(Achievement _achievement, AchievementBits bit, bool includeProgress, int bitIndex) {
     if (bit.item == null) {
       return Row(
         children: <Widget>[
@@ -502,6 +503,7 @@ class AchievementPage extends StatelessWidget {
           CompanionItemBox(
             item: bit.item,
             size: 40.0,
+            hero: '${bit.id} $bitIndex',
             markCompleted: includeProgress &&
               _achievement.progress != null &&
               ((_achievement.progress.bits != null &&

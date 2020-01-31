@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,7 +6,7 @@ import 'package:guildwars2_companion/models/items/skin.dart';
 import 'package:guildwars2_companion/pages/general/item.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 
-class CompanionItemBox extends StatefulWidget {
+class CompanionItemBox extends StatelessWidget {
 
   final Item item;
   final Skin skin;
@@ -36,46 +34,14 @@ class CompanionItemBox extends StatefulWidget {
     this.hero,
   });
 
-  @override
-  _CompanionItemBoxState createState() => _CompanionItemBoxState();
-}
-
-class _CompanionItemBoxState extends State<CompanionItemBox> {
-
-  String _hero;
-
-  @override
-  void initState() {
-    super.initState();
-
-    if (widget.hero != null) {
-      _hero = widget.hero;
-    } else if (widget.item != null) {
-      _hero = widget.item.id.toString() + _randomString(8);
-    }
-  }
-
-  String _randomString(int length) {
-    var rand = new Random();
-    var codeUnits = new List.generate(
-        length, 
-        (index){
-          return rand.nextInt(33)+89;
-        }
-    );
-    
-    return new String.fromCharCodes(codeUnits);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    if (widget.item == null && !widget.displayEmpty) {
+    if (item == null && !displayEmpty) {
       return _buildError();
     }
 
-    if (_hero != null) {
+    if (hero != null) {
       return Hero(
-        tag: _hero,
+        tag: hero,
         child: _buildItemBox(context),
       );
     }
@@ -85,9 +51,9 @@ class _CompanionItemBoxState extends State<CompanionItemBox> {
 
   Widget _buildItemBox(BuildContext context) {
     return Container(
-      width: this.widget.size,
-      height: this.widget.size,
-      margin: widget.includeMargin ? EdgeInsets.all(4.0) : null,
+      width: this.size,
+      height: this.size,
+      margin: includeMargin ? EdgeInsets.all(4.0) : null,
       decoration: BoxDecoration(
         color: Colors.grey,
         borderRadius: BorderRadius.circular(6.0),
@@ -98,7 +64,7 @@ class _CompanionItemBoxState extends State<CompanionItemBox> {
           ),
         ],
         border: Border.all(
-          color: GuildWarsUtil.getRarityColor(widget.displayEmpty ? 'Basic' : widget.item.rarity),
+          color: GuildWarsUtil.getRarityColor(displayEmpty ? 'Basic' : item.rarity),
           width: 2.0
         ),
       ),
@@ -108,13 +74,13 @@ class _CompanionItemBoxState extends State<CompanionItemBox> {
           alignment: Alignment.topRight,
           children: <Widget>[
             _buildImage(),
-            if (widget.quantity > 1)
+            if (quantity > 1)
               _buildQuantity(),
-            if (widget.quantity == 0)
+            if (quantity == 0)
               _buildGreyOverlay(),
-            if (widget.markCompleted)
+            if (markCompleted)
               _buildCompleted(),
-            if (widget.enablePopup && !widget.displayEmpty)
+            if (enablePopup && !displayEmpty)
               _buildInkwell(context),
           ],
         ),
@@ -137,9 +103,9 @@ class _CompanionItemBoxState extends State<CompanionItemBox> {
 
   Widget _buildError() {
     return Container(
-      width: this.widget.size,
-      height: this.widget.size,
-      margin: widget.includeMargin ? EdgeInsets.all(4.0) : null,
+      width: this.size,
+      height: this.size,
+      margin: includeMargin ? EdgeInsets.all(4.0) : null,
       decoration: BoxDecoration(
         color: Colors.grey,
         borderRadius: BorderRadius.circular(6.0),
@@ -156,7 +122,7 @@ class _CompanionItemBoxState extends State<CompanionItemBox> {
       ),
       child: Icon(
         FontAwesomeIcons.dizzy,
-        size: this.widget.size / 1.5,
+        size: this.size / 1.5,
         color: Colors.white,
       )
     );
@@ -164,8 +130,8 @@ class _CompanionItemBoxState extends State<CompanionItemBox> {
 
   Widget _buildGreyOverlay() { 
     return Container(
-      width: this.widget.size,
-      height: this.widget.size,
+      width: this.size,
+      height: this.size,
       color: Colors.white54,
     );
   }
@@ -176,7 +142,7 @@ class _CompanionItemBoxState extends State<CompanionItemBox> {
       child: Material(
         color: Colors.transparent,
         child: Text(
-          widget.quantity.toString(),
+          quantity.toString(),
           style: TextStyle(
             color: Color(0xFFe3e0b5),
             fontSize: 16.0,
@@ -201,27 +167,27 @@ class _CompanionItemBoxState extends State<CompanionItemBox> {
   }
 
   Widget _buildImage() {
-    if (widget.displayEmpty) {
+    if (displayEmpty) {
       return Container();
     }
 
     return CachedNetworkImage(
-      height: widget.size,
-      width: widget.size,
-      imageUrl: widget.skin != null ? widget.skin.icon : widget.item.icon,
+      height: size,
+      width: size,
+      imageUrl: skin != null ? skin.icon : item.icon,
       placeholder: (context, url) => Theme(
         data: Theme.of(context).copyWith(accentColor: Colors.white),
         child: Center(
           child: Container(
-            height: this.widget.size / 1.5,
-            width: this.widget.size / 1.5,
+            height: this.size / 1.5,
+            width: this.size / 1.5,
             child: CircularProgressIndicator()
           )
         ),
       ),
       errorWidget: (context, url, error) => Center(child: Icon(
         FontAwesomeIcons.dizzy,
-        size: this.widget.size / 1.5,
+        size: this.size / 1.5,
         color: Colors.white,
       )),
       fit: BoxFit.cover,
@@ -235,11 +201,11 @@ class _CompanionItemBoxState extends State<CompanionItemBox> {
         child: InkWell(
           onTap: () => Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ItemPage(
-              item: widget.item,
-              skin: widget.skin,
-              hero: _hero,
-              upgradesInfo: widget.upgradesInfo,
-              infusionsInfo: widget.infusionsInfo,
+              item: item,
+              skin: skin,
+              hero: hero,
+              upgradesInfo: upgradesInfo,
+              infusionsInfo: infusionsInfo,
             )
           ))
         ),
