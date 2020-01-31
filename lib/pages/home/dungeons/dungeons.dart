@@ -63,6 +63,7 @@ class DungeonsPage extends StatelessWidget {
       color: dungeon.color,
       title: dungeon.name,
       height: null,
+      hero: dungeon.id,
       leading: Image.asset(
         'assets/dungeons/${dungeon.id}.jpg'
       ),

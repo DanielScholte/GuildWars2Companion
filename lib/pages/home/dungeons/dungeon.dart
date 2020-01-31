@@ -49,9 +49,12 @@ class DungeonPage extends StatelessWidget {
                 ),
               ],
             ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(6.0),
-              child: Image.asset('assets/dungeons_square/${dungeon.id}.jpg'),
+            child: Hero(
+              tag: dungeon.id,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(6.0),
+                child: Image.asset('assets/dungeons_square/${dungeon.id}.jpg'),
+              ),
             ),
           ),
           Padding(
