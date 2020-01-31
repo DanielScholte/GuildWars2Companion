@@ -221,20 +221,26 @@ class CompanionAchievementButton extends StatelessWidget {
 
   Widget _buildIcon({height = 48.0}) {
     if (achievement.icon == null && categoryIcon != null && categoryIcon.contains('assets')) {
-      return Image.asset(categoryIcon, height: height,);
+      return Hero(
+        tag: achievement.id.toString(),
+        child: Image.asset(categoryIcon, height: height,),
+      );
     }
 
     if (achievement.icon != null || categoryIcon != null) {
-      return CachedNetworkImage(
-        height: height,
-        imageUrl: achievement.icon != null ? achievement.icon : categoryIcon,
-        placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-        errorWidget: (context, url, error) => Center(child: Icon(
-          FontAwesomeIcons.dizzy,
-          size: 28,
-          color: Colors.white,
-        )),
-        fit: BoxFit.fill,
+      return Hero(
+        tag: achievement.id.toString(),
+        child: CachedNetworkImage(
+          height: height,
+          imageUrl: achievement.icon != null ? achievement.icon : categoryIcon,
+          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+          errorWidget: (context, url, error) => Center(child: Icon(
+            FontAwesomeIcons.dizzy,
+            size: 28,
+            color: Colors.white,
+          )),
+          fit: BoxFit.fill,
+        ),
       );
     }
 
