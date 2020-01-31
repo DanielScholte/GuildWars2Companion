@@ -36,18 +36,21 @@ class MasteryLevelPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(6.0),
-                      child: CachedNetworkImage(
-                        height: 60.0,
-                        imageUrl: level.icon,
-                        placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                        errorWidget: (context, url, error) => Center(child: Icon(
-                          FontAwesomeIcons.dizzy,
-                          size: 28,
-                          color: Colors.white,
-                        )),
-                        fit: BoxFit.fill,
+                    child: Hero(
+                      tag: level.name,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(6.0),
+                        child: CachedNetworkImage(
+                          height: 60.0,
+                          imageUrl: level.icon,
+                          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) => Center(child: Icon(
+                            FontAwesomeIcons.dizzy,
+                            size: 28,
+                            color: Colors.white,
+                          )),
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     ),
                   ),

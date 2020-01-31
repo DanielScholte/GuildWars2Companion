@@ -62,6 +62,7 @@ class MasteryLevelsPage extends StatelessWidget {
                         title: l.name,
                         height: 64.0,
                         color: GuildWarsUtil.regionColor(_mastery.region),
+                        hero: l.name,
                         leading: Stack(
                           children: <Widget>[
                             CachedNetworkImage(
