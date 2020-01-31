@@ -108,6 +108,7 @@ class _MetaEventPageState extends State<MetaEventPage> {
       color: Colors.orange,
       title: segment.name,
       height: 64.0,
+      hero: segment.name,
       leading: Image.asset(
         'assets/button_headers/event_icon.png',
         height: 48.0,

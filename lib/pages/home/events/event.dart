@@ -45,10 +45,13 @@ class EventPage extends StatelessWidget {
       includeBack: true,
       child: Column(
         children: <Widget>[
-          Image.asset(
-            'assets/button_headers/event_icon.png',
-            height: 48.0,
-            width: 48.0,
+          Hero(
+            tag: segment.name,
+            child: Image.asset(
+              'assets/button_headers/event_icon.png',
+              height: 48.0,
+              width: 48.0,
+            ),
           ),
           Padding(
             padding: EdgeInsets.all(4.0),
