@@ -23,6 +23,6 @@ class WalletRepository {
       }
     });
 
-    return currencies;
+    return currencies.where((c) => c.name != null && c.name.isNotEmpty).toList();
   }
 }
