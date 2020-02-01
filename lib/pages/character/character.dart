@@ -11,8 +11,8 @@ import 'package:guildwars2_companion/pages/character/inventory.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
-import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
+import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_box.dart';
 
@@ -27,103 +27,109 @@ class CharacterPage extends StatelessWidget {
     return Theme(
       data: Theme.of(context).copyWith(accentColor: _character.professionColor),
       child: Scaffold(
-        appBar: CompanionAppBar(
-          title: _character.name,
-          color: _character.professionColor,
-          foregroundColor: Colors.white,
-          icon: Container(
-            width: 28,
-            height: 28,
-            child: Hero(
-              child: ColorFiltered(
-                child: CachedNetworkImage(
-                  imageUrl: _character.professionInfo.iconBig,
-                  placeholder: (context, url) => Theme(
-                    data: Theme.of(context).copyWith(accentColor: Colors.white),
-                    child: CircularProgressIndicator(),
-                  ),
-                  errorWidget: (context, url, error) => Center(child: Icon(
-                    FontAwesomeIcons.dizzy,
-                    size: 20,
-                    color: Colors.white,
-                  )),
-                  fit: BoxFit.contain,
-                ),
-                colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcATop),
-              ),
-              tag: _character.name,
-            ),
-          ),
-        ),
-        body: BlocBuilder<CharacterBloc, CharacterState>(
-          builder: (BuildContext context, CharacterState state) {
-            if (state is ErrorCharactersState) {
-              return Center(
-                child: CompanionError(
-                  title: 'the character',
-                  onTryAgain: () =>
-                    BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent()),
-                ),
-              );
-            }
-
-            if (state is LoadedCharactersState) {
-              Character character = state.characters.firstWhere((c) => c.name == _character.name);
-
-              if (character == null) {
-                return Center(
-                  child: CompanionError(
-                    title: 'the character',
-                    onTryAgain: () =>
-                      BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent()),
-                  ),
-                );
-              }
-
-              return Column(
+        body: Column(
+          children: <Widget>[
+            CompanionHeader(
+              includeBack: true,
+              color: _character.professionColor,
+              child: Column(
                 children: <Widget>[
-                  CompanionHeader(
-                    color: _character.professionColor,
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          width: double.infinity,
-                          child: Wrap(
-                            alignment: WrapAlignment.spaceEvenly,
-                            runSpacing: 16.0,
-                            children: <Widget>[
-                              CompanionInfoBox(
-                                header: 'Level',
-                                text: character.level.toString(),
-                                loading: false,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        width: 28,
+                        height: 28,
+                        child: Hero(
+                          child: ColorFiltered(
+                            child: CachedNetworkImage(
+                              imageUrl: _character.professionInfo.iconBig,
+                              placeholder: (context, url) => Theme(
+                                data: Theme.of(context).copyWith(accentColor: Colors.white),
+                                child: CircularProgressIndicator(),
                               ),
-                              CompanionInfoBox(
-                                header: 'Playtime',
-                                text: GuildWarsUtil.calculatePlayTime(character.age).toString() + 'h',
-                                loading: false,
-                              ),
-                              CompanionInfoBox(
-                                header: 'Deaths',
-                                text: character.deaths.toString(),
-                                loading: false,
-                              ),
-                            ],
+                              errorWidget: (context, url, error) => Center(child: Icon(
+                                FontAwesomeIcons.dizzy,
+                                size: 20,
+                                color: Colors.white,
+                              )),
+                              fit: BoxFit.contain,
+                            ),
+                            colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcATop),
                           ),
+                          tag: _character.name,
                         ),
-                        if (character.crafting != null && character.crafting.isNotEmpty)
-                          _buildCrafting(character.crafting)
+                      ),
+                      Text(
+                        _character.name,
+                        style: Theme.of(context).textTheme.title.merge(TextStyle(
+                          color: Colors.white
+                        ))
+                      )
+                    ],
+                  ),
+                  if (_character.titleName != null && _character.titleName.isNotEmpty)
+                    Text(
+                      _character.titleName,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0
+                      ),
+                    ),
+                  Container(height: 8.0,),
+                  Container(
+                    width: double.infinity,
+                    child: Wrap(
+                      alignment: WrapAlignment.spaceEvenly,
+                      runSpacing: 16.0,
+                      children: <Widget>[
+                        CompanionInfoBox(
+                          header: 'Level',
+                          text: _character.level.toString(),
+                          loading: false,
+                        ),
+                        CompanionInfoBox(
+                          header: 'Playtime',
+                          text: GuildWarsUtil.calculatePlayTime(_character.age).toString() + 'h',
+                          loading: false,
+                        ),
+                        CompanionInfoBox(
+                          header: 'Deaths',
+                          text: _character.deaths.toString(),
+                          loading: false,
+                        ),
                       ],
                     ),
                   ),
-                  _buildButtons(context, state)
+                  if (_character.crafting != null && _character.crafting.isNotEmpty)
+                    _buildCrafting(_character.crafting)
                 ],
-              );
-            }
+              ),
+            ),
+            BlocBuilder<CharacterBloc, CharacterState>(
+              builder: (context, state) {
+                if (state is ErrorCharactersState) {
+                  return Expanded(
+                    child: Center(
+                      child: CompanionError(
+                        title: 'the character',
+                        onTryAgain: () =>
+                          BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent()),
+                      ),
+                    ),
+                  );
+                }
 
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          },
+                if (state is LoadedCharactersState) {
+                  return _buildButtons(context, state);
+                }
+
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            )
+          ],
         ),
       ),
     );
