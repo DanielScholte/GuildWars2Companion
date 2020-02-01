@@ -262,6 +262,7 @@ class AchievementPage extends StatelessWidget {
               .map((p) => CompanionAchievementButton(
                 state: state,
                 achievement: p,
+                hero: 'pre ${p.id} ${_achievement.prerequisitesInfo.indexOf(p)}',
               ))
               .toList(),
           )
