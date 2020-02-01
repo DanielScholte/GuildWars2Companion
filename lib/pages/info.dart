@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
-import '../widgets/appbar.dart';
+import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:package_info/package_info.dart';
 
 class InfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CompanionAppBar(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        foregroundColor: Colors.black,
-        title: '',
-      ),
-      body: Container(
-        width: double.infinity,
-        margin: EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Column(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          CompanionHeader(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            foregroundColor: Colors.black,
+            includeBack: true,
+            includeShadow: false,
+            child: Column(
               children: <Widget>[
                 Image.asset(
                   'assets/logo.png',
@@ -39,14 +36,26 @@ class InfoPage extends StatelessWidget {
                 _getAppVersion()
               ],
             ),
-            Text(
+          ),
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              'Thanks to the Guild Wars 2 Wiki and GW2.Ninja for the event timers.',
+              style: TextStyle(
+                fontSize: 16.0
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
               '©2010–2018 ArenaNet, LLC. All rights reserved. Guild Wars, Guild Wars 2, Heart of Thorns, Guild Wars 2: Path of Fire, ArenaNet, NCSOFT, the Interlocking NC Logo, and all associated logos and designs are trademarks or registered trademarks of NCSOFT Corporation. All other trademarks are the property of their respective owners.',
               style: TextStyle(
                 fontSize: 16.0
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -5,14 +5,18 @@ import 'package:guildwars2_companion/utils/urls.dart';
 class CompanionHeader extends StatelessWidget {
 
   final Color color;
+  final Color foregroundColor;
   final Widget child;
   final bool includeBack;
   final String wikiName;
+  final bool includeShadow;
 
   CompanionHeader({
     @required this.child,
     this.color = Colors.red,
+    this.foregroundColor = Colors.white,
     this.includeBack = false,
+    this.includeShadow = true,
     this.wikiName
   });
 
@@ -22,10 +26,11 @@ class CompanionHeader extends StatelessWidget {
       decoration: BoxDecoration(
         color: color,
         boxShadow: [
-          BoxShadow(
-            color: Colors.black38,
-            blurRadius: 8.0,
-          ),
+          if (includeShadow)
+            BoxShadow(
+              color: Colors.black38,
+              blurRadius: 8.0,
+            ),
         ],
       ),
       width: double.infinity,
@@ -41,7 +46,7 @@ class CompanionHeader extends StatelessWidget {
                   child: Material(
                     color: Colors.transparent,
                     child: BackButton(
-                      color: Colors.white,
+                      color: foregroundColor,
                     ),
                   ),
                 ),
@@ -58,7 +63,7 @@ class CompanionHeader extends StatelessWidget {
                     child: IconButton(
                       icon: Icon(
                         FontAwesomeIcons.wikipediaW,
-                        color: Colors.white,
+                        color: foregroundColor,
                         size: 20.0,
                       ),
                       onPressed: () => Urls.launchUrl('https://wiki.guildwars2.com/index.php?search=${wikiName.replaceAll(' ', '+')}'),
