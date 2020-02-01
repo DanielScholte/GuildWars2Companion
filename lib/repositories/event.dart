@@ -27,9 +27,9 @@ class EventRepository {
       DateTime now = DateTime.now().toUtc();
       DateTime offset = DateTime.utc(now.year, now.month, now.day).subtract(event.offset);
 
-      while(offset.day <= now.day && offset.month <= now.month && offset.year <= now.year) {
+      while(_getDayValue(offset) <= _getDayValue(now)) {
         event.segments.forEach((segment) {
-          if (offset.day > now.day || offset.month > now.month || offset.year > now.year) {
+          if (_getDayValue(offset) > _getDayValue(now)) {
             return;
           }
 
@@ -67,5 +67,9 @@ class EventRepository {
     });
 
     return events;
+  }
+
+  int _getDayValue(DateTime date) {
+    return DateTime.utc(date.year, date.month, date.day).millisecondsSinceEpoch ~/ 86400000;
   }
 }
