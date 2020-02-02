@@ -352,7 +352,11 @@ class EventService {
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            duration: Duration(minutes: 85),
+            duration: Duration(minutes: 55),
+          ),
+          MetaEventSegment(
+            name: 'Drakkar and Spirits of the Wild',
+            duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
             name: 'Raven Shrines',
