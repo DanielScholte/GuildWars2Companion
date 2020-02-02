@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:guildwars2_companion/models/account/account.dart';
+import 'package:guildwars2_companion/models/account/token_entry.dart';
 import 'package:guildwars2_companion/models/account/token_info.dart';
 import 'package:guildwars2_companion/repositories/account.dart';
 import 'package:guildwars2_companion/utils/token.dart';
@@ -39,7 +40,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       yield* _addToken(event.token);
     } else if (event is RemoveTokenEvent) {
       yield LoadingAccountState();
-      yield* _removeToken(event.token);
+      yield* _removeToken(event.tokenId);
     } else if (event is UnauthenticateEvent) {
       await TokenUtil.removeToken();
       yield await _getUnauthenticated(null);
@@ -50,7 +51,6 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     try {
       TokenInfo tokenInfo = await accountRepository.getTokenInfo(token);
 
-      await TokenUtil.setToken(token);
       yield AuthenticatedState(
         await accountRepository.getAccount(token),
         tokenInfo
@@ -64,22 +64,27 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     try {
       Account account = await accountRepository.getAccount(token);
 
-      await TokenUtil.addToTokenList('$token;${account.name};${DateTime.now()}');
-      yield await _getUnauthenticated("Token added");
+      await accountRepository.addToken(TokenEntry(
+        name: account.name,
+        date: DateTime.now().toIso8601String(),
+        token: token,
+      ));
+      yield await _getUnauthenticated("Token added", tokenAdded: true);
     } catch (_) {
       yield await _getUnauthenticated("Invalid token");
     }
   }
 
-  Stream<AccountState> _removeToken(String token) async* {
-    await TokenUtil.removeFromTokenList(token);
+  Stream<AccountState> _removeToken(int tokenId) async* {
+    await accountRepository.removeToken(tokenId);
     yield await _getUnauthenticated("Token removed");
   }  
 
-  Future<UnauthenticatedState> _getUnauthenticated(String message) async {
+  Future<UnauthenticatedState> _getUnauthenticated(String message, { bool tokenAdded = false }) async {
     return UnauthenticatedState(
-      await TokenUtil.getTokenList(),
-      message
+      await accountRepository.getTokens(),
+      message,
+      tokenAdded
     );
   }
 }

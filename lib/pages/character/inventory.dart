@@ -72,7 +72,7 @@ class InventoryPage extends StatelessWidget {
                     await Future.delayed(Duration(milliseconds: 200), () {});
                   },
                   child: ListView(
-                    children: character.bags.map((b) => _buildBag(b)).toList(),
+                    children: character.bags.map((b) => _buildBag(b, character.bags.indexOf(b))).toList(),
                   ),
                 );
               }
@@ -87,7 +87,7 @@ class InventoryPage extends StatelessWidget {
     );
   }
 
-  Widget _buildBag(Bags bag) {
+  Widget _buildBag(Bags bag, int bagIndex) {
     List<InventoryItem> inventory = bag.inventory.where((i) => i.id != -1 && i.itemInfo != null).toList();
     int usedSlots = inventory.length;
     return CompanionCard(
@@ -98,6 +98,7 @@ class InventoryPage extends StatelessWidget {
               if (bag.itemInfo != null)
                 CompanionItemBox(
                   item: bag.itemInfo,
+                  hero: '$bagIndex ${bag.id}',
                   size: 45.0,
                   includeMargin: false,
                 ),
@@ -130,6 +131,7 @@ class InventoryPage extends StatelessWidget {
                   .map((i) => CompanionItemBox(
                     item: i.itemInfo,
                     skin: i.skinInfo,
+                    hero: '$bagIndex ${inventory.indexOf(i)} ${i.id}',
                     upgradesInfo: i.upgradesInfo,
                     infusionsInfo: i.infusionsInfo,
                     quantity: i.charges != null ? i.charges : i.count,

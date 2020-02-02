@@ -60,6 +60,7 @@ class GenericBankPage extends StatelessWidget {
                           .map((i) => CompanionItemBox(
                             item: i.itemInfo,
                             skin: i.skinInfo,
+                            hero: '${inventory.indexOf(i)}${i.id}',
                             upgradesInfo: i.upgradesInfo,
                             infusionsInfo: i.infusionsInfo,
                             quantity: i.charges != null ? i.charges : i.count,

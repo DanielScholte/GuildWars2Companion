@@ -5,28 +5,30 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/achievement/achievement_state.dart';
 import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
 import 'package:guildwars2_companion/models/achievement/achievement.dart';
-import 'package:guildwars2_companion/pages/progression/achievement.dart';
+import 'package:guildwars2_companion/pages/progression/achievements/achievement.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
 
-import 'full_button.dart';
+import 'button.dart';
 
 class CompanionAchievementButton extends StatelessWidget {
   final LoadedAchievementsState state;
   final Achievement achievement;
   final String categoryIcon;
   final String levels;
+  final String hero;
 
   CompanionAchievementButton({
     @required this.state,
     @required this.achievement,
     this.categoryIcon,
     this.levels,
+    this.hero,
   });
 
   @override
   Widget build(BuildContext context) {
-    return CompanionFullButton(
+    return CompanionButton(
       title: achievement.name,
       height: 64.0,
       color: Colors.blueGrey,
@@ -49,6 +51,7 @@ class CompanionAchievementButton extends StatelessWidget {
           builder: (context) => AchievementPage(
             achievement: achievement,
             categoryIcon: categoryIcon,
+            hero: hero != null ? hero : achievement.id.toString(),
           )
         ));
       },
@@ -221,20 +224,26 @@ class CompanionAchievementButton extends StatelessWidget {
 
   Widget _buildIcon({height = 48.0}) {
     if (achievement.icon == null && categoryIcon != null && categoryIcon.contains('assets')) {
-      return Image.asset(categoryIcon, height: height,);
+      return Hero(
+        tag: hero != null ? hero : achievement.id.toString(),
+        child: Image.asset(categoryIcon, height: height,),
+      );
     }
 
     if (achievement.icon != null || categoryIcon != null) {
-      return CachedNetworkImage(
-        height: height,
-        imageUrl: achievement.icon != null ? achievement.icon : categoryIcon,
-        placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-        errorWidget: (context, url, error) => Center(child: Icon(
-          FontAwesomeIcons.dizzy,
-          size: 28,
-          color: Colors.white,
-        )),
-        fit: BoxFit.fill,
+      return Hero(
+        tag: hero != null ? hero : achievement.id.toString(),
+        child: CachedNetworkImage(
+          height: height,
+          imageUrl: achievement.icon != null ? achievement.icon : categoryIcon,
+          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+          errorWidget: (context, url, error) => Center(child: Icon(
+            FontAwesomeIcons.dizzy,
+            size: 28,
+            color: Colors.white,
+          )),
+          fit: BoxFit.fill,
+        ),
       );
     }
 

@@ -1,3 +1,5 @@
+import 'package:url_launcher/url_launcher.dart';
+
 class Urls {
   static final String baseUrl = 'https://api.guildwars2.com/v2';
 
@@ -8,6 +10,7 @@ class Urls {
   static final String walletUrl = '/account/wallet';
 
   static final String completedWorldBossesUrl = '/account/worldbosses';
+  static final String completedRaidsUrl = '/account/raids';
   static final String completedDungeonsUrl = '/account/dungeons';
 
   static final String charactersUrl = '/characters?ids=all';
@@ -48,5 +51,13 @@ class Urls {
       }).add(id);
     });
     return output.map((l) => l.join(',')).toList();
+  }
+
+  static Future<void> launchUrl(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

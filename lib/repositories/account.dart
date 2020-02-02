@@ -1,50 +1,38 @@
-import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 import 'package:guildwars2_companion/models/account/account.dart';
+import 'package:guildwars2_companion/models/account/token_entry.dart';
 import 'package:guildwars2_companion/models/account/token_info.dart';
-import 'package:guildwars2_companion/utils/dio.dart';
-import 'package:guildwars2_companion/utils/urls.dart';
+import 'package:guildwars2_companion/services/account.dart';
+import 'package:guildwars2_companion/utils/token.dart';
 
 class AccountRepository {
-  Dio _dio;
+  final AccountService accountService;
 
-  AccountRepository() {
-    _dio = DioUtil.getDioInstance(
-      includeTokenInterceptor: false
-    );
+  AccountRepository({
+    @required this.accountService
+  });
+
+  Future<List<TokenEntry>> getTokens() {
+    return accountService.getTokens();
   }
 
+  Future<void> addToken(TokenEntry token) {
+    return accountService.addToken(token);
+  }
 
-  Future<Account> getAccount(String token) async {
-    final response = await _dio.get(
-      Urls.accountUrl,
-      options: Options(
-        headers: {
-          'Authorization': 'Bearer $token',
-        },
-      ),
-    );
-
-    if (response.statusCode == 200) {
-      return Account.fromJson(response.data);
-    }
-
-    throw Exception();
+  Future<void> removeToken(int tokenId) {
+    return accountService.removeToken(tokenId);
   }
 
   Future<TokenInfo> getTokenInfo(String token) async {
-    final response = await _dio.get(
-      Urls.tokenInfoUrl,
-      options: Options(
-        headers: {
-          'Authorization': 'Bearer $token',
-        },
-      ),
-    );
+    TokenInfo tokenInfo = await accountService.getTokenInfo(token);
+    
+    await TokenUtil.setToken(token);
+    
+    return tokenInfo;
+  }
 
-    if (response.statusCode == 200) {
-      return TokenInfo.fromJson(response.data);
-    }
-
-    throw Exception();
+  Future<Account> getAccount(String token) {
+    return accountService.getAccount(token);
   }
 }

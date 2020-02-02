@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class InfoRow extends StatelessWidget {
+class CompanionInfoRow extends StatelessWidget {
   
   final String header;
   final String text;
   final Widget widget;
 
-  InfoRow({
+  CompanionInfoRow({
     @required this.header,
     this.text,
     this.widget

@@ -18,6 +18,7 @@ class CompanionItemBox extends StatelessWidget {
   final bool enablePopup;
   final List<Item> upgradesInfo;
   final List<Item> infusionsInfo;
+  final String hero;
 
   CompanionItemBox({
     @required this.item,
@@ -30,14 +31,25 @@ class CompanionItemBox extends StatelessWidget {
     this.includeMargin = false,
     this.enablePopup = true,
     this.markCompleted = false,
+    this.hero,
   });
 
-  @override
   Widget build(BuildContext context) {
     if (item == null && !displayEmpty) {
       return _buildError();
     }
 
+    if (hero != null) {
+      return Hero(
+        tag: hero,
+        child: _buildItemBox(context),
+      );
+    }
+
+    return _buildItemBox(context);
+  }
+
+  Widget _buildItemBox(BuildContext context) {
     return Container(
       width: this.size,
       height: this.size,
@@ -72,7 +84,7 @@ class CompanionItemBox extends StatelessWidget {
               _buildInkwell(context),
           ],
         ),
-      ),
+      )
     );
   }
 
@@ -127,25 +139,28 @@ class CompanionItemBox extends StatelessWidget {
   Widget _buildQuantity() {
     return Padding(
       padding: EdgeInsets.only(right: 2.0),
-      child: Text(
-        quantity.toString(),
-        style: TextStyle(
-          color: Color(0xFFe3e0b5),
-          fontSize: 16.0,
-          shadows: [
-            BoxShadow(
-              color: Colors.black,
-              blurRadius: 6.0,
-            ),
-            BoxShadow(
-              color: Colors.black,
-              blurRadius: 2.0,
-            ),
-            BoxShadow(
-              color: Colors.black,
-              blurRadius: 4.0,
-            ),
-          ],
+      child: Material(
+        color: Colors.transparent,
+        child: Text(
+          quantity.toString(),
+          style: TextStyle(
+            color: Color(0xFFe3e0b5),
+            fontSize: 16.0,
+            shadows: [
+              BoxShadow(
+                color: Colors.black,
+                blurRadius: 6.0,
+              ),
+              BoxShadow(
+                color: Colors.black,
+                blurRadius: 2.0,
+              ),
+              BoxShadow(
+                color: Colors.black,
+                blurRadius: 4.0,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -188,6 +203,7 @@ class CompanionItemBox extends StatelessWidget {
             builder: (context) => ItemPage(
               item: item,
               skin: skin,
+              hero: hero,
               upgradesInfo: upgradesInfo,
               infusionsInfo: infusionsInfo,
             )

@@ -6,16 +6,20 @@ import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/blocs/achievement/achievement_bloc.dart';
 import 'package:guildwars2_companion/blocs/achievement/achievement_state.dart';
 import 'package:guildwars2_companion/blocs/dungeon/bloc.dart';
+import 'package:guildwars2_companion/blocs/event/event_bloc.dart';
+import 'package:guildwars2_companion/blocs/raid/raid_bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
-import 'package:guildwars2_companion/blocs/world_bosses/bloc.dart';
-import 'package:guildwars2_companion/pages/home/dungeons.dart';
-import 'package:guildwars2_companion/pages/home/wallet.dart';
-import 'package:guildwars2_companion/pages/home/world_bosses.dart';
+import 'package:guildwars2_companion/blocs/world_boss/bloc.dart';
+import 'package:guildwars2_companion/pages/home/dungeons/dungeons.dart';
+import 'package:guildwars2_companion/pages/home/events/meta_events.dart';
+import 'package:guildwars2_companion/pages/home/raids/raids.dart';
+import 'package:guildwars2_companion/pages/home/wallet/wallet.dart';
+import 'package:guildwars2_companion/pages/home/world_bosses/world_bosses.dart';
 import 'package:guildwars2_companion/pages/info.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/utils/token.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
-import 'package:guildwars2_companion/widgets/full_button.dart';
+import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_box.dart';
 
@@ -106,7 +110,8 @@ class HomePage extends StatelessWidget {
                         if (state.tokenInfo.permissions.contains('wallet'))
                           _buildWallet(context),
                         _buildWorldBosses(context, state.tokenInfo.permissions.contains('progression')),
-                        _buildRaids(),
+                        _buildEvents(context),
+                        _buildRaids(context, state.tokenInfo.permissions.contains('progression')),
                         _buildDungeons(context, state.tokenInfo.permissions.contains('progression'))
                       ],
                     ),
@@ -188,7 +193,7 @@ class HomePage extends StatelessWidget {
     return BlocBuilder<WalletBloc, WalletState>(
       builder: (BuildContext context, WalletState state) {
         if (state is LoadedWalletState) {
-          return CompanionFullButton(
+          return CompanionButton(
             color: Colors.orange,
             title: 'Wallet',
             onTap: () => Navigator.of(context).push(
@@ -268,7 +273,7 @@ class HomePage extends StatelessWidget {
           );
         }
 
-        return CompanionFullButton(
+        return CompanionButton(
           color: Colors.orange,
           title: 'Wallet',
           onTap: null,
@@ -279,11 +284,11 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildWorldBosses(BuildContext context, bool includeProgress) {
-    return CompanionFullButton(
+    return CompanionButton(
       color: Colors.deepPurple,
       title: 'World bosses',
       onTap: () {
-        BlocProvider.of<WorldBossesBloc>(context).add(LoadWorldbossesEvent(true, includeProgress));
+        BlocProvider.of<WorldBossBloc>(context).add(LoadWorldbossesEvent(true, includeProgress));
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => WorldBossesPage()
         ));
@@ -292,8 +297,22 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  Widget _buildEvents(BuildContext context) {
+    return CompanionButton(
+      color: Colors.green,
+      title: 'Meta Events',
+      onTap: () {
+        BlocProvider.of<EventBloc>(context).add(LoadEventsEvent());
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => MetaEventsPage()
+        ));
+      },
+      leading: Image.asset('assets/button_headers/events.jpg'),
+    );
+  }
+
   Widget _buildDungeons(BuildContext context, bool includeProgress) {
-    return CompanionFullButton(
+    return CompanionButton(
       color: Colors.deepOrange,
       title: 'Dungeons',
       onTap: () {
@@ -306,11 +325,16 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildRaids() {
-    return CompanionFullButton(
+  Widget _buildRaids(BuildContext context, bool includeProgress) {
+    return CompanionButton(
       color: Colors.blue,
       title: 'Raids',
-      onTap: () {},
+      onTap: () {
+        BlocProvider.of<RaidBloc>(context).add(LoadRaidsEvent(includeProgress));
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => RaidsPage()
+        ));
+      },
       leading: Image.asset('assets/button_headers/raids.jpg'),
     );
   }

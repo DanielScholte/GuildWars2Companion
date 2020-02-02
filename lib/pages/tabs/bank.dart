@@ -7,7 +7,7 @@ import 'package:guildwars2_companion/pages/bank/material.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
-import 'package:guildwars2_companion/widgets/full_button.dart';
+import 'package:guildwars2_companion/widgets/button.dart';
 
 class BankPage extends StatelessWidget {
   @override
@@ -43,7 +43,7 @@ class BankPage extends StatelessWidget {
                 },
                 child: ListView(
                   children: <Widget>[
-                    CompanionFullButton(
+                    CompanionButton(
                       color: Colors.blueGrey,
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
@@ -57,7 +57,7 @@ class BankPage extends StatelessWidget {
                         color: Colors.white,
                       ),
                     ),
-                    CompanionFullButton(
+                    CompanionButton(
                       color: Colors.deepOrange,
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
@@ -71,7 +71,7 @@ class BankPage extends StatelessWidget {
                         color: Colors.white,
                       ),
                     ),
-                    CompanionFullButton(
+                    CompanionButton(
                       color: Colors.blue,
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(

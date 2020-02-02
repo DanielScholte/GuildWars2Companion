@@ -81,6 +81,7 @@ class MaterialPage extends StatelessWidget {
                 .map((i) => CompanionItemBox(
                   item: i.itemInfo,
                   quantity: i.count,
+                  hero: '${i.id} ${category.materials.indexOf(i)}',
                   includeMargin: false,
                 ))
                 .toList(),

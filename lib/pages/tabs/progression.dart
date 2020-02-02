@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
-import 'package:guildwars2_companion/pages/progression/achievement_categories.dart';
-import 'package:guildwars2_companion/pages/progression/daily_categories.dart';
-import 'package:guildwars2_companion/pages/progression/masteries.dart';
+import 'package:guildwars2_companion/pages/progression/achievements/achievement_categories.dart';
+import 'package:guildwars2_companion/pages/progression/dailies/daily_categories.dart';
+import 'package:guildwars2_companion/pages/progression/masteries/masteries.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
-import 'package:guildwars2_companion/widgets/full_button.dart';
+import 'package:guildwars2_companion/widgets/button.dart';
 
 class ProgressionPage extends StatelessWidget {
   @override
@@ -61,7 +61,7 @@ class ProgressionPage extends StatelessWidget {
   Widget _buildButtonList(BuildContext context) {
     return ListView(
       children: <Widget>[
-        CompanionFullButton(
+        CompanionButton(
           color: Colors.orange,
           onTap: () => Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => AchievementCategoriesPage()
@@ -73,7 +73,7 @@ class ProgressionPage extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        CompanionFullButton(
+        CompanionButton(
           color: Colors.indigo,
           onTap: () => Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => DailyCategoriesPage()
@@ -85,7 +85,7 @@ class ProgressionPage extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        CompanionFullButton(
+        CompanionButton(
           color: Colors.red,
           onTap: () => Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => MasteriesPage()
