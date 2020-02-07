@@ -182,7 +182,7 @@ class CompanionAchievementButton extends StatelessWidget {
                 size: 28.0,
               )
             else
-              _buildIcon(height: 42.0),
+              _buildIcon(height: 40.0),
             if (achievement.progress != null && achievement.progress.current != null && achievement.progress.max != null)
               Column(
                 children: <Widget>[

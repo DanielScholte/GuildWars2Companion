@@ -48,8 +48,11 @@ class TokenPage extends StatelessWidget {
                   Align(
                     child: Image.asset(
                       'assets/token_footer.jpg',
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                      alignment: Alignment.bottomLeft,
                     ),
-                    alignment: Alignment.bottomCenter,
+                    alignment: Alignment.bottomLeft,
                   ),
                   Column(
                     children: <Widget>[
@@ -175,8 +178,13 @@ class TokenPage extends StatelessWidget {
             return Stack(
               children: <Widget>[
                 Align(
-                  child: Image.asset('assets/token_footer.jpg'),
-                  alignment: Alignment.bottomCenter,
+                  child: Image.asset(
+                    'assets/token_footer.jpg',
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    alignment: Alignment.bottomLeft,
+                  ),
+                  alignment: Alignment.bottomLeft,
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
