@@ -1,21 +1,21 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 import '../models/character/character.dart';
 import '../models/character/profession.dart';
 import '../models/character/title.dart';
-import '../utils/dio.dart';
 import '../utils/urls.dart';
 
 class CharacterService {
   List<AccountTitle> _titles;
 
-  Dio _dio;
+  Dio dio;
 
-  CharacterService() {
-    _dio = DioUtil.getDioInstance();
-  }
+  CharacterService({
+    @required this.dio,
+  });
 
   Future<List<Character>> getCharacters() async {
-    final response = await _dio.get(Urls.charactersUrl);
+    final response = await dio.get(Urls.charactersUrl);
 
     if (response.statusCode == 200) {
       List characters = response.data;
@@ -30,7 +30,7 @@ class CharacterService {
       return _titles;
     }
 
-    final response = await _dio.get(Urls.titlesUrl);
+    final response = await dio.get(Urls.titlesUrl);
 
     if (response.statusCode == 200) {
       List titles = response.data;
@@ -42,7 +42,7 @@ class CharacterService {
   }
 
   Future<List<Profession>> getProfessions() async {
-    final response = await _dio.get(Urls.professionsUrl);
+    final response = await dio.get(Urls.professionsUrl);
 
     if (response.statusCode == 200) {
       List professions = response.data;

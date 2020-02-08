@@ -1,18 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/models/other/raid.dart';
-import 'package:guildwars2_companion/utils/dio.dart';
 import 'package:guildwars2_companion/utils/urls.dart';
 
 class RaidService {
-  Dio _dio;
+  Dio dio;
 
-  RaidService() {
-    _dio = DioUtil.getDioInstance();
-  }
+  RaidService({
+    @required this.dio,
+  });
 
   Future<List<String>> getCompletedRaids() async {
-    final response = await _dio.get(Urls.completedRaidsUrl);
+    final response = await dio.get(Urls.completedRaidsUrl);
 
     if (response.statusCode == 200) {
       List dungeons = response.data;

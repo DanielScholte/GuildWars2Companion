@@ -1,19 +1,19 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 import '../models/wallet/currency.dart';
 import '../models/wallet/wallet.dart';
-import '../utils/dio.dart';
 import '../utils/urls.dart';
 
 class WalletService {
 
-  Dio _dio;
+  Dio dio;
 
-  WalletService() {
-    _dio = DioUtil.getDioInstance();
-  }
+  WalletService({
+    @required this.dio,
+  });
 
   Future<List<Currency>> getCurrency() async {
-    final response = await _dio.get(Urls.currencyUrl);
+    final response = await dio.get(Urls.currencyUrl);
 
     if (response.statusCode == 200) {
       List currencies = response.data;
@@ -24,7 +24,7 @@ class WalletService {
   }
 
   Future<List<WalletEntry>> getWallet() async {
-    final response = await _dio.get(Urls.walletUrl);
+    final response = await dio.get(Urls.walletUrl);
 
     if (response.statusCode == 200) {
       List walletEntries = response.data;

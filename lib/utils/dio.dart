@@ -1,9 +1,16 @@
 import 'package:dio/dio.dart';
-import 'package:guildwars2_companion/utils/token.dart';
+import 'package:guildwars2_companion/services/token.dart';
 import 'package:guildwars2_companion/utils/urls.dart';
 
 class DioUtil {
-  static Dio getDioInstance({
+
+  final TokenService tokenService;
+
+  DioUtil({
+    this.tokenService,
+  });
+
+  Dio getDioInstance({
     bool includeTokenInterceptor = true
   }) {
     Dio dio = Dio(
@@ -18,7 +25,7 @@ class DioUtil {
       dio.interceptors.add(InterceptorsWrapper(
         onRequest: (RequestOptions options) async {
           return options..headers = {
-            'Authorization': 'Bearer ${await TokenUtil.getToken()}',
+            'Authorization': 'Bearer ${await tokenService.getToken()}',
           };
         }
       ));

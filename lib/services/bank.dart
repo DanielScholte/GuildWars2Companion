@@ -1,19 +1,19 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 import '../models/bank/material.dart';
 import '../models/bank/material_category.dart';
 import '../models/items/inventory.dart';
-import '../utils/dio.dart';
 import '../utils/urls.dart';
 
 class BankService {
-  Dio _dio;
+  Dio dio;
 
-  BankService() {
-    _dio = DioUtil.getDioInstance();
-  }
+  BankService({
+    @required this.dio,
+  });
 
   Future<List<InventoryItem>> getInventory() async {
-    final response = await _dio.get(Urls.inventoryUrl);
+    final response = await dio.get(Urls.inventoryUrl);
 
     if (response.statusCode == 200) {
       List items = response.data;
@@ -24,7 +24,7 @@ class BankService {
   }
 
   Future<List<InventoryItem>> getBank() async {
-    final response = await _dio.get(Urls.bankUrl);
+    final response = await dio.get(Urls.bankUrl);
 
     if (response.statusCode == 200) {
       List items = response.data;
@@ -35,7 +35,7 @@ class BankService {
   }
 
   Future<List<Material>> getMaterials() async {
-    final response = await _dio.get(Urls.materialUrl);
+    final response = await dio.get(Urls.materialUrl);
 
     if (response.statusCode == 200) {
       List items = response.data;
@@ -46,7 +46,7 @@ class BankService {
   }
 
   Future<List<MaterialCategory>> getMaterialCategories() async {
-    final response = await _dio.get(Urls.materialCategoryUrl);
+    final response = await dio.get(Urls.materialCategoryUrl);
 
     if (response.statusCode == 200) {
       List items = response.data;

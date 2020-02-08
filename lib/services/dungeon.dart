@@ -1,19 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../models/other/dungeon.dart';
-import '../utils/dio.dart';
 import '../utils/urls.dart';
 
 class DungeonService {
 
-  Dio _dio;
+  Dio dio;
 
-  DungeonService() {
-    _dio = DioUtil.getDioInstance();
-  }
+  DungeonService({
+    @required this.dio,
+  });
 
   Future<List<String>> getCompletedDungeons() async {
-    final response = await _dio.get(Urls.completedDungeonsUrl);
+    final response = await dio.get(Urls.completedDungeonsUrl);
 
     if (response.statusCode == 200) {
       List dungeons = response.data;

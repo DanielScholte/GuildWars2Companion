@@ -17,7 +17,6 @@ import 'package:guildwars2_companion/pages/home/wallet/wallet.dart';
 import 'package:guildwars2_companion/pages/home/world_bosses/world_bosses.dart';
 import 'package:guildwars2_companion/pages/info.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
-import 'package:guildwars2_companion/utils/token.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
@@ -127,7 +126,7 @@ class HomePage extends StatelessWidget {
             child: CompanionError(
               title: 'the account',
               onTryAgain: () async =>
-                BlocProvider.of<AccountBloc>(context).add(AuthenticateEvent(await TokenUtil.getToken())),
+                BlocProvider.of<AccountBloc>(context).add(SetupAccountEvent()),
             ),
           ),
         );

@@ -1,19 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../models/other/world_boss.dart';
-import '../utils/dio.dart';
 import '../utils/urls.dart';
 
 class WorldBossService {
 
-  Dio _dio;
+  Dio dio;
 
-  WorldBossService() {
-    _dio = DioUtil.getDioInstance();
-  }
+  WorldBossService({
+    @required this.dio,
+  });
 
   Future<List<String>> getCompletedWorldBosses() async {
-    final response = await _dio.get(Urls.completedWorldBossesUrl);
+    final response = await dio.get(Urls.completedWorldBossesUrl);
 
     if (response.statusCode == 200) {
       List worldBosses = response.data;

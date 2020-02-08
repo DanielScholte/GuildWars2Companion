@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 import '../migrations/achievement.dart';
 import '../models/achievement/achievement.dart';
 import '../models/achievement/achievement_category.dart';
@@ -7,7 +8,6 @@ import '../models/achievement/achievement_progress.dart';
 import '../models/achievement/daily.dart';
 import '../models/mastery/mastery.dart';
 import '../models/mastery/mastery_progress.dart';
-import '../utils/dio.dart';
 import '../utils/urls.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
@@ -18,11 +18,11 @@ import 'package:flutter/foundation.dart' as Foundation;
 class AchievementService {
   List<Achievement> _cachedAchievements = [];
 
-  Dio _dio;
+  Dio dio;
 
-  AchievementService() {
-    _dio = DioUtil.getDioInstance();
-  }
+  AchievementService({
+    @required this.dio
+  });
 
   Future<Database> _getDatabase() async {
     return await openDatabaseWithMigration(
@@ -87,7 +87,7 @@ class AchievementService {
     List<String> achievementIdsList = Urls.divideIdLists(achievementIds);
     List<Achievement> achievements = [];
     for (var achievementIdsString in achievementIdsList) {
-      final response = await _dio.get(Urls.achievementsUrl + achievementIdsString);
+      final response = await dio.get(Urls.achievementsUrl + achievementIdsString);
 
       if (response.statusCode == 200 || response.statusCode == 206) {
         List responseAchievements = response.data;
@@ -130,7 +130,7 @@ class AchievementService {
   }
 
   Future<List<AchievementProgress>> getAchievementProgress() async {
-    final response = await _dio.get(Urls.achievementProgressUrl);
+    final response = await dio.get(Urls.achievementProgressUrl);
 
     if (response.statusCode == 200) {
       List progress = response.data;
@@ -141,7 +141,7 @@ class AchievementService {
   }
 
   Future<List<AchievementCategory>> getAchievementCategories() async {
-    final response = await _dio.get(Urls.achievementCategoriesUrl);
+    final response = await dio.get(Urls.achievementCategoriesUrl);
 
     if (response.statusCode == 200) {
       List categories = response.data;
@@ -152,7 +152,7 @@ class AchievementService {
   }
 
   Future<List<AchievementGroup>> getAchievementGroups() async {
-    final response = await _dio.get(Urls.achievementGroupsUrl);
+    final response = await dio.get(Urls.achievementGroupsUrl);
 
     if (response.statusCode == 200) {
       List groups = response.data;
@@ -163,7 +163,7 @@ class AchievementService {
   }
 
   Future<DailyGroup> getDailies({bool tomorrow = false}) async {
-    final response = await _dio.get(tomorrow ? Urls.dailiesTomorrowUrl : Urls.dailiesUrl);
+    final response = await dio.get(tomorrow ? Urls.dailiesTomorrowUrl : Urls.dailiesUrl);
 
     if (response.statusCode == 200) {
       return DailyGroup.fromJson(response.data);
@@ -173,7 +173,7 @@ class AchievementService {
   }
 
   Future<List<Mastery>> getMasteries() async {
-    final response = await _dio.get(Urls.masteriesUrl);
+    final response = await dio.get(Urls.masteriesUrl);
 
     if (response.statusCode == 200) {
       List masteries = response.data;
@@ -184,7 +184,7 @@ class AchievementService {
   }
 
   Future<List<MasteryProgress>> getMasteryProgress() async {
-    final response = await _dio.get(Urls.masteryProgressUrl);
+    final response = await dio.get(Urls.masteryProgressUrl);
 
     if (response.statusCode == 200) {
       List masteries = response.data;

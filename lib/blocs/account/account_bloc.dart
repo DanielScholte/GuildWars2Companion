@@ -5,7 +5,6 @@ import 'package:guildwars2_companion/models/account/account.dart';
 import 'package:guildwars2_companion/models/account/token_entry.dart';
 import 'package:guildwars2_companion/models/account/token_info.dart';
 import 'package:guildwars2_companion/repositories/account.dart';
-import 'package:guildwars2_companion/utils/token.dart';
 import './bloc.dart';
 
 
@@ -30,8 +29,8 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       yield* _authenticate(event.token);
     } else if (event is SetupAccountEvent) {
       yield LoadingAccountState();
-      if (await TokenUtil.tokenPresent()) {
-        yield* _authenticate(await TokenUtil.getToken());
+      if (await accountRepository.tokenPresent()) {
+        yield* _authenticate(await accountRepository.getCurrentToken());
         return;
       }
       yield await _getUnauthenticated(null);
@@ -42,7 +41,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       yield LoadingAccountState();
       yield* _removeToken(event.tokenId);
     } else if (event is UnauthenticateEvent) {
-      await TokenUtil.removeToken();
+      await accountRepository.removeCurrentToken();
       yield await _getUnauthenticated(null);
     }
   }

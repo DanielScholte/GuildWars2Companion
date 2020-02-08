@@ -30,32 +30,82 @@ import 'package:guildwars2_companion/services/dungeon.dart';
 import 'package:guildwars2_companion/services/event.dart';
 import 'package:guildwars2_companion/services/item.dart';
 import 'package:guildwars2_companion/services/raid.dart';
+import 'package:guildwars2_companion/services/token.dart';
 import 'package:guildwars2_companion/services/trading_post.dart';
 import 'package:guildwars2_companion/services/wallet.dart';
 import 'package:guildwars2_companion/services/world_boss.dart';
-import 'package:guildwars2_companion/utils/token.dart';
+import 'package:guildwars2_companion/utils/dio.dart';
 
 import 'blocs/dungeon/bloc.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  ItemService itemService = ItemService();
+  final TokenService tokenService = TokenService();
+
+  final DioUtil dioUtil = DioUtil(
+    tokenService: tokenService
+  );
+
+  final AccountService accountService = AccountService(
+    dio: dioUtil.getDioInstance(
+      includeTokenInterceptor: false
+    )
+  );
+  
+  final AchievementService achievementService = AchievementService(
+    dio: dioUtil.getDioInstance()
+  );
+
+  final BankService bankService = BankService(
+    dio: dioUtil.getDioInstance()
+  );
+
+  final CharacterService characterService = CharacterService(
+    dio: dioUtil.getDioInstance()
+  );
+
+  final DungeonService dungeonService = DungeonService(
+    dio: dioUtil.getDioInstance()
+  );
+
+  final EventService eventService = EventService();
+
+  final ItemService itemService = ItemService(
+    dio: dioUtil.getDioInstance()
+  );
   await itemService.loadCachedData();
 
+  final RaidService raidService = RaidService(
+    dio: dioUtil.getDioInstance()
+  );
+
+  final TradingPostService tradingPostService = TradingPostService(
+    dio: dioUtil.getDioInstance()
+  );
+
+  final WalletService walletService = WalletService(
+    dio: dioUtil.getDioInstance()
+  );
+
+  final WorldBossService worldBossService = WorldBossService(
+    dio: dioUtil.getDioInstance()
+  );
+
   runApp(GuildWars2Companion(
-    accountService: AccountService(),
-    achievementService: AchievementService(),
-    bankService: BankService(),
-    characterService: CharacterService(),
-    dungeonService: DungeonService(),
-    eventService: EventService(),
+    accountService: accountService,
+    achievementService: achievementService,
+    bankService: bankService,
+    characterService: characterService,
+    dungeonService: dungeonService,
+    eventService: eventService,
     itemService: itemService,
-    raidService: RaidService(),
-    tradingPostService: TradingPostService(),
-    walletService: WalletService(),
-    worldBossService: WorldBossService(),
-    isAuthenticated: await TokenUtil.tokenPresent(),
+    raidService: raidService,
+    tokenService: tokenService,
+    tradingPostService: tradingPostService,
+    walletService: walletService,
+    worldBossService: worldBossService,
+    isAuthenticated: await tokenService.tokenPresent(),
   ));
 }
 
@@ -68,6 +118,7 @@ class GuildWars2Companion extends StatelessWidget {
   final EventService eventService;
   final ItemService itemService;
   final RaidService raidService;
+  final TokenService tokenService;
   final TradingPostService tradingPostService;
   final WalletService walletService;
   final WorldBossService worldBossService;
@@ -83,6 +134,7 @@ class GuildWars2Companion extends StatelessWidget {
     @required this.eventService,
     @required this.itemService,
     @required this.raidService,
+    @required this.tokenService,
     @required this.tradingPostService,
     @required this.walletService,
     @required this.worldBossService,
@@ -116,7 +168,8 @@ class GuildWars2Companion extends StatelessWidget {
       providers: [
         RepositoryProvider<AccountRepository>(
           create: (BuildContext context) => AccountRepository(
-            accountService: accountService
+            accountService: accountService,
+            tokenService: tokenService,
           ),
         ),
         RepositoryProvider<AchievementRepository>(
@@ -230,7 +283,4 @@ class GuildWars2Companion extends StatelessWidget {
       ],
     );
   }
-
-  // All: B2537E72-F213-E34F-8499-20FE02DA411216C368B9-75F1-41A5-B616-B447A1228A0B
-  // None: E335E350-DEF3-8F4E-873F-F776BF00CC2F19D7D5FA-8129-4FF5-8C47-D9B3060957FF
 }
