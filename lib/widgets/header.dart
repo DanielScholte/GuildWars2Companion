@@ -73,6 +73,7 @@ class CompanionHeader extends StatelessWidget {
               ),
             ),
           SafeArea(
+            bottom: false,
             child: Padding(
               padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0, top: 14.0),
               child: child,
