@@ -15,8 +15,9 @@ class Urls {
   static final String completedRaidsUrl = '/account/raids';
   static final String completedDungeonsUrl = '/account/dungeons';
 
-  static final String pvpRanksUrl = '/pvp/ranks?ids=all';
   static final String pvpStatsUrl = '/pvp/stats';
+  static final String pvpStandingsUrl = '/pvp/standings';
+  static final String pvpRanksUrl = '/pvp/ranks?ids=all';
   static final String pvpGamesUrl = '/pvp/games?ids=all';
   static final String pvpSeasonsUrl = '/pvp/seasons?ids=';
 
