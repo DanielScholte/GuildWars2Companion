@@ -7,11 +7,13 @@ import 'package:guildwars2_companion/blocs/achievement/achievement_bloc.dart';
 import 'package:guildwars2_companion/blocs/achievement/achievement_state.dart';
 import 'package:guildwars2_companion/blocs/dungeon/bloc.dart';
 import 'package:guildwars2_companion/blocs/event/event_bloc.dart';
+import 'package:guildwars2_companion/blocs/pvp/pvp_bloc.dart';
 import 'package:guildwars2_companion/blocs/raid/raid_bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/blocs/world_boss/bloc.dart';
 import 'package:guildwars2_companion/pages/home/dungeons/dungeons.dart';
 import 'package:guildwars2_companion/pages/home/events/meta_events.dart';
+import 'package:guildwars2_companion/pages/home/pvp/pvp.dart';
 import 'package:guildwars2_companion/pages/home/raids/raids.dart';
 import 'package:guildwars2_companion/pages/home/wallet/wallet.dart';
 import 'package:guildwars2_companion/pages/home/world_bosses/world_bosses.dart';
@@ -73,7 +75,10 @@ class HomePage extends StatelessWidget {
                     FontAwesomeIcons.signOutAlt,
                     size: 20.0,
                   ),
-                  onPressed: () => BlocProvider.of<AccountBloc>(context).add(UnauthenticateEvent()),
+                  onPressed: () {
+                    BlocProvider.of<PvpBloc>(context).add(ResetPvpEvent());
+                    BlocProvider.of<AccountBloc>(context).add(UnauthenticateEvent());
+                  }
                 ),
               ],
             ),
@@ -289,6 +294,12 @@ class HomePage extends StatelessWidget {
       color: Colors.blueGrey,
       title: 'PvP',
       onTap: () {
+        if (!(BlocProvider.of<PvpBloc>(context).state is LoadedPvpState)) {
+          BlocProvider.of<PvpBloc>(context).add(LoadPvpEvent());
+        }
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => PvpPage()
+        ));
       },
       leading: Image.asset('assets/button_headers/pvp.jpg'),
     );

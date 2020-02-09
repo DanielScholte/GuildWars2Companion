@@ -31,14 +31,21 @@ class PvpRepository {
     games.forEach((g) => mapIds.add(g.mapId));
     standings.forEach((s) => seasonIds.add(s.seasonId));
 
-    List<GameMap> maps = await mapService.getMaps(mapIds.toSet().toList());
-    List<PvpSeason> seasons = await pvpService.getSeasons(seasonIds.toSet().toList());
+    List<GameMap> maps = mapIds.isEmpty ? [] : await mapService.getMaps(mapIds.toSet().toList());
+    List<PvpSeason> seasons = seasonIds.isEmpty ? [] : await pvpService.getSeasons(seasonIds.toSet().toList());
 
     stats.rank = ranks.firstWhere((r) => r.levels.any((l) => l.minRank <= stats.pvpRank && l.maxRank >= stats.pvpRank), orElse: () => ranks.first);
+    ranks.forEach((rank) {
+      rank.levels.forEach((level) {
+        if (stats.pvpRankPoints - level.points >= 0){
+          stats.pvpRankPoints -= level.points;
+        }
+      });
+    });
+
     standings.forEach((standing) {
       standing.season = seasons.firstWhere((s) => s.id == standing.seasonId, orElse: () => null);
     });
-
     standings.removeWhere((s) => s.season == null || s.season.ranks == null);
 
     games.forEach((game) {

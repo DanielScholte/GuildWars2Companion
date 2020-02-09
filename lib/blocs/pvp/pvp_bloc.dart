@@ -39,6 +39,8 @@ class PvpBloc extends Bloc<PvpEvent, PvpState> {
       } catch (_) {
         yield ErrorPvpState();
       }
+    } else if (event is ResetPvpEvent) {
+      yield LoadingPvpState();
     }
   }
 }

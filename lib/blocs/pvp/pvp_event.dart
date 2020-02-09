@@ -4,3 +4,5 @@ part of 'pvp_bloc.dart';
 abstract class PvpEvent {}
 
 class LoadPvpEvent extends PvpEvent {}
+
+class ResetPvpEvent extends PvpEvent {}
