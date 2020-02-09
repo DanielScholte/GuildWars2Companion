@@ -61,6 +61,10 @@ class Urls {
     return output.map((l) => l.join(',')).toList();
   }
 
+  static String combineStringIds(List<String> ids) {
+    return ids.join(',');
+  }
+
   static Future<void> launchUrl(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
