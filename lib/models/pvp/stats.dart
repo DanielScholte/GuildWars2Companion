@@ -1,4 +1,7 @@
+import 'package:guildwars2_companion/models/pvp/rank.dart';
+
 class PvpStats {
+  PvpRank rank;
   int pvpRank;
   int pvpRankPoints;
   int pvpRankRollovers;

@@ -1,6 +1,9 @@
+import 'package:guildwars2_companion/models/other/map.dart';
+
 class PvpGame {
   String id;
   int mapId;
+  GameMap map;
   String started;
   String ended;
   String result;

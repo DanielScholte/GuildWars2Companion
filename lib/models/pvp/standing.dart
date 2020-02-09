@@ -1,7 +1,10 @@
+import 'package:guildwars2_companion/models/pvp/season.dart';
+
 class PvpStanding {
   PvpStandingStats current;
   PvpStandingStats best;
   String seasonId;
+  PvpSeason season;
 
   PvpStanding({this.current, this.best, this.seasonId});
 
