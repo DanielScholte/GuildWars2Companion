@@ -6,12 +6,19 @@ class Urls {
   static final String tokenInfoUrl = '/tokeninfo';
   static final String accountUrl = '/account';
 
+  static final String mapsUrl = '/maps?ids=';
+
   static final String currencyUrl = '/currencies?ids=all';
   static final String walletUrl = '/account/wallet';
 
   static final String completedWorldBossesUrl = '/account/worldbosses';
   static final String completedRaidsUrl = '/account/raids';
   static final String completedDungeonsUrl = '/account/dungeons';
+
+  static final String pvpRanksUrl = '/pvp/ranks?ids=all';
+  static final String pvpStatsUrl = '/pvp/stats';
+  static final String pvpGamesUrl = '/pvp/games?ids=all';
+  static final String pvpSeasonsUrl = '/pvp/seasons?ids=';
 
   static final String charactersUrl = '/characters?ids=all';
   static final String titlesUrl = '/titles?ids=all';
