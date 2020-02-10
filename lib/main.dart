@@ -52,59 +52,25 @@ Future main() async {
       includeTokenInterceptor: false
     )
   );
-  
-  final AchievementService achievementService = AchievementService(
-    dio: dioUtil.getDioInstance()
-  );
-
-  final BankService bankService = BankService(
-    dio: dioUtil.getDioInstance()
-  );
-
-  final CharacterService characterService = CharacterService(
-    dio: dioUtil.getDioInstance()
-  );
-
-  final DungeonService dungeonService = DungeonService(
-    dio: dioUtil.getDioInstance()
-  );
-
-  final EventService eventService = EventService();
 
   final ItemService itemService = ItemService(
     dio: dioUtil.getDioInstance()
   );
   await itemService.loadCachedData();
 
-  final RaidService raidService = RaidService(
-    dio: dioUtil.getDioInstance()
-  );
-
-  final TradingPostService tradingPostService = TradingPostService(
-    dio: dioUtil.getDioInstance()
-  );
-
-  final WalletService walletService = WalletService(
-    dio: dioUtil.getDioInstance()
-  );
-
-  final WorldBossService worldBossService = WorldBossService(
-    dio: dioUtil.getDioInstance()
-  );
-
   runApp(GuildWars2Companion(
     accountService: accountService,
-    achievementService: achievementService,
-    bankService: bankService,
-    characterService: characterService,
-    dungeonService: dungeonService,
-    eventService: eventService,
+    achievementService: AchievementService(dio: dioUtil.getDioInstance()),
+    bankService: BankService(dio: dioUtil.getDioInstance()),
+    characterService: CharacterService(dio: dioUtil.getDioInstance()),
+    dungeonService: DungeonService(dio: dioUtil.getDioInstance()),
+    eventService: EventService(),
     itemService: itemService,
-    raidService: raidService,
+    raidService: RaidService(dio: dioUtil.getDioInstance()),
     tokenService: tokenService,
-    tradingPostService: tradingPostService,
-    walletService: walletService,
-    worldBossService: worldBossService,
+    tradingPostService: TradingPostService(dio: dioUtil.getDioInstance()),
+    walletService: WalletService(dio: dioUtil.getDioInstance()),
+    worldBossService: WorldBossService(dio: dioUtil.getDioInstance()),
     isAuthenticated: await tokenService.tokenPresent(),
   ));
 }
