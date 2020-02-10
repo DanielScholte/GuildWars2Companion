@@ -119,7 +119,7 @@ class PvpSeasonRank {
   String icon;
   String overlay;
   String overlaySmall;
-  List<PvpDivisionTier> tiers;
+  List<PvpRankTier> tiers;
 
   PvpSeasonRank(
       {this.name,
@@ -136,9 +136,9 @@ class PvpSeasonRank {
     overlay = json['overlay'];
     overlaySmall = json['overlay_small'];
     if (json['tiers'] != null) {
-      tiers = new List<PvpDivisionTier>();
+      tiers = new List<PvpRankTier>();
       json['tiers'].forEach((v) {
-        tiers.add(new PvpDivisionTier.fromJson(v));
+        tiers.add(new PvpRankTier.fromJson(v));
       });
     }
   }
