@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/pvp/pvp_bloc.dart';
 import 'package:guildwars2_companion/models/pvp/rank.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
+import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 
@@ -104,7 +105,28 @@ class PvpPage extends StatelessWidget {
               child: ListView(
                 padding: EdgeInsets.only(top: 8.0),
                 children: <Widget>[
-
+                  CompanionButton(
+                    color: Colors.orange,
+                    title: 'Ranked seasons',
+                    onTap: () {
+                    },
+                    leading: Icon(
+                      FontAwesomeIcons.trophy,
+                      size: 35.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                  CompanionButton(
+                    color: Colors.blue,
+                    title: 'Game history',
+                    onTap: () {
+                    },
+                    leading: Icon(
+                      FontAwesomeIcons.history,
+                      size: 35.0,
+                      color: Colors.white,
+                    ),
+                  ),
                 ],
               ),
             ),
