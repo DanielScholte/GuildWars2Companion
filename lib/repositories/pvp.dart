@@ -47,6 +47,7 @@ class PvpRepository {
       standing.season = seasons.firstWhere((s) => s.id == standing.seasonId, orElse: () => null);
     });
     standings.removeWhere((s) => s.season == null || s.season.ranks == null);
+    standings.sort((a, b) => -a.season.start.compareTo(b.season.start));
 
     games.forEach((game) {
       game.map = maps.firstWhere((m) => m.id == game.mapId, orElse: () => null);
