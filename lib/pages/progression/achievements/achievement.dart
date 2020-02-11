@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -6,6 +5,7 @@ import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
 import 'package:guildwars2_companion/models/achievement/achievement.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/achievement_button.dart';
+import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
@@ -45,15 +45,11 @@ class AchievementPage extends StatelessWidget {
                   else
                     Hero(
                       tag: hero,
-                      child: CachedNetworkImage(
+                      child: CompanionCachedImage(
                         height: 42.0,
                         imageUrl: achievement.icon != null ? achievement.icon : categoryIcon,
-                        placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                        errorWidget: (context, url, error) => Center(child: Icon(
-                          FontAwesomeIcons.dizzy,
-                          size: 28,
-                          color: Colors.white,
-                        )),
+                        color: Colors.white,
+                        iconSize: 28,
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -541,14 +537,10 @@ class AchievementPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(6.0),
               child: Stack(
                 children: <Widget>[
-                  CachedNetworkImage(
+                  CompanionCachedImage(
                     imageUrl: bit.type == 'Skin' ? bit.skin.icon : bit.mini.icon,
-                    placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                    errorWidget: (context, url, error) => Center(child: Icon(
-                      FontAwesomeIcons.dizzy,
-                      size: 20,
-                      color: Colors.black,
-                    )),
+                    color: Colors.black,
+                    iconSize: 20,
                     fit: BoxFit.fill,
                   ),
                   if (includeProgress &&

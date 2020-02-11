@@ -1,10 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/models/items/skin.dart';
 import 'package:guildwars2_companion/pages/general/item.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
+
+import 'cached_image.dart';
 
 class CompanionItemBox extends StatelessWidget {
 
@@ -171,25 +172,12 @@ class CompanionItemBox extends StatelessWidget {
       return Container();
     }
 
-    return CachedNetworkImage(
+    return CompanionCachedImage(
       height: size,
       width: size,
       imageUrl: skin != null ? skin.icon : item.icon,
-      placeholder: (context, url) => Theme(
-        data: Theme.of(context).copyWith(accentColor: Colors.white),
-        child: Center(
-          child: Container(
-            height: this.size / 1.5,
-            width: this.size / 1.5,
-            child: CircularProgressIndicator()
-          )
-        ),
-      ),
-      errorWidget: (context, url, error) => Center(child: Icon(
-        FontAwesomeIcons.dizzy,
-        size: this.size / 1.5,
-        color: Colors.white,
-      )),
+      iconSize: size / 1.5,
+      color: Colors.white,
       fit: BoxFit.cover,
     );
   }

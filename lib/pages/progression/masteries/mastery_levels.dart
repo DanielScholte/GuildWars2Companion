@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,6 +6,7 @@ import 'package:guildwars2_companion/models/mastery/mastery.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
+import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 
@@ -65,17 +65,10 @@ class MasteryLevelsPage extends StatelessWidget {
                         hero: l.name,
                         leading: Stack(
                           children: <Widget>[
-                            CachedNetworkImage(
+                            CompanionCachedImage(
                               imageUrl: l.icon,
-                              placeholder: (context, url) => Center(child: Theme(
-                                data: Theme.of(context).copyWith(accentColor: Colors.white),
-                                child: CircularProgressIndicator()
-                              )),
-                              errorWidget: (context, url, error) => Center(child: Icon(
-                                FontAwesomeIcons.dizzy,
-                                size: 28,
-                                color: Colors.white,
-                              )),
+                              color: Colors.white,
+                              iconSize: 28,
                               fit: BoxFit.fill,
                             ),
                             if (l.done)

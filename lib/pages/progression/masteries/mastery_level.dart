@@ -1,8 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/models/mastery/mastery.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_row.dart';
@@ -40,15 +39,11 @@ class MasteryLevelPage extends StatelessWidget {
                       tag: level.name,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(6.0),
-                        child: CachedNetworkImage(
+                        child: CompanionCachedImage(
                           height: 60.0,
                           imageUrl: level.icon,
-                          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                          errorWidget: (context, url, error) => Center(child: Icon(
-                            FontAwesomeIcons.dizzy,
-                            size: 28,
-                            color: Colors.white,
-                          )),
+                          color: Colors.white,
+                          iconSize: 28,
                           fit: BoxFit.fill,
                         ),
                       ),

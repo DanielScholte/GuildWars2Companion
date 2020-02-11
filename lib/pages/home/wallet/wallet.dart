@@ -1,11 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/models/wallet/currency.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
+import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 
@@ -102,16 +101,10 @@ class WalletPage extends StatelessWidget {
             width: 20.0,
             height: 20.0,
             margin: EdgeInsets.only(left: 4.0),
-            child: CachedNetworkImage(
+            child: CompanionCachedImage(
               imageUrl: currency.icon,
-              placeholder: (context, url) => CircularProgressIndicator(
-                strokeWidth: 2.0,
-              ),
-              errorWidget: (context, url, error) => Center(child: Icon(
-                FontAwesomeIcons.dizzy,
-                size: 14,
-                color: Colors.black,
-              )),
+              color: Colors.orange,
+              iconSize: 14,
               fit: BoxFit.cover,
             ),
           ),

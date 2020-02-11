@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -17,6 +16,7 @@ import 'package:guildwars2_companion/pages/home/wallet/wallet.dart';
 import 'package:guildwars2_companion/pages/home/world_bosses/world_bosses.dart';
 import 'package:guildwars2_companion/pages/info.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
@@ -145,6 +145,13 @@ class HomePage extends StatelessWidget {
           );
         }
 
+        if (state is ErrorAchievementsState) {
+          return CompanionInfoBox(
+            header: 'Mastery level',
+            loading: false,
+          );
+        }
+
         return CompanionInfoBox(
           header: 'Mastery level',
         );
@@ -159,6 +166,13 @@ class HomePage extends StatelessWidget {
           return CompanionInfoBox(
             header: 'Achievements',
             text: GuildWarsUtil.intToString(state.achievementPoints + dailies),
+            loading: false,
+          );
+        }
+
+        if (state is ErrorAchievementsState) {
+          return CompanionInfoBox(
+            header: 'Achievements',
             loading: false,
           );
         }
@@ -211,17 +225,10 @@ class HomePage extends StatelessWidget {
                       width: 20.0,
                       height: 20.0,
                       margin: EdgeInsets.symmetric(horizontal: 8.0),
-                      child: CachedNetworkImage(
+                      child: CompanionCachedImage(
                         imageUrl: c.icon,
-                        placeholder: (context, url) => Theme(
-                          data: Theme.of(context).copyWith(accentColor: Colors.white),
-                          child: CircularProgressIndicator(),
-                        ),
-                        errorWidget: (context, url, error) => Center(child: Icon(
-                        FontAwesomeIcons.dizzy,
-                        size: 14,
                         color: Colors.white,
-                      )),
+                        iconSize: 14,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -268,6 +275,21 @@ class HomePage extends StatelessWidget {
                   ],
                 ))
                 .toList(),
+            ),
+          );
+        }
+
+        if (state is ErrorWalletState) {
+          return CompanionButton(
+            color: Colors.orange,
+            title: 'Wallet',
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => WalletPage())
+            ),
+            leading: Icon(
+              FontAwesomeIcons.dizzy,
+              size: 35.0,
+              color: Colors.white,
             ),
           );
         }

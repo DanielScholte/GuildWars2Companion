@@ -120,11 +120,13 @@ class _TabPageState extends State<TabPage> {
           BubbleBottomBarItem(
             icon: Icon(
               t.icon,
+              key: Key('Icon_${t.title}'),
               color: t.color,
               size: t.iconSize,
             ),
             activeIcon: Icon(
               t.icon,
+              key: Key('Icon_${t.title}_Active'),
               color: Colors.white,
               size: t.iconSize
             ),
