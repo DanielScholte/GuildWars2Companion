@@ -13,7 +13,7 @@ import 'package:mockito/mockito.dart';
 import 'mocks/services.dart';
 
 main() {
-  group('Token Permissions tests', () {
+  group('Token Permissions', () {
     MockAccountService accountService;
     MockAchievementService achievementService;
     MockBankService bankService;
@@ -74,8 +74,7 @@ main() {
         .thenAnswer((_) async => []);
     });
 
-    testWidgets('Full permissions test', (WidgetTester tester) async {
-
+    testWidgets('All permissions', (WidgetTester tester) async {
       when(accountService.getTokenInfo(any))
         .thenAnswer((_) async => TokenInfo(
           permissions: [
@@ -131,7 +130,134 @@ main() {
       expect(find.byKey(Key('Icon_Trading')), findsOneWidget);
       expect(find.byKey(Key('Icon_Progression')), findsOneWidget);
 
-      // T O D O: Check character screen
+      await tester.tap(find.byKey(Key('Icon_Characters')));
+
+      await tester.pumpAndSettle();
+
+      expect(find.widgetWithText(CompanionButton, 'Unit Test Character'), findsOneWidget);
+
+      await tester.tap(find.widgetWithText(CompanionButton, 'Unit Test Character'));
+
+      await tester.pumpAndSettle();
+
+      expect(find.widgetWithText(CompanionButton, 'Equipment'), findsOneWidget);
+      expect(find.widgetWithText(CompanionButton, 'Inventory'), findsOneWidget);
+    });
+
+    testWidgets('No builds & inventory', (WidgetTester tester) async {
+      when(accountService.getTokenInfo(any))
+        .thenAnswer((_) async => TokenInfo(
+          permissions: [
+            'account',
+            'characters',
+            'guilds',
+            'progression',
+            'pvp',
+            'tradingpost',
+            'unlocks',
+            'wallet',
+          ],
+        ));
+
+      await tester.pumpWidget(GuildWars2Companion(
+        accountService: accountService,
+        achievementService: achievementService,
+        bankService: bankService,
+        characterService: characterService,
+        dungeonService: dungeonService,
+        eventService: eventService,
+        itemService: itemService,
+        raidService: raidService,
+        tokenService: tokenService,
+        tradingPostService: tradingPostService,
+        walletService: walletService,
+        worldBossService: worldBossService,
+        isAuthenticated: true,
+      ));
+
+      await tester.pumpAndSettle();
+
+      expect(find.widgetWithText(CompanionInfoBox, 'Playtime'), findsOneWidget);
+      expect(find.widgetWithText(CompanionInfoBox, 'Mastery level'), findsOneWidget);
+      expect(find.widgetWithText(CompanionInfoBox, 'Achievements'), findsOneWidget);
+
+      expect(find.widgetWithText(CompanionButton, 'Wallet'), findsOneWidget);
+      expect(find.widgetWithText(CompanionButton, 'World bosses'), findsOneWidget);
+      expect(find.widgetWithText(CompanionButton, 'Meta Events'), findsOneWidget);
+      
+      await tester.drag(find.widgetWithText(ListView, 'Meta Events'), Offset(0.0, -500));
+
+      await tester.pumpAndSettle();
+
+      expect(find.widgetWithText(CompanionButton, 'Raids'), findsOneWidget);
+      expect(find.widgetWithText(CompanionButton, 'Dungeons'), findsOneWidget);
+
+      expect(find.byKey(Key('Icon_Home_Active')), findsOneWidget);
+      expect(find.byKey(Key('Icon_Characters')), findsOneWidget);
+      expect(find.byKey(Key('Icon_Bank')), findsNothing);
+      expect(find.byKey(Key('Icon_Trading')), findsOneWidget);
+      expect(find.byKey(Key('Icon_Progression')), findsOneWidget);
+
+      await tester.tap(find.byKey(Key('Icon_Characters')));
+
+      await tester.pumpAndSettle();
+
+      expect(find.widgetWithText(CompanionButton, 'Unit Test Character'), findsOneWidget);
+
+      await tester.tap(find.widgetWithText(CompanionButton, 'Unit Test Character'));
+
+      await tester.pumpAndSettle();
+
+      expect(find.widgetWithText(CompanionButton, 'Equipment'), findsNothing);
+      expect(find.widgetWithText(CompanionButton, 'Inventory'), findsNothing);
+    });
+
+    testWidgets('No permissions', (WidgetTester tester) async {
+      when(accountService.getTokenInfo(any))
+        .thenAnswer((_) async => TokenInfo(
+          permissions: [
+            'account',
+          ],
+        ));
+
+      await tester.pumpWidget(GuildWars2Companion(
+        accountService: accountService,
+        achievementService: achievementService,
+        bankService: bankService,
+        characterService: characterService,
+        dungeonService: dungeonService,
+        eventService: eventService,
+        itemService: itemService,
+        raidService: raidService,
+        tokenService: tokenService,
+        tradingPostService: tradingPostService,
+        walletService: walletService,
+        worldBossService: worldBossService,
+        isAuthenticated: true,
+      ));
+
+      await tester.pumpAndSettle();
+
+      expect(find.widgetWithText(CompanionInfoBox, 'Playtime'), findsOneWidget);
+      expect(find.widgetWithText(CompanionInfoBox, 'Mastery level'), findsNothing);
+      expect(find.widgetWithText(CompanionInfoBox, 'Achievements'), findsNothing);
+
+      expect(find.widgetWithText(CompanionButton, 'Wallet'), findsNothing);
+      expect(find.widgetWithText(CompanionButton, 'World bosses'), findsOneWidget);
+      expect(find.widgetWithText(CompanionButton, 'Meta Events'), findsOneWidget);
+      
+      await tester.drag(find.widgetWithText(ListView, 'Meta Events'), Offset(0.0, -500));
+
+      await tester.pumpAndSettle();
+
+      expect(find.widgetWithText(CompanionButton, 'Raids'), findsOneWidget);
+      expect(find.widgetWithText(CompanionButton, 'Dungeons'), findsOneWidget);
+
+      expect(find.byKey(Key('Icon_Home_Active')), findsOneWidget);
+      expect(find.byKey(Key('Icon_Characters')), findsNothing);
+      expect(find.byKey(Key('Icon_Bank')), findsNothing);
+      expect(find.byKey(Key('Icon_Trading')), findsNothing);
+      expect(find.byKey(Key('Icon_Progression')), findsOneWidget);
     });
   });
 }
