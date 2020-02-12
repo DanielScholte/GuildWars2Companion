@@ -36,20 +36,13 @@ class SeasonPage extends StatelessWidget {
                     padding: EdgeInsets.only(bottom: 4.0),
                     child: Text(
                       standing.season.name,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.w500
-                      ),
+                      style: Theme.of(context).textTheme.display1,
                     ),
                   ),
                   Text(
                     _dateFormat.format(DateTime.parse(standing.season.start)) +
                           (standing.season.end != null ? ' - ' + _dateFormat.format(DateTime.parse(standing.season.end)) : ''),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.0
-                    ),
+                    style: Theme.of(context).textTheme.display3,
                   )
                 ],
               ),
@@ -58,7 +51,7 @@ class SeasonPage extends StatelessWidget {
               child: ListView(
                 padding: EdgeInsets.only(top: 8.0),
                 children: <Widget>[
-                  _buildRewards()
+                  _buildRewards(context)
                 ],
               ),
             )
@@ -68,7 +61,7 @@ class SeasonPage extends StatelessWidget {
     );
   }
 
-  Widget _buildRewards() {
+  Widget _buildRewards(BuildContext context) {
     return CompanionCard(
       child: Column(
         children: <Widget>[
@@ -76,10 +69,9 @@ class SeasonPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Rewards',
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.w500,
-              ),
+              style: Theme.of(context).textTheme.display2.copyWith(
+                color: Colors.black
+              )
             ),
           ),
         ],

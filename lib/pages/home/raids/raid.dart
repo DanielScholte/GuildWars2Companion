@@ -20,7 +20,7 @@ class RaidPage extends StatelessWidget {
       child: Scaffold(
         body: Column(
           children: <Widget>[
-            _buildHeader(),
+            _buildHeader(context),
             Expanded(
               child: _buildProgression(context)
             )
@@ -30,7 +30,7 @@ class RaidPage extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return CompanionHeader(
       color: raid.color,
       wikiName: raid.name,
@@ -61,10 +61,7 @@ class RaidPage extends StatelessWidget {
             padding: EdgeInsets.all(4.0),
             child: Text(
               raid.name,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 22.0,
-              ),
+              style: Theme.of(context).textTheme.display1,
               textAlign: TextAlign.center,
             ),
           ),
@@ -100,7 +97,7 @@ class RaidPage extends StatelessWidget {
               child: ListView(
                 padding: EdgeInsets.only(top: 8.0),
                 children: [
-                  _buildProgress(state.includeProgress, _raid)
+                  _buildProgress(context, state.includeProgress, _raid)
                 ],
               ),
             );
@@ -114,7 +111,7 @@ class RaidPage extends StatelessWidget {
     );
   }
 
-  Widget _buildProgress(bool includeProgress, Raid _raid) {
+  Widget _buildProgress(BuildContext context, bool includeProgress, Raid _raid) {
     return CompanionCard(
       child: Column(
         children: <Widget>[
@@ -122,10 +119,9 @@ class RaidPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               includeProgress ? 'Weekly Progress' : 'Bosses',
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.w500
-              ),
+              style: Theme.of(context).textTheme.display2.copyWith(
+                color: Colors.black
+              )
             ),
           ),
           Column(
@@ -150,8 +146,8 @@ class RaidPage extends StatelessWidget {
                       padding: EdgeInsets.all(4.0),
                       child: Text(
                         p.name,
-                        style: TextStyle(
-                          fontSize: 16.0
+                        style: Theme.of(context).textTheme.display3.copyWith(
+                          color: Colors.black
                         ),
                         textAlign: TextAlign.left,
                         overflow: TextOverflow.ellipsis,

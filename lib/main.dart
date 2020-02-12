@@ -168,11 +168,29 @@ class GuildWars2Companion extends StatelessWidget {
         child: MaterialApp(
           title: 'Guild Wars 2 Companion',
           theme: ThemeData(
+            brightness: Brightness.light,
             primarySwatch: Colors.red,
             primaryColor: Color(0xFFAA0404),
             accentColor: Colors.red,
             scaffoldBackgroundColor: Color(0xFFEEEEEE),
             cursorColor: Color(0xFFAA0404),
+            textTheme: TextTheme(
+              display1: TextStyle(
+                fontSize: 22.0,
+                color: Colors.white,
+                fontWeight: FontWeight.normal
+              ),
+              display2: TextStyle(
+                fontSize: 18.0,
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+              ),
+              display3: TextStyle(
+                fontSize: 16.0,
+                color: Colors.white,
+                fontWeight: FontWeight.normal,
+              )
+            )
           ),
           home: isAuthenticated ? TabPage() : TokenPage(),
         ),

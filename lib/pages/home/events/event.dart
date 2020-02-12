@@ -23,12 +23,12 @@ class EventPage extends StatelessWidget {
       child: Scaffold(
         body: Column(
           children: <Widget>[
-            _buildHeader(),
+            _buildHeader(context),
             Expanded(
               child: ListView(
                 padding: EdgeInsets.only(top: 8.0),
                 children: <Widget>[
-                  _buildTimes()
+                  _buildTimes(context)
                 ],
               ),
             ),
@@ -38,7 +38,7 @@ class EventPage extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return CompanionHeader(
       color: Colors.orange,
       wikiName: segment.name,
@@ -57,19 +57,13 @@ class EventPage extends StatelessWidget {
             padding: EdgeInsets.all(4.0),
             child: Text(
               segment.name,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 22.0,
-              ),
+              style: Theme.of(context).textTheme.display1,
               textAlign: TextAlign.center,
             ),
           ),
           Text(
             sequence.name,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16.0
-            ),
+            style: Theme.of(context).textTheme.display3,
             textAlign: TextAlign.center,
           ),
         ],
@@ -77,7 +71,7 @@ class EventPage extends StatelessWidget {
     );
   }
 
-  Widget _buildTimes() {
+  Widget _buildTimes(BuildContext context) {
     List<DateTime> times = segment.times.map((d) => d.toLocal()).toList();
     times.sort((a, b) => a.hour.compareTo(b.hour));
 
@@ -88,10 +82,9 @@ class EventPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Spawn Times',
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.w500
-              ),
+              style: Theme.of(context).textTheme.display2.copyWith(
+                color: Colors.black
+              )
             ),
           ),
           Wrap(
@@ -103,10 +96,7 @@ class EventPage extends StatelessWidget {
                 backgroundColor: Colors.orange,
                 label: Text(
                   timeFormat.format(t),
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0
-                  ),
+                  style: Theme.of(context).textTheme.display3,
                 ),
               ))
               .toList()

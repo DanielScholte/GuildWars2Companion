@@ -84,11 +84,7 @@ class PvpPage extends StatelessWidget {
                 ),
                 Text(
                   'Rank ${state.pvpStats.pvpRank}',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w500
-                  ),
+                  style: Theme.of(context).textTheme.display1,
                 ),
                 if (level != null && state.pvpStats.pvpRankPoints < level.points)
                   _buildProgress(context, level, state),

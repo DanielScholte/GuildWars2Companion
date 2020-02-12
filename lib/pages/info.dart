@@ -23,15 +23,15 @@ class InfoPage extends StatelessWidget {
                 Container(height: 16.0,),
                 Text(
                   'Guild Wars 2 Companion',
-                  style: TextStyle(
-                    fontSize: 20.0
-                  ),
+                  style: Theme.of(context).textTheme.display1.copyWith(
+                    color: Colors.black
+                  )
                 ),
                 Text(
                   'By Daniël Scholte / Revolt.2860',
-                  style: TextStyle(
-                    fontSize: 16.0
-                  ),
+                  style: Theme.of(context).textTheme.display3.copyWith(
+                    color: Colors.black
+                  )
                 ),
                 _getAppVersion()
               ],
@@ -41,18 +41,18 @@ class InfoPage extends StatelessWidget {
             padding: EdgeInsets.all(16.0),
             child: Text(
               'Thanks to the Guild Wars 2 Wiki and GW2.Ninja for the event timers.',
-              style: TextStyle(
-                fontSize: 16.0
-              ),
+              style: Theme.of(context).textTheme.display3.copyWith(
+                color: Colors.black
+              )
             ),
           ),
           Padding(
             padding: EdgeInsets.all(16.0),
             child: Text(
               '©2010–2018 ArenaNet, LLC. All rights reserved. Guild Wars, Guild Wars 2, Heart of Thorns, Guild Wars 2: Path of Fire, ArenaNet, NCSOFT, the Interlocking NC Logo, and all associated logos and designs are trademarks or registered trademarks of NCSOFT Corporation. All other trademarks are the property of their respective owners.',
-              style: TextStyle(
-                fontSize: 16.0
-              ),
+              style: Theme.of(context).textTheme.display3.copyWith(
+                color: Colors.black
+              )
             ),
           ),
         ],
@@ -78,9 +78,9 @@ class InfoPage extends StatelessWidget {
 
         return Text(
           'Version ${snapshot.data.version} - Build ${snapshot.data.buildNumber}',
-          style: TextStyle(
-            fontSize: 16.0
-          ),
+          style: Theme.of(context).textTheme.display3.copyWith(
+            color: Colors.black
+          )
         );
       },
     );

@@ -72,7 +72,7 @@ class InventoryPage extends StatelessWidget {
                     await Future.delayed(Duration(milliseconds: 200), () {});
                   },
                   child: ListView(
-                    children: character.bags.map((b) => _buildBag(b, character.bags.indexOf(b))).toList(),
+                    children: character.bags.map((b) => _buildBag(context, b, character.bags.indexOf(b))).toList(),
                   ),
                 );
               }
@@ -87,7 +87,7 @@ class InventoryPage extends StatelessWidget {
     );
   }
 
-  Widget _buildBag(Bags bag, int bagIndex) {
+  Widget _buildBag(BuildContext context, Bags bag, int bagIndex) {
     List<InventoryItem> inventory = bag.inventory.where((i) => i.id != -1 && i.itemInfo != null).toList();
     int usedSlots = inventory.length;
     return CompanionCard(
@@ -108,15 +108,21 @@ class InventoryPage extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       bag.itemInfo.name,
-                      style: TextStyle(
+                      style: Theme.of(context).textTheme.display3.copyWith(
+                        color: Colors.black,
                         fontWeight: FontWeight.w500
-                      ),
+                      )
                     ),
                   ),
                 ),
               if (bag.itemInfo == null)
                 Spacer(),
-              Text('$usedSlots/${bag.size}')
+              Text(
+                '$usedSlots/${bag.size}',
+                style: Theme.of(context).textTheme.display3.copyWith(
+                  color: Colors.black
+                )
+              )
             ],
           ),
           if (usedSlots > 0)

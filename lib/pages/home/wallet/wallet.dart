@@ -64,10 +64,10 @@ class WalletPage extends StatelessWidget {
           Expanded(
             child: Text(
               currency.name,
-              style: TextStyle(
-                fontSize: 16.0,
+              style: Theme.of(context).textTheme.display3.copyWith(
+                color: Colors.black,
                 fontWeight: FontWeight.w500
-              ),
+              )
             ),
           ),
           _buildCurrency(context, currency),
@@ -94,9 +94,9 @@ class WalletPage extends StatelessWidget {
         children: <Widget>[
           Text(
             GuildWarsUtil.intToString(currency.value),
-            style: TextStyle(
-              fontSize: 16.0,
-            ),
+            style: Theme.of(context).textTheme.display3.copyWith(
+              color: Colors.black
+            )
           ),
           Container(
             width: 20.0,
