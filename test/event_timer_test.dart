@@ -12,7 +12,7 @@ main() {
       final eventService = MockEventService();
 
       when(eventService.getMetaEvents())
-        .thenAnswer((_) => [
+        .thenReturn([
           MetaEventSequence(
             id: 'test',
             name: 'Test Meta Event',
@@ -67,7 +67,7 @@ main() {
       final eventService = MockEventService();
 
       when(eventService.getMetaEvents())
-        .thenAnswer((_) => [
+        .thenReturn([
           MetaEventSequence(
             id: 'test',
             name: 'Test Meta Event',
@@ -129,7 +129,7 @@ main() {
       final eventService = MockEventService();
 
       when(eventService.getMetaEvents())
-        .thenAnswer((_) => [
+        .thenReturn([
           MetaEventSequence(
             id: 'test',
             name: 'Test Meta Event',
