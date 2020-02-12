@@ -123,7 +123,8 @@ class RaidPage extends StatelessWidget {
             child: Text(
               includeProgress ? 'Weekly Progress' : 'Bosses',
               style: TextStyle(
-                fontSize: 18.0
+                fontSize: 18.0,
+                fontWeight: FontWeight.w500
               ),
             ),
           ),

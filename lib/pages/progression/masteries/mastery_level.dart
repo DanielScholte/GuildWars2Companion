@@ -106,7 +106,8 @@ class MasteryLevelPage extends StatelessWidget {
                           child: Text(
                             'Information',
                             style: TextStyle(
-                              fontSize: 18.0
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w500
                             ),
                           ),
                         ),
@@ -143,7 +144,8 @@ class MasteryLevelPage extends StatelessWidget {
             child: Text(
               title,
               style: TextStyle(
-                fontSize: 18.0
+                fontSize: 18.0,
+                fontWeight: FontWeight.w500
               ),
             ),
           ),

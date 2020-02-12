@@ -253,7 +253,8 @@ class AchievementPage extends StatelessWidget {
             child: Text(
               'Prerequisites',
               style: TextStyle(
-                fontSize: 18.0
+                fontSize: 18.0,
+                fontWeight: FontWeight.w500
               ),
             ),
           ),
@@ -280,7 +281,8 @@ class AchievementPage extends StatelessWidget {
             child: Text(
               'Rewards',
               style: TextStyle(
-                fontSize: 18.0
+                fontSize: 18.0,
+                fontWeight: FontWeight.w500
               ),
             ),
           ),
@@ -400,7 +402,8 @@ class AchievementPage extends StatelessWidget {
               child: Text(
                 'Objectives',
                 style: TextStyle(
-                  fontSize: 18.0
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
@@ -455,7 +458,8 @@ class AchievementPage extends StatelessWidget {
             child: Text(
               'Collection',
               style: TextStyle(
-                fontSize: 18.0
+                fontSize: 18.0,
+                fontWeight: FontWeight.w500
               ),
             ),
           ),
@@ -597,7 +601,8 @@ class AchievementPage extends StatelessWidget {
             child: Text(
               title,
               style: TextStyle(
-                fontSize: 18.0
+                fontSize: 18.0,
+                fontWeight: FontWeight.w500
               ),
             ),
           ),

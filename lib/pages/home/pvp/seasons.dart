@@ -1,13 +1,14 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/pvp/pvp_bloc.dart';
 import 'package:guildwars2_companion/models/pvp/season.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
+import 'package:guildwars2_companion/widgets/pvp_season_rank.dart';
 import 'package:intl/intl.dart';
+
+import 'season.dart';
 
 class SeasonsPage extends StatelessWidget {
   
@@ -60,38 +61,9 @@ class SeasonsPage extends StatelessWidget {
                         orElse: () => s.season.ranks.first
                       );
                     return CompanionButton(
-                      leading: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          CachedNetworkImage(
-                            height: 42.0,
-                            imageUrl: rank.overlay,
-                            placeholder: (context, url) => Theme(
-                              data: Theme.of(context).copyWith(accentColor: Colors.white),
-                              child: CircularProgressIndicator(),
-                            ),
-                            errorWidget: (context, url, error) => Center(child: Icon(
-                              FontAwesomeIcons.dizzy,
-                              size: 20,
-                              color: Colors.white,
-                            )),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: rank.tiers
-                              .map((r) => Container(
-                                height: 12.0,
-                                width: 12.0,
-                                margin: EdgeInsets.symmetric(horizontal: 2.0),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(9.0),
-                                  border: Border.all(color: Colors.white, width: 2.0),
-                                  color: s.current.rating >= r.rating ? Colors.white : null,
-                                ),
-                              ))
-                              .toList(),
-                          )
-                        ],
+                      leading: CompanionPvpSeasonRank(
+                        rank: rank,
+                        standing: s,
                       ),
                       subtitles: [
                         _dateFormat.format(DateTime.parse(s.season.start)) +
@@ -99,6 +71,12 @@ class SeasonsPage extends StatelessWidget {
                       ],
                       color: Colors.blueGrey,
                       title: s.season.name,
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => SeasonPage(
+                          rank: rank,
+                          standing: s,
+                        )
+                      )),
                     );
                   })
                   .toList(),

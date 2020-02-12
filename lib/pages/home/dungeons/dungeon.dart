@@ -131,7 +131,8 @@ class DungeonPage extends StatelessWidget {
             child: Text(
               includeProgress ? 'Daily Progress' : 'Paths',
               style: TextStyle(
-                fontSize: 18.0
+                fontSize: 18.0,
+                fontWeight: FontWeight.w500
               ),
             ),
           ),

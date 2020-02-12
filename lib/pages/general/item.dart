@@ -108,7 +108,8 @@ class ItemPage extends StatelessWidget {
             child: Text(
               'Transmuted',
               style: TextStyle(
-                fontSize: 18.0
+                fontSize: 18.0,
+                fontWeight: FontWeight.w500
               ),
             ),
           ),
@@ -171,7 +172,8 @@ class ItemPage extends StatelessWidget {
             child: Text(
               header,
               style: TextStyle(
-                fontSize: 18.0
+                fontSize: 18.0,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
@@ -192,7 +194,8 @@ class ItemPage extends StatelessWidget {
             child: Text(
               'Description',
               style: TextStyle(
-                fontSize: 18.0
+                fontSize: 18.0,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
@@ -216,7 +219,8 @@ class ItemPage extends StatelessWidget {
             child: Text(
               'Effect description',
               style: TextStyle(
-                fontSize: 18.0
+                fontSize: 18.0,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
@@ -260,7 +264,8 @@ class ItemPage extends StatelessWidget {
               child: Text(
                 'Stats',
                 style: TextStyle(
-                  fontSize: 18.0
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
@@ -370,7 +375,8 @@ class ItemPage extends StatelessWidget {
             child: Text(
               'Stats',
               style: TextStyle(
-                fontSize: 18.0
+                fontSize: 18.0,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
@@ -416,7 +422,8 @@ class ItemPage extends StatelessWidget {
                   child: Text(
                     'Value',
                     style: TextStyle(
-                      fontSize: 18.0
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
@@ -446,7 +453,8 @@ class ItemPage extends StatelessWidget {
                   child: Text(
                     'Value',
                     style: TextStyle(
-                      fontSize: 18.0
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
@@ -487,7 +495,8 @@ class ItemPage extends StatelessWidget {
                 child: Text(
                   'Value',
                   style: TextStyle(
-                    fontSize: 18.0
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w500
                   ),
                 ),
               ),

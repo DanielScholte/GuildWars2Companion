@@ -96,7 +96,8 @@ class WorldBossPage extends StatelessWidget {
             child: Text(
               'Stats',
               style: TextStyle(
-                fontSize: 18.0
+                fontSize: 18.0,
+                fontWeight: FontWeight.w500
               ),
             ),
           ),
@@ -126,7 +127,8 @@ class WorldBossPage extends StatelessWidget {
             child: Text(
               'Spawn Times',
               style: TextStyle(
-                fontSize: 18.0
+                fontSize: 18.0,
+                fontWeight: FontWeight.w500
               ),
             ),
           ),
