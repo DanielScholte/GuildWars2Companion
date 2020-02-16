@@ -54,7 +54,7 @@ class AchievementPage extends StatelessWidget {
                       ),
                     ),
                   if (achievement.progress != null)
-                    _buildProgress(),
+                    _buildProgress(context),
                   if (achievement.progress != null && achievement.progress.current != null && achievement.progress.max != null)
                     Padding(
                       padding: EdgeInsets.only(top: 4.0),
@@ -62,10 +62,7 @@ class AchievementPage extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             '${((achievement.progress.current / achievement.progress.max) * 100).round()}%',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.0
-                            ),
+                            style: Theme.of(context).textTheme.display3,
                           ),
                           Theme(
                             data: Theme.of(context).copyWith(accentColor: Colors.white),
@@ -89,10 +86,7 @@ class AchievementPage extends StatelessWidget {
                     padding: EdgeInsets.only(top: 4.0),
                     child: Text(
                       achievement.name,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22.0,
-                      ),
+                      style: Theme.of(context).textTheme.display1,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -101,10 +95,7 @@ class AchievementPage extends StatelessWidget {
                       padding: EdgeInsets.only(top: 4.0),
                       child: Text(
                         achievement.categoryName,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.0,
-                        ),
+                        style: Theme.of(context).textTheme.display3,
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -180,11 +171,11 @@ class AchievementPage extends StatelessWidget {
                             ));
                             await Future.delayed(Duration(milliseconds: 200), () {});
                           },
-                          child: _buildContent(_achievement, state),
+                          child: _buildContent(context, _achievement, state),
                         );
                       }
 
-                      return _buildContent(_achievement, state);
+                      return _buildContent(context, _achievement, state);
                     }
                   }
 
@@ -200,36 +191,33 @@ class AchievementPage extends StatelessWidget {
     );
   }
 
-  Widget _buildContent(Achievement _achievement, LoadedAchievementsState state) {
+  Widget _buildContent(BuildContext context, Achievement _achievement, LoadedAchievementsState state) {
     return ListView(
       padding: EdgeInsets.only(top: 8.0),
       children: <Widget>[
         if (_achievement.description != null && _achievement.description.isNotEmpty)
-          _buildDescription('Description', removeAllHtmlTags(_achievement.description)),
+          _buildDescription(context, 'Description', removeAllHtmlTags(_achievement.description)),
         if (_achievement.lockedText != null && _achievement.lockedText.isNotEmpty)
-          _buildDescription('Locked description', removeAllHtmlTags(_achievement.lockedText)),
+          _buildDescription(context, 'Locked description', removeAllHtmlTags(_achievement.lockedText)),
         if (_achievement.requirement != null && _achievement.requirement.isNotEmpty)
-          _buildDescription('Requirement', removeAllHtmlTags(_achievement.requirement)),
+          _buildDescription(context, 'Requirement', removeAllHtmlTags(_achievement.requirement)),
         if (_achievement.rewards != null && _achievement.rewards.isNotEmpty)
-          _buildRewards(_achievement),
+          _buildRewards(context, _achievement),
         if (_achievement.prerequisitesInfo != null && _achievement.prerequisitesInfo.isNotEmpty)
-          _buildPrerequisites(_achievement, state),
+          _buildPrerequisites(context, _achievement, state),
         if (_achievement.bits != null && _achievement.bits.isNotEmpty)
-          _buildBits(_achievement, state)
+          _buildBits(context, _achievement, state)
       ],
     );
   }
 
-  Widget _buildProgress() {
+  Widget _buildProgress(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
           '${achievement.progress.points} / ${achievement.pointCap}',
-          style: TextStyle(
-            fontSize: 16.0,
-            color: Colors.white
-          ),
+          style: Theme.of(context).textTheme.display3,
         ),
         Container(width: 4.0,),
         Image.asset(
@@ -240,7 +228,7 @@ class AchievementPage extends StatelessWidget {
     );
   }
 
-  Widget _buildPrerequisites(Achievement _achievement, LoadedAchievementsState state) {
+  Widget _buildPrerequisites(BuildContext context, Achievement _achievement, LoadedAchievementsState state) {
     return CompanionCard(
       child: Column(
         children: <Widget>[
@@ -248,9 +236,9 @@ class AchievementPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Prerequisites',
-              style: TextStyle(
-                fontSize: 18.0
-              ),
+              style: Theme.of(context).textTheme.display2.copyWith(
+                color: Colors.black
+              )
             ),
           ),
           Column(
@@ -267,7 +255,7 @@ class AchievementPage extends StatelessWidget {
     );
   }
 
-  Widget _buildRewards(Achievement _achievement) {
+  Widget _buildRewards(BuildContext context, Achievement _achievement) {
     return CompanionCard(
       child: Column(
         children: <Widget>[
@@ -275,9 +263,9 @@ class AchievementPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Rewards',
-              style: TextStyle(
-                fontSize: 18.0
-              ),
+              style: Theme.of(context).textTheme.display2.copyWith(
+                color: Colors.black
+              )
             ),
           ),
           Column(
@@ -307,8 +295,8 @@ class AchievementPage extends StatelessWidget {
                           padding: EdgeInsets.all(4.0),
                           child: Text(
                             r.item.name,
-                            style: TextStyle(
-                              fontSize: 16.0
+                            style: Theme.of(context).textTheme.display3.copyWith(
+                              color: Colors.black
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -331,8 +319,8 @@ class AchievementPage extends StatelessWidget {
                           padding: EdgeInsets.all(4.0),
                           child: Text(
                             _masteryToName(r.region) + ' Mastery point',
-                            style: TextStyle(
-                              fontSize: 16.0
+                            style: Theme.of(context).textTheme.display3.copyWith(
+                              color: Colors.black
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -354,8 +342,8 @@ class AchievementPage extends StatelessWidget {
                           padding: EdgeInsets.all(4.0),
                           child: Text(
                             r.title.name,
-                            style: TextStyle(
-                              fontSize: 16.0
+                            style: Theme.of(context).textTheme.display3.copyWith(
+                              color: Colors.black
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -386,7 +374,7 @@ class AchievementPage extends StatelessWidget {
     }
   }
 
-  Widget _buildBits(Achievement _achievement, LoadedAchievementsState state) {
+  Widget _buildBits(BuildContext context, Achievement _achievement, LoadedAchievementsState state) {
     if (_achievement.bits.any((b) => b.type == 'Text')) {
       return CompanionCard(
         child: Column(
@@ -395,8 +383,8 @@ class AchievementPage extends StatelessWidget {
               padding: EdgeInsets.only(bottom: 8.0),
               child: Text(
                 'Objectives',
-                style: TextStyle(
-                  fontSize: 18.0
+                style: Theme.of(context).textTheme.display2.copyWith(
+                  color: Colors.black
                 ),
               ),
             ),
@@ -426,8 +414,8 @@ class AchievementPage extends StatelessWidget {
                         padding: EdgeInsets.all(4.0),
                         child: Text(
                           i.text,
-                          style: TextStyle(
-                            fontSize: 16.0
+                          style: Theme.of(context).textTheme.display3.copyWith(
+                            color: Colors.black
                           ),
                           textAlign: TextAlign.left,
                           overflow: TextOverflow.ellipsis,
@@ -450,8 +438,8 @@ class AchievementPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Collection',
-              style: TextStyle(
-                fontSize: 18.0
+              style: Theme.of(context).textTheme.display2.copyWith(
+                color: Colors.black
               ),
             ),
           ),
@@ -460,13 +448,13 @@ class AchievementPage extends StatelessWidget {
               .map((i) {
                 switch (i.type) {
                   case 'Item':
-                    return _buildItemBit(_achievement, i, state.includesProgress, _achievement.bits.indexOf(i));
+                    return _buildItemBit(context, _achievement, i, state.includesProgress, _achievement.bits.indexOf(i));
                     break;
                   case 'Skin':
-                    return _buildSkinMiniBit(_achievement, i, state.includesProgress);
+                    return _buildSkinMiniBit(context, _achievement, i, state.includesProgress);
                     break;
                   case 'Minipet':
-                    return _buildSkinMiniBit(_achievement, i, state.includesProgress);
+                    return _buildSkinMiniBit(context, _achievement, i, state.includesProgress);
                     break;
                 }
 
@@ -479,14 +467,14 @@ class AchievementPage extends StatelessWidget {
     );
   }
 
-  Widget _buildItemBit(Achievement _achievement, AchievementBits bit, bool includeProgress, int bitIndex) {
+  Widget _buildItemBit(BuildContext context, Achievement _achievement, AchievementBits bit, bool includeProgress, int bitIndex) {
     if (bit.item == null) {
       return Row(
         children: <Widget>[
           Text(
             'Unknown item',
-            style: TextStyle(
-              fontSize: 16.0
+            style: Theme.of(context).textTheme.display3.copyWith(
+              color: Colors.black
             ),
           ),
         ],
@@ -512,8 +500,8 @@ class AchievementPage extends StatelessWidget {
               padding: EdgeInsets.all(4.0),
               child: Text(
                 bit.item.name,
-                style: TextStyle(
-                  fontSize: 16.0
+                style: Theme.of(context).textTheme.display3.copyWith(
+                  color: Colors.black
                 ),
                 textAlign: TextAlign.left,
                 overflow: TextOverflow.ellipsis,
@@ -525,7 +513,7 @@ class AchievementPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSkinMiniBit(Achievement _achievement, AchievementBits bit, bool includeProgress) {
+  Widget _buildSkinMiniBit(BuildContext context, Achievement _achievement, AchievementBits bit, bool includeProgress) {
     return Padding(
       padding: const EdgeInsets.all(2.0),
       child: Row(
@@ -567,8 +555,8 @@ class AchievementPage extends StatelessWidget {
               padding: EdgeInsets.all(4.0),
               child: Text(
                 bit.type == 'Skin' ? bit.skin.name : bit.mini.name,
-                style: TextStyle(
-                  fontSize: 16.0
+                style: Theme.of(context).textTheme.display3.copyWith(
+                  color: Colors.black
                 ),
                 textAlign: TextAlign.left,
                 overflow: TextOverflow.ellipsis,
@@ -580,7 +568,7 @@ class AchievementPage extends StatelessWidget {
     );
   }
 
-  Widget _buildDescription(String title, String text) {
+  Widget _buildDescription(BuildContext context, String title, String text) {
     return CompanionCard(
       child: Column(
         children: <Widget>[
@@ -588,15 +576,15 @@ class AchievementPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               title,
-              style: TextStyle(
-                fontSize: 18.0
+              style: Theme.of(context).textTheme.display2.copyWith(
+                color: Colors.black
               ),
             ),
           ),
           Text(
             text,
-            style: TextStyle(
-              fontSize: 16.0
+            style: Theme.of(context).textTheme.display3.copyWith(
+              color: Colors.black
             ),
           ),
         ],

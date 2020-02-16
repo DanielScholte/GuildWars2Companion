@@ -134,30 +134,19 @@ class _MetaEventPageState extends State<MetaEventPage> {
                 if (isActive) {
                   return Text(
                     'Active',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white
-                    ),
+                    style: Theme.of(context).textTheme.display2,
                   );
                 }
                   
                 return Text(
                   GuildWarsUtil.durationToString(time.difference(DateTime.now())),
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white
-                  ),
+                  style: Theme.of(context).textTheme.display2,
                 );
               },
             ),
             Text(
               timeFormat.format(time),
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16.0,
-              ),
+              style: Theme.of(context).textTheme.display3,
             )
           ],
         ),

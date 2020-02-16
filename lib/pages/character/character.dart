@@ -53,19 +53,16 @@ class CharacterPage extends StatelessWidget {
                       ),
                       Text(
                         _character.name,
-                        style: Theme.of(context).textTheme.title.merge(TextStyle(
+                        style: Theme.of(context).textTheme.title.copyWith(
                           color: Colors.white
-                        ))
+                        )
                       )
                     ],
                   ),
                   if (_character.titleName != null && _character.titleName.isNotEmpty)
                     Text(
                       _character.titleName,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0
-                      ),
+                      style: Theme.of(context).textTheme.display3
                     ),
                   Container(height: 8.0,),
                   Container(

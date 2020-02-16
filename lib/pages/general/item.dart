@@ -32,25 +32,25 @@ class ItemPage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          _buildHeader(),
+          _buildHeader(context),
           Expanded(
             child: ListView(
               padding: EdgeInsets.only(top: 8.0),
               children: <Widget>[
                 if (skin != null)
-                  _buildTransmutedItemInfo(),
+                  _buildTransmutedItemInfo(context),
                 if (item.description != null && item.description.isNotEmpty)
-                  _buildItemDescription(),
+                  _buildItemDescription(context),
                 if (item.details != null)
-                  _buildItemDetails()
+                  _buildItemDetails(context)
                 else
-                  _buildRarityOnlyDetails(),
+                  _buildRarityOnlyDetails(context),
                 if (item.type == 'Consumable' && item.details != null && item.details.description != null && item.details.description.isNotEmpty)
-                  _buildConsumableDescription(),
+                  _buildConsumableDescription(context),
                 if (upgradesInfo != null && upgradesInfo.where((up) => up != null).toList().isNotEmpty)
-                  _buildItemList('Upgrades', upgradesInfo),
+                  _buildItemList(context, 'Upgrades', upgradesInfo),
                 if (infusionsInfo != null && infusionsInfo.where((inf) => inf != null).toList().isNotEmpty)
-                  _buildItemList('Infusions', infusionsInfo),
+                  _buildItemList(context, 'Infusions', infusionsInfo),
                 _buildValue(context)
               ],
             ),
@@ -60,7 +60,7 @@ class ItemPage extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return CompanionHeader(
       includeBack: true,
       wikiName: item.name,
@@ -79,19 +79,13 @@ class ItemPage extends StatelessWidget {
             padding: EdgeInsets.all(4.0),
             child: Text(
               skin != null ? skin.name : item.name,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 22.0,
-              ),
+              style: Theme.of(context).textTheme.display1,
               textAlign: TextAlign.center,
             ),
           ),
           Text(
             item.type != null ? typeToName(item.type) : '',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16.0
-            ),
+            style: Theme.of(context).textTheme.display3,
             textAlign: TextAlign.center,
           ),
         ],
@@ -99,7 +93,7 @@ class ItemPage extends StatelessWidget {
     );
   }
 
-  Widget _buildTransmutedItemInfo() {
+  Widget _buildTransmutedItemInfo(BuildContext context) {
     return CompanionCard(
       child: Column(
         children: <Widget>[
@@ -107,9 +101,9 @@ class ItemPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Transmuted',
-              style: TextStyle(
-                fontSize: 18.0
-              ),
+              style: Theme.of(context).textTheme.display2.copyWith(
+                color: Colors.black
+              )
             ),
           ),
           Row(
@@ -124,8 +118,8 @@ class ItemPage extends StatelessWidget {
                 padding: EdgeInsets.all(8.0),
                 child: Text(
                   item.name,
-                  style: TextStyle(
-                    fontSize: 16.0
+                  style: Theme.of(context).textTheme.display3.copyWith(
+                    color: Colors.black
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -137,7 +131,7 @@ class ItemPage extends StatelessWidget {
     );
   }
 
-  Widget _buildItemList(String header, List<Item> items) {
+  Widget _buildItemList(BuildContext context, String header, List<Item> items) {
     List<Widget> itemWidgets = [];
 
     for (var i = 0; i < items.length; i++) {
@@ -153,8 +147,8 @@ class ItemPage extends StatelessWidget {
             padding: EdgeInsets.all(4.0),
             child: Text(
               items[i].name,
-              style: TextStyle(
-                fontSize: 16.0
+              style: Theme.of(context).textTheme.display3.copyWith(
+                color: Colors.black
               ),
               textAlign: TextAlign.center,
             ),
@@ -170,9 +164,9 @@ class ItemPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               header,
-              style: TextStyle(
-                fontSize: 18.0
-              ),
+              style: Theme.of(context).textTheme.display2.copyWith(
+                color: Colors.black
+              )
             ),
           ),
           Column(
@@ -183,7 +177,7 @@ class ItemPage extends StatelessWidget {
     );
   }
 
-  Widget _buildItemDescription() {
+  Widget _buildItemDescription(BuildContext context) {
     return CompanionCard(
       child: Column(
         children: <Widget>[
@@ -191,23 +185,23 @@ class ItemPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Description',
-              style: TextStyle(
-                fontSize: 18.0
-              ),
+              style: Theme.of(context).textTheme.display2.copyWith(
+                color: Colors.black
+              )
             ),
           ),
           Text(
             removeAllHtmlTags(item.description),
-            style: TextStyle(
-              fontSize: 16.0
-            ),
+            style: Theme.of(context).textTheme.display3.copyWith(
+              color: Colors.black
+            )
           ),
         ],
       ),
     );
   }
 
-  Widget _buildConsumableDescription() {
+  Widget _buildConsumableDescription(BuildContext context) {
     return CompanionCard(
       child: Column(
         children: <Widget>[
@@ -215,16 +209,16 @@ class ItemPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Effect description',
-              style: TextStyle(
-                fontSize: 18.0
-              ),
+              style: Theme.of(context).textTheme.display2.copyWith(
+                color: Colors.black
+              )
             ),
           ),
           Text(
             removeAllHtmlTags(item.details.description),
-            style: TextStyle(
-              fontSize: 16.0
-            ),
+            style: Theme.of(context).textTheme.display3.copyWith(
+              color: Colors.black
+            )
           ),
         ],
       ),
@@ -241,7 +235,7 @@ class ItemPage extends StatelessWidget {
     return htmlText.replaceAll(exp, '');
   }
 
-  Widget _buildItemDetails() {
+  Widget _buildItemDetails(BuildContext context) {
     if ([
       'Armor',
       'Bag',
@@ -259,8 +253,8 @@ class ItemPage extends StatelessWidget {
               padding: EdgeInsets.only(bottom: 8.0),
               child: Text(
                 'Stats',
-                style: TextStyle(
-                  fontSize: 18.0
+                style: Theme.of(context).textTheme.display2.copyWith(
+                  color: Colors.black
                 ),
               ),
             ),
@@ -285,7 +279,7 @@ class ItemPage extends StatelessWidget {
       );
     }
 
-    return _buildRarityOnlyDetails();
+    return _buildRarityOnlyDetails(context);
   }
 
   Widget _buildArmorDetails() {
@@ -361,7 +355,7 @@ class ItemPage extends StatelessWidget {
     );
   }
 
-  Widget _buildRarityOnlyDetails() {
+  Widget _buildRarityOnlyDetails(BuildContext context) {
     return CompanionCard(
       child: Column(
         children: <Widget>[
@@ -369,9 +363,9 @@ class ItemPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Stats',
-              style: TextStyle(
-                fontSize: 18.0
-              ),
+              style: Theme.of(context).textTheme.display2.copyWith(
+                color: Colors.black
+              )
             ),
           ),
           CompanionInfoRow(
@@ -415,8 +409,8 @@ class ItemPage extends StatelessWidget {
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     'Value',
-                    style: TextStyle(
-                      fontSize: 18.0
+                    style: Theme.of(context).textTheme.display2.copyWith(
+                      color: Colors.black
                     ),
                   ),
                 ),
@@ -445,8 +439,8 @@ class ItemPage extends StatelessWidget {
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     'Value',
-                    style: TextStyle(
-                      fontSize: 18.0
+                    style: Theme.of(context).textTheme.display2.copyWith(
+                      color: Colors.black
                     ),
                   ),
                 ),
@@ -486,8 +480,8 @@ class ItemPage extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 8.0),
                 child: Text(
                   'Value',
-                  style: TextStyle(
-                    fontSize: 18.0
+                  style: Theme.of(context).textTheme.display2.copyWith(
+                    color: Colors.black
                   ),
                 ),
               ),

@@ -56,14 +56,14 @@ class CompanionAchievementButton extends StatelessWidget {
         ));
       },
       leading: _buildLeading(context),
-      trailing: _buildTrailing(),
+      trailing: _buildTrailing(context),
       subtitles: this.levels != null ? [
         this.levels
       ] : null,
     );
   }
 
-  Widget _buildTrailing() {
+  Widget _buildTrailing(BuildContext context) {
     int points = 0;
     achievement.tiers.forEach((t) => points += t.points);
 
@@ -106,10 +106,7 @@ class CompanionAchievementButton extends StatelessWidget {
             children: <Widget>[
               Text(
                 points.toString(),
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16.0
-                ),
+                style: Theme.of(context).textTheme.display3,
               ),
               Container(width: 4.0,),
               Image.asset(

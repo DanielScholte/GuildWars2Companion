@@ -6,6 +6,7 @@ import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
 import 'package:guildwars2_companion/blocs/bank/bloc.dart';
 import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/blocs/event/event_bloc.dart';
+import 'package:guildwars2_companion/blocs/pvp/pvp_bloc.dart';
 import 'package:guildwars2_companion/blocs/raid/raid_bloc.dart';
 import 'package:guildwars2_companion/blocs/trading_post/bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
@@ -18,6 +19,7 @@ import 'package:guildwars2_companion/repositories/bank.dart';
 import 'package:guildwars2_companion/repositories/character.dart';
 import 'package:guildwars2_companion/repositories/dungeon.dart';
 import 'package:guildwars2_companion/repositories/event.dart';
+import 'package:guildwars2_companion/repositories/pvp.dart';
 import 'package:guildwars2_companion/repositories/raid.dart';
 import 'package:guildwars2_companion/repositories/trading_post.dart';
 import 'package:guildwars2_companion/repositories/wallet.dart';
@@ -29,6 +31,8 @@ import 'package:guildwars2_companion/services/character.dart';
 import 'package:guildwars2_companion/services/dungeon.dart';
 import 'package:guildwars2_companion/services/event.dart';
 import 'package:guildwars2_companion/services/item.dart';
+import 'package:guildwars2_companion/services/map.dart';
+import 'package:guildwars2_companion/services/pvp.dart';
 import 'package:guildwars2_companion/services/raid.dart';
 import 'package:guildwars2_companion/services/token.dart';
 import 'package:guildwars2_companion/services/trading_post.dart';
@@ -67,6 +71,8 @@ Future main() async {
     eventService: EventService(),
     itemService: itemService,
     raidService: RaidService(dio: dioUtil.getDioInstance()),
+    mapService: MapService(dio: dioUtil.getDioInstance()),
+    pvpService: PvpService(dio: dioUtil.getDioInstance()),
     tokenService: tokenService,
     tradingPostService: TradingPostService(dio: dioUtil.getDioInstance()),
     walletService: WalletService(dio: dioUtil.getDioInstance()),
@@ -83,6 +89,8 @@ class GuildWars2Companion extends StatelessWidget {
   final DungeonService dungeonService;
   final EventService eventService;
   final ItemService itemService;
+  final MapService mapService;
+  final PvpService pvpService;
   final RaidService raidService;
   final TokenService tokenService;
   final TradingPostService tradingPostService;
@@ -99,6 +107,8 @@ class GuildWars2Companion extends StatelessWidget {
     @required this.dungeonService,
     @required this.eventService,
     @required this.itemService,
+    @required this.mapService,
+    @required this.pvpService,
     @required this.raidService,
     @required this.tokenService,
     @required this.tradingPostService,
@@ -116,11 +126,29 @@ class GuildWars2Companion extends StatelessWidget {
         child: MaterialApp(
           title: 'Guild Wars 2 Companion',
           theme: ThemeData(
+            brightness: Brightness.light,
             primarySwatch: Colors.red,
             primaryColor: Color(0xFFAA0404),
             accentColor: Colors.red,
             scaffoldBackgroundColor: Color(0xFFEEEEEE),
             cursorColor: Color(0xFFAA0404),
+            textTheme: TextTheme(
+              display1: TextStyle(
+                fontSize: 22.0,
+                color: Colors.white,
+                fontWeight: FontWeight.normal
+              ),
+              display2: TextStyle(
+                fontSize: 18.0,
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+              ),
+              display3: TextStyle(
+                fontSize: 16.0,
+                color: Colors.white,
+                fontWeight: FontWeight.normal,
+              )
+            )
           ),
           home: isAuthenticated ? TabPage() : TokenPage(),
         ),
@@ -165,6 +193,12 @@ class GuildWars2Companion extends StatelessWidget {
         RepositoryProvider<EventRepository>(
           create: (BuildContext context) => EventRepository(
             eventService: eventService,
+          ),
+        ),
+        RepositoryProvider<PvpRepository>(
+          create: (BuildContext context) => PvpRepository(
+            mapService: mapService,
+            pvpService: pvpService,
           ),
         ),
         RepositoryProvider<RaidRepository>(
@@ -224,6 +258,11 @@ class GuildWars2Companion extends StatelessWidget {
         BlocProvider<EventBloc>(
           create: (BuildContext context) => EventBloc(
             eventRepository: RepositoryProvider.of<EventRepository>(context),
+          ),
+        ),
+        BlocProvider<PvpBloc>(
+          create: (BuildContext context) => PvpBloc(
+            pvpRepository: RepositoryProvider.of<PvpRepository>(context),
           ),
         ),
         BlocProvider<RaidBloc>(

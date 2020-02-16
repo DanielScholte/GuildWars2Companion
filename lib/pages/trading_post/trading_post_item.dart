@@ -182,9 +182,8 @@ class TradingPostItemPage extends StatelessWidget {
                 padding: EdgeInsets.all(16.0),
                 child: Text(
                   error,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18.0
+                  style: Theme.of(context).textTheme.display2.copyWith(
+                    color: Colors.black
                   ),
                 ),
               ),

@@ -40,7 +40,7 @@ class MaterialPage extends StatelessWidget {
                 },
                 child: ListView(
                   children: state.materialCategories
-                    .map((c) => _buildMaterialCategory(c))
+                    .map((c) => _buildMaterialCategory(context, c))
                     .toList(),
                 ),
               );
@@ -55,7 +55,7 @@ class MaterialPage extends StatelessWidget {
     );
   }
 
-  Widget _buildMaterialCategory(MaterialCategory category) {
+  Widget _buildMaterialCategory(BuildContext context, MaterialCategory category) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
       child: Column(
@@ -64,10 +64,9 @@ class MaterialPage extends StatelessWidget {
             padding: EdgeInsets.all(8.0),
             child: Text(
               category.name,
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 18.0
-              ),
+              style: Theme.of(context).textTheme.display2.copyWith(
+                color: Colors.black
+              )
             ),
           ),
           Container(
