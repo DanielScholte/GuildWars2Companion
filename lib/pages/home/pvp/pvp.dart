@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,6 +7,7 @@ import 'package:guildwars2_companion/pages/home/pvp/games.dart';
 import 'package:guildwars2_companion/pages/home/pvp/seasons.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
+import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_box.dart';
@@ -66,18 +66,12 @@ class PvpPage extends StatelessWidget {
                   height: 48.0,
                   child: FittedBox(
                     fit: BoxFit.none,
-                    child: CachedNetworkImage(
+                    child: CompanionCachedImage(
                       height: 96.0,
                       imageUrl: state.pvpStats.rank.icon,
-                      placeholder: (context, url) => Theme(
-                        data: Theme.of(context).copyWith(accentColor: Colors.white),
-                        child: CircularProgressIndicator(),
-                      ),
-                      errorWidget: (context, url, error) => Center(child: Icon(
-                        FontAwesomeIcons.dizzy,
-                        size: 20,
-                        color: Colors.white,
-                      )),
+                      color: Colors.white,
+                      iconSize: 20,
+                      fit: null,
                     ),
                   ),
                 ),

@@ -5,6 +5,8 @@ import 'package:guildwars2_companion/services/character.dart';
 import 'package:guildwars2_companion/services/dungeon.dart';
 import 'package:guildwars2_companion/services/event.dart';
 import 'package:guildwars2_companion/services/item.dart';
+import 'package:guildwars2_companion/services/map.dart';
+import 'package:guildwars2_companion/services/pvp.dart';
 import 'package:guildwars2_companion/services/raid.dart';
 import 'package:guildwars2_companion/services/token.dart';
 import 'package:guildwars2_companion/services/trading_post.dart';
@@ -20,6 +22,8 @@ class MockDungeonService extends Mock implements DungeonService {}
 class MockEventService extends Mock implements EventService {}
 class MockItemService extends Mock implements ItemService {}
 class MockRaidService extends Mock implements RaidService {}
+class MockMapService extends Mock implements MapService {}
+class MockPvpService extends Mock implements PvpService {}
 class MockTokenService extends Mock implements TokenService {}
 class MockTradingPostService extends Mock implements TradingPostService {}
 class MockWalletService extends Mock implements WalletService {}

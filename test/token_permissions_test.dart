@@ -22,6 +22,8 @@ main() {
     MockEventService eventService;
     MockItemService itemService;
     MockRaidService raidService;
+    MockMapService mapService;
+    MockPvpService pvpService;
     MockTokenService tokenService;
     MockTradingPostService tradingPostService;
     MockWalletService walletService;
@@ -36,6 +38,8 @@ main() {
       eventService = MockEventService();
       itemService = MockItemService();
       raidService = MockRaidService();
+      mapService = MockMapService();
+      pvpService = MockPvpService();
       tokenService = MockTokenService();
       tradingPostService = MockTradingPostService();
       walletService = MockWalletService();
@@ -100,6 +104,8 @@ main() {
         eventService: eventService,
         itemService: itemService,
         raidService: raidService,
+        mapService: mapService,
+        pvpService: pvpService,
         tokenService: tokenService,
         tradingPostService: tradingPostService,
         walletService: walletService,
@@ -121,6 +127,7 @@ main() {
 
       await tester.pumpAndSettle();
 
+      expect(find.widgetWithText(CompanionButton, 'PvP'), findsOneWidget);
       expect(find.widgetWithText(CompanionButton, 'Raids'), findsOneWidget);
       expect(find.widgetWithText(CompanionButton, 'Dungeons'), findsOneWidget);
 
@@ -168,6 +175,8 @@ main() {
         eventService: eventService,
         itemService: itemService,
         raidService: raidService,
+        mapService: mapService,
+        pvpService: pvpService,
         tokenService: tokenService,
         tradingPostService: tradingPostService,
         walletService: walletService,
@@ -189,6 +198,7 @@ main() {
 
       await tester.pumpAndSettle();
 
+      expect(find.widgetWithText(CompanionButton, 'PvP'), findsOneWidget);
       expect(find.widgetWithText(CompanionButton, 'Raids'), findsOneWidget);
       expect(find.widgetWithText(CompanionButton, 'Dungeons'), findsOneWidget);
 
@@ -229,6 +239,8 @@ main() {
         eventService: eventService,
         itemService: itemService,
         raidService: raidService,
+        mapService: mapService,
+        pvpService: pvpService,
         tokenService: tokenService,
         tradingPostService: tradingPostService,
         walletService: walletService,
@@ -250,6 +262,7 @@ main() {
 
       await tester.pumpAndSettle();
 
+      expect(find.widgetWithText(CompanionButton, 'PvP'), findsNothing);
       expect(find.widgetWithText(CompanionButton, 'Raids'), findsOneWidget);
       expect(find.widgetWithText(CompanionButton, 'Dungeons'), findsOneWidget);
 

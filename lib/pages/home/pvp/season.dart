@@ -1,8 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/models/pvp/season.dart';
 import 'package:guildwars2_companion/models/pvp/standing.dart';
+import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/pvp_season_rank.dart';
@@ -132,18 +132,12 @@ class SeasonPage extends StatelessWidget {
                             .toList(),
                         ),
                       ),
-                      CachedNetworkImage(
+                      CompanionCachedImage(
                         height: 72.0,
                         imageUrl: d.smallIcon,
-                        placeholder: (context, url) => Theme(
-                          data: Theme.of(context).copyWith(accentColor: Colors.white),
-                          child: CircularProgressIndicator(),
-                        ),
-                        errorWidget: (context, url, error) => Center(child: Icon(
-                          FontAwesomeIcons.dizzy,
-                          size: 20,
-                          color: Colors.white,
-                        )),
+                        color: Colors.black,
+                        iconSize: 28,
+                        fit: null,
                       ),
                     ],
                   ),
