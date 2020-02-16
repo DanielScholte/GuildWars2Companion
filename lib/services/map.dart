@@ -15,7 +15,7 @@ class MapService {
     List<String> mapIdsList = Urls.divideIdLists(mapIds);
     List<GameMap> maps = [];
     for (var mapIds in mapIdsList) {
-      final response = await dio.get(Urls.skinsUrl + mapIds);
+      final response = await dio.get(Urls.mapsUrl + mapIds);
 
       if (response.statusCode == 200 || response.statusCode == 206) {
         List responseMaps = response.data;

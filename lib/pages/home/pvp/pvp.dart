@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/pvp/pvp_bloc.dart';
 import 'package:guildwars2_companion/models/pvp/stats.dart';
+import 'package:guildwars2_companion/pages/home/pvp/games.dart';
 import 'package:guildwars2_companion/pages/home/pvp/seasons.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
@@ -131,8 +132,9 @@ class PvpPage extends StatelessWidget {
                   CompanionButton(
                     color: Colors.blue,
                     title: 'Game history',
-                    onTap: () {
-                    },
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => PvpGamesPage()
+                    )),
                     leading: Icon(
                       FontAwesomeIcons.history,
                       size: 35.0,

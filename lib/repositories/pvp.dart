@@ -56,6 +56,7 @@ class PvpRepository {
     games.forEach((game) {
       game.map = maps.firstWhere((m) => m.id == game.mapId, orElse: () => null);
     });
+    games.sort((a, b) => -a.started.compareTo(b.started));
 
     return PvpData(
       pvpStats:  stats,
