@@ -113,10 +113,10 @@ class HomePage extends StatelessWidget {
                       children: <Widget>[
                         if (state.tokenInfo.permissions.contains('wallet'))
                           _buildWallet(context),
-                        if (state.tokenInfo.permissions.contains('pvp'))
-                          _buildPvp(context),
                         _buildWorldBosses(context, state.tokenInfo.permissions.contains('progression')),
                         _buildEvents(context),
+                        if (state.tokenInfo.permissions.contains('pvp'))
+                          _buildPvp(context),
                         _buildRaids(context, state.tokenInfo.permissions.contains('progression')),
                         _buildDungeons(context, state.tokenInfo.permissions.contains('progression'))
                       ],
@@ -291,7 +291,7 @@ class HomePage extends StatelessWidget {
 
   Widget _buildPvp(BuildContext context) {
     return CompanionButton(
-      color: Colors.blueGrey,
+      color: Color(0xFF678A9E),
       title: 'PvP',
       onTap: () {
         if (!(BlocProvider.of<PvpBloc>(context).state is LoadedPvpState)) {

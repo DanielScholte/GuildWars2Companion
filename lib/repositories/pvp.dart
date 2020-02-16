@@ -37,8 +37,12 @@ class PvpRepository {
     stats.rank = ranks.firstWhere((r) => r.levels.any((l) => l.minRank <= stats.pvpRank && l.maxRank >= stats.pvpRank), orElse: () => ranks.first);
     ranks.forEach((rank) {
       rank.levels.forEach((level) {
-        if (stats.pvpRankPoints - level.points >= 0){
-          stats.pvpRankPoints -= level.points;
+        for (int i = level.minRank; i <= level.maxRank; i++) {
+          if (stats.pvpRankPoints - level.points >= 0){
+            stats.pvpRankPoints -= level.points;
+          } else if (stats.pvpRankPointsNeeded == null) {
+            stats.pvpRankPointsNeeded = level.points;
+          }
         }
       });
     });

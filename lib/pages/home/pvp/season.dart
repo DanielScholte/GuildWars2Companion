@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/models/pvp/season.dart';
 import 'package:guildwars2_companion/models/pvp/standing.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
@@ -28,9 +30,12 @@ class SeasonPage extends StatelessWidget {
               includeBack: true,
               child: Column(
                 children: <Widget>[
-                  CompanionPvpSeasonRank(
-                    rank: rank,
-                    standing: standing,
+                  Hero(
+                    tag: standing.seasonId,
+                    child: CompanionPvpSeasonRank(
+                      rank: rank,
+                      standing: standing,
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(bottom: 4.0),
@@ -72,6 +77,78 @@ class SeasonPage extends StatelessWidget {
               style: Theme.of(context).textTheme.display2.copyWith(
                 color: Colors.black
               )
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.only(top: 8.0),
+            child: Wrap(
+              alignment: WrapAlignment.spaceEvenly,
+              crossAxisAlignment: WrapCrossAlignment.end,
+              runSpacing: 16.0,
+              children: standing.season.divisions
+                .map((d) => Container(
+                  width: 110,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 4.0),
+                        child: Text(
+                          d.name,
+                          style: Theme.of(context).textTheme.display3.copyWith(
+                            color: Colors.black
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      ConstrainedBox(
+                        constraints: new BoxConstraints(
+                          minHeight: 38.0,
+                          maxWidth: 80.0,
+                        ),
+                        child: Wrap(
+                          alignment: WrapAlignment.center,
+                          runSpacing: 2.0,
+                          children: d.tiers
+                            .map((t) => Container(
+                              height: 18.0,
+                              width: 18.0,
+                              margin: EdgeInsets.symmetric(horizontal: 2.0),
+                              child: 
+                                standing.current.division > standing.season.divisions.indexOf(d) ||
+                                (standing.current.division == standing.season.divisions.indexOf(d) &&
+                                standing.current.tier >= d.tiers.indexOf(t))
+                                ? Icon(
+                                FontAwesomeIcons.check,
+                                size: 10,
+                                color: Colors.white,
+                              ) : null,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(9.0),
+                                color: Colors.black,
+                              ),
+                            ))
+                            .toList(),
+                        ),
+                      ),
+                      CachedNetworkImage(
+                        height: 72.0,
+                        imageUrl: d.smallIcon,
+                        placeholder: (context, url) => Theme(
+                          data: Theme.of(context).copyWith(accentColor: Colors.white),
+                          child: CircularProgressIndicator(),
+                        ),
+                        errorWidget: (context, url, error) => Center(child: Icon(
+                          FontAwesomeIcons.dizzy,
+                          size: 20,
+                          color: Colors.white,
+                        )),
+                      ),
+                    ],
+                  ),
+                ))
+                .toList()
             ),
           ),
         ],

@@ -3,18 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/pvp/pvp_bloc.dart';
-import 'package:guildwars2_companion/models/pvp/rank.dart';
+import 'package:guildwars2_companion/models/pvp/stats.dart';
 import 'package:guildwars2_companion/pages/home/pvp/seasons.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
+import 'package:guildwars2_companion/widgets/info_box.dart';
 
 class PvpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.blueGrey),
+      data: Theme.of(context).copyWith(accentColor: Color(0xFF678A9E)),
       child: BlocBuilder<PvpBloc, PvpState>(
         builder: (context, state) {
           if (state is ErrorPvpState) {
@@ -43,7 +44,7 @@ class PvpPage extends StatelessWidget {
     return Scaffold(
       appBar: CompanionAppBar(
         title: '',
-        color: Colors.blueGrey,
+        color: Color(0xFF678A9E),
         foregroundColor: Colors.white,
         elevation: 4.0,
       ),
@@ -52,14 +53,11 @@ class PvpPage extends StatelessWidget {
   }
 
   Widget _buildPvpPage(BuildContext context, LoadedPvpState state) {
-    PvpRankLevels level = state.pvpStats.rank.levels
-      .firstWhere((l) => l.minRank <= state.pvpStats.pvpRank && l.maxRank >= state.pvpStats.pvpRank, orElse: () => null);
-
     return Scaffold(
       body: Column(
         children: <Widget>[
           CompanionHeader(
-            color: Colors.blueGrey,
+            color: Color(0xFF678A9E),
             includeBack: true,
             child: Column(
               children: <Widget>[
@@ -86,8 +84,24 @@ class PvpPage extends StatelessWidget {
                   'Rank ${state.pvpStats.pvpRank}',
                   style: Theme.of(context).textTheme.display1,
                 ),
-                if (level != null && state.pvpStats.pvpRankPoints < level.points)
-                  _buildProgress(context, level, state),
+                if (state.pvpStats.pvpRankPointsNeeded != null && state.pvpStats.pvpRank < 80)
+                  _buildProgress(context, state),
+                Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.only(top: 8.0),
+                  child: Wrap(
+                    alignment: WrapAlignment.spaceEvenly,
+                    runSpacing: 16.0,
+                    children: <Widget>[
+                      if (state.pvpStats.ladders != null && state.pvpStats.ladders.unranked != null
+                        && state.pvpStats.ladders.unranked.wins + state.pvpStats.ladders.unranked.losses != 0)
+                        _buildWinrateBox(state.pvpStats.ladders.unranked, 'Unranked\nwinrate'),
+                      if (state.pvpStats.ladders != null && state.pvpStats.ladders.ranked != null
+                        && state.pvpStats.ladders.ranked.wins + state.pvpStats.ladders.ranked.losses != 0)
+                        _buildWinrateBox(state.pvpStats.ladders.ranked, 'Ranked\nwinrate')
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -134,7 +148,17 @@ class PvpPage extends StatelessWidget {
     );
   }
 
-  Widget _buildProgress(BuildContext context, PvpRankLevels level, LoadedPvpState state) {
+  Widget _buildWinrateBox(PvpWinLoss winLoss, String header) {
+    int total = winLoss.wins + winLoss.losses;
+
+    return CompanionInfoBox(
+      header: header,
+      text: ((winLoss.wins / total) * 100).toStringAsFixed(2) + '%',
+      loading: false,
+    );
+  }
+
+  Widget _buildProgress(BuildContext context, LoadedPvpState state) {
     return Theme(
       data: Theme.of(context).copyWith(accentColor: Colors.white),
       child: Container(
@@ -144,7 +168,7 @@ class PvpPage extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(4.0),
           child: LinearProgressIndicator(
-            value: state.pvpStats.pvpRankPoints / level.points,
+            value: state.pvpStats.pvpRankPoints / state.pvpStats.pvpRankPointsNeeded,
             backgroundColor: Colors.white24
           ),
         ),

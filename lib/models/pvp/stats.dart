@@ -4,6 +4,7 @@ class PvpStats {
   PvpRank rank;
   int pvpRank;
   int pvpRankPoints;
+  int pvpRankPointsNeeded;
   int pvpRankRollovers;
   PvpWinLoss aggregate;
   PvpProfessions professions;
