@@ -32,7 +32,7 @@ class CompanionInfoRow extends StatelessWidget {
           else
             Text(
               text,
-              style: Theme.of(context).textTheme.display2.copyWith(
+              style: Theme.of(context).textTheme.display3.copyWith(
                 color: Colors.black
               ),
             )
