@@ -345,26 +345,28 @@ class EventService {
         id: 'bjora',
         name: 'Bjora Marches',
         region: 'Icebrood',
-        offset: Duration(minutes: 5),
         segments: [
+          MetaEventSegment(
+            name: 'Shards and Construct',
+            duration: Duration(minutes: 5),
+          ),
           MetaEventSegment(
             name: 'Icebrood Champions',
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            duration: Duration(minutes: 55),
+            duration: Duration(minutes: 45),
           ),
           MetaEventSegment(
             name: 'Drakkar and Spirits of the Wild',
-            duration: Duration(minutes: 30),
+            duration: Duration(minutes: 35),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 5),
           ),
           MetaEventSegment(
             name: 'Raven Shrines',
             duration: Duration(minutes: 15),
-          ),
-          MetaEventSegment(
-            name: 'Shards and Construct',
-            duration: Duration(minutes: 5),
           ),
         ]
       ),

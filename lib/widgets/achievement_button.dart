@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,6 +9,7 @@ import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
 
 import 'button.dart';
+import 'cached_image.dart';
 
 class CompanionAchievementButton extends StatelessWidget {
   final LoadedAchievementsState state;
@@ -56,14 +56,14 @@ class CompanionAchievementButton extends StatelessWidget {
         ));
       },
       leading: _buildLeading(context),
-      trailing: _buildTrailing(),
+      trailing: _buildTrailing(context),
       subtitles: this.levels != null ? [
         this.levels
       ] : null,
     );
   }
 
-  Widget _buildTrailing() {
+  Widget _buildTrailing(BuildContext context) {
     int points = 0;
     achievement.tiers.forEach((t) => points += t.points);
 
@@ -106,10 +106,7 @@ class CompanionAchievementButton extends StatelessWidget {
             children: <Widget>[
               Text(
                 points.toString(),
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16.0
-                ),
+                style: Theme.of(context).textTheme.display3,
               ),
               Container(width: 4.0,),
               Image.asset(
@@ -233,15 +230,11 @@ class CompanionAchievementButton extends StatelessWidget {
     if (achievement.icon != null || categoryIcon != null) {
       return Hero(
         tag: hero != null ? hero : achievement.id.toString(),
-        child: CachedNetworkImage(
+        child: CompanionCachedImage(
           height: height,
           imageUrl: achievement.icon != null ? achievement.icon : categoryIcon,
-          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-          errorWidget: (context, url, error) => Center(child: Icon(
-            FontAwesomeIcons.dizzy,
-            size: 28,
-            color: Colors.white,
-          )),
+          color: Colors.white,
+          iconSize: 28,
           fit: BoxFit.fill,
         ),
       );

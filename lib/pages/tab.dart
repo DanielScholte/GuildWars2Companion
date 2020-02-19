@@ -17,7 +17,6 @@ import 'tabs/progression.dart';
 import 'tabs/trading_post.dart';
 import 'token/token.dart';
 import '../utils/guild_wars_icons.dart';
-import '../utils/token.dart';
 import '../widgets/error.dart';
 
 class TabPage extends StatefulWidget {
@@ -82,7 +81,7 @@ class _TabPageState extends State<TabPage> {
                   child: CompanionError(
                     title: 'the account',
                     onTryAgain: () async =>
-                      BlocProvider.of<AccountBloc>(context).add(AuthenticateEvent(await TokenUtil.getToken())),
+                      BlocProvider.of<AccountBloc>(context).add(SetupAccountEvent()),
                   ),
                 ),
               );
@@ -121,11 +120,13 @@ class _TabPageState extends State<TabPage> {
           BubbleBottomBarItem(
             icon: Icon(
               t.icon,
+              key: Key('Icon_${t.title}'),
               color: t.color,
               size: t.iconSize,
             ),
             activeIcon: Icon(
               t.icon,
+              key: Key('Icon_${t.title}_Active'),
               color: Colors.white,
               size: t.iconSize
             ),

@@ -20,13 +20,13 @@ class WorldBossPage extends StatelessWidget {
       child: Scaffold(
         body: Column(
           children: <Widget>[
-            _buildHeader(),
+            _buildHeader(context),
             Expanded(
               child: ListView(
                 padding: EdgeInsets.only(top: 8.0),
                 children: <Widget>[
-                  _buildStats(),
-                  _buildTimes()
+                  _buildStats(context),
+                  _buildTimes(context)
                 ],
               ),
             ),
@@ -36,7 +36,7 @@ class WorldBossPage extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return CompanionHeader(
       color: worldBoss.color,
       wikiName: worldBoss.name,
@@ -67,19 +67,13 @@ class WorldBossPage extends StatelessWidget {
             padding: EdgeInsets.all(4.0),
             child: Text(
               worldBoss.name,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 22.0,
-              ),
+              style: Theme.of(context).textTheme.display1,
               textAlign: TextAlign.center,
             ),
           ),
           Text(
             worldBoss.location,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16.0
-            ),
+            style: Theme.of(context).textTheme.display3,
             textAlign: TextAlign.center,
           ),
         ],
@@ -87,7 +81,7 @@ class WorldBossPage extends StatelessWidget {
     );
   }
 
-  Widget _buildStats() {
+  Widget _buildStats(BuildContext context) {
     return CompanionCard(
       child: Column(
         children: <Widget>[
@@ -95,9 +89,9 @@ class WorldBossPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Stats',
-              style: TextStyle(
-                fontSize: 18.0
-              ),
+              style: Theme.of(context).textTheme.display2.copyWith(
+                color: Colors.black
+              )
             ),
           ),
           CompanionInfoRow(
@@ -117,7 +111,7 @@ class WorldBossPage extends StatelessWidget {
     );
   }
 
-  Widget _buildTimes() {
+  Widget _buildTimes(BuildContext context) {
     return CompanionCard(
       child: Column(
         children: <Widget>[
@@ -125,9 +119,9 @@ class WorldBossPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Spawn Times',
-              style: TextStyle(
-                fontSize: 18.0
-              ),
+              style: Theme.of(context).textTheme.display2.copyWith(
+                color: Colors.black
+              )
             ),
           ),
           Wrap(
@@ -139,10 +133,7 @@ class WorldBossPage extends StatelessWidget {
                 backgroundColor: worldBoss.color,
                 label: Text(
                   timeFormat.format(t),
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0
-                  ),
+                  style: Theme.of(context).textTheme.display3,
                 ),
               ))
               .toList()

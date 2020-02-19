@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,6 +7,7 @@ import 'package:guildwars2_companion/models/trading_post/transaction.dart';
 import 'package:guildwars2_companion/pages/trading_post/trading_post_item.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
+import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
@@ -209,10 +209,9 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
                             RichText(
                               text: TextSpan(
                                 text: 'Items: ',
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black
+                                style: Theme.of(context).textTheme.display3.copyWith(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500
                                 ),
                                 children: [
                                   TextSpan(
@@ -228,10 +227,9 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
                               children: <Widget>[
                                 Text(
                                   'Funds: ',
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black
+                                  style: Theme.of(context).textTheme.display3.copyWith(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500
                                   ),
                                 ),
                                 CompanionCoin(tradingPostDelivery.coins)
@@ -273,9 +271,8 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
         child: Center(
           child: Text(
             'No items found',
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 18.0
+            style: Theme.of(context).textTheme.display2.copyWith(
+              color: Colors.black
             ),
           ),
         ),
@@ -323,9 +320,8 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
                 padding: EdgeInsets.all(16.0),
                 child: Text(
                   'No items found',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18.0
+                  style: Theme.of(context).textTheme.display2.copyWith(
+                    color: Colors.black
                   ),
                 ),
               ),
@@ -349,15 +345,11 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
             leading: Stack(
               alignment: Alignment.topRight,
               children: <Widget>[
-                CachedNetworkImage(
+                CompanionCachedImage(
                   height: 64.0,
                   imageUrl: t.itemInfo.icon,
-                  placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                  errorWidget: (context, url, error) => Center(child: Icon(
-                    FontAwesomeIcons.dizzy,
-                    size: 28,
-                    color: Colors.black,
-                  )),
+                  color: Colors.black,
+                  iconSize: 28,
                   fit: BoxFit.fill,
                 ),
                 if (t.quantity > 1)

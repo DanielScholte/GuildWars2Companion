@@ -1,0 +1,24 @@
+name: Flutter Testing
+
+on: [push]
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Setup Java 12.x
+      uses: actions/setup-java@v1
+      with:
+        java-version: '12.x'
+    - name: Setup Flutter Stable 
+      uses: subosito/flutter-action@v1
+      with:
+        channel: 'stable'
+    - name: Get project packages
+      run: flutter pub get
+    - name: Analyze code
+      run: flutter analyze
+    - name: Run tests
+      run: flutter test

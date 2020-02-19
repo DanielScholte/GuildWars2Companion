@@ -20,7 +20,7 @@ class DungeonPage extends StatelessWidget {
       child: Scaffold(
         body: Column(
           children: <Widget>[
-            _buildHeader(),
+            _buildHeader(context),
             Expanded(
               child: _buildProgression(context)
             )
@@ -30,7 +30,7 @@ class DungeonPage extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return CompanionHeader(
       color: dungeon.color,
       wikiName: dungeon.name,
@@ -61,19 +61,13 @@ class DungeonPage extends StatelessWidget {
             padding: EdgeInsets.all(4.0),
             child: Text(
               dungeon.name,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 22.0,
-              ),
+              style: Theme.of(context).textTheme.display1,
               textAlign: TextAlign.center,
             ),
           ),
           Text(
             dungeon.location,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16.0
-            ),
+            style: Theme.of(context).textTheme.display3,
             textAlign: TextAlign.center,
           ),
         ],
@@ -108,7 +102,7 @@ class DungeonPage extends StatelessWidget {
               child: ListView(
                 padding: EdgeInsets.only(top: 8.0),
                 children: [
-                  _buildProgress(state.includeProgress, _dungeon)
+                  _buildProgress(context, state.includeProgress, _dungeon)
                 ],
               ),
             );
@@ -122,7 +116,7 @@ class DungeonPage extends StatelessWidget {
     );
   }
 
-  Widget _buildProgress(bool includeProgress, Dungeon _dungeon) {
+  Widget _buildProgress(BuildContext context, bool includeProgress, Dungeon _dungeon) {
     return CompanionCard(
       child: Column(
         children: <Widget>[
@@ -130,8 +124,8 @@ class DungeonPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               includeProgress ? 'Daily Progress' : 'Paths',
-              style: TextStyle(
-                fontSize: 18.0
+              style: Theme.of(context).textTheme.display2.copyWith(
+                color: Colors.black
               ),
             ),
           ),
@@ -157,8 +151,8 @@ class DungeonPage extends StatelessWidget {
                       padding: EdgeInsets.all(4.0),
                       child: Text(
                         p.name,
-                        style: TextStyle(
-                          fontSize: 16.0
+                        style: Theme.of(context).textTheme.display3.copyWith(
+                          color: Colors.black
                         ),
                         textAlign: TextAlign.left,
                         overflow: TextOverflow.ellipsis,

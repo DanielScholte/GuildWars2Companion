@@ -19,8 +19,8 @@ class HowToTokenPage extends StatelessWidget {
           Text(
             'To use the Guild Wars 2 Companion app, you need to generate a personal token on the Arenanet website:',
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 16.0
+            style: Theme.of(context).textTheme.display3.copyWith(
+              color: Colors.black
             ),
           ),
           Center(
@@ -32,46 +32,45 @@ class HowToTokenPage extends StatelessWidget {
           Text(
             'Instructions',
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 18.0,
-              fontWeight: FontWeight.w500
+            style: Theme.of(context).textTheme.display2.copyWith(
+              color: Colors.black
             ),
           ),
           Text(
             "After navigating to the above mentioned website, click on the 'New Key' button to generate a new key.",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 16.0
+            style: Theme.of(context).textTheme.display3.copyWith(
+              color: Colors.black
             ),
           ),
           Container(height: 16.0,),
           Text(
             "On the next page, enter a name for the key and select which elements you want to app to have access to.",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 16.0
+            style: Theme.of(context).textTheme.display3.copyWith(
+              color: Colors.black
             ),
           ),
           Text(
             "We recommend to select all the options to get the optimal experience.",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 16.0
+            style: Theme.of(context).textTheme.display3.copyWith(
+              color: Colors.black
             ),
           ),
           Text(
             "Keep in mind, the app can only retrieve the selected information. The app cannot make any changes to your account, and the retrieved information will stay on your phone and won't be shared.",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 16.0
+            style: Theme.of(context).textTheme.display3.copyWith(
+              color: Colors.black
             ),
           ),
           Container(height: 16.0,),
           Text(
             "After creating a new api key, copy and paste the key in the app, or scan the qr code.",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 16.0
+            style: Theme.of(context).textTheme.display3.copyWith(
+              color: Colors.black
             ),
           ),
         ],

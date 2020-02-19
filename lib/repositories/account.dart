@@ -3,13 +3,15 @@ import 'package:guildwars2_companion/models/account/account.dart';
 import 'package:guildwars2_companion/models/account/token_entry.dart';
 import 'package:guildwars2_companion/models/account/token_info.dart';
 import 'package:guildwars2_companion/services/account.dart';
-import 'package:guildwars2_companion/utils/token.dart';
+import 'package:guildwars2_companion/services/token.dart';
 
 class AccountRepository {
   final AccountService accountService;
+  final TokenService tokenService;
 
   AccountRepository({
-    @required this.accountService
+    @required this.accountService,
+    @required this.tokenService
   });
 
   Future<List<TokenEntry>> getTokens() {
@@ -27,12 +29,24 @@ class AccountRepository {
   Future<TokenInfo> getTokenInfo(String token) async {
     TokenInfo tokenInfo = await accountService.getTokenInfo(token);
     
-    await TokenUtil.setToken(token);
+    await tokenService.setToken(token);
     
     return tokenInfo;
   }
 
   Future<Account> getAccount(String token) {
     return accountService.getAccount(token);
+  }
+
+  Future<bool> tokenPresent() {
+    return tokenService.tokenPresent();
+  }
+
+  Future<String> getCurrentToken() {
+    return tokenService.getToken();
+  }
+
+  Future<bool> removeCurrentToken() {
+    return tokenService.removeToken();
   }
 }

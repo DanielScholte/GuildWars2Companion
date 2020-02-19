@@ -1,8 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/models/mastery/mastery.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_row.dart';
@@ -40,15 +39,11 @@ class MasteryLevelPage extends StatelessWidget {
                       tag: level.name,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(6.0),
-                        child: CachedNetworkImage(
+                        child: CompanionCachedImage(
                           height: 60.0,
                           imageUrl: level.icon,
-                          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                          errorWidget: (context, url, error) => Center(child: Icon(
-                            FontAwesomeIcons.dizzy,
-                            size: 28,
-                            color: Colors.white,
-                          )),
+                          color: Colors.white,
+                          iconSize: 28,
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -59,20 +54,14 @@ class MasteryLevelPage extends StatelessWidget {
                       padding: EdgeInsets.only(top: 4.0),
                       child: Text(
                         'Completed',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          color: Colors.white
-                        ),
+                        style: Theme.of(context).textTheme.display3
                       ),
                     ),
                   Padding(
                     padding: EdgeInsets.only(top: 4.0),
                     child: Text(
                       level.name,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22.0,
-                      ),
+                      style: Theme.of(context).textTheme.display1,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -80,10 +69,7 @@ class MasteryLevelPage extends StatelessWidget {
                     padding: EdgeInsets.only(top: 4.0),
                     child: Text(
                       mastery.name,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0,
-                      ),
+                      style: Theme.of(context).textTheme.display3,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -95,9 +81,9 @@ class MasteryLevelPage extends StatelessWidget {
                 padding: EdgeInsets.only(top: 8.0),
                 children: <Widget>[
                   if (level.description != null && level.description.isNotEmpty)
-                    _buildDescription('Description', level.description),
+                    _buildDescription(context, 'Description', level.description),
                   if (level.instruction != null && level.instruction.isNotEmpty)
-                    _buildDescription('Instructions', level.instruction),
+                    _buildDescription(context, 'Instructions', level.instruction),
                   CompanionCard(
                     child: Column(
                       children: <Widget>[
@@ -105,8 +91,8 @@ class MasteryLevelPage extends StatelessWidget {
                           padding: EdgeInsets.only(bottom: 8.0),
                           child: Text(
                             'Information',
-                            style: TextStyle(
-                              fontSize: 18.0
+                            style: Theme.of(context).textTheme.display2.copyWith(
+                              color: Colors.black
                             ),
                           ),
                         ),
@@ -134,7 +120,7 @@ class MasteryLevelPage extends StatelessWidget {
     );
   }
 
-  Widget _buildDescription(String title, String text) {
+  Widget _buildDescription(BuildContext context, String title, String text) {
     return CompanionCard(
       child: Column(
         children: <Widget>[
@@ -142,15 +128,15 @@ class MasteryLevelPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               title,
-              style: TextStyle(
-                fontSize: 18.0
+              style: Theme.of(context).textTheme.display2.copyWith(
+                color: Colors.black
               ),
             ),
           ),
           Text(
             text,
-            style: TextStyle(
-              fontSize: 16.0
+            style: Theme.of(context).textTheme.display3.copyWith(
+              color: Colors.black
             ),
           ),
         ],

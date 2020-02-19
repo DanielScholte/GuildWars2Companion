@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,17 +6,19 @@ import 'package:guildwars2_companion/blocs/achievement/achievement_bloc.dart';
 import 'package:guildwars2_companion/blocs/achievement/achievement_state.dart';
 import 'package:guildwars2_companion/blocs/dungeon/bloc.dart';
 import 'package:guildwars2_companion/blocs/event/event_bloc.dart';
+import 'package:guildwars2_companion/blocs/pvp/pvp_bloc.dart';
 import 'package:guildwars2_companion/blocs/raid/raid_bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/blocs/world_boss/bloc.dart';
 import 'package:guildwars2_companion/pages/home/dungeons/dungeons.dart';
 import 'package:guildwars2_companion/pages/home/events/meta_events.dart';
+import 'package:guildwars2_companion/pages/home/pvp/pvp.dart';
 import 'package:guildwars2_companion/pages/home/raids/raids.dart';
 import 'package:guildwars2_companion/pages/home/wallet/wallet.dart';
 import 'package:guildwars2_companion/pages/home/world_bosses/world_bosses.dart';
 import 'package:guildwars2_companion/pages/info.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
-import 'package:guildwars2_companion/utils/token.dart';
+import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
@@ -74,7 +75,10 @@ class HomePage extends StatelessWidget {
                     FontAwesomeIcons.signOutAlt,
                     size: 20.0,
                   ),
-                  onPressed: () => BlocProvider.of<AccountBloc>(context).add(UnauthenticateEvent()),
+                  onPressed: () {
+                    BlocProvider.of<PvpBloc>(context).add(ResetPvpEvent());
+                    BlocProvider.of<AccountBloc>(context).add(UnauthenticateEvent());
+                  }
                 ),
               ],
             ),
@@ -111,6 +115,8 @@ class HomePage extends StatelessWidget {
                           _buildWallet(context),
                         _buildWorldBosses(context, state.tokenInfo.permissions.contains('progression')),
                         _buildEvents(context),
+                        if (state.tokenInfo.permissions.contains('pvp'))
+                          _buildPvp(context),
                         _buildRaids(context, state.tokenInfo.permissions.contains('progression')),
                         _buildDungeons(context, state.tokenInfo.permissions.contains('progression'))
                       ],
@@ -127,7 +133,7 @@ class HomePage extends StatelessWidget {
             child: CompanionError(
               title: 'the account',
               onTryAgain: () async =>
-                BlocProvider.of<AccountBloc>(context).add(AuthenticateEvent(await TokenUtil.getToken())),
+                BlocProvider.of<AccountBloc>(context).add(SetupAccountEvent()),
             ),
           ),
         );
@@ -146,6 +152,13 @@ class HomePage extends StatelessWidget {
           );
         }
 
+        if (state is ErrorAchievementsState) {
+          return CompanionInfoBox(
+            header: 'Mastery level',
+            loading: false,
+          );
+        }
+
         return CompanionInfoBox(
           header: 'Mastery level',
         );
@@ -160,6 +173,13 @@ class HomePage extends StatelessWidget {
           return CompanionInfoBox(
             header: 'Achievements',
             text: GuildWarsUtil.intToString(state.achievementPoints + dailies),
+            loading: false,
+          );
+        }
+
+        if (state is ErrorAchievementsState) {
+          return CompanionInfoBox(
+            header: 'Achievements',
             loading: false,
           );
         }
@@ -212,17 +232,10 @@ class HomePage extends StatelessWidget {
                       width: 20.0,
                       height: 20.0,
                       margin: EdgeInsets.symmetric(horizontal: 8.0),
-                      child: CachedNetworkImage(
+                      child: CompanionCachedImage(
                         imageUrl: c.icon,
-                        placeholder: (context, url) => Theme(
-                          data: Theme.of(context).copyWith(accentColor: Colors.white),
-                          child: CircularProgressIndicator(),
-                        ),
-                        errorWidget: (context, url, error) => Center(child: Icon(
-                        FontAwesomeIcons.dizzy,
-                        size: 14,
                         color: Colors.white,
-                      )),
+                        iconSize: 14,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -273,6 +286,21 @@ class HomePage extends StatelessWidget {
           );
         }
 
+        if (state is ErrorWalletState) {
+          return CompanionButton(
+            color: Colors.orange,
+            title: 'Wallet',
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => WalletPage())
+            ),
+            leading: Icon(
+              FontAwesomeIcons.dizzy,
+              size: 35.0,
+              color: Colors.white,
+            ),
+          );
+        }
+
         return CompanionButton(
           color: Colors.orange,
           title: 'Wallet',
@@ -280,6 +308,22 @@ class HomePage extends StatelessWidget {
           loading: true,
         );
       },
+    );
+  }
+
+  Widget _buildPvp(BuildContext context) {
+    return CompanionButton(
+      color: Color(0xFF678A9E),
+      title: 'PvP',
+      onTap: () {
+        if (!(BlocProvider.of<PvpBloc>(context).state is LoadedPvpState)) {
+          BlocProvider.of<PvpBloc>(context).add(LoadPvpEvent());
+        }
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => PvpPage()
+        ));
+      },
+      leading: Image.asset('assets/button_headers/pvp.jpg'),
     );
   }
 

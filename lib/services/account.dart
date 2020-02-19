@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 import 'package:guildwars2_companion/migrations/token.dart';
 import 'package:guildwars2_companion/models/account/token_entry.dart';
 import 'package:path/path.dart';
@@ -6,19 +7,16 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_migration/sqflite_migration.dart';
 import '../models/account/account.dart';
 import '../models/account/token_info.dart';
-import '../utils/dio.dart';
 import '../utils/urls.dart';
 
 class AccountService {
   List<TokenEntry> _tokenEntries;
 
-  Dio _dio;
+  Dio dio;
 
-  AccountService() {
-    _dio = DioUtil.getDioInstance(
-      includeTokenInterceptor: false
-    );
-  }
+  AccountService({
+    @required this.dio,
+  });
 
   Future<Database> _getDatabase() async {
     return await openDatabaseWithMigration(
@@ -83,7 +81,7 @@ class AccountService {
   }
 
   Future<Account> getAccount(String token) async {
-    final response = await _dio.get(
+    final response = await dio.get(
       Urls.accountUrl,
       options: Options(
         headers: {
@@ -100,7 +98,7 @@ class AccountService {
   }
 
   Future<TokenInfo> getTokenInfo(String token) async {
-    final response = await _dio.get(
+    final response = await dio.get(
       Urls.tokenInfoUrl,
       options: Options(
         headers: {

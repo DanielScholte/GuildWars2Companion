@@ -92,10 +92,7 @@ class DungeonsPage extends StatelessWidget {
                   padding: EdgeInsets.only(left: 4.0),
                   child: Text(
                     p.name,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.0,
-                    ),
+                    style: Theme.of(context).textTheme.display3,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

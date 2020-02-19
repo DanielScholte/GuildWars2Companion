@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 import '../migrations/item.dart';
 import '../migrations/mini.dart';
 import '../migrations/skin.dart';
 import '../models/items/item.dart';
 import '../models/items/skin.dart';
 import '../models/other/mini.dart';
-import '../utils/dio.dart';
 import '../utils/urls.dart';
 
 import 'package:intl/intl.dart';
@@ -20,11 +20,11 @@ class ItemService {
   List<Skin> _cachedSkins;
   List<Mini> _cachedMinis;
 
-  Dio _dio;
+  Dio dio;
 
-  ItemService() {
-    _dio = DioUtil.getDioInstance();
-  }
+  ItemService({
+    @required this.dio,
+  });
 
   Future<Database> _getItemDatabase() async {
     return await openDatabaseWithMigration(
@@ -131,7 +131,7 @@ class ItemService {
     List<String> itemIdsList = Urls.divideIdLists(itemIds);
     List<Item> items = [];
     for (var itemIdsString in itemIdsList) {
-      final response = await _dio.get(Urls.itemsUrl + itemIdsString);
+      final response = await dio.get(Urls.itemsUrl + itemIdsString);
 
       if (response.statusCode == 200 || response.statusCode == 206) {
         List reponseItems = response.data;
@@ -197,7 +197,7 @@ class ItemService {
     List<String> skinIdsList = Urls.divideIdLists(skinIds);
     List<Skin> skins = [];
     for (var skinIds in skinIdsList) {
-      final response = await _dio.get(Urls.skinsUrl + skinIds);
+      final response = await dio.get(Urls.skinsUrl + skinIds);
 
       if (response.statusCode == 200 || response.statusCode == 206) {
         List reponseSkins = response.data;
@@ -263,7 +263,7 @@ class ItemService {
     List<String> miniIdsList = Urls.divideIdLists(miniIds);
     List<Mini> minis = [];
     for (var skinIds in miniIdsList) {
-      final response = await _dio.get(Urls.minisUrl + skinIds);
+      final response = await dio.get(Urls.minisUrl + skinIds);
 
       if (response.statusCode == 200 || response.statusCode == 206) {
         List reponseMinis = response.data;
