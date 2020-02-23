@@ -96,7 +96,7 @@ class TokenPage extends StatelessWidget {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: <Widget>[
                                         Text(
-                                          'Delete token',
+                                          'Delete Api Key',
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 18.0
@@ -124,7 +124,7 @@ class TokenPage extends StatelessWidget {
                                           ),
                                         ),
                                         Text(
-                                          'Delete token',
+                                          'Delete Api Key',
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 18.0
@@ -148,7 +148,7 @@ class TokenPage extends StatelessWidget {
                                 Column(
                                   children: <Widget>[
                                     Text(
-                                      'No tokens found',
+                                      'No Api Keys found',
                                       style: TextStyle(
                                         fontSize: 24.0,
                                         fontWeight: FontWeight.w500
@@ -242,7 +242,7 @@ class TokenPage extends StatelessWidget {
                       fontWeight: FontWeight.w500
                     ),
                     backgroundColor: Colors.blue,
-                    label: 'Enter token by Qr Code',
+                    label: 'Enter Api Key by Qr Code',
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => QrCodePage()
                     )),
@@ -257,7 +257,7 @@ class TokenPage extends StatelessWidget {
                       fontWeight: FontWeight.w500
                     ),
                     backgroundColor: Colors.blue,
-                    label: 'Enter token by text',
+                    label: 'Enter Api Key by text',
                     onTap: () => _addTokenByText(context),
                   ),
                   SpeedDialChild(
@@ -270,7 +270,7 @@ class TokenPage extends StatelessWidget {
                       fontWeight: FontWeight.w500
                     ),
                     backgroundColor: Colors.deepOrange,
-                    label: 'How do I get a token?',
+                    label: 'How do I get an Api Key?',
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => HowToTokenPage()
                     )),
@@ -325,11 +325,11 @@ class TokenPage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Add your Guild Wars 2 token'),
+          title: Text('Add your Guild Wars 2 Api Key'),
           content: TextField(
             controller: tokenFieldController,
             decoration: InputDecoration(
-              hintText: 'Token',
+              hintText: 'Api Key',
             ),
           ),
           actions: <Widget>[

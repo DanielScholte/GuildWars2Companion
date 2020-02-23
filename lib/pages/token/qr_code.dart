@@ -92,7 +92,7 @@ class _QrCodePageState extends State<QrCodePage> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            'Checking token...',
+                            'Checking Api Key...',
                             style: Theme.of(context).textTheme.display2
                           ),
                         )

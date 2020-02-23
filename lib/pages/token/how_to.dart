@@ -8,7 +8,7 @@ class HowToTokenPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CompanionAppBar(
-        title: 'How do I get a token?',
+        title: 'How do I get an Api Key?',
         color: Colors.red,
         foregroundColor: Colors.white,
         elevation: 4.0,
@@ -17,7 +17,7 @@ class HowToTokenPage extends StatelessWidget {
         padding: EdgeInsets.all(8.0),
         children: <Widget>[
           Text(
-            'To use the Guild Wars 2 Companion app, you need to generate a personal token on the Arenanet website:',
+            'To use the Guild Wars 2 Companion app, you need to generate a personal Api Key on the Arenanet website:',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.display3.copyWith(
               color: Colors.black
