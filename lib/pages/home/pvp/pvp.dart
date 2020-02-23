@@ -104,7 +104,7 @@ class PvpPage extends StatelessWidget {
           Expanded(
             child: RefreshIndicator(
               backgroundColor: Theme.of(context).accentColor,
-              color: Colors.white,
+              color: Theme.of(context).cardColor,
               onRefresh: () async {
                 BlocProvider.of<PvpBloc>(context).add(LoadPvpEvent());
                 await Future.delayed(Duration(milliseconds: 200), () {});

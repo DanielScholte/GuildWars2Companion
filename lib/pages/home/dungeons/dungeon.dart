@@ -95,7 +95,7 @@ class DungeonPage extends StatelessWidget {
           if (_dungeon != null) {
             return RefreshIndicator(
               backgroundColor: Theme.of(context).accentColor,
-              color: Colors.white,
+              color: Theme.of(context).cardColor,
               onRefresh: () async {
                 BlocProvider.of<DungeonBloc>(context).add(LoadDungeonsEvent(state.includeProgress));
                 await Future.delayed(Duration(milliseconds: 200), () {});

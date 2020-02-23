@@ -309,7 +309,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
     if (transactions.where((t) => t.itemInfo != null).isEmpty) {
       return RefreshIndicator(
         backgroundColor: Colors.green,
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         onRefresh: () async {
           BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostEvent());
           await Future.delayed(Duration(milliseconds: 200), () {});
@@ -334,7 +334,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
 
     return RefreshIndicator(
       backgroundColor: Colors.green,
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       onRefresh: () async {
         BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostEvent());
         await Future.delayed(Duration(milliseconds: 200), () {});

@@ -160,7 +160,7 @@ class TradingPostItemPage extends StatelessWidget {
     if (offers.isEmpty) {
       return RefreshIndicator(
         backgroundColor: Theme.of(context).accentColor,
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         onRefresh: () async {
           BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostListingsEvent(
             buying: state.buying,
@@ -192,7 +192,7 @@ class TradingPostItemPage extends StatelessWidget {
 
     return RefreshIndicator(
       backgroundColor: Theme.of(context).accentColor,
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       onRefresh: () async {
         BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostListingsEvent(
           buying: state.buying,

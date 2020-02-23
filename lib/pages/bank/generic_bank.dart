@@ -40,8 +40,8 @@ class GenericBankPage extends StatelessWidget {
               List<InventoryItem> inventory = bankType == BankType.bank 
                 ? state.bank : state.inventory;
               return RefreshIndicator(
-                backgroundColor: Theme.of(context).cardColor,
-                color: Colors.white,
+                backgroundColor: Theme.of(context).accentColor,
+                color: Theme.of(context).cardColor,
                 onRefresh: () async {
                   BlocProvider.of<BankBloc>(context).add(LoadBankEvent());
                   await Future.delayed(Duration(milliseconds: 200), () {});

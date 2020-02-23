@@ -79,7 +79,7 @@ class _MetaEventPageState extends State<MetaEventPage> {
 
               return RefreshIndicator(
                 backgroundColor: Theme.of(context).accentColor,
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 onRefresh: () async {
                   BlocProvider.of<EventBloc>(context).add(LoadEventsEvent(id: widget.metaEventSequence.id));
                   await Future.delayed(Duration(milliseconds: 200), () {});

@@ -121,7 +121,7 @@ class _TabPageState extends State<TabPage> {
             icon: Icon(
               t.icon,
               key: Key('Icon_${t.title}'),
-              color: t.color,
+              color: Theme.of(context).brightness == Brightness.light ? t.color : Colors.white70,
               size: t.iconSize,
             ),
             activeIcon: Icon(

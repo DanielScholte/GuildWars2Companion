@@ -67,7 +67,7 @@ class InventoryPage extends StatelessWidget {
 
                 return RefreshIndicator(
                   backgroundColor: Theme.of(context).accentColor,
-                  color: Colors.white,
+                  color: Theme.of(context).cardColor,
                   onRefresh: () async {
                     BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterItemsEvent());
                     await Future.delayed(Duration(milliseconds: 200), () {});

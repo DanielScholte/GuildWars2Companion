@@ -44,7 +44,7 @@ class AchievementsPage extends StatelessWidget {
               if (_achievementCategory != null) {
                 return RefreshIndicator(
                   backgroundColor: Theme.of(context).accentColor,
-                  color: Colors.white,
+                  color: Theme.of(context).cardColor,
                   onRefresh: () async {
                     BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
                       includeProgress: state.includesProgress

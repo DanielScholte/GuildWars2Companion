@@ -90,7 +90,7 @@ class RaidPage extends StatelessWidget {
           if (_raid != null) {
             return RefreshIndicator(
               backgroundColor: Theme.of(context).accentColor,
-              color: Colors.white,
+              color: Theme.of(context).cardColor,
               onRefresh: () async {
                 BlocProvider.of<RaidBloc>(context).add(LoadRaidsEvent(state.includeProgress));
                 await Future.delayed(Duration(milliseconds: 200), () {});

@@ -37,7 +37,7 @@ class CharactersPage extends StatelessWidget {
             if (state is LoadedCharactersState) {
               return RefreshIndicator(
                 backgroundColor: Theme.of(context).accentColor,
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 onRefresh: () async {
                   BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent());
                   await Future.delayed(Duration(milliseconds: 200), () {});

@@ -39,7 +39,7 @@ class ProgressionPage extends StatelessWidget {
             if (state is LoadedAchievementsState) {
               return RefreshIndicator(
                 backgroundColor: Theme.of(context).accentColor,
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 onRefresh: () async {
                   BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
                     includeProgress: state.includesProgress

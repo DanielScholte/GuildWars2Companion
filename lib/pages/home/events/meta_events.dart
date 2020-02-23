@@ -39,7 +39,7 @@ class MetaEventsPage extends StatelessWidget {
             if (state is LoadedEventsState) {
               return RefreshIndicator(
                 backgroundColor: Theme.of(context).accentColor,
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 onRefresh: () async {
                   BlocProvider.of<EventBloc>(context).add(LoadEventsEvent());
                   await Future.delayed(Duration(milliseconds: 200), () {});

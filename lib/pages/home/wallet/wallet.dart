@@ -35,8 +35,8 @@ class WalletPage extends StatelessWidget {
 
             if (state is LoadedWalletState) {
               return RefreshIndicator(
-                backgroundColor: Colors.orange,
-                color: Colors.white,
+                backgroundColor: Theme.of(context).accentColor,
+                color: Theme.of(context).cardColor,
                 onRefresh: () async {
                   BlocProvider.of<WalletBloc>(context).add(LoadWalletEvent());
                   await Future.delayed(Duration(milliseconds: 200), () {});

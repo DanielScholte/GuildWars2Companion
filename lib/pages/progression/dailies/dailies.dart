@@ -92,7 +92,7 @@ class DailiesPage extends StatelessWidget {
   Widget _buildDailyTab(BuildContext context, LoadedAchievementsState state, List<Daily> dailies, String prefix) {
     return RefreshIndicator(
       backgroundColor: Theme.of(context).accentColor,
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       onRefresh: () async {
         BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
           includeProgress: state.includesProgress
