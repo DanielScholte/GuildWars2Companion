@@ -8,6 +8,7 @@ class CompanionAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Color foregroundColor;
   final double elevation;
   final Widget bottom;
+  final bool implyLeading;
 
   CompanionAppBar({
     @required this.title,
@@ -15,12 +16,14 @@ class CompanionAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.color = Colors.transparent,
     this.foregroundColor = Colors.black87,
     this.elevation = 0,
-    this.bottom
+    this.bottom,
+    this.implyLeading = true,
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: implyLeading,
       iconTheme: IconThemeData(
         color: foregroundColor,
       ),

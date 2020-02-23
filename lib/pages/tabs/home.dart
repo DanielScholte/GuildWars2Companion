@@ -63,7 +63,7 @@ class HomePage extends StatelessWidget {
               actions: <Widget>[
                 IconButton(
                   icon: Icon(
-                    FontAwesomeIcons.infoCircle,
+                    FontAwesomeIcons.cog,
                     size: 20.0,
                   ),
                   onPressed: () => Navigator.of(context).push(MaterialPageRoute(

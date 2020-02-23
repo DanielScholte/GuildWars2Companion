@@ -65,6 +65,9 @@ Future main() async {
   );
   await itemService.loadCachedData();
 
+  final ConfigurationProvider configurationProvider = ConfigurationProvider();
+  await configurationProvider.loadConfiguration();
+
   runApp(GuildWars2Companion(
     accountService: accountService,
     achievementService: AchievementService(dio: dioUtil.getDioInstance()),
@@ -80,7 +83,7 @@ Future main() async {
     tradingPostService: TradingPostService(dio: dioUtil.getDioInstance()),
     walletService: WalletService(dio: dioUtil.getDioInstance()),
     worldBossService: WorldBossService(dio: dioUtil.getDioInstance()),
-    configurationProvider: ConfigurationProvider(),
+    configurationProvider: configurationProvider,
     isAuthenticated: await tokenService.tokenPresent(),
   ));
 }
