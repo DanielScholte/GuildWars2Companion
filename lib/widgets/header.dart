@@ -10,6 +10,7 @@ class CompanionHeader extends StatelessWidget {
   final bool includeBack;
   final String wikiName;
   final bool includeShadow;
+  final bool enforceColor;
 
   CompanionHeader({
     @required this.child,
@@ -17,14 +18,15 @@ class CompanionHeader extends StatelessWidget {
     this.foregroundColor = Colors.white,
     this.includeBack = false,
     this.includeShadow = true,
-    this.wikiName
+    this.wikiName,
+    this.enforceColor = false
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).brightness == Brightness.light ? color : Theme.of(context).cardColor,
+        color: Theme.of(context).brightness == Brightness.light || enforceColor ? color : Theme.of(context).cardColor,
         boxShadow: [
           if (includeShadow && Theme.of(context).brightness == Brightness.light)
             BoxShadow(
