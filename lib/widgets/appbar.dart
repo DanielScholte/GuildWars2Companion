@@ -40,8 +40,8 @@ class CompanionAppBar extends StatelessWidget implements PreferredSizeWidget {
           )
         ],
       ),
-      backgroundColor: color,
-      elevation: elevation,
+      backgroundColor: Theme.of(context).brightness == Brightness.light ? color : Theme.of(context).cardColor,
+      elevation: Theme.of(context).brightness == Brightness.light ? elevation : 0.0,
       bottom: bottom,
     );
   }

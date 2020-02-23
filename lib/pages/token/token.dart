@@ -5,7 +5,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/models/account/token_entry.dart';
-import 'package:guildwars2_companion/pages/info.dart';
+import 'package:guildwars2_companion/pages/configuration/configuration.dart';
 import 'package:guildwars2_companion/pages/tab.dart';
 import 'package:guildwars2_companion/pages/token/how_to.dart';
 import 'package:guildwars2_companion/pages/token/qr_code.dart';
@@ -287,7 +287,7 @@ class TokenPage extends StatelessWidget {
                       fontWeight: FontWeight.w500
                     ),
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => InfoPage()
+                      builder: (context) => ConfigurationPage()
                     )),
                   ),
                 ],

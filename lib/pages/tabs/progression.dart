@@ -5,6 +5,7 @@ import 'package:guildwars2_companion/pages/progression/achievements/achievement_
 import 'package:guildwars2_companion/pages/progression/dailies/daily_categories.dart';
 import 'package:guildwars2_companion/pages/progression/masteries/masteries.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
@@ -12,8 +13,8 @@ import 'package:guildwars2_companion/widgets/button.dart';
 class ProgressionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.orange),
+    return CompanionAccent(
+      lightColor: Colors.orange,
       child: Scaffold(
         appBar: CompanionAppBar(
           title: 'Progression',

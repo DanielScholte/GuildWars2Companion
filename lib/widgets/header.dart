@@ -24,9 +24,9 @@ class CompanionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: color,
+        color: Theme.of(context).brightness == Brightness.light ? color : Theme.of(context).cardColor,
         boxShadow: [
-          if (includeShadow)
+          if (includeShadow && Theme.of(context).brightness == Brightness.light)
             BoxShadow(
               color: Colors.black38,
               blurRadius: 8.0,

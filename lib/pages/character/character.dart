@@ -8,6 +8,7 @@ import 'package:guildwars2_companion/pages/character/equipment.dart';
 import 'package:guildwars2_companion/pages/character/inventory.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
@@ -22,8 +23,8 @@ class CharacterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: _character.professionColor),
+    return CompanionAccent(
+      lightColor: _character.professionColor,
       child: Scaffold(
         body: Column(
           children: <Widget>[

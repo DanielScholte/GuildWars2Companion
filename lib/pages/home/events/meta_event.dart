@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/event/event_bloc.dart';
 import 'package:guildwars2_companion/models/other/meta_event.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
@@ -52,8 +53,8 @@ class _MetaEventPageState extends State<MetaEventPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: GuildWarsUtil.regionColor(widget.metaEventSequence.region)),
+    return CompanionAccent(
+      lightColor: GuildWarsUtil.regionColor(widget.metaEventSequence.region),
       child: Scaffold(
         appBar: CompanionAppBar(
           title: widget.metaEventSequence.name,

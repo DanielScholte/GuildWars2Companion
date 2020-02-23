@@ -5,6 +5,7 @@ import 'package:guildwars2_companion/blocs/bank/bloc.dart';
 import 'package:guildwars2_companion/pages/bank/generic_bank.dart';
 import 'package:guildwars2_companion/pages/bank/material.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
@@ -12,8 +13,8 @@ import 'package:guildwars2_companion/widgets/button.dart';
 class BankPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.indigo),
+    return CompanionAccent(
+      lightColor: Colors.indigo,
       child: Scaffold(
         appBar: CompanionAppBar(
           title: 'Bank',

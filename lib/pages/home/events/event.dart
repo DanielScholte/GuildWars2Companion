@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/models/other/meta_event.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:intl/intl.dart';
@@ -18,8 +19,8 @@ class EventPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.orange),
+    return CompanionAccent(
+      lightColor: Colors.orange,
       child: Scaffold(
         body: Column(
           children: <Widget>[

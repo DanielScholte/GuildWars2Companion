@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/models/other/world_boss.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_row.dart';
@@ -15,8 +16,8 @@ class WorldBossPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: worldBoss.color),
+    return CompanionAccent(
+      lightColor: worldBoss.color,
       child: Scaffold(
         body: Column(
           children: <Widget>[

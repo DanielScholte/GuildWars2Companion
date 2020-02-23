@@ -13,52 +13,49 @@ import 'mastery_levels.dart';
 class MasteriesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.red),
-      child: Scaffold(
-        appBar: CompanionAppBar(
-          title: 'Masteries',
-          color: Colors.red,
-          foregroundColor: Colors.white,
-          elevation: 4.0,
-        ),
-        body: BlocBuilder<AchievementBloc, AchievementState>(
-          builder: (context, state) {
-            if (state is ErrorAchievementsState) {
-              return Center(
-                child: CompanionError(
-                  title: 'the masteries',
-                  onTryAgain: () =>
-                    BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
-                      includeProgress: state.includesProgress
-                    )),
-                ),
-              );
-            }
-
-            if (state is LoadedAchievementsState) {
-              return RefreshIndicator(
-                backgroundColor: Theme.of(context).accentColor,
-                color: Colors.white,
-                onRefresh: () async {
+    return Scaffold(
+      appBar: CompanionAppBar(
+        title: 'Masteries',
+        color: Colors.red,
+        foregroundColor: Colors.white,
+        elevation: 4.0,
+      ),
+      body: BlocBuilder<AchievementBloc, AchievementState>(
+        builder: (context, state) {
+          if (state is ErrorAchievementsState) {
+            return Center(
+              child: CompanionError(
+                title: 'the masteries',
+                onTryAgain: () =>
                   BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
                     includeProgress: state.includesProgress
-                  ));
-                  await Future.delayed(Duration(milliseconds: 200), () {});
-                },
-                child: ListView(
-                  children: state.masteries
-                    .map((g) => _buildMastery(context, g))
-                    .toList(),
-                ),
-              );
-            }
-
-            return Center(
-              child: CircularProgressIndicator(),
+                  )),
+              ),
             );
-          },
-        ),
+          }
+
+          if (state is LoadedAchievementsState) {
+            return RefreshIndicator(
+              backgroundColor: Theme.of(context).accentColor,
+              color: Colors.white,
+              onRefresh: () async {
+                BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
+                  includeProgress: state.includesProgress
+                ));
+                await Future.delayed(Duration(milliseconds: 200), () {});
+              },
+              child: ListView(
+                children: state.masteries
+                  .map((g) => _buildMastery(context, g))
+                  .toList(),
+              ),
+            );
+          }
+
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        },
       ),
     );
   }

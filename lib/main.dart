@@ -13,6 +13,7 @@ import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/blocs/world_boss/bloc.dart';
 import 'package:guildwars2_companion/pages/tab.dart';
 import 'package:guildwars2_companion/pages/token/token.dart';
+import 'package:guildwars2_companion/providers/configuration.dart';
 import 'package:guildwars2_companion/repositories/account.dart';
 import 'package:guildwars2_companion/repositories/achievement.dart';
 import 'package:guildwars2_companion/repositories/bank.dart';
@@ -39,6 +40,8 @@ import 'package:guildwars2_companion/services/trading_post.dart';
 import 'package:guildwars2_companion/services/wallet.dart';
 import 'package:guildwars2_companion/services/world_boss.dart';
 import 'package:guildwars2_companion/utils/dio.dart';
+import 'package:guildwars2_companion/utils/theme.dart';
+import 'package:provider/provider.dart';
 
 import 'blocs/dungeon/bloc.dart';
 
@@ -77,6 +80,7 @@ Future main() async {
     tradingPostService: TradingPostService(dio: dioUtil.getDioInstance()),
     walletService: WalletService(dio: dioUtil.getDioInstance()),
     worldBossService: WorldBossService(dio: dioUtil.getDioInstance()),
+    configurationProvider: ConfigurationProvider(),
     isAuthenticated: await tokenService.tokenPresent(),
   ));
 }
@@ -97,6 +101,8 @@ class GuildWars2Companion extends StatelessWidget {
   final WalletService walletService;
   final WorldBossService worldBossService;
 
+  final ConfigurationProvider configurationProvider;
+
   final bool isAuthenticated;
 
   const GuildWars2Companion({
@@ -114,6 +120,7 @@ class GuildWars2Companion extends StatelessWidget {
     @required this.tradingPostService,
     @required this.walletService,
     @required this.worldBossService,
+    @required this.configurationProvider,
     @required this.isAuthenticated
   });
 
@@ -123,35 +130,17 @@ class GuildWars2Companion extends StatelessWidget {
 
     return _initializeRepositories(
       child: _initializeBlocs(
-        child: MaterialApp(
-          title: 'Guild Wars 2 Companion',
-          theme: ThemeData(
-            brightness: Brightness.light,
-            primarySwatch: Colors.red,
-            primaryColor: Color(0xFFAA0404),
-            accentColor: Colors.red,
-            scaffoldBackgroundColor: Color(0xFFEEEEEE),
-            cursorColor: Color(0xFFAA0404),
-            textTheme: TextTheme(
-              display1: TextStyle(
-                fontSize: 22.0,
-                color: Colors.white,
-                fontWeight: FontWeight.normal
-              ),
-              display2: TextStyle(
-                fontSize: 18.0,
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-              ),
-              display3: TextStyle(
-                fontSize: 16.0,
-                color: Colors.white,
-                fontWeight: FontWeight.normal,
-              )
-            )
-          ),
-          home: isAuthenticated ? TabPage() : TokenPage(),
-        ),
+        child: _initializeConfiguration(
+          builder: (context, state, child) {
+            return MaterialApp(
+              title: 'Guild Wars 2 Companion',
+              theme: ThemeUtil.getLightTheme(),
+              darkTheme: ThemeUtil.getDarkTheme(),
+              themeMode: state.themeMode,
+              home: isAuthenticated ? TabPage() : TokenPage(),
+            );
+          }
+        ) ,
       ),
     );
   }
@@ -286,6 +275,17 @@ class GuildWars2Companion extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _initializeConfiguration({
+    Widget Function(BuildContext, ConfigurationProvider, Widget) builder
+  }) {
+    return ChangeNotifierProvider<ConfigurationProvider>(
+      create: (context) => configurationProvider,
+      child: Consumer<ConfigurationProvider>(
+        builder: builder,
+      ),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/models/mastery/mastery.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
@@ -15,8 +16,8 @@ class MasteryLevelPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: GuildWarsUtil.regionColor(mastery.region)),
+    return CompanionAccent(
+      lightColor: GuildWarsUtil.regionColor(mastery.region),
       child: Scaffold(
         body: Column(
           children: <Widget>[

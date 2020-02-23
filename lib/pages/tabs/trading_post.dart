@@ -6,6 +6,7 @@ import 'package:guildwars2_companion/models/trading_post/delivery.dart';
 import 'package:guildwars2_companion/models/trading_post/transaction.dart';
 import 'package:guildwars2_companion/pages/trading_post/trading_post_item.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
@@ -41,8 +42,8 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.green),
+    return CompanionAccent(
+      lightColor: Colors.green,
       child: DefaultTabController(
         length: 4,
         child: Scaffold(
@@ -54,8 +55,8 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
           body: Column(
             children: <Widget>[
               Material(
-                color: Colors.green,
-                elevation: 4.0,
+                color: Theme.of(context).brightness == Brightness.light ? Colors.green : Theme.of(context).cardColor,
+                elevation: Theme.of(context).brightness == Brightness.light ? 4.0 : 0.0,
                 child: TabBar(
                   indicatorColor: Colors.white,
                   tabs: [

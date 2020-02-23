@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/models/pvp/season.dart';
 import 'package:guildwars2_companion/models/pvp/standing.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
@@ -20,8 +21,8 @@ class SeasonPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.blueGrey),
+    return CompanionAccent(
+      lightColor: Colors.blueGrey,
       child: Scaffold(
         body: Column(
           children: <Widget>[

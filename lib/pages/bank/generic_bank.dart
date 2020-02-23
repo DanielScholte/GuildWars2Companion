@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/bank/bloc.dart';
 import 'package:guildwars2_companion/models/items/inventory.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
@@ -14,10 +15,8 @@ class GenericBankPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-        accentColor: bankType == BankType.bank ? Colors.blueGrey : Colors.blue
-      ),
+    return CompanionAccent(
+      lightColor: bankType == BankType.bank ? Colors.blueGrey : Colors.blue,
       child: Scaffold(
         appBar: CompanionAppBar(
           title: bankType == BankType.bank ? 'Bank' : 'Shared inventory',
@@ -41,7 +40,7 @@ class GenericBankPage extends StatelessWidget {
               List<InventoryItem> inventory = bankType == BankType.bank 
                 ? state.bank : state.inventory;
               return RefreshIndicator(
-                backgroundColor: Theme.of(context).accentColor,
+                backgroundColor: Theme.of(context).cardColor,
                 color: Colors.white,
                 onRefresh: () async {
                   BlocProvider.of<BankBloc>(context).add(LoadBankEvent());

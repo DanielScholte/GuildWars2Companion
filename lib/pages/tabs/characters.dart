@@ -4,6 +4,7 @@ import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/models/character/character.dart';
 import 'package:guildwars2_companion/pages/character/character.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
@@ -12,8 +13,8 @@ import 'package:guildwars2_companion/widgets/button.dart';
 class CharactersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.blue),
+    return CompanionAccent(
+      lightColor: Colors.blue,
       child: Scaffold(
         appBar: CompanionAppBar(
           title: 'Characters',

@@ -10,13 +10,13 @@ import 'package:guildwars2_companion/blocs/pvp/pvp_bloc.dart';
 import 'package:guildwars2_companion/blocs/raid/raid_bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/blocs/world_boss/bloc.dart';
+import 'package:guildwars2_companion/pages/configuration/configuration.dart';
 import 'package:guildwars2_companion/pages/home/dungeons/dungeons.dart';
 import 'package:guildwars2_companion/pages/home/events/meta_events.dart';
 import 'package:guildwars2_companion/pages/home/pvp/pvp.dart';
 import 'package:guildwars2_companion/pages/home/raids/raids.dart';
 import 'package:guildwars2_companion/pages/home/wallet/wallet.dart';
 import 'package:guildwars2_companion/pages/home/world_bosses/world_bosses.dart';
-import 'package:guildwars2_companion/pages/info.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
@@ -39,7 +39,7 @@ class HomePage extends StatelessWidget {
         if (state is AuthenticatedState) {
           return Scaffold(
             appBar: AppBar(
-              backgroundColor: Colors.red,
+              backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.red : Theme.of(context).cardColor,
               centerTitle: true,
               elevation: 0.0,
               title: RichText(
@@ -67,7 +67,7 @@ class HomePage extends StatelessWidget {
                     size: 20.0,
                   ),
                   onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => InfoPage()
+                    builder: (context) => ConfigurationPage()
                   )),
                 ),
                 IconButton(
@@ -85,6 +85,7 @@ class HomePage extends StatelessWidget {
             body: Column(
               children: <Widget>[
                 CompanionHeader(
+                  color: Colors.red,
                   child: Column(
                     children: <Widget>[
                       Container(

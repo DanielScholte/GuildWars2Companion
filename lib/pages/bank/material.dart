@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/bank/bloc.dart';
 import 'package:guildwars2_companion/models/bank/material_category.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
@@ -9,8 +10,8 @@ import 'package:guildwars2_companion/widgets/item_box.dart';
 class MaterialPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.deepOrange),
+    return CompanionAccent(
+      lightColor: Colors.deepOrange,
       child: Scaffold(
         appBar: CompanionAppBar(
           title: 'Materials',

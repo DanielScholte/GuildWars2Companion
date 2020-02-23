@@ -5,6 +5,7 @@ import 'package:guildwars2_companion/blocs/pvp/pvp_bloc.dart';
 import 'package:guildwars2_companion/models/pvp/stats.dart';
 import 'package:guildwars2_companion/pages/home/pvp/games.dart';
 import 'package:guildwars2_companion/pages/home/pvp/seasons.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/cached_image.dart';
@@ -15,8 +16,8 @@ import 'package:guildwars2_companion/widgets/info_box.dart';
 class PvpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Color(0xFF678A9E)),
+    return CompanionAccent(
+      lightColor: Color(0xFF678A9E),
       child: BlocBuilder<PvpBloc, PvpState>(
         builder: (context, state) {
           if (state is ErrorPvpState) {

@@ -34,13 +34,14 @@ class CompanionButton extends StatelessWidget {
       width: double.infinity,
       height: height,
       decoration: BoxDecoration(
-        color: color,
+        color: Theme.of(context).brightness == Brightness.light ? color : Color(0xFF323232),
         borderRadius: BorderRadius.circular(12.0),
         boxShadow: [
-          BoxShadow(
-            color: Colors.black26,
-            blurRadius: 8.0,
-          ),
+          if (Theme.of(context).brightness == Brightness.light)
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 8.0,
+            ),
         ],
       ),
       margin: EdgeInsets.all(8.0),
