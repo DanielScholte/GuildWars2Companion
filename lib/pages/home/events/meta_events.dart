@@ -67,7 +67,7 @@ class MetaEventsPage extends StatelessWidget {
   Widget _buildCategory(BuildContext context, String name, String region, List<MetaEventSequence> sequences) {
     return CompanionCard(
       padding: EdgeInsets.zero,
-      backgroundColor: GuildWarsUtil.regionColor(region),
+      backgroundColor: Theme.of(context).brightness == Brightness.light ? GuildWarsUtil.regionColor(region) : Colors.white30,
       child: CompanionExpandableHeader(
         header: name,
         foreground: Colors.white,

@@ -178,11 +178,18 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
         boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-            blurRadius: 5.0,
-          ),
-        ]
+          if (Theme.of(context).brightness == Brightness.light)
+            BoxShadow(
+              color: Colors.grey,
+              blurRadius: 5.0,
+            ),
+        ],
+        border: Theme.of(context).brightness == Brightness.dark ? Border(
+          top: BorderSide(
+            color: Colors.white,
+            width: 1.0
+          )
+        ) : null,
       ),
       child: Column(
         children: <Widget>[
@@ -211,7 +218,6 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
                               text: TextSpan(
                                 text: 'Items: ',
                                 style: Theme.of(context).textTheme.display3.copyWith(
-                                  color: Colors.black,
                                   fontWeight: FontWeight.w500
                                 ),
                                 children: [
@@ -229,7 +235,6 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
                                 Text(
                                   'Funds: ',
                                   style: Theme.of(context).textTheme.display3.copyWith(
-                                    color: Colors.black,
                                     fontWeight: FontWeight.w500
                                   ),
                                 ),
@@ -272,9 +277,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
         child: Center(
           child: Text(
             'No items found',
-            style: Theme.of(context).textTheme.display2.copyWith(
-              color: Colors.black
-            ),
+            style: Theme.of(context).textTheme.display2,
           ),
         ),
       );
@@ -308,7 +311,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
   Widget _buildTransactionTab(List<TradingPostTransaction> transactions, LoadedTradingPostState state) {
     if (transactions.where((t) => t.itemInfo != null).isEmpty) {
       return RefreshIndicator(
-        backgroundColor: Colors.green,
+        backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.green : Colors.white,
         color: Theme.of(context).cardColor,
         onRefresh: () async {
           BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostEvent());
@@ -321,9 +324,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
                 padding: EdgeInsets.all(16.0),
                 child: Text(
                   'No items found',
-                  style: Theme.of(context).textTheme.display2.copyWith(
-                    color: Colors.black
-                  ),
+                  style: Theme.of(context).textTheme.display2,
                 ),
               ),
             ),
@@ -333,7 +334,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
     }
 
     return RefreshIndicator(
-      backgroundColor: Colors.green,
+      backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.green : Colors.white,
       color: Theme.of(context).cardColor,
       onRefresh: () async {
         BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostEvent());

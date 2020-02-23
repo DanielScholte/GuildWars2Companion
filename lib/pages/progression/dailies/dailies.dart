@@ -28,8 +28,8 @@ class DailiesPage extends StatelessWidget {
           body: Column(
             children: <Widget>[
               Material(
-                color: _getColor(),
-                elevation: 4.0,
+                color: Theme.of(context).brightness == Brightness.light ? _getColor() : Theme.of(context).cardColor,
+                elevation: Theme.of(context).brightness == Brightness.light ? 4.0 : 0.0,
                 child: TabBar(
                   indicatorColor: Colors.white,
                   tabs: [

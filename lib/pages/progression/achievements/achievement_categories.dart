@@ -73,7 +73,7 @@ class AchievementCategoriesPage extends StatelessWidget {
       .toList();
     return CompanionCard(
       padding: EdgeInsets.zero,
-      backgroundColor: Colors.blueGrey,
+      backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.blueGrey : Colors.white30,
       child: CompanionExpandableHeader(
         header: group.name,
         foreground: Colors.white,

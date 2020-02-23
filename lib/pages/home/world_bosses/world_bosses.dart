@@ -140,19 +140,25 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
                 if (isActive) {
                   return Text(
                     'Active',
-                    style: Theme.of(context).textTheme.display2,
+                    style: Theme.of(context).textTheme.display2.copyWith(
+                      color: Colors.white
+                    ),
                   );
                 }
                   
                 return Text(
                   GuildWarsUtil.durationToString(worldBoss.dateTime.toLocal().difference(DateTime.now())),
-                  style: Theme.of(context).textTheme.display2,
+                  style: Theme.of(context).textTheme.display2.copyWith(
+                    color: Colors.white
+                  ),
                 );
               },
             ),
             Text(
               timeFormat.format(worldBoss.dateTime.toLocal()),
-              style: Theme.of(context).textTheme.display3,
+              style: Theme.of(context).textTheme.display3.copyWith(
+                color: Colors.white
+              ),
             )
           ],
         ),

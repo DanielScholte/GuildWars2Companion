@@ -64,7 +64,9 @@ class EventPage extends StatelessWidget {
           ),
           Text(
             sequence.name,
-            style: Theme.of(context).textTheme.display3,
+            style: Theme.of(context).textTheme.display3.copyWith(
+              color: Colors.white
+            ),
             textAlign: TextAlign.center,
           ),
         ],
@@ -83,9 +85,7 @@ class EventPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Spawn Times',
-              style: Theme.of(context).textTheme.display2.copyWith(
-                color: Colors.black
-              )
+              style: Theme.of(context).textTheme.display2,
             ),
           ),
           Wrap(
@@ -94,10 +94,12 @@ class EventPage extends StatelessWidget {
             runSpacing: 4.0,
             children: times
               .map((t) => Chip(
-                backgroundColor: Colors.orange,
+                backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.orange : Colors.white12,
                 label: Text(
                   timeFormat.format(t),
-                  style: Theme.of(context).textTheme.display3,
+                  style: Theme.of(context).textTheme.display3.copyWith(
+                    color: Colors.white
+                  ),
                 ),
               ))
               .toList()

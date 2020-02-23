@@ -44,10 +44,11 @@ class DungeonPage extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6.0),
               boxShadow: [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 4.0,
-                ),
+                if (Theme.of(context).brightness == Brightness.light)
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 4.0,
+                  ),
               ],
             ),
             child: Hero(
@@ -68,7 +69,9 @@ class DungeonPage extends StatelessWidget {
           ),
           Text(
             dungeon.location,
-            style: Theme.of(context).textTheme.display3,
+            style: Theme.of(context).textTheme.display3.copyWith(
+              color: Colors.white
+            ),
             textAlign: TextAlign.center,
           ),
         ],
@@ -125,9 +128,7 @@ class DungeonPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               includeProgress ? 'Daily Progress' : 'Paths',
-              style: Theme.of(context).textTheme.display2.copyWith(
-                color: Colors.black
-              ),
+              style: Theme.of(context).textTheme.display2,
             ),
           ),
           Column(
@@ -152,9 +153,7 @@ class DungeonPage extends StatelessWidget {
                       padding: EdgeInsets.all(4.0),
                       child: Text(
                         p.name,
-                        style: Theme.of(context).textTheme.display3.copyWith(
-                          color: Colors.black
-                        ),
+                        style: Theme.of(context).textTheme.display3,
                         textAlign: TextAlign.left,
                         overflow: TextOverflow.ellipsis,
                       ),

@@ -70,11 +70,14 @@ class MasteriesPage extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(top: 8.0),
-            child: Icon(
+            child: Theme.of(context).brightness == Brightness.light ? Icon(
               GuildWarsIcons.mastery,
               size: 32.0,
               color: Colors.white,
-            ),
+            ) : Image.asset(
+              GuildWarsUtil.masteryIcon(mastery.region),
+              height: 32.0,
+            )
           ),
           Column(
             children: <Widget>[

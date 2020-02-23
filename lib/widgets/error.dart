@@ -23,9 +23,7 @@ class CompanionError extends StatelessWidget {
           child: Text(
             "Something went wrong while loading $title",
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.display2.copyWith(
-              color: Colors.black
-            ),
+            style: Theme.of(context).textTheme.display2,
           ),
         ),
         Padding(
@@ -33,9 +31,7 @@ class CompanionError extends StatelessWidget {
           child: Text(
             "Please check your internet connection",
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.display3.copyWith(
-              color: Colors.black
-            ),
+            style: Theme.of(context).textTheme.display3,
           ),
         ),
         CompanionSimpleButton(

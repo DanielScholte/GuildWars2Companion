@@ -28,7 +28,7 @@ class TradingPostItemPage extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.red,
+          backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.red : Theme.of(context).cardColor,
           elevation: 0.0,
           title: Row(
             mainAxisSize: MainAxisSize.min,
@@ -76,8 +76,8 @@ class TradingPostItemPage extends StatelessWidget {
         body: Column(
           children: <Widget>[
             Material(
-              color: Colors.red,
-              elevation: 4.0,
+              color: Theme.of(context).brightness == Brightness.light ? Colors.red : Theme.of(context).cardColor,
+              elevation: Theme.of(context).brightness == Brightness.light ? 4.0 : 0.0,
               child: TabBar(
                 indicatorColor: Colors.white,
                 tabs: [
@@ -179,9 +179,7 @@ class TradingPostItemPage extends StatelessWidget {
                 padding: EdgeInsets.all(16.0),
                 child: Text(
                   error,
-                  style: Theme.of(context).textTheme.display2.copyWith(
-                    color: Colors.black
-                  ),
+                  style: Theme.of(context).textTheme.display2,
                 ),
               ),
             ),

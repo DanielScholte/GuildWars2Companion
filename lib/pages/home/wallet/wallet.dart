@@ -65,7 +65,6 @@ class WalletPage extends StatelessWidget {
             child: Text(
               currency.name,
               style: Theme.of(context).textTheme.display3.copyWith(
-                color: Colors.black,
                 fontWeight: FontWeight.w500
               )
             ),
@@ -84,6 +83,7 @@ class WalletPage extends StatelessWidget {
         child: CompanionCoin(
           currency.value,
           innerPadding: 6.0,
+          color: Theme.of(context).textTheme.display3.color
         ),
       );
     }
@@ -94,9 +94,7 @@ class WalletPage extends StatelessWidget {
         children: <Widget>[
           Text(
             GuildWarsUtil.intToString(currency.value),
-            style: Theme.of(context).textTheme.display3.copyWith(
-              color: Colors.black
-            )
+            style: Theme.of(context).textTheme.display3,
           ),
           Container(
             width: 20.0,

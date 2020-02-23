@@ -42,9 +42,7 @@ class SeasonsPage extends StatelessWidget {
               return Center(
                 child: Text(
                   'No ranked seasons with participation found',
-                  style: Theme.of(context).textTheme.display2.copyWith(
-                    color: Colors.black
-                  )
+                  style: Theme.of(context).textTheme.display2,
                 ),
               );
             }

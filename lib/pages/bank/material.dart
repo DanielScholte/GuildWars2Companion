@@ -65,9 +65,7 @@ class MaterialPage extends StatelessWidget {
             padding: EdgeInsets.all(8.0),
             child: Text(
               category.name,
-              style: Theme.of(context).textTheme.display2.copyWith(
-                color: Colors.black
-              )
+              style: Theme.of(context).textTheme.display2,
             ),
           ),
           Container(

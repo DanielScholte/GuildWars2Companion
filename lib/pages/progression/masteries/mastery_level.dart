@@ -30,10 +30,11 @@ class MasteryLevelPage extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6.0),
                       boxShadow: [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 4.0,
-                        ),
+                        if (Theme.of(context).brightness == Brightness.light)
+                          BoxShadow(
+                            color: Colors.black26,
+                            blurRadius: 4.0,
+                          ),
                       ],
                     ),
                     child: Hero(
@@ -55,7 +56,9 @@ class MasteryLevelPage extends StatelessWidget {
                       padding: EdgeInsets.only(top: 4.0),
                       child: Text(
                         'Completed',
-                        style: Theme.of(context).textTheme.display3
+                        style: Theme.of(context).textTheme.display3.copyWith(
+                          color: Colors.white
+                        )
                       ),
                     ),
                   Padding(
@@ -70,7 +73,9 @@ class MasteryLevelPage extends StatelessWidget {
                     padding: EdgeInsets.only(top: 4.0),
                     child: Text(
                       mastery.name,
-                      style: Theme.of(context).textTheme.display3,
+                      style: Theme.of(context).textTheme.display3.copyWith(
+                        color: Colors.white
+                      ),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -92,9 +97,7 @@ class MasteryLevelPage extends StatelessWidget {
                           padding: EdgeInsets.only(bottom: 8.0),
                           child: Text(
                             'Information',
-                            style: Theme.of(context).textTheme.display2.copyWith(
-                              color: Colors.black
-                            ),
+                            style: Theme.of(context).textTheme.display2,
                           ),
                         ),
                         CompanionInfoRow(
@@ -129,16 +132,12 @@ class MasteryLevelPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               title,
-              style: Theme.of(context).textTheme.display2.copyWith(
-                color: Colors.black
-              ),
+              style: Theme.of(context).textTheme.display2,
             ),
           ),
           Text(
             text,
-            style: Theme.of(context).textTheme.display3.copyWith(
-              color: Colors.black
-            ),
+            style: Theme.of(context).textTheme.display3,
           ),
         ],
       ),

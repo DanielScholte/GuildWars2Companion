@@ -44,10 +44,11 @@ class RaidPage extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6.0),
               boxShadow: [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 4.0,
-                ),
+                if (Theme.of(context).brightness == Brightness.light)
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 4.0,
+                  ),
               ],
             ),
             child: Hero(
@@ -120,9 +121,7 @@ class RaidPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               includeProgress ? 'Weekly Progress' : 'Bosses',
-              style: Theme.of(context).textTheme.display2.copyWith(
-                color: Colors.black
-              )
+              style: Theme.of(context).textTheme.display2,
             ),
           ),
           Column(
@@ -147,9 +146,7 @@ class RaidPage extends StatelessWidget {
                       padding: EdgeInsets.all(4.0),
                       child: Text(
                         p.name,
-                        style: Theme.of(context).textTheme.display3.copyWith(
-                          color: Colors.black
-                        ),
+                        style: Theme.of(context).textTheme.display3,
                         textAlign: TextAlign.left,
                         overflow: TextOverflow.ellipsis,
                       ),

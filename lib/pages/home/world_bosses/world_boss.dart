@@ -50,10 +50,11 @@ class WorldBossPage extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6.0),
               boxShadow: [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 4.0,
-                ),
+                if (Theme.of(context).brightness == Brightness.light)
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 4.0,
+                  ),
               ],
             ),
             child: Hero(
@@ -74,7 +75,9 @@ class WorldBossPage extends StatelessWidget {
           ),
           Text(
             worldBoss.location,
-            style: Theme.of(context).textTheme.display3,
+            style: Theme.of(context).textTheme.display3.copyWith(
+              color: Colors.white
+            ),
             textAlign: TextAlign.center,
           ),
         ],
@@ -90,9 +93,7 @@ class WorldBossPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Stats',
-              style: Theme.of(context).textTheme.display2.copyWith(
-                color: Colors.black
-              )
+              style: Theme.of(context).textTheme.display2,
             ),
           ),
           CompanionInfoRow(
@@ -120,9 +121,7 @@ class WorldBossPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Spawn Times',
-              style: Theme.of(context).textTheme.display2.copyWith(
-                color: Colors.black
-              )
+              style: Theme.of(context).textTheme.display2,
             ),
           ),
           Wrap(
@@ -131,10 +130,12 @@ class WorldBossPage extends StatelessWidget {
             runSpacing: 4.0,
             children: _getSpawnTimes(worldBoss.times)
               .map((t) => Chip(
-                backgroundColor: worldBoss.color,
+                backgroundColor: Theme.of(context).brightness == Brightness.light ? worldBoss.color : Colors.white12,
                 label: Text(
                   timeFormat.format(t),
-                  style: Theme.of(context).textTheme.display3,
+                  style: Theme.of(context).textTheme.display3.copyWith(
+                    color: Colors.white
+                  ),
                 ),
               ))
               .toList()

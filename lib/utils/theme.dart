@@ -18,12 +18,12 @@ class ThemeUtil {
         ),
         display2: TextStyle(
           fontSize: 18.0,
-          color: Colors.white,
+          color: Colors.black,
           fontWeight: FontWeight.w500,
         ),
         display3: TextStyle(
           fontSize: 16.0,
-          color: Colors.white,
+          color: Colors.black,
           fontWeight: FontWeight.normal,
         ),
       )
@@ -54,7 +54,10 @@ class ThemeUtil {
           fontSize: 16.0,
           color: Colors.white,
           fontWeight: FontWeight.normal,
-        )
+        ),
+        display4: TextStyle(
+          color: Colors.white,
+        ),
       )
     );
   }

@@ -63,7 +63,9 @@ class CharacterPage extends StatelessWidget {
                   if (_character.titleName != null && _character.titleName.isNotEmpty)
                     Text(
                       _character.titleName,
-                      style: Theme.of(context).textTheme.display3
+                      style: Theme.of(context).textTheme.display3.copyWith(
+                        color: Colors.white
+                      )
                     ),
                   Container(height: 8.0,),
                   Container(

@@ -38,9 +38,7 @@ class PvpGamesPage extends StatelessWidget {
               return Center(
                 child: Text(
                   'No pvp games found',
-                  style: Theme.of(context).textTheme.display2.copyWith(
-                    color: Colors.black
-                  )
+                  style: Theme.of(context).textTheme.display2,
                 ),
               );
             }
@@ -63,15 +61,11 @@ class PvpGamesPage extends StatelessWidget {
                               children: <Widget>[
                                 Text(
                                   g.map.name,
-                                  style: Theme.of(context).textTheme.display2.copyWith(
-                                    color: Colors.black
-                                  ),
+                                  style: Theme.of(context).textTheme.display2,
                                 ),
                                 Text(
                                   _dateFormat.format(DateTime.parse(g.started)),
-                                  style: Theme.of(context).textTheme.display3.copyWith(
-                                    color: Colors.black
-                                  ),
+                                  style: Theme.of(context).textTheme.display3,
                                 ),
                               ],
                             ),
@@ -91,7 +85,6 @@ class PvpGamesPage extends StatelessWidget {
                                 g.ratingType,
                                 style: Theme.of(context).textTheme.display3.copyWith(
                                   fontWeight: FontWeight.w500,
-                                  color: Colors.black
                                 ),
                               ),
                             ],
