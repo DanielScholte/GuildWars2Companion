@@ -4,6 +4,7 @@ import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/models/character/bags.dart';
 import 'package:guildwars2_companion/models/character/character.dart';
 import 'package:guildwars2_companion/models/items/inventory.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
@@ -17,8 +18,8 @@ class InventoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.indigo),
+    return CompanionAccent(
+      lightColor: Colors.indigo,
       child: Scaffold(
         appBar: CompanionAppBar(
           title: 'Inventory',
@@ -66,7 +67,7 @@ class InventoryPage extends StatelessWidget {
 
                 return RefreshIndicator(
                   backgroundColor: Theme.of(context).accentColor,
-                  color: Colors.white,
+                  color: Theme.of(context).cardColor,
                   onRefresh: () async {
                     BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterItemsEvent());
                     await Future.delayed(Duration(milliseconds: 200), () {});
@@ -109,7 +110,6 @@ class InventoryPage extends StatelessWidget {
                     child: Text(
                       bag.itemInfo.name,
                       style: Theme.of(context).textTheme.display3.copyWith(
-                        color: Colors.black,
                         fontWeight: FontWeight.w500
                       )
                     ),
@@ -119,9 +119,7 @@ class InventoryPage extends StatelessWidget {
                 Spacer(),
               Text(
                 '$usedSlots/${bag.size}',
-                style: Theme.of(context).textTheme.display3.copyWith(
-                  color: Colors.black
-                )
+                style: Theme.of(context).textTheme.display3,
               )
             ],
           ),

@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/world_boss/bloc.dart';
 import 'package:guildwars2_companion/models/other/world_boss.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
@@ -48,8 +49,8 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.deepPurple),
+    return CompanionAccent(
+      lightColor: Colors.deepPurple,
       child: Scaffold(
         appBar: CompanionAppBar(
           title: 'World Bosses',
@@ -72,7 +73,7 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
             if (state is LoadedWorldbossesState) {
               return RefreshIndicator(
                 backgroundColor: Theme.of(context).accentColor,
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 onRefresh: () async {
                   BlocProvider.of<WorldBossBloc>(context).add(LoadWorldbossesEvent(true, state.includeProgress));
                   await Future.delayed(Duration(milliseconds: 200), () {});
@@ -139,19 +140,25 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
                 if (isActive) {
                   return Text(
                     'Active',
-                    style: Theme.of(context).textTheme.display2,
+                    style: Theme.of(context).textTheme.display2.copyWith(
+                      color: Colors.white
+                    ),
                   );
                 }
                   
                 return Text(
                   GuildWarsUtil.durationToString(worldBoss.dateTime.toLocal().difference(DateTime.now())),
-                  style: Theme.of(context).textTheme.display2,
+                  style: Theme.of(context).textTheme.display2.copyWith(
+                    color: Colors.white
+                  ),
                 );
               },
             ),
             Text(
               timeFormat.format(worldBoss.dateTime.toLocal()),
-              style: Theme.of(context).textTheme.display3,
+              style: Theme.of(context).textTheme.display3.copyWith(
+                color: Colors.white
+              ),
             )
           ],
         ),

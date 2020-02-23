@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/bank/bloc.dart';
 import 'package:guildwars2_companion/models/bank/material_category.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
@@ -9,8 +10,8 @@ import 'package:guildwars2_companion/widgets/item_box.dart';
 class MaterialPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.deepOrange),
+    return CompanionAccent(
+      lightColor: Colors.deepOrange,
       child: Scaffold(
         appBar: CompanionAppBar(
           title: 'Materials',
@@ -33,7 +34,7 @@ class MaterialPage extends StatelessWidget {
             if (state is LoadedBankState) {
               return RefreshIndicator(
                 backgroundColor: Theme.of(context).accentColor,
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 onRefresh: () async {
                   BlocProvider.of<BankBloc>(context).add(LoadBankEvent());
                   await Future.delayed(Duration(milliseconds: 200), () {});
@@ -64,9 +65,7 @@ class MaterialPage extends StatelessWidget {
             padding: EdgeInsets.all(8.0),
             child: Text(
               category.name,
-              style: Theme.of(context).textTheme.display2.copyWith(
-                color: Colors.black
-              )
+              style: Theme.of(context).textTheme.display2,
             ),
           ),
           Container(

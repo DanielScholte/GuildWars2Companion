@@ -24,136 +24,133 @@ class TradingPostItemPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.red),
-      child: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.red,
-            elevation: 0.0,
-            title: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(right: 4.0),
-                  child: Container(
-                    width: 28,
-                    height: 28,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(4.0),
-                      child: CompanionCachedImage(
-                        imageUrl: item.icon,
-                        color: Colors.white,
-                        iconSize: 20,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    item.name,
-                    style: TextStyle(
-                      color: Colors.white
-                    ),
-                  ),
-                )
-              ],
-            ),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(
-                  FontAwesomeIcons.infoCircle,
-                  size: 20.0,
-                ),
-                onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => ItemPage(
-                    item: item,
-                  ),
-                )),
-              )
-            ],
-          ),
-          body: Column(
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.red : Theme.of(context).cardColor,
+          elevation: 0.0,
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Material(
-                color: Colors.red,
-                elevation: 4.0,
-                child: TabBar(
-                  indicatorColor: Colors.white,
-                  tabs: [
-                    Tab(
-                      child: Text(
-                        'Buyers',
-                        style: TextStyle(
-                          fontSize: 16.0
-                        ),
-                      ),
+              Padding(
+                padding: EdgeInsets.only(right: 4.0),
+                child: Container(
+                  width: 28,
+                  height: 28,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(4.0),
+                    child: CompanionCachedImage(
+                      imageUrl: item.icon,
+                      color: Colors.white,
+                      iconSize: 20,
+                      fit: BoxFit.contain,
                     ),
-                    Tab(
-                      child: Text(
-                        'Sellers',
-                        style: TextStyle(
-                          fontSize: 16.0
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
               Expanded(
-                child: BlocBuilder<TradingPostBloc, TradingPostState>(
-                  builder: (context, state) {
-                    if (state is ErrorTradingPostState) {
-                      return Center(
-                        child: CompanionError(
-                          title: 'the listings',
-                          onTryAgain: () =>
-                            BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostEvent()),
-                        ),
-                      );
-                    }
-
-                    if (state is LoadedTradingPostState && state.hasError) {
-                      return Center(
-                        child: CompanionError(
-                          title: 'the listings',
-                          onTryAgain: () =>
-                            BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostListingsEvent(
-                              buying: state.buying,
-                              selling: state.selling,
-                              bought: state.bought,
-                              sold: state.sold,
-                              tradingPostDelivery: state.tradingPostDelivery,
-                              itemId: item.id,
-                            )),
-                        ),
-                      );
-                    }
-
-                    if (state is LoadedTradingPostState) {
-                      TradingPostTransaction tradingPostTransaction = _getTradingPostTransaction(state);
-
-                      if (tradingPostTransaction != null && !tradingPostTransaction.loading && tradingPostTransaction.listing != null) {
-                        return TabBarView(
-                          children: <Widget>[
-                            _buildListingTab(context, state, tradingPostTransaction.listing.buys, 'Ordered', 'No orders found'),
-                            _buildListingTab(context, state, tradingPostTransaction.listing.sells, 'Available', 'No items found'),
-                          ],
-                        );
-                      }
-                      
-                    }
-
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
+                child: Text(
+                  item.name,
+                  style: TextStyle(
+                    color: Colors.white
+                  ),
                 ),
-              ),
+              )
             ],
           ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                FontAwesomeIcons.infoCircle,
+                size: 20.0,
+              ),
+              onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => ItemPage(
+                  item: item,
+                ),
+              )),
+            )
+          ],
+        ),
+        body: Column(
+          children: <Widget>[
+            Material(
+              color: Theme.of(context).brightness == Brightness.light ? Colors.red : Theme.of(context).cardColor,
+              elevation: Theme.of(context).brightness == Brightness.light ? 4.0 : 0.0,
+              child: TabBar(
+                indicatorColor: Colors.white,
+                tabs: [
+                  Tab(
+                    child: Text(
+                      'Buyers',
+                      style: TextStyle(
+                        fontSize: 16.0
+                      ),
+                    ),
+                  ),
+                  Tab(
+                    child: Text(
+                      'Sellers',
+                      style: TextStyle(
+                        fontSize: 16.0
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: BlocBuilder<TradingPostBloc, TradingPostState>(
+                builder: (context, state) {
+                  if (state is ErrorTradingPostState) {
+                    return Center(
+                      child: CompanionError(
+                        title: 'the listings',
+                        onTryAgain: () =>
+                          BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostEvent()),
+                      ),
+                    );
+                  }
+
+                  if (state is LoadedTradingPostState && state.hasError) {
+                    return Center(
+                      child: CompanionError(
+                        title: 'the listings',
+                        onTryAgain: () =>
+                          BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostListingsEvent(
+                            buying: state.buying,
+                            selling: state.selling,
+                            bought: state.bought,
+                            sold: state.sold,
+                            tradingPostDelivery: state.tradingPostDelivery,
+                            itemId: item.id,
+                          )),
+                      ),
+                    );
+                  }
+
+                  if (state is LoadedTradingPostState) {
+                    TradingPostTransaction tradingPostTransaction = _getTradingPostTransaction(state);
+
+                    if (tradingPostTransaction != null && !tradingPostTransaction.loading && tradingPostTransaction.listing != null) {
+                      return TabBarView(
+                        children: <Widget>[
+                          _buildListingTab(context, state, tradingPostTransaction.listing.buys, 'Ordered', 'No orders found'),
+                          _buildListingTab(context, state, tradingPostTransaction.listing.sells, 'Available', 'No items found'),
+                        ],
+                      );
+                    }
+                    
+                  }
+
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -163,7 +160,7 @@ class TradingPostItemPage extends StatelessWidget {
     if (offers.isEmpty) {
       return RefreshIndicator(
         backgroundColor: Theme.of(context).accentColor,
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         onRefresh: () async {
           BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostListingsEvent(
             buying: state.buying,
@@ -182,9 +179,7 @@ class TradingPostItemPage extends StatelessWidget {
                 padding: EdgeInsets.all(16.0),
                 child: Text(
                   error,
-                  style: Theme.of(context).textTheme.display2.copyWith(
-                    color: Colors.black
-                  ),
+                  style: Theme.of(context).textTheme.display2,
                 ),
               ),
             ),
@@ -195,7 +190,7 @@ class TradingPostItemPage extends StatelessWidget {
 
     return RefreshIndicator(
       backgroundColor: Theme.of(context).accentColor,
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       onRefresh: () async {
         BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostListingsEvent(
           buying: state.buying,

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/event/event_bloc.dart';
 import 'package:guildwars2_companion/models/other/meta_event.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
@@ -14,8 +15,8 @@ import 'meta_event.dart';
 class MetaEventsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.green),
+    return CompanionAccent(
+      lightColor: Colors.green,
       child: Scaffold(
         appBar: CompanionAppBar(
           title: 'Meta Events',
@@ -38,7 +39,7 @@ class MetaEventsPage extends StatelessWidget {
             if (state is LoadedEventsState) {
               return RefreshIndicator(
                 backgroundColor: Theme.of(context).accentColor,
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 onRefresh: () async {
                   BlocProvider.of<EventBloc>(context).add(LoadEventsEvent());
                   await Future.delayed(Duration(milliseconds: 200), () {});
@@ -66,7 +67,7 @@ class MetaEventsPage extends StatelessWidget {
   Widget _buildCategory(BuildContext context, String name, String region, List<MetaEventSequence> sequences) {
     return CompanionCard(
       padding: EdgeInsets.zero,
-      backgroundColor: GuildWarsUtil.regionColor(region),
+      backgroundColor: Theme.of(context).brightness == Brightness.light ? GuildWarsUtil.regionColor(region) : Colors.white30,
       child: CompanionExpandableHeader(
         header: name,
         foreground: Colors.white,

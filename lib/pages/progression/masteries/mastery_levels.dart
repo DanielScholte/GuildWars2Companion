@@ -5,6 +5,7 @@ import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
 import 'package:guildwars2_companion/models/mastery/mastery.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
@@ -20,8 +21,8 @@ class MasteryLevelsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: GuildWarsUtil.regionColor(mastery.region)),
+    return CompanionAccent(
+      lightColor: GuildWarsUtil.regionColor(mastery.region),
       child: Scaffold(
         appBar: CompanionAppBar(
           title: mastery.name,
@@ -49,7 +50,7 @@ class MasteryLevelsPage extends StatelessWidget {
               if (_mastery != null) {
                 return RefreshIndicator(
                   backgroundColor: Theme.of(context).accentColor,
-                  color: Colors.white,
+                  color: Theme.of(context).cardColor,
                   onRefresh: () async {
                     BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
                       includeProgress: state.includesProgress

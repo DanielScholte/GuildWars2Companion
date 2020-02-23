@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/pvp/pvp_bloc.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
@@ -12,8 +13,8 @@ class PvpGamesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.blue),
+    return CompanionAccent(
+      lightColor: Colors.blue,
       child: Scaffold(
         appBar: CompanionAppBar(
           color: Colors.blue,
@@ -37,9 +38,7 @@ class PvpGamesPage extends StatelessWidget {
               return Center(
                 child: Text(
                   'No pvp games found',
-                  style: Theme.of(context).textTheme.display2.copyWith(
-                    color: Colors.black
-                  )
+                  style: Theme.of(context).textTheme.display2,
                 ),
               );
             }
@@ -62,15 +61,11 @@ class PvpGamesPage extends StatelessWidget {
                               children: <Widget>[
                                 Text(
                                   g.map.name,
-                                  style: Theme.of(context).textTheme.display2.copyWith(
-                                    color: Colors.black
-                                  ),
+                                  style: Theme.of(context).textTheme.display2,
                                 ),
                                 Text(
                                   _dateFormat.format(DateTime.parse(g.started)),
-                                  style: Theme.of(context).textTheme.display3.copyWith(
-                                    color: Colors.black
-                                  ),
+                                  style: Theme.of(context).textTheme.display3,
                                 ),
                               ],
                             ),
@@ -90,7 +85,6 @@ class PvpGamesPage extends StatelessWidget {
                                 g.ratingType,
                                 style: Theme.of(context).textTheme.display3.copyWith(
                                   fontWeight: FontWeight.w500,
-                                  color: Colors.black
                                 ),
                               ),
                             ],

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/dungeon/bloc.dart';
 import 'package:guildwars2_companion/models/other/dungeon.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
@@ -12,8 +13,8 @@ import 'dungeon.dart';
 class DungeonsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.deepOrange),
+    return CompanionAccent(
+      lightColor: Colors.deepOrange,
       child: Scaffold(
         appBar: CompanionAppBar(
           title: 'Dungeons',
@@ -36,7 +37,7 @@ class DungeonsPage extends StatelessWidget {
             if (state is LoadedDungeonsState) {
               return RefreshIndicator(
                 backgroundColor: Theme.of(context).accentColor,
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 onRefresh: () async {
                   BlocProvider.of<DungeonBloc>(context).add(LoadDungeonsEvent(state.includeProgress));
                   await Future.delayed(Duration(milliseconds: 200), () {});
@@ -92,7 +93,9 @@ class DungeonsPage extends StatelessWidget {
                   padding: EdgeInsets.only(left: 4.0),
                   child: Text(
                     p.name,
-                    style: Theme.of(context).textTheme.display3,
+                    style: Theme.of(context).textTheme.display3.copyWith(
+                      color: Colors.white
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

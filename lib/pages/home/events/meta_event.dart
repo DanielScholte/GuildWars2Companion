@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/event/event_bloc.dart';
 import 'package:guildwars2_companion/models/other/meta_event.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
@@ -52,8 +53,8 @@ class _MetaEventPageState extends State<MetaEventPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: GuildWarsUtil.regionColor(widget.metaEventSequence.region)),
+    return CompanionAccent(
+      lightColor: GuildWarsUtil.regionColor(widget.metaEventSequence.region),
       child: Scaffold(
         appBar: CompanionAppBar(
           title: widget.metaEventSequence.name,
@@ -78,7 +79,7 @@ class _MetaEventPageState extends State<MetaEventPage> {
 
               return RefreshIndicator(
                 backgroundColor: Theme.of(context).accentColor,
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 onRefresh: () async {
                   BlocProvider.of<EventBloc>(context).add(LoadEventsEvent(id: widget.metaEventSequence.id));
                   await Future.delayed(Duration(milliseconds: 200), () {});
@@ -134,19 +135,25 @@ class _MetaEventPageState extends State<MetaEventPage> {
                 if (isActive) {
                   return Text(
                     'Active',
-                    style: Theme.of(context).textTheme.display2,
+                    style: Theme.of(context).textTheme.display2.copyWith(
+                      color: Colors.white,
+                    ),
                   );
                 }
                   
                 return Text(
                   GuildWarsUtil.durationToString(time.difference(DateTime.now())),
-                  style: Theme.of(context).textTheme.display2,
+                  style: Theme.of(context).textTheme.display2.copyWith(
+                    color: Colors.white
+                  ),
                 );
               },
             ),
             Text(
               timeFormat.format(time),
-              style: Theme.of(context).textTheme.display3,
+              style: Theme.of(context).textTheme.display3.copyWith(
+                color: Colors.white
+              ),
             )
           ],
         ),

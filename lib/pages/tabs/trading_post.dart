@@ -6,6 +6,7 @@ import 'package:guildwars2_companion/models/trading_post/delivery.dart';
 import 'package:guildwars2_companion/models/trading_post/transaction.dart';
 import 'package:guildwars2_companion/pages/trading_post/trading_post_item.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
@@ -41,8 +42,8 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.green),
+    return CompanionAccent(
+      lightColor: Colors.green,
       child: DefaultTabController(
         length: 4,
         child: Scaffold(
@@ -54,8 +55,8 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
           body: Column(
             children: <Widget>[
               Material(
-                color: Colors.green,
-                elevation: 4.0,
+                color: Theme.of(context).brightness == Brightness.light ? Colors.green : Theme.of(context).cardColor,
+                elevation: Theme.of(context).brightness == Brightness.light ? 4.0 : 0.0,
                 child: TabBar(
                   indicatorColor: Colors.white,
                   tabs: [
@@ -177,11 +178,18 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
         boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-            blurRadius: 5.0,
-          ),
-        ]
+          if (Theme.of(context).brightness == Brightness.light)
+            BoxShadow(
+              color: Colors.grey,
+              blurRadius: 5.0,
+            ),
+        ],
+        border: Theme.of(context).brightness == Brightness.dark ? Border(
+          top: BorderSide(
+            color: Colors.white,
+            width: 1.0
+          )
+        ) : null,
       ),
       child: Column(
         children: <Widget>[
@@ -210,7 +218,6 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
                               text: TextSpan(
                                 text: 'Items: ',
                                 style: Theme.of(context).textTheme.display3.copyWith(
-                                  color: Colors.black,
                                   fontWeight: FontWeight.w500
                                 ),
                                 children: [
@@ -228,7 +235,6 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
                                 Text(
                                   'Funds: ',
                                   style: Theme.of(context).textTheme.display3.copyWith(
-                                    color: Colors.black,
                                     fontWeight: FontWeight.w500
                                   ),
                                 ),
@@ -271,9 +277,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
         child: Center(
           child: Text(
             'No items found',
-            style: Theme.of(context).textTheme.display2.copyWith(
-              color: Colors.black
-            ),
+            style: Theme.of(context).textTheme.display2,
           ),
         ),
       );
@@ -307,8 +311,8 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
   Widget _buildTransactionTab(List<TradingPostTransaction> transactions, LoadedTradingPostState state) {
     if (transactions.where((t) => t.itemInfo != null).isEmpty) {
       return RefreshIndicator(
-        backgroundColor: Colors.green,
-        color: Colors.white,
+        backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.green : Colors.white,
+        color: Theme.of(context).cardColor,
         onRefresh: () async {
           BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostEvent());
           await Future.delayed(Duration(milliseconds: 200), () {});
@@ -320,9 +324,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
                 padding: EdgeInsets.all(16.0),
                 child: Text(
                   'No items found',
-                  style: Theme.of(context).textTheme.display2.copyWith(
-                    color: Colors.black
-                  ),
+                  style: Theme.of(context).textTheme.display2,
                 ),
               ),
             ),
@@ -332,8 +334,8 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
     }
 
     return RefreshIndicator(
-      backgroundColor: Colors.green,
-      color: Colors.white,
+      backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.green : Colors.white,
+      color: Theme.of(context).cardColor,
       onRefresh: () async {
         BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostEvent());
         await Future.delayed(Duration(milliseconds: 200), () {});

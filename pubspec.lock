@@ -241,12 +241,12 @@ packages:
     source: hosted
     version: "1.0.1"
   provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.1"
+    version: "4.0.4"
   qr_code_scanner:
     dependency: "direct main"
     description:

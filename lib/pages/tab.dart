@@ -32,11 +32,6 @@ class _TabPageState extends State<TabPage> {
   void initState() {
     super.initState();
 
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: Color(0xFFEEEEEE),
-      systemNavigationBarIconBrightness: Brightness.dark
-    ));
-
     if (BlocProvider.of<AccountBloc>(context).state is AuthenticatedState) {
       _handleAuth(context, BlocProvider.of<AccountBloc>(context).state);
     }
@@ -49,6 +44,11 @@ class _TabPageState extends State<TabPage> {
  
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
+      systemNavigationBarIconBrightness: Theme.of(context).brightness == Brightness.dark ? Brightness.light : Brightness.dark
+    ));
+
     return WillPopScope(
       onWillPop: () async {
         if (_currentIndex != 0) {
@@ -121,7 +121,7 @@ class _TabPageState extends State<TabPage> {
             icon: Icon(
               t.icon,
               key: Key('Icon_${t.title}'),
-              color: t.color,
+              color: Theme.of(context).brightness == Brightness.light ? t.color : Colors.white70,
               size: t.iconSize,
             ),
             activeIcon: Icon(
@@ -137,7 +137,7 @@ class _TabPageState extends State<TabPage> {
                 fontSize: 12.0
               ),
             ),
-            backgroundColor: t.color
+            backgroundColor: Theme.of(context).brightness == Brightness.light ? t.color : Theme.of(context).cardColor
           )
         ).toList(),
       ),

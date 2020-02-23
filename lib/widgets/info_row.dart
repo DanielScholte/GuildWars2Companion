@@ -23,7 +23,6 @@ class CompanionInfoRow extends StatelessWidget {
           Text(
             header,
             style: Theme.of(context).textTheme.display3.copyWith(
-              color: Colors.black,
               fontWeight: FontWeight.w500
             ),
           ),
@@ -32,9 +31,7 @@ class CompanionInfoRow extends StatelessWidget {
           else
             Text(
               text,
-              style: Theme.of(context).textTheme.display3.copyWith(
-                color: Colors.black
-              ),
+              style: Theme.of(context).textTheme.display3,
             )
         ],
       ),

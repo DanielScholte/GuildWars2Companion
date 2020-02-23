@@ -4,6 +4,7 @@ import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
 import 'package:guildwars2_companion/models/achievement/achievement_category.dart';
 import 'package:guildwars2_companion/models/achievement/achievement_group.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
@@ -16,8 +17,8 @@ import 'achievements.dart';
 class AchievementCategoriesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.orange),
+    return CompanionAccent(
+      lightColor: Colors.orange,
       child: Scaffold(
         appBar: CompanionAppBar(
           title: 'Achievements',
@@ -42,7 +43,7 @@ class AchievementCategoriesPage extends StatelessWidget {
             if (state is LoadedAchievementsState) {
               return RefreshIndicator(
                 backgroundColor: Theme.of(context).accentColor,
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 onRefresh: () async {
                   BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
                     includeProgress: state.includesProgress
@@ -72,7 +73,7 @@ class AchievementCategoriesPage extends StatelessWidget {
       .toList();
     return CompanionCard(
       padding: EdgeInsets.zero,
-      backgroundColor: Colors.blueGrey,
+      backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.blueGrey : Colors.white30,
       child: CompanionExpandableHeader(
         header: group.name,
         foreground: Colors.white,

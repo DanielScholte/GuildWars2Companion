@@ -8,6 +8,7 @@ import 'package:guildwars2_companion/pages/character/equipment.dart';
 import 'package:guildwars2_companion/pages/character/inventory.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
@@ -22,8 +23,8 @@ class CharacterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: _character.professionColor),
+    return CompanionAccent(
+      lightColor: _character.professionColor,
       child: Scaffold(
         body: Column(
           children: <Widget>[
@@ -62,7 +63,9 @@ class CharacterPage extends StatelessWidget {
                   if (_character.titleName != null && _character.titleName.isNotEmpty)
                     Text(
                       _character.titleName,
-                      style: Theme.of(context).textTheme.display3
+                      style: Theme.of(context).textTheme.display3.copyWith(
+                        color: Colors.white
+                      )
                     ),
                   Container(height: 8.0,),
                   Container(
@@ -180,7 +183,7 @@ class CharacterPage extends StatelessWidget {
             child: Expanded(
               child: RefreshIndicator(
                 backgroundColor: Theme.of(context).accentColor,
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 onRefresh: () async {
                   BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent());
                   await Future.delayed(Duration(milliseconds: 200), () {});

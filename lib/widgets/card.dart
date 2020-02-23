@@ -11,7 +11,7 @@ class CompanionCard extends StatelessWidget {
     @required this.child,
     this.padding = const EdgeInsets.all(8.0),
     this.borderRadius = 12.0,
-    this.backgroundColor = Colors.white,
+    this.backgroundColor,
   });
 
   @override
@@ -22,12 +22,13 @@ class CompanionCard extends StatelessWidget {
       padding: padding,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(borderRadius),
-        color: backgroundColor,
+        color: backgroundColor != null ? backgroundColor : Theme.of(context).cardColor,
         boxShadow: [
-          BoxShadow(
-            color: Colors.black26,
-            blurRadius: 4.0,
-          ),
+          if (Theme.of(context).brightness == Brightness.light)
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 4.0,
+            ),
         ]
       ),
       child: child

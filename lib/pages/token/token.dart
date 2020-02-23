@@ -5,10 +5,11 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/models/account/token_entry.dart';
-import 'package:guildwars2_companion/pages/info.dart';
+import 'package:guildwars2_companion/pages/configuration/configuration.dart';
 import 'package:guildwars2_companion/pages/tab.dart';
 import 'package:guildwars2_companion/pages/token/how_to.dart';
 import 'package:guildwars2_companion/pages/token/qr_code.dart';
+import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:intl/intl.dart';
 
@@ -39,45 +40,15 @@ class TokenPage extends StatelessWidget {
       },
       child: Scaffold(
         key: _scaffoldKey,
-        backgroundColor: Colors.white,
         body: BlocBuilder<AccountBloc, AccountState>(
           builder: (BuildContext context, state) {
             if (state is UnauthenticatedState) {
               return Stack(
                 children: <Widget>[
-                  Align(
-                    child: Image.asset(
-                      'assets/token_footer.jpg',
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                      alignment: Alignment.bottomLeft,
-                    ),
-                    alignment: Alignment.bottomLeft,
-                  ),
+                  _getFooter(context),
                   Column(
                     children: <Widget>[
-                      Stack(
-                        children: <Widget>[
-                          Image.asset(
-                            'assets/token_header.jpg',
-                            height: 170.0,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                            alignment: Alignment.bottomCenter,
-                          ),
-                          SafeArea(
-                            child: Center(
-                              child: Padding(
-                                padding: EdgeInsets.only(top: 8.0),
-                                child: Image.asset(
-                                  'assets/token_header_logo.png',
-                                  height: 72.0,
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                      _getHeader(context),
                       if (state.tokens.isNotEmpty)
                         MediaQuery.removePadding(
                           removeTop: true,
@@ -177,40 +148,11 @@ class TokenPage extends StatelessWidget {
 
             return Stack(
               children: <Widget>[
-                Align(
-                  child: Image.asset(
-                    'assets/token_footer.jpg',
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    alignment: Alignment.bottomLeft,
-                  ),
-                  alignment: Alignment.bottomLeft,
-                ),
+                _getFooter(context),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Stack(
-                      children: <Widget>[
-                        Image.asset(
-                          'assets/token_header.jpg',
-                          height: 170.0,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
-                          alignment: Alignment.bottomCenter,
-                        ),
-                        SafeArea(
-                          child: Center(
-                            child: Padding(
-                              padding: EdgeInsets.only(top: 8.0),
-                              child: Image.asset(
-                                'assets/token_header_logo.png',
-                                height: 72.0,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
+                    _getHeader(context),
                     CircularProgressIndicator(),
                     Container()
                   ],
@@ -229,12 +171,13 @@ class TokenPage extends StatelessWidget {
                 overlayColor: Colors.black,
                 overlayOpacity: .6,
                 backgroundColor: Colors.blue,
-                // backgroundColor: Theme.of(context).primaryColor,
                 foregroundColor: Colors.white,
+                elevation: Theme.of(context).brightness == Brightness.light ? 6.0 : 0.0,
                 children: [
                   SpeedDialChild(
                     child: Icon(
                       FontAwesomeIcons.qrcode,
+                      color: Colors.white,
                       size: 18.0,
                     ),
                     labelStyle: TextStyle(
@@ -243,6 +186,7 @@ class TokenPage extends StatelessWidget {
                     ),
                     backgroundColor: Colors.blue,
                     label: 'Enter Api Key by Qr Code',
+                    labelBackgroundColor: Theme.of(context).cardColor,
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => QrCodePage()
                     )),
@@ -250,6 +194,7 @@ class TokenPage extends StatelessWidget {
                   SpeedDialChild(
                     child: Icon(
                       FontAwesomeIcons.solidEdit,
+                      color: Colors.white,
                       size: 18.0,
                     ),
                     labelStyle: TextStyle(
@@ -258,11 +203,13 @@ class TokenPage extends StatelessWidget {
                     ),
                     backgroundColor: Colors.blue,
                     label: 'Enter Api Key by text',
+                    labelBackgroundColor: Theme.of(context).cardColor,
                     onTap: () => _addTokenByText(context),
                   ),
                   SpeedDialChild(
                     child: Icon(
                       FontAwesomeIcons.question,
+                      color: Colors.white,
                       size: 18.0,
                     ),
                     labelStyle: TextStyle(
@@ -271,23 +218,26 @@ class TokenPage extends StatelessWidget {
                     ),
                     backgroundColor: Colors.deepOrange,
                     label: 'How do I get an Api Key?',
+                    labelBackgroundColor: Theme.of(context).cardColor,
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => HowToTokenPage()
                     )),
                   ),
                   SpeedDialChild(
                     child: Icon(
-                      FontAwesomeIcons.info,
+                      FontAwesomeIcons.cog,
+                      color: Colors.white,
                       size: 18.0,
                     ),
                     backgroundColor: Colors.deepOrange,
-                    label: 'App information',
+                    label: 'Settings',
+                    labelBackgroundColor: Theme.of(context).cardColor,
                     labelStyle: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.w500
                     ),
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => InfoPage()
+                      builder: (context) => ConfigurationPage()
                     )),
                   ),
                 ],
@@ -315,6 +265,55 @@ class TokenPage extends StatelessWidget {
         'Added: ${DateFormat('yyyy-MM-dd').format(added)}'
       ] : null,
       onTap: () => BlocProvider.of<AccountBloc>(context).add(AuthenticateEvent(token.token)),
+    );
+  }
+
+  Widget _getHeader(BuildContext context) {
+    if (Theme.of(context).brightness == Brightness.dark) {
+      return CompanionAppBar(
+        title: 'GW2 Companion - Api keys',
+        foregroundColor: Colors.white,
+        implyLeading: false,
+      );
+    }
+
+    return Stack(
+      children: <Widget>[
+        Image.asset(
+          'assets/token_header.png',
+          height: 170.0,
+          width: double.infinity,
+          fit: BoxFit.cover,
+          alignment: Alignment.bottomCenter,
+        ),
+        SafeArea(
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.only(top: 8.0),
+              child: Image.asset(
+                'assets/token_header_logo.png',
+                height: 72.0,
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _getFooter(BuildContext context) {
+    if (Theme.of(context).brightness == Brightness.dark) {
+      return Container();
+    }
+
+    return Align(
+      child: Image.asset(
+        'assets/token_footer.png',
+        width: double.infinity,
+        fit: BoxFit.cover,
+        alignment: Alignment.bottomLeft,
+      ),
+      alignment: Alignment.bottomLeft,
     );
   }
 

@@ -59,10 +59,11 @@ class CompanionItemBox extends StatelessWidget {
         color: Colors.grey,
         borderRadius: BorderRadius.circular(6.0),
         boxShadow: [
-          BoxShadow(
-            color: Colors.black26,
-            blurRadius: 4.0,
-          ),
+          if (Theme.of(context).brightness == Brightness.light)
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 4.0,
+            ),
         ],
         border: Border.all(
           color: GuildWarsUtil.getRarityColor(displayEmpty ? 'Basic' : item.rarity),
