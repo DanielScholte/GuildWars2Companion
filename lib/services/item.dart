@@ -104,6 +104,10 @@ class ItemService {
       'minis',
     );
 
+    itemDatabase.close();
+    skinDatabase.close();
+    miniDatabase.close();
+
     _cachedItems.clear();
     _cachedSkins.clear();
     _cachedMinis.clear();

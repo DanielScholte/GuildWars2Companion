@@ -298,7 +298,7 @@ class AchievementRepository {
     return achievementService.clearCache();
   }
 
-  int getCachedAchievementsCount() {
+  Future<int> getCachedAchievementsCount() {
     return achievementService.getCachedAchievementsCount();
   }
 

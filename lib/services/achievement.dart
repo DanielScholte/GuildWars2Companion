@@ -61,11 +61,23 @@ class AchievementService {
     );
 
     _cachedAchievements.clear();
+
+    database.close();
     
     return;
   }
 
-  int getCachedAchievementsCount() {
+  Future<int> getCachedAchievementsCount() async {
+    if (_cachedAchievements.isEmpty) {
+      Database database = await _getDatabase();
+
+      var count = await database.rawQuery('SELECT COUNT (*) from achievements');
+
+      database.close();
+
+      return Sqflite.firstIntValue(count);
+    }
+
     return _cachedAchievements.length;
   }
 

@@ -20,8 +20,8 @@ class FaqPage extends StatelessWidget {
           ),
           Text(
             '''
-            All data in the GW2 Companion app is retrieved from the official Guild Wars 2 api.
-            Some Achievements and Masteries are currently missing from the Api. So when adding up the points, this number does not match the one from in-game.
+All data in the GW2 Companion app is retrieved from the official Guild Wars 2 api.
+Some Achievements and Masteries are currently missing from the Api. So when adding up the points, this number does not match the one from in-game.
             ''',
             style: Theme.of(context).textTheme.display3,
           ),

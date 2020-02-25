@@ -15,11 +15,23 @@ class CachingConfigurationPage extends StatefulWidget {
 class _CachingConfigurationPageState extends State<CachingConfigurationPage> {
   bool allowClearCache = true;
 
+  AchievementRepository _achievementRepository;
+  ItemRepository _itemRepository;
+
+  Future<int> _cachedAchievementsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _achievementRepository = RepositoryProvider.of<AchievementRepository>(context);
+    _itemRepository = RepositoryProvider.of<ItemRepository>(context);
+
+    _cachedAchievementsFuture = _achievementRepository.getCachedAchievementsCount();
+  }
+
   @override
   Widget build(BuildContext context) {
-    AchievementRepository achievementRepository = RepositoryProvider.of<AchievementRepository>(context);
-    ItemRepository itemRepository = RepositoryProvider.of<ItemRepository>(context);
-
     return Scaffold(
       appBar: CompanionAppBar(
         title: 'Caching',
@@ -30,40 +42,64 @@ class _CachingConfigurationPageState extends State<CachingConfigurationPage> {
       body: ListView(
         padding: EdgeInsets.all(8.0),
         children: <Widget>[
-          CompanionInfoRow(
-            header: 'Cached achievements',
-            text: GuildWarsUtil.intToString(achievementRepository.getCachedAchievementsCount()),
-          ),
+          _cachedAchievements(context, _achievementRepository),
           CompanionInfoRow(
             header: 'Cached items',
-            text: GuildWarsUtil.intToString(itemRepository.getCachedItemsCount()),
+            text: GuildWarsUtil.intToString(_itemRepository.getCachedItemsCount()),
           ),
           CompanionInfoRow(
             header: 'Cached skins',
-            text: GuildWarsUtil.intToString(itemRepository.getCachedSkinsCount()),
+            text: GuildWarsUtil.intToString(_itemRepository.getCachedSkinsCount()),
           ),
           CompanionInfoRow(
             header: 'Cached minis',
-            text: GuildWarsUtil.intToString(itemRepository.getCachedMinisCount()),
+            text: GuildWarsUtil.intToString(_itemRepository.getCachedMinisCount()),
           ),
           CompanionSimpleButton(
             text: allowClearCache ? 'Clear cache' : 'Clearing cache...',
             onPressed: allowClearCache ? () => _clearCacheDialog(
               context: context,
-              achievementRepository: achievementRepository,
-              itemRepository: itemRepository
+              achievementRepository: _achievementRepository,
+              itemRepository: _itemRepository
             ) : null,
           ),
           Text(
             '''
-            Caching allows GW2 Companion to load quicker while saving bandwidth and reducing the possibility for connection failures.
-            Only mostly static data such as Achievements and Items are cached. Progression isn't cached.
-            Experiencing issues with cached data, such as outdated information? Try clearing the cache.
+Caching allows GW2 Companion to load quicker while saving bandwidth and reducing the possibility for connection failures.
+Only mostly static data such as Achievements and Items are cached. Progression isn't cached.
+Experiencing issues with cached data, such as outdated information? Try clearing the cache.
             ''',
             style: Theme.of(context).textTheme.display3,
+            textAlign: TextAlign.left,
           )
         ],
       )
+    );
+  }
+
+  Widget _cachedAchievements(BuildContext context, AchievementRepository achievementRepository) {
+    return FutureBuilder<int>(
+      future: _cachedAchievementsFuture,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return CompanionInfoRow(
+            header: 'Cached achievements',
+            text: 'Error',
+          );
+        }
+
+        if (snapshot.hasData) {
+          return CompanionInfoRow(
+            header: 'Cached achievements',
+            text: GuildWarsUtil.intToString(snapshot.data),
+          );
+        }
+
+        return CompanionInfoRow(
+          header: 'Cached achievements',
+          text: 'Loading...',
+        );
+      },
     );
   }
 
@@ -100,6 +136,7 @@ class _CachingConfigurationPageState extends State<CachingConfigurationPage> {
 
                 setState(() {
                   allowClearCache = true;
+                  _cachedAchievementsFuture = _achievementRepository.getCachedAchievementsCount();
                 });
               },
             )
