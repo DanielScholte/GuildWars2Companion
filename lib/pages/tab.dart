@@ -65,10 +65,6 @@ class _TabPageState extends State<TabPage> {
             return;
           }
           
-          SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-            systemNavigationBarColor: Colors.black,
-            systemNavigationBarIconBrightness: Brightness.light
-          ));
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (BuildContext context) => TokenPage()));
         },

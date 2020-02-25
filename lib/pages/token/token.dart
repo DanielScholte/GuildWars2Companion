@@ -9,8 +9,8 @@ import 'package:guildwars2_companion/pages/configuration/configuration.dart';
 import 'package:guildwars2_companion/pages/tab.dart';
 import 'package:guildwars2_companion/pages/token/how_to.dart';
 import 'package:guildwars2_companion/pages/token/qr_code.dart';
-import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
+import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:intl/intl.dart';
 
 class TokenPage extends StatelessWidget {
@@ -20,8 +20,8 @@ class TokenPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: Colors.black,
-      systemNavigationBarIconBrightness: Brightness.light
+      systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
+      systemNavigationBarIconBrightness: Theme.of(context).brightness == Brightness.dark ? Brightness.light : Brightness.dark
     ));
 
     return BlocListener<AccountBloc, AccountState>(
@@ -50,63 +50,60 @@ class TokenPage extends StatelessWidget {
                     children: <Widget>[
                       _getHeader(context),
                       if (state.tokens.isNotEmpty)
-                        MediaQuery.removePadding(
-                          removeTop: true,
-                          context: context,
-                          child: Expanded(
-                            child: ListView(
-                              children: state.tokens.map((t) => 
-                                Dismissible(
-                                  child: _tokenCard(context, t),
-                                  key: ValueKey(t),
-                                  // direction: DismissDirection.startToEnd,
-                                  onDismissed: (_) => BlocProvider.of<AccountBloc>(context).add(RemoveTokenEvent(t.id)),
-                                  secondaryBackground: Container(
-                                    color: Colors.red,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: <Widget>[
-                                        Text(
-                                          'Delete Api Key',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18.0
-                                          ),
+                        Expanded(
+                          child: ListView(
+                            padding: Theme.of(context).brightness == Brightness.light ? EdgeInsets.zero : EdgeInsets.only(top: 8.0),
+                            children: state.tokens.map((t) => 
+                              Dismissible(
+                                child: _tokenCard(context, t),
+                                key: ValueKey(t),
+                                // direction: DismissDirection.startToEnd,
+                                onDismissed: (_) => BlocProvider.of<AccountBloc>(context).add(RemoveTokenEvent(t.id)),
+                                secondaryBackground: Container(
+                                  color: Colors.red,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      Text(
+                                        'Delete Api Key',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18.0
                                         ),
-                                        Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Icon(
-                                            Icons.delete,
-                                            color: Colors.white,
-                                          ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Icon(
+                                          Icons.delete,
+                                          color: Colors.white,
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                  background: Container(
-                                    color: Colors.red,
-                                    child: Row(
-                                      children: <Widget>[
-                                        Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Icon(
-                                            Icons.delete,
-                                            color: Colors.white,
-                                          ),
+                                ),
+                                background: Container(
+                                  color: Colors.red,
+                                  child: Row(
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Icon(
+                                          Icons.delete,
+                                          color: Colors.white,
                                         ),
-                                        Text(
-                                          'Delete Api Key',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18.0
-                                          ),
-                                        )
-                                      ],
-                                    ),
+                                      ),
+                                      Text(
+                                        'Delete Api Key',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18.0
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                )
-                              ).toList(),
-                            ),
+                                ),
+                              )
+                            ).toList(),
                           ),
                         ),
                       if (state.tokens.isEmpty)
@@ -180,13 +177,8 @@ class TokenPage extends StatelessWidget {
                       color: Colors.white,
                       size: 18.0,
                     ),
-                    labelStyle: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500
-                    ),
                     backgroundColor: Colors.blue,
-                    label: 'Enter Api Key by Qr Code',
-                    labelBackgroundColor: Theme.of(context).cardColor,
+                    labelWidget: _speedDailLabel(context, 'Enter Api Key by Qr Code'),
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => QrCodePage()
                     )),
@@ -197,13 +189,8 @@ class TokenPage extends StatelessWidget {
                       color: Colors.white,
                       size: 18.0,
                     ),
-                    labelStyle: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500
-                    ),
                     backgroundColor: Colors.blue,
-                    label: 'Enter Api Key by text',
-                    labelBackgroundColor: Theme.of(context).cardColor,
+                    labelWidget: _speedDailLabel(context, 'Enter Api Key by text'),
                     onTap: () => _addTokenByText(context),
                   ),
                   SpeedDialChild(
@@ -212,13 +199,8 @@ class TokenPage extends StatelessWidget {
                       color: Colors.white,
                       size: 18.0,
                     ),
-                    labelStyle: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500
-                    ),
                     backgroundColor: Colors.deepOrange,
-                    label: 'How do I get an Api Key?',
-                    labelBackgroundColor: Theme.of(context).cardColor,
+                    labelWidget: _speedDailLabel(context, 'How do I get an Api Key?'),
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => HowToTokenPage()
                     )),
@@ -230,12 +212,7 @@ class TokenPage extends StatelessWidget {
                       size: 18.0,
                     ),
                     backgroundColor: Colors.deepOrange,
-                    label: 'Settings',
-                    labelBackgroundColor: Theme.of(context).cardColor,
-                    labelStyle: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500
-                    ),
+                    labelWidget: _speedDailLabel(context, 'Settings'),
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => ConfigurationPage()
                     )),
@@ -246,6 +223,30 @@ class TokenPage extends StatelessWidget {
 
             return Container();
           },
+        ),
+      ),
+    );
+  }
+
+  Widget _speedDailLabel(BuildContext context, String label) {
+    return Container(
+      padding: EdgeInsets.all(6.0),
+      margin: EdgeInsets.only(right: 16.0),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        boxShadow: [
+          if (Theme.of(context).brightness == Brightness.light)
+            BoxShadow(
+              color: Colors.black54,
+              blurRadius: 4.0,
+            ),
+        ],
+        borderRadius: BorderRadius.circular(6.0)
+      ),
+      child: Text(
+        label,
+        style: Theme.of(context).textTheme.display3.copyWith(
+          fontWeight: FontWeight.w500
         ),
       ),
     );
@@ -270,10 +271,36 @@ class TokenPage extends StatelessWidget {
 
   Widget _getHeader(BuildContext context) {
     if (Theme.of(context).brightness == Brightness.dark) {
-      return CompanionAppBar(
-        title: 'GW2 Companion - Api keys',
-        foregroundColor: Colors.white,
-        implyLeading: false,
+      return CompanionHeader(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Image.asset(
+              'assets/token_header_logo.png',
+              height: 64.0,
+            ),
+            Container(width: 8.0,),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'GW2 Companion',
+                  style: Theme.of(context).textTheme.display1.copyWith(
+                    fontWeight: FontWeight.w500
+                  ),
+                ),
+                Text(
+                  'Api Keys',
+                  style: Theme.of(context).textTheme.display1.copyWith(
+                    fontWeight: FontWeight.w300
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
       );
     }
 
