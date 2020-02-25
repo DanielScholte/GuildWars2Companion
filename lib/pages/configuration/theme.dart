@@ -11,7 +11,7 @@ class ThemeConfigurationPage extends StatelessWidget {
     return Scaffold(
       appBar: CompanionAppBar(
         title: 'Theme',
-        color: Colors.red,
+        color: Colors.blue,
         elevation: 4.0,
         foregroundColor: Colors.white,
       ),

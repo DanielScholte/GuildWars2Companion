@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:guildwars2_companion/pages/configuration/faq.dart';
 import 'package:guildwars2_companion/pages/configuration/theme.dart';
 import 'package:guildwars2_companion/utils/urls.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
@@ -110,7 +111,9 @@ class ConfigurationPage extends StatelessWidget {
                     color: Colors.white,
                   ),
                   height: 64.0,
-                  onTap: () {},
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => FaqPage()
+                  )),
                 ),
                 Container(height: 8.0,),
                 Text(
