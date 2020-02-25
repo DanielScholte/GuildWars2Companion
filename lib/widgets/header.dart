@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:guildwars2_companion/providers/configuration.dart';
 import 'package:guildwars2_companion/utils/urls.dart';
+import 'package:provider/provider.dart';
 
 class CompanionHeader extends StatelessWidget {
 
@@ -9,6 +11,7 @@ class CompanionHeader extends StatelessWidget {
   final Widget child;
   final bool includeBack;
   final String wikiName;
+  final bool wikiRequiresEnglish;
   final bool includeShadow;
   final bool enforceColor;
 
@@ -19,6 +22,7 @@ class CompanionHeader extends StatelessWidget {
     this.includeBack = false,
     this.includeShadow = true,
     this.wikiName,
+    this.wikiRequiresEnglish = false,
     this.enforceColor = false
   });
 
@@ -55,24 +59,36 @@ class CompanionHeader extends StatelessWidget {
               ),
             ),
           if (wikiName != null)
-            SafeArea(
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                  padding: EdgeInsets.all(4.0),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: IconButton(
-                      icon: Icon(
-                        FontAwesomeIcons.wikipediaW,
-                        color: foregroundColor,
-                        size: 20.0,
-                      ),
-                      onPressed: () => Urls.launchUrl('https://wiki.guildwars2.com/index.php?search=${wikiName.replaceAll(' ', '+')}'),
+            Consumer<ConfigurationProvider>(
+              builder: (context, state, child) {
+                if (wikiRequiresEnglish && state.language != 'en') {
+                  return Container();
+                }
+
+                if (!['en', 'es', 'de', 'fr'].contains(state.language)) {
+                  return Container();
+                }
+
+                return SafeArea(
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: EdgeInsets.all(4.0),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: IconButton(
+                          icon: Icon(
+                            FontAwesomeIcons.wikipediaW,
+                            color: foregroundColor,
+                            size: 20.0,
+                          ),
+                          onPressed: () => Urls.launchUrl('${_getWikiUrl(state.language)}${wikiName.replaceAll(' ', '+')}'),
+                        ),
+                      )
                     ),
-                  )
-                ),
-              ),
+                  ),
+                );
+              }
             ),
           SafeArea(
             bottom: false,
@@ -84,5 +100,18 @@ class CompanionHeader extends StatelessWidget {
         ],
       )
     );
+  }
+
+  String _getWikiUrl(String language) {
+    switch (language) {
+      case 'fr':
+        return Urls.wikiFrenchUrl;
+      case 'de':
+        return Urls.wikiGermanUrl;
+      case 'es':
+        return Urls.wikiSpanishUrl;
+      default:
+        return Urls.wikiEnglishUrl;
+    }
   }
 }

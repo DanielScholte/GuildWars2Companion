@@ -35,6 +35,7 @@ class RaidPage extends StatelessWidget {
     return CompanionHeader(
       color: raid.color,
       wikiName: raid.name,
+      wikiRequiresEnglish: true,
       includeBack: true,
       child: Column(
         children: <Widget>[

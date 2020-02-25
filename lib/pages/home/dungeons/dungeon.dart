@@ -35,6 +35,7 @@ class DungeonPage extends StatelessWidget {
     return CompanionHeader(
       color: dungeon.color,
       wikiName: dungeon.name,
+      wikiRequiresEnglish: true,
       includeBack: true,
       child: Column(
         children: <Widget>[

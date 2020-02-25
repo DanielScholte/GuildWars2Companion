@@ -41,6 +41,7 @@ class WorldBossPage extends StatelessWidget {
     return CompanionHeader(
       color: worldBoss.color,
       wikiName: worldBoss.name,
+      wikiRequiresEnglish: true,
       includeBack: true,
       child: Column(
         children: <Widget>[

@@ -223,9 +223,9 @@ class HomePage extends StatelessWidget {
             leading: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                state.currencies.firstWhere((c) => c.name == 'Coin', orElse: null),
-                state.currencies.firstWhere((c) => c.name == 'Karma', orElse: null),
-                state.currencies.firstWhere((c) => c.name == 'Gem', orElse: null),
+                state.currencies.firstWhere((c) => c.name == 'Coin' || c.id == 1, orElse: null),
+                state.currencies.firstWhere((c) => c.name == 'Karma' || c.id == 2, orElse: null),
+                state.currencies.firstWhere((c) => c.name == 'Gem' || c.id == 4, orElse: null),
               ] .where((c) => c != null)
                 .map((c) => Row(
                   children: <Widget>[
@@ -240,7 +240,7 @@ class HomePage extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    if (c.name == 'Coin')
+                    if (c.name == 'Coin' || c.id == 1)
                       Text(
                         (c.value ~/ 10000).toString(),
                         style: TextStyle(
@@ -248,7 +248,7 @@ class HomePage extends StatelessWidget {
                           fontWeight: FontWeight.w500
                         ),
                       ),
-                    if (c.name == 'Karma' && c.value < 1000000)
+                    if ((c.name == 'Karma' || c.id == 2) && c.value < 1000000)
                       Text(
                         (c.value ~/ 1000).toString() + 'k',
                         style: TextStyle(
@@ -256,7 +256,7 @@ class HomePage extends StatelessWidget {
                           fontWeight: FontWeight.w500
                         ),
                       ),
-                    if (c.name == 'Karma' && c.value >= 1000000 && c.value < 10000000)
+                    if ((c.name == 'Karma' || c.id == 2) && c.value >= 1000000 && c.value < 10000000)
                       Text(
                         (c.value / 1000000).toStringAsFixed(1) + 'm',
                         style: TextStyle(
@@ -264,7 +264,7 @@ class HomePage extends StatelessWidget {
                           fontWeight: FontWeight.w500
                         ),
                       ),
-                    if (c.name == 'Karma' && c.value >= 10000000)
+                    if ((c.name == 'Karma' || c.id == 2) && c.value >= 10000000)
                       Text(
                         (c.value ~/ 1000000).toString() + 'm',
                         style: TextStyle(
@@ -272,7 +272,7 @@ class HomePage extends StatelessWidget {
                           fontWeight: FontWeight.w500
                         ),
                       ),
-                    if (c.name == 'Gem')
+                    if (c.name == 'Gem' || c.id == 4)
                       Text(
                         c.value.toString(),
                         style: TextStyle(

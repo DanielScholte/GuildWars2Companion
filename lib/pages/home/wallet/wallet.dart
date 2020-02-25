@@ -77,7 +77,7 @@ class WalletPage extends StatelessWidget {
   }
 
   Widget _buildCurrency(BuildContext context, Currency currency) {
-    if (currency.name == 'Coin') {
+    if (currency.name == 'Coin' || currency.id == 1) {
       return Padding(
         padding: EdgeInsets.only(right: 2.0),
         child: CompanionCoin(

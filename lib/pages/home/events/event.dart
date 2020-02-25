@@ -43,6 +43,7 @@ class EventPage extends StatelessWidget {
     return CompanionHeader(
       color: Colors.orange,
       wikiName: segment.name,
+      wikiRequiresEnglish: true,
       includeBack: true,
       child: Column(
         children: <Widget>[

@@ -49,6 +49,11 @@ class Urls {
   static final String masteriesUrl = '/masteries?ids=all';
   static final String masteryProgressUrl = '/account/masteries';
 
+  static final String wikiEnglishUrl = 'https://wiki.guildwars2.com/index.php?search=';
+  static final String wikiFrenchUrl = 'https://wiki-fr.guildwars2.com/index.php?search=';
+  static final String wikiGermanUrl = 'https://wiki-de.guildwars2.com/index.php?search=';
+  static final String wikiSpanishUrl = 'https://wiki-es.guildwars2.com/index.php?search=';
+
   static List<String> divideIdLists(List<int> ids) {
     List<List<int>> output = [[]];
     ids.forEach((id) {

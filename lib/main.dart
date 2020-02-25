@@ -51,8 +51,12 @@ Future main() async {
 
   final TokenService tokenService = TokenService();
 
+  final ConfigurationProvider configurationProvider = ConfigurationProvider();
+  await configurationProvider.loadConfiguration();
+
   final DioUtil dioUtil = DioUtil(
-    tokenService: tokenService
+    tokenService: tokenService,
+    configurationProvider: configurationProvider
   );
 
   final AccountService accountService = AccountService(
@@ -65,9 +69,6 @@ Future main() async {
     dio: dioUtil.getDioInstance()
   );
   await itemService.loadCachedData();
-
-  final ConfigurationProvider configurationProvider = ConfigurationProvider();
-  await configurationProvider.loadConfiguration();
 
   runApp(GuildWars2Companion(
     accountService: accountService,

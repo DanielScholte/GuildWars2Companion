@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/pages/configuration/caching.dart';
 import 'package:guildwars2_companion/pages/configuration/faq.dart';
+import 'package:guildwars2_companion/pages/configuration/language.dart';
 import 'package:guildwars2_companion/pages/configuration/theme.dart';
 import 'package:guildwars2_companion/utils/urls.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
@@ -75,14 +76,16 @@ class ConfigurationPage extends StatelessWidget {
                   )),
                 ),
                 CompanionButton(
-                  title: 'Language',
+                  title: 'Api and Wiki Language',
                   color: Colors.blue,
                   leading: Icon(
                     FontAwesomeIcons.globeEurope,
                     color: Colors.white,
                   ),
                   height: 64.0,
-                  onTap: () {},
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => LanguageConfigurationPage()
+                  )),
                 ),
                 CompanionButton(
                   title: 'Time notation',
