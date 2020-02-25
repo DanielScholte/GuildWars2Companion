@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:guildwars2_companion/pages/configuration/caching.dart';
 import 'package:guildwars2_companion/pages/configuration/faq.dart';
 import 'package:guildwars2_companion/pages/configuration/theme.dart';
 import 'package:guildwars2_companion/utils/urls.dart';
@@ -101,7 +102,9 @@ class ConfigurationPage extends StatelessWidget {
                     color: Colors.white,
                   ),
                   height: 64.0,
-                  onTap: () {},
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => CachingConfigurationPage()
+                  )),
                 ),
                 CompanionButton(
                   title: 'Frequently asked questions',

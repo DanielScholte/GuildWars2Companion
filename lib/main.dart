@@ -20,6 +20,7 @@ import 'package:guildwars2_companion/repositories/bank.dart';
 import 'package:guildwars2_companion/repositories/character.dart';
 import 'package:guildwars2_companion/repositories/dungeon.dart';
 import 'package:guildwars2_companion/repositories/event.dart';
+import 'package:guildwars2_companion/repositories/item.dart';
 import 'package:guildwars2_companion/repositories/pvp.dart';
 import 'package:guildwars2_companion/repositories/raid.dart';
 import 'package:guildwars2_companion/repositories/trading_post.dart';
@@ -185,6 +186,11 @@ class GuildWars2Companion extends StatelessWidget {
         RepositoryProvider<EventRepository>(
           create: (BuildContext context) => EventRepository(
             eventService: eventService,
+          ),
+        ),
+        RepositoryProvider<ItemRepository>(
+          create: (BuildContext context) => ItemRepository(
+            itemService: itemService,
           ),
         ),
         RepositoryProvider<PvpRepository>(

@@ -13,7 +13,6 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:sqflite_migration/sqflite_migration.dart';
-import 'package:flutter/foundation.dart' as Foundation;
 
 class ItemService {
   List<Item> _cachedItems;
@@ -81,16 +80,34 @@ class ItemService {
     final List<Map<String, dynamic>> minis = await miniDatabase.query('minis');
     _cachedMinis = List.generate(minis.length, (i) => Mini.fromDb(minis[i]));
 
-    if (Foundation.kDebugMode) {
-      print('Cached items: ${_cachedItems.length}');
-      print('Cached skins: ${_cachedSkins.length}');
-      print('Cached minis: ${_cachedMinis.length}');
-    }
-
     itemDatabase.close();
     skinDatabase.close();
     miniDatabase.close();
 
+    return;
+  }
+
+  Future<void> clearCache() async {
+    Database itemDatabase = await _getItemDatabase();
+    Database skinDatabase = await _getSkinDatabase();
+    Database miniDatabase = await _getMiniDatabase();
+
+    await itemDatabase.delete(
+      'items',
+    );
+
+    await skinDatabase.delete(
+      'skins',
+    );
+
+    await miniDatabase.delete(
+      'minis',
+    );
+
+    _cachedItems.clear();
+    _cachedSkins.clear();
+    _cachedMinis.clear();
+    
     return;
   }
 

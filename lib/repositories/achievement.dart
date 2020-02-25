@@ -294,6 +294,14 @@ class AchievementRepository {
     return;
   }
 
+  Future<void> clearCache() {
+    return achievementService.clearCache();
+  }
+
+  int getCachedAchievementsCount() {
+    return achievementService.getCachedAchievementsCount();
+  }
+
   int _getProgressionRate(Achievement achievement, AchievementProgress progress) {
     if (progress == null) {
       return 0;
