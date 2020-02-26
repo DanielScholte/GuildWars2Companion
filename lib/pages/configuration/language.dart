@@ -20,11 +20,11 @@ class LanguageConfigurationPage extends StatelessWidget {
         builder: (context, state, child) {
           return ListView(
             children: [
-              _buildThemeOption(context, state.language, 'en', 'English'),
-              _buildThemeOption(context, state.language, 'es', 'Spanish'),
-              _buildThemeOption(context, state.language, 'de', 'German'),
-              _buildThemeOption(context, state.language, 'fr', 'French'),
-              _buildThemeOption(context, state.language, 'zh', 'Chinese'),
+              _buildLanguageOption(context, state.language, 'en', 'English'),
+              _buildLanguageOption(context, state.language, 'es', 'Spanish'),
+              _buildLanguageOption(context, state.language, 'de', 'German'),
+              _buildLanguageOption(context, state.language, 'fr', 'French'),
+              _buildLanguageOption(context, state.language, 'zh', 'Chinese'),
             ]
           );
         }
@@ -32,7 +32,7 @@ class LanguageConfigurationPage extends StatelessWidget {
     );
   }
 
-  Widget _buildThemeOption(BuildContext context, String currentLanguage, String language, String title) {
+  Widget _buildLanguageOption(BuildContext context, String currentLanguage, String language, String title) {
     return RadioListTile(
       groupValue: currentLanguage,
       value: language,
