@@ -5,12 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/world_boss/bloc.dart';
 import 'package:guildwars2_companion/models/other/world_boss.dart';
+import 'package:guildwars2_companion/providers/configuration.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:timer_builder/timer_builder.dart';
 
 import 'world_boss.dart';
@@ -21,9 +23,6 @@ class WorldBossesPage extends StatefulWidget {
 }
 
 class _WorldBossesPageState extends State<WorldBossesPage> {
-
-  final DateFormat timeFormat = DateFormat.Hm();
-
   Timer _timer;
   int _refreshTimeout = 0;
 
@@ -58,44 +57,50 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
           foregroundColor: Colors.white,
           elevation: 4.0,
         ),
-        body: BlocBuilder<WorldBossBloc, WorldBossState>(
-          builder: (context, state) {
-            if (state is ErrorWorldbossesState) {
-              return Center(
-                child: CompanionError(
-                  title: 'the world bosses',
-                  onTryAgain: () =>
-                    BlocProvider.of<WorldBossBloc>(context).add(LoadWorldbossesEvent(true, state.includeProgress)),
-                ),
-              );
-            }
+        body: Consumer<ConfigurationProvider>(
+          builder: (context, state, child) {
+            final DateFormat timeFormat = state.timeNotation24Hours ? DateFormat.Hm() : DateFormat('kk:mm a');
 
-            if (state is LoadedWorldbossesState) {
-              return RefreshIndicator(
-                backgroundColor: Theme.of(context).accentColor,
-                color: Theme.of(context).cardColor,
-                onRefresh: () async {
-                  BlocProvider.of<WorldBossBloc>(context).add(LoadWorldbossesEvent(true, state.includeProgress));
-                  await Future.delayed(Duration(milliseconds: 200), () {});
-                },
-                child: ListView(
-                  children: state.worldBosses
-                    .map((w) => _buildWorldbossRow(context, w, state.includeProgress))
-                    .toList(),
-                ),
-              );
-            }
+            return BlocBuilder<WorldBossBloc, WorldBossState>(
+              builder: (context, state) {
+                if (state is ErrorWorldbossesState) {
+                  return Center(
+                    child: CompanionError(
+                      title: 'the world bosses',
+                      onTryAgain: () =>
+                        BlocProvider.of<WorldBossBloc>(context).add(LoadWorldbossesEvent(true, state.includeProgress)),
+                    ),
+                  );
+                }
 
-            return Center(
-              child: CircularProgressIndicator(),
+                if (state is LoadedWorldbossesState) {
+                  return RefreshIndicator(
+                    backgroundColor: Theme.of(context).accentColor,
+                    color: Theme.of(context).cardColor,
+                    onRefresh: () async {
+                      BlocProvider.of<WorldBossBloc>(context).add(LoadWorldbossesEvent(true, state.includeProgress));
+                      await Future.delayed(Duration(milliseconds: 200), () {});
+                    },
+                    child: ListView(
+                      children: state.worldBosses
+                        .map((w) => _buildWorldbossRow(context, timeFormat, w, state.includeProgress))
+                        .toList(),
+                    ),
+                  );
+                }
+
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
             );
-          },
+          }
         ),
       ),
     );
   }
               
-  Widget _buildWorldbossRow(BuildContext context, WorldBoss worldBoss, bool includeProgress) {
+  Widget _buildWorldbossRow(BuildContext context, DateFormat timeFormat, WorldBoss worldBoss, bool includeProgress) {
     return CompanionButton(
       color: worldBoss.color,
       title: worldBoss.name,

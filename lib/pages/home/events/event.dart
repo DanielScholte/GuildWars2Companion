@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/models/other/meta_event.dart';
+import 'package:guildwars2_companion/providers/configuration.dart';
 import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class EventPage extends StatelessWidget {
 
   final MetaEventSequence sequence;
   final MetaEventSegment segment;
-
-  final DateFormat timeFormat = DateFormat.Hm();
 
   EventPage({
     this.sequence,
@@ -79,34 +79,40 @@ class EventPage extends StatelessWidget {
     List<DateTime> times = segment.times.map((d) => d.toLocal()).toList();
     times.sort((a, b) => a.hour.compareTo(b.hour));
 
-    return CompanionCard(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              'Spawn Times',
-              style: Theme.of(context).textTheme.display2,
-            ),
-          ),
-          Wrap(
-            alignment: WrapAlignment.spaceEvenly,
-            spacing: 16.0,
-            runSpacing: 4.0,
-            children: times
-              .map((t) => Chip(
-                backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.orange : Colors.white12,
-                label: Text(
-                  timeFormat.format(t),
-                  style: Theme.of(context).textTheme.display3.copyWith(
-                    color: Colors.white
-                  ),
+    return Consumer<ConfigurationProvider>(
+      builder: (context, state, child) {
+        final DateFormat timeFormat = state.timeNotation24Hours ? DateFormat.Hm() : DateFormat('kk:mm a');
+
+        return CompanionCard(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(bottom: 8.0),
+                child: Text(
+                  'Spawn Times',
+                  style: Theme.of(context).textTheme.display2,
                 ),
-              ))
-              .toList()
-          )
-        ],
-      ),
+              ),
+              Wrap(
+                alignment: WrapAlignment.spaceEvenly,
+                spacing: 16.0,
+                runSpacing: 4.0,
+                children: times
+                  .map((t) => Chip(
+                    backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.orange : Colors.white12,
+                    label: Text(
+                      timeFormat.format(t),
+                      style: Theme.of(context).textTheme.display3.copyWith(
+                        color: Colors.white
+                      ),
+                    ),
+                  ))
+                  .toList()
+              )
+            ],
+          ),
+        );
+      }
     );
   }
 }

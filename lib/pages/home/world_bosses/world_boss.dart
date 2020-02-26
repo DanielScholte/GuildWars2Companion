@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/models/other/world_boss.dart';
+import 'package:guildwars2_companion/providers/configuration.dart';
 import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_row.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class WorldBossPage extends StatelessWidget {
 
   final WorldBoss worldBoss;
-
-  final DateFormat timeFormat = DateFormat.Hm();
 
   WorldBossPage(this.worldBoss);
 
@@ -115,34 +115,40 @@ class WorldBossPage extends StatelessWidget {
   }
 
   Widget _buildTimes(BuildContext context) {
-    return CompanionCard(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              'Spawn Times',
-              style: Theme.of(context).textTheme.display2,
-            ),
-          ),
-          Wrap(
-            alignment: WrapAlignment.spaceEvenly,
-            spacing: 16.0,
-            runSpacing: 4.0,
-            children: _getSpawnTimes(worldBoss.times)
-              .map((t) => Chip(
-                backgroundColor: Theme.of(context).brightness == Brightness.light ? worldBoss.color : Colors.white12,
-                label: Text(
-                  timeFormat.format(t),
-                  style: Theme.of(context).textTheme.display3.copyWith(
-                    color: Colors.white
-                  ),
+    return Consumer<ConfigurationProvider>(
+      builder: (context, state, child) {
+        final DateFormat timeFormat = state.timeNotation24Hours ? DateFormat.Hm() : DateFormat('kk:mm a');
+
+        return CompanionCard(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(bottom: 8.0),
+                child: Text(
+                  'Spawn Times',
+                  style: Theme.of(context).textTheme.display2,
                 ),
-              ))
-              .toList()
-          )
-        ],
-      ),
+              ),
+              Wrap(
+                alignment: WrapAlignment.spaceEvenly,
+                spacing: 16.0,
+                runSpacing: 4.0,
+                children: _getSpawnTimes(worldBoss.times)
+                  .map((t) => Chip(
+                    backgroundColor: Theme.of(context).brightness == Brightness.light ? worldBoss.color : Colors.white12,
+                    label: Text(
+                      timeFormat.format(t),
+                      style: Theme.of(context).textTheme.display3.copyWith(
+                        color: Colors.white
+                      ),
+                    ),
+                  ))
+                  .toList()
+              )
+            ],
+          ),
+        );
+      }
     );
   }
 
