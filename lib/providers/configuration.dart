@@ -6,6 +6,7 @@ class ConfigurationProvider extends ChangeNotifier {
 
   ThemeMode themeMode = ThemeMode.light;
   String language = 'en';
+  bool timeNotation24Hours = true;
 
   Future<void> changeTheme(ThemeMode theme) async {
     themeMode = theme;
@@ -23,9 +24,18 @@ class ConfigurationProvider extends ChangeNotifier {
     return;
   }
 
+  Future<void> changeTimeNotation(bool notation24Hours) async {
+    timeNotation24Hours = notation24Hours;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool("configuration_time24", notation24Hours);
+    notifyListeners();
+    return;
+  }
+
   Future<void> loadConfiguration() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     themeMode = ThemeMode.values[prefs.getInt("configuration_theme") ?? 1];
     language = prefs.getString('configuration_lang') ?? 'en';
+    timeNotation24Hours = prefs.getBool('configuration_time24') ?? true;
   }
 }

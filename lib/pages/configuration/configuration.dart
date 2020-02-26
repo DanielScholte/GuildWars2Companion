@@ -6,6 +6,7 @@ import 'package:guildwars2_companion/pages/configuration/caching.dart';
 import 'package:guildwars2_companion/pages/configuration/faq.dart';
 import 'package:guildwars2_companion/pages/configuration/language.dart';
 import 'package:guildwars2_companion/pages/configuration/theme.dart';
+import 'package:guildwars2_companion/pages/configuration/time.dart';
 import 'package:guildwars2_companion/utils/urls.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
@@ -95,7 +96,9 @@ class ConfigurationPage extends StatelessWidget {
                     color: Colors.white,
                   ),
                   height: 64.0,
-                  onTap: () {},
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => TimeConfigurationPage()
+                  )),
                 ),
                 CompanionButton(
                   title: 'Caching',
