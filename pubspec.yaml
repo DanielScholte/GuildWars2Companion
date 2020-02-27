@@ -52,7 +52,7 @@ dependencies:
 
   qr_code_scanner: ^0.0.12
 
-  url_launcher: ^5.4.1
+  url_launcher: ^5.4.2
 
   provider: ^4.0.4
 
