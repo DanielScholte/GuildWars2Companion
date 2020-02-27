@@ -32,7 +32,7 @@ dependencies:
 
   intl: ^0.16.0
 
-  cached_network_image: ^2.0.0-rc
+  cached_network_image: ^2.0.0
 
   font_awesome_flutter: ^8.7.0
 
