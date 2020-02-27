@@ -34,7 +34,7 @@ dependencies:
 
   cached_network_image: ^2.0.0-rc
 
-  font_awesome_flutter: ^8.5.0
+  font_awesome_flutter: ^8.7.0
 
   sqflite: ^1.2.1
 
