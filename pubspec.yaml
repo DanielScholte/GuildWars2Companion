@@ -26,7 +26,7 @@ dependencies:
 
   shared_preferences: ^0.5.6
 
-  flutter_bloc: ^3.1.0
+  flutter_bloc: ^3.2.0
 
   bubble_bottom_bar: ^1.2.0
 
