@@ -42,7 +42,7 @@ dependencies:
 
   path: ^1.6.4
 
-  package_info: ^0.4.0+13
+  package_info: ^0.4.0+14
 
   timer_builder: ^1.3.0
 
