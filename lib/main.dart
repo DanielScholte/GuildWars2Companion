@@ -13,6 +13,7 @@ import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/blocs/world_boss/bloc.dart';
 import 'package:guildwars2_companion/pages/tab.dart';
 import 'package:guildwars2_companion/pages/token/token.dart';
+import 'package:guildwars2_companion/providers/changelog.dart';
 import 'package:guildwars2_companion/providers/configuration.dart';
 import 'package:guildwars2_companion/repositories/account.dart';
 import 'package:guildwars2_companion/repositories/achievement.dart';
@@ -54,6 +55,9 @@ Future main() async {
   final ConfigurationProvider configurationProvider = ConfigurationProvider();
   await configurationProvider.loadConfiguration();
 
+  final ChangelogProvider changelogProvider = ChangelogProvider();
+  await changelogProvider.loadChangelogData();
+
   final DioUtil dioUtil = DioUtil(
     tokenService: tokenService,
     configurationProvider: configurationProvider
@@ -85,6 +89,7 @@ Future main() async {
     tradingPostService: TradingPostService(dio: dioUtil.getDioInstance()),
     walletService: WalletService(dio: dioUtil.getDioInstance()),
     worldBossService: WorldBossService(dio: dioUtil.getDioInstance()),
+    changelogProvider: changelogProvider,
     configurationProvider: configurationProvider,
     isAuthenticated: await tokenService.tokenPresent(),
   ));
@@ -106,6 +111,7 @@ class GuildWars2Companion extends StatelessWidget {
   final WalletService walletService;
   final WorldBossService worldBossService;
 
+  final ChangelogProvider changelogProvider;
   final ConfigurationProvider configurationProvider;
 
   final bool isAuthenticated;
@@ -125,6 +131,7 @@ class GuildWars2Companion extends StatelessWidget {
     @required this.tradingPostService,
     @required this.walletService,
     @required this.worldBossService,
+    @required this.changelogProvider,
     @required this.configurationProvider,
     @required this.isAuthenticated
   });
@@ -291,10 +298,13 @@ class GuildWars2Companion extends StatelessWidget {
   Widget _initializeConfiguration({
     Widget Function(BuildContext, ConfigurationProvider, Widget) builder
   }) {
-    return ChangeNotifierProvider<ConfigurationProvider>(
-      create: (context) => configurationProvider,
-      child: Consumer<ConfigurationProvider>(
-        builder: builder,
+    return ChangeNotifierProvider<ChangelogProvider>(
+      create: (context) => changelogProvider,
+      child: ChangeNotifierProvider<ConfigurationProvider>(
+        create: (context) => configurationProvider,
+        child: Consumer<ConfigurationProvider>(
+          builder: builder,
+        ),
       ),
     );
   }

@@ -6,6 +6,7 @@ import 'package:guildwars2_companion/models/account/account.dart';
 import 'package:guildwars2_companion/models/account/token_info.dart';
 import 'package:guildwars2_companion/models/character/character.dart';
 import 'package:guildwars2_companion/models/character/profession.dart';
+import 'package:guildwars2_companion/providers/changelog.dart';
 import 'package:guildwars2_companion/providers/configuration.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/info_box.dart';
@@ -111,6 +112,7 @@ main() {
         tradingPostService: tradingPostService,
         walletService: walletService,
         worldBossService: worldBossService,
+        changelogProvider: ChangelogProvider(),
         configurationProvider: ConfigurationProvider(),
         isAuthenticated: true,
       ));
@@ -183,6 +185,7 @@ main() {
         tradingPostService: tradingPostService,
         walletService: walletService,
         worldBossService: worldBossService,
+        changelogProvider: ChangelogProvider(),
         configurationProvider: ConfigurationProvider(),
         isAuthenticated: true,
       ));
@@ -248,6 +251,7 @@ main() {
         tradingPostService: tradingPostService,
         walletService: walletService,
         worldBossService: worldBossService,
+        changelogProvider: ChangelogProvider(),
         configurationProvider: ConfigurationProvider(),
         isAuthenticated: true,
       ));

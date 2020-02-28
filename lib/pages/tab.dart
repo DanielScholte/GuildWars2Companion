@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:guildwars2_companion/widgets/changelog.dart';
 import '../blocs/account/bloc.dart';
 import '../blocs/achievement/bloc.dart';
 import '../blocs/bank/bloc.dart';
@@ -27,8 +28,6 @@ class TabPage extends StatefulWidget {
 class _TabPageState extends State<TabPage> {
 
   int _currentIndex = 0;
-  int _opacity = 0;
-  bool _displayChangelog = false;
 
   @override
   void initState() {
@@ -96,59 +95,7 @@ class _TabPageState extends State<TabPage> {
             return Stack(
               children: <Widget>[
                 _buildTabPage(context, state),
-                if (_displayChangelog)
-                  AnimatedOpacity(
-                    opacity: _opacity.toDouble(),
-                    duration: Duration(milliseconds: 250),
-                    child: Container(
-                      color: Colors.black87,
-                      child: SafeArea(
-                        child: Center(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Icon(
-                                FontAwesomeIcons.smile,
-                                size: 48,
-                                color: Colors.white,
-                              ),
-                              Text(
-                                'Welcome back!',
-                                style: Theme.of(context).textTheme.display1.copyWith(
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.w500
-                                ),
-                              ),
-                              Text(
-                                'Since your last visit, the following new features have been added to the app:',
-                                style: Theme.of(context).textTheme.display2.copyWith(
-                                  color: Colors.white
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              Column(
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-
-                                    ],
-                                  )
-                                ],
-                              ),
-                              RaisedButton(
-                                child: Text('close'),
-                                onPressed: () async {
-                                  setState(() => _opacity = 0);
-                                  await Future.delayed(Duration(milliseconds: 250));
-                                  setState(() => _displayChangelog = false);
-                                },
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                CompanionChangelog(),
               ],
             );
           },
@@ -230,13 +177,7 @@ class _TabPageState extends State<TabPage> {
     
     _tabs = tabs;
 
-    _displayChangelog = true;
-
     setState(() {});
-
-    await Future.delayed(Duration(milliseconds: 100));
-
-    setState(() => _opacity = 1);
     return;
   }
 }
