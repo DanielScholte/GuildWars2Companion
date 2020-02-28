@@ -63,7 +63,7 @@ class _MetaEventPageState extends State<MetaEventPage> {
         ),
         body: Consumer<ConfigurationProvider>(
           builder: (context, state, child) {
-            final DateFormat timeFormat = state.timeNotation24Hours ? DateFormat.Hm() : DateFormat('kk:mm a');
+            final DateFormat timeFormat = state.timeNotation24Hours ? DateFormat.Hm() : DateFormat.jm();
 
             return BlocBuilder<EventBloc, EventState>(
               builder: (context, state) {

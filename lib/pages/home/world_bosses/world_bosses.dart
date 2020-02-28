@@ -59,7 +59,7 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
         ),
         body: Consumer<ConfigurationProvider>(
           builder: (context, state, child) {
-            final DateFormat timeFormat = state.timeNotation24Hours ? DateFormat.Hm() : DateFormat('kk:mm a');
+            final DateFormat timeFormat = state.timeNotation24Hours ? DateFormat.Hm() : DateFormat.jm();
 
             return BlocBuilder<WorldBossBloc, WorldBossState>(
               builder: (context, state) {

@@ -117,7 +117,7 @@ class WorldBossPage extends StatelessWidget {
   Widget _buildTimes(BuildContext context) {
     return Consumer<ConfigurationProvider>(
       builder: (context, state, child) {
-        final DateFormat timeFormat = state.timeNotation24Hours ? DateFormat.Hm() : DateFormat('kk:mm a');
+        final DateFormat timeFormat = state.timeNotation24Hours ? DateFormat.Hm() : DateFormat.jm();
 
         return CompanionCard(
           child: Column(
