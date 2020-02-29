@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:guildwars2_companion/providers/configuration.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guildwars2_companion/blocs/configuration/configuration_bloc.dart';
+import 'package:guildwars2_companion/models/other/configuration.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
-import 'package:provider/provider.dart';
 
 class TimeConfigurationPage extends StatelessWidget {
   @override
@@ -13,15 +14,17 @@ class TimeConfigurationPage extends StatelessWidget {
         elevation: 4.0,
         foregroundColor: Colors.white,
       ),
-      body: Consumer<ConfigurationProvider>(
-        builder: (context, state, child) {
+      body: BlocBuilder<ConfigurationBloc, ConfigurationState>(
+        builder: (context, state) {
+          final Configuration configuration = (state as LoadedConfiguration).configuration;
+          
           return ListView(
-            children: [
-              _buildTimeOption(context, state.timeNotation24Hours, true, '24 hours'),
-              _buildTimeOption(context, state.timeNotation24Hours, false, '12 hours'),
-            ]
+            children: <Widget>[
+              _buildTimeOption(context, configuration.timeNotation24Hours, true, '24 hours'),
+              _buildTimeOption(context, configuration.timeNotation24Hours, false, '12 hours'),
+            ],
           );
-        }
+        },
       ),
     );
   }
@@ -34,8 +37,7 @@ class TimeConfigurationPage extends StatelessWidget {
         title,
         style: Theme.of(context).textTheme.display3,
       ),
-      onChanged: (bool notation) =>
-        Provider.of<ConfigurationProvider>(context, listen: false).changeTimeNotation(notation),
+      onChanged: (bool notation) => BlocProvider.of<ConfigurationBloc>(context).add(ChangeTimeNotationEvent(notation24Hours: notation)),
     );
   }
 }

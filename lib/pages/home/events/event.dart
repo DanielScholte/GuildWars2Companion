@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guildwars2_companion/blocs/configuration/configuration_bloc.dart';
+import 'package:guildwars2_companion/models/other/configuration.dart';
 import 'package:guildwars2_companion/models/other/meta_event.dart';
-import 'package:guildwars2_companion/providers/configuration.dart';
 import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class EventPage extends StatelessWidget {
 
@@ -79,10 +80,11 @@ class EventPage extends StatelessWidget {
     List<DateTime> times = segment.times.map((d) => d.toLocal()).toList();
     times.sort((a, b) => a.hour.compareTo(b.hour));
 
-    return Consumer<ConfigurationProvider>(
-      builder: (context, state, child) {
-        final DateFormat timeFormat = state.timeNotation24Hours ? DateFormat.Hm() : DateFormat.jm();
-
+    return BlocBuilder<ConfigurationBloc, ConfigurationState>(
+      builder: (context, state) {
+        final Configuration configuration = (state as LoadedConfiguration).configuration;
+        final DateFormat timeFormat = configuration.timeNotation24Hours ? DateFormat.Hm() : DateFormat.jm();
+        
         return CompanionCard(
           child: Column(
             children: <Widget>[
@@ -112,7 +114,7 @@ class EventPage extends StatelessWidget {
             ],
           ),
         );
-      }
+      },
     );
   }
 }

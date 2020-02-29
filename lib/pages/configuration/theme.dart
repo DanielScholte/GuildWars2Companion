@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:guildwars2_companion/providers/configuration.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guildwars2_companion/blocs/configuration/configuration_bloc.dart';
+import 'package:guildwars2_companion/models/other/configuration.dart';
 import 'package:guildwars2_companion/utils/theme.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
-import 'package:provider/provider.dart';
 
 class ThemeConfigurationPage extends StatelessWidget {
   @override
@@ -15,16 +16,18 @@ class ThemeConfigurationPage extends StatelessWidget {
         elevation: 4.0,
         foregroundColor: Colors.white,
       ),
-      body: Consumer<ConfigurationProvider>(
-        builder: (context, state, child) {
+      body: BlocBuilder<ConfigurationBloc, ConfigurationState>(
+        builder: (context, state) {
+          final Configuration configuration = (state as LoadedConfiguration).configuration;
+          
           return ListView(
-            children: [
-              _buildThemeOption(context, state.themeMode, ThemeMode.light, 'Light'),
-              _buildThemeOption(context, state.themeMode, ThemeMode.dark, 'Dark'),
-              _buildThemeOption(context, state.themeMode, ThemeMode.system, 'Use system theme'),
-            ]
+            children: <Widget>[
+              _buildThemeOption(context, configuration.themeMode, ThemeMode.light, 'Light'),
+              _buildThemeOption(context, configuration.themeMode, ThemeMode.dark, 'Dark'),
+              _buildThemeOption(context, configuration.themeMode, ThemeMode.system, 'Use system theme'),
+            ],
           );
-        }
+        },
       ),
     );
   }
@@ -45,7 +48,7 @@ class ThemeConfigurationPage extends StatelessWidget {
           ));
         }
 
-        Provider.of<ConfigurationProvider>(context, listen: false).changeTheme(themeMode);
+        BlocProvider.of<ConfigurationBloc>(context).add(ChangeThemeEvent(theme: themeMode));
       },
     );
   }

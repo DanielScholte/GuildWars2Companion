@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:guildwars2_companion/providers/changelog.dart';
+import 'package:guildwars2_companion/blocs/changelog/changelog_bloc.dart';
+import 'package:guildwars2_companion/repositories/changelog.dart';
 import 'package:guildwars2_companion/widgets/simple_button.dart';
-import 'package:provider/provider.dart';
 
 class CompanionChangelog extends StatefulWidget {
   @override
@@ -18,7 +19,7 @@ class _CompanionChangelogState extends State<CompanionChangelog> {
   void initState() {
     super.initState();
 
-    _displayChangelog = Provider.of<ChangelogProvider>(context, listen: false).anyNewChangelog();
+    _displayChangelog = RepositoryProvider.of<ChangelogRepository>(context).anyNewChanges();
 
     if (_displayChangelog) {
       setState(() {});
@@ -31,8 +32,10 @@ class _CompanionChangelogState extends State<CompanionChangelog> {
   @override
   Widget build(BuildContext context) {
     if (_displayChangelog) {
-      return Consumer<ChangelogProvider>(
-        builder: (context, state, child) {
+      return BlocBuilder<ChangelogBloc, ChangelogState>(
+        builder: (context, state) {
+          final List<String> changes = (state as LoadedChangelog).allChanges;
+
           return AnimatedOpacity(
             opacity: _opacity.toDouble(),
             duration: Duration(milliseconds: 250),
@@ -71,7 +74,7 @@ class _CompanionChangelogState extends State<CompanionChangelog> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
-                              children: state.getNewFeatures()
+                              children: changes
                                 .map((c) => Row(
                                   children: <Widget>[
                                     Container(
@@ -98,7 +101,7 @@ class _CompanionChangelogState extends State<CompanionChangelog> {
                       CompanionSimpleButton(
                         text: 'Continue',
                         onPressed: () async {
-                          await state.saveNewFeaturesSeen();
+                          BlocProvider.of<ChangelogBloc>(context).add(SetNewFeaturesSeenEvent());
                           setState(() => _opacity = 0);
                           await Future.delayed(Duration(milliseconds: 250));
                           setState(() => _displayChangelog = false);
@@ -110,7 +113,7 @@ class _CompanionChangelogState extends State<CompanionChangelog> {
               ),
             ),
           );
-        }
+        },
       );
     }
     return Container();

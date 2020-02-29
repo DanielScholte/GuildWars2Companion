@@ -1,8 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ConfigurationProvider extends ChangeNotifier {
+class ConfigurationService {
 
   ThemeMode themeMode = ThemeMode.light;
   String language = 'en';
@@ -12,7 +11,6 @@ class ConfigurationProvider extends ChangeNotifier {
     themeMode = theme;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setInt("configuration_theme", theme.index);
-    notifyListeners();
     return;
   }
 
@@ -20,7 +18,6 @@ class ConfigurationProvider extends ChangeNotifier {
     language = lang;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString("configuration_lang", lang);
-    notifyListeners();
     return;
   }
 
@@ -28,7 +25,6 @@ class ConfigurationProvider extends ChangeNotifier {
     timeNotation24Hours = notation24Hours;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool("configuration_time24", notation24Hours);
-    notifyListeners();
     return;
   }
 
