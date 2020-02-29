@@ -69,11 +69,21 @@ This will also clear your cache and require you to restart the app.'''
           ),
           actions: <Widget>[
             FlatButton(
-              child: const Text('Cancel'),
+              child: Text(
+                'Cancel',
+                style: TextStyle(
+                  fontSize: 18.0
+                ),
+              ),
               onPressed: () => Navigator.of(context).pop(),
             ),
             FlatButton(
-              child: const Text('Change language'),
+              child: Text(
+                'Change language',
+                style: TextStyle(
+                  fontSize: 18.0
+                ),
+              ),
               onPressed: () async {
                 await configurationProvider.changeLanguage(lang);
 

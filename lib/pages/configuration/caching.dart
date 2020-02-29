@@ -119,11 +119,21 @@ Experiencing issues with cached data, such as outdated information? Try clearing
           ),
           actions: <Widget>[
             FlatButton(
-              child: const Text('Cancel'),
+              child: Text(
+                'Cancel',
+                style: TextStyle(
+                  fontSize: 18.0
+                ),
+              ),
               onPressed: () => Navigator.of(context).pop(),
             ),
             FlatButton(
-              child: const Text('Clear cache'),
+              child: Text(
+                'Clear cache',
+                style: TextStyle(
+                  fontSize: 18.0
+                ),
+              ),
               onPressed: () async {
                 Navigator.of(context).pop();
 
