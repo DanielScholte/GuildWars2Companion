@@ -149,24 +149,29 @@ class ConfigurationPage extends StatelessWidget {
                   style: Theme.of(context).textTheme.display3,
                   textAlign: TextAlign.center,
                 ),
-                InkWell(
-                  onTap: () => Urls.launchUrl(_getPlatformUrl()),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          _getPlatformIcon()
-                        ),
-                        Container(width: 8.0,),
-                        Text(
-                          'Review the app',
-                          style: Theme.of(context).textTheme.display2,
-                        )
-                      ],
+                SafeArea(
+                  top: false,
+                  left: false,
+                  right: false,
+                  child: InkWell(
+                    onTap: () => Urls.launchUrl(_getPlatformUrl()),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            _getPlatformIcon()
+                          ),
+                          Container(width: 8.0,),
+                          Text(
+                            'Review the app',
+                            style: Theme.of(context).textTheme.display2,
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 )

@@ -10,7 +10,7 @@ class ChangelogProvider extends ChangeNotifier {
   List<Changelog> changelog = [
     Changelog(
       version: '1.2.0',
-      build: 7,
+      build: 8,
       newFeatures: true,
       changes: [
         "Dark theme",
