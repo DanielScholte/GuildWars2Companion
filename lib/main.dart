@@ -49,6 +49,7 @@ import 'package:guildwars2_companion/utils/dio.dart';
 import 'package:guildwars2_companion/utils/theme.dart';
 
 import 'blocs/dungeon/bloc.dart';
+import 'models/other/configuration.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -144,12 +145,18 @@ class GuildWars2Companion extends StatelessWidget {
 
     return _initializeRepositories(
       child: _initializeBlocs(
-        child: MaterialApp(
-          title: 'Guild Wars 2 Companion',
-          theme: ThemeUtil.getLightTheme(),
-          darkTheme: ThemeUtil.getDarkTheme(),
-          themeMode: ThemeMode.system,
-          home: isAuthenticated ? TabPage() : TokenPage(),
+        child: BlocBuilder<ConfigurationBloc, ConfigurationState>(
+          builder: (context, state) {
+            final Configuration configuration = (state as LoadedConfiguration).configuration;
+
+            return MaterialApp(
+              title: 'Guild Wars 2 Companion',
+              theme: ThemeUtil.getLightTheme(),
+              darkTheme: ThemeUtil.getDarkTheme(),
+              themeMode: configuration.themeMode,
+              home: isAuthenticated ? TabPage() : TokenPage(),
+            );
+          }
         ),
       ),
     );
