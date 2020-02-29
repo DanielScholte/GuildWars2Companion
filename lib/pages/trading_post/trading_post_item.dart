@@ -204,7 +204,9 @@ class TradingPostItemPage extends StatelessWidget {
       },
       child: ListView(
         children: offers.map((o) => Container(
-          color: o.unitPrice == orderValue ? Colors.red[100] : Colors.transparent,
+          color: o.unitPrice == orderValue ? (
+            Theme.of(context).brightness == Brightness.light ? Colors.red[100] : Colors.white24
+          ) : null,
           padding: EdgeInsets.symmetric(horizontal: 8.0),
           child: CompanionInfoRow(
             header: '${GuildWarsUtil.intToString(o.quantity)} $type',
