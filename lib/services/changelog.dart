@@ -1,10 +1,8 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/models/other/changelog.dart';
 import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ChangelogProvider extends ChangeNotifier {
+class ChangelogService {
   int lastLaunchBuildNumber = 0;
   int currentBuildNumber = 0;
   List<Changelog> changelog = [
@@ -55,7 +53,7 @@ class ChangelogProvider extends ChangeNotifier {
     lastLaunchBuildNumber = currentBuildNumber;
   }
 
-  bool anyNewChangelog() {
+  bool anyNewChanges() {
     return 
       currentBuildNumber > lastLaunchBuildNumber &&
       changelog.any((c) => c.build > lastLaunchBuildNumber && c.newFeatures) &&

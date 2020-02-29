@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:guildwars2_companion/providers/changelog.dart';
+import 'package:guildwars2_companion/blocs/changelog/changelog_bloc.dart';
+import 'package:guildwars2_companion/models/other/changelog.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
-import 'package:provider/provider.dart';
 
 class ChangelogPage extends StatelessWidget {
   @override
@@ -14,11 +15,13 @@ class ChangelogPage extends StatelessWidget {
         elevation: 4.0,
         foregroundColor: Colors.white,
       ),
-      body: Consumer<ChangelogProvider>(
-        builder: (context, state, child) {
+      body: BlocBuilder<ChangelogBloc, ChangelogState>(
+        builder: (context, state) {
+          final List<Changelog> changelogs = (state as LoadedChangelog).changelogs;
+
           return ListView(
             padding: EdgeInsets.all(8.0),
-            children: state.changelog
+            children: changelogs
               .map((c) => Padding(
                 padding: EdgeInsets.symmetric(vertical: 8.0),
                 child: Column(
@@ -52,8 +55,8 @@ class ChangelogPage extends StatelessWidget {
               ))
               .toList()
           );
-        }
-      )
+        },
+      ),
     );
   }
 }

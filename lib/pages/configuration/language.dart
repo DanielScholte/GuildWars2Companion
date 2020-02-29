@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:guildwars2_companion/providers/configuration.dart';
+import 'package:guildwars2_companion/blocs/configuration/configuration_bloc.dart';
+import 'package:guildwars2_companion/models/other/configuration.dart';
 import 'package:guildwars2_companion/repositories/achievement.dart';
 import 'package:guildwars2_companion/repositories/item.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
-import 'package:provider/provider.dart';
 
 class LanguageConfigurationPage extends StatelessWidget {
   @override
@@ -16,18 +16,20 @@ class LanguageConfigurationPage extends StatelessWidget {
         elevation: 4.0,
         foregroundColor: Colors.white,
       ),
-      body: Consumer<ConfigurationProvider>(
-        builder: (context, state, child) {
+      body: BlocBuilder<ConfigurationBloc, ConfigurationState>(
+        builder: (context, state) {
+          final Configuration configuration = (state as LoadedConfiguration).configuration;
+          
           return ListView(
-            children: [
-              _buildLanguageOption(context, state.language, 'en', 'English'),
-              _buildLanguageOption(context, state.language, 'es', 'Spanish'),
-              _buildLanguageOption(context, state.language, 'de', 'German'),
-              _buildLanguageOption(context, state.language, 'fr', 'French'),
-              _buildLanguageOption(context, state.language, 'zh', 'Chinese'),
-            ]
+            children: <Widget>[
+              _buildLanguageOption(context, configuration.language, 'en', 'English'),
+              _buildLanguageOption(context, configuration.language, 'es', 'Spanish'),
+              _buildLanguageOption(context, configuration.language, 'de', 'German'),
+              _buildLanguageOption(context, configuration.language, 'fr', 'French'),
+              _buildLanguageOption(context, configuration.language, 'zh', 'Chinese'),
+            ],
           );
-        }
+        },
       ),
     );
   }
@@ -44,7 +46,6 @@ class LanguageConfigurationPage extends StatelessWidget {
         context: context,
         achievementRepository: RepositoryProvider.of<AchievementRepository>(context),
         itemRepository: RepositoryProvider.of<ItemRepository>(context),
-        configurationProvider: Provider.of<ConfigurationProvider>(context, listen: false),
         lang: lang
       ),
     );
@@ -54,7 +55,6 @@ class LanguageConfigurationPage extends StatelessWidget {
     BuildContext context,
     AchievementRepository achievementRepository,
     ItemRepository itemRepository,
-    ConfigurationProvider configurationProvider,
     String lang,
   }) async {
     return showDialog(
@@ -85,7 +85,7 @@ This will also clear your cache and require you to restart the app.'''
                 ),
               ),
               onPressed: () async {
-                await configurationProvider.changeLanguage(lang);
+                BlocProvider.of<ConfigurationBloc>(context).add(ChangeLanguageEvent(language: lang));
 
                 Navigator.of(context).pop();
 

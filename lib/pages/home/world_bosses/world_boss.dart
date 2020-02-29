@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guildwars2_companion/blocs/configuration/configuration_bloc.dart';
+import 'package:guildwars2_companion/models/other/configuration.dart';
 import 'package:guildwars2_companion/models/other/world_boss.dart';
-import 'package:guildwars2_companion/providers/configuration.dart';
 import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_row.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class WorldBossPage extends StatelessWidget {
 
@@ -115,9 +116,10 @@ class WorldBossPage extends StatelessWidget {
   }
 
   Widget _buildTimes(BuildContext context) {
-    return Consumer<ConfigurationProvider>(
-      builder: (context, state, child) {
-        final DateFormat timeFormat = state.timeNotation24Hours ? DateFormat.Hm() : DateFormat.jm();
+    return BlocBuilder<ConfigurationBloc, ConfigurationState>(
+      builder: (context, state) {
+        final Configuration configuration = (state as LoadedConfiguration).configuration;
+        final DateFormat timeFormat = configuration.timeNotation24Hours ? DateFormat.Hm() : DateFormat.jm();
 
         return CompanionCard(
           child: Column(

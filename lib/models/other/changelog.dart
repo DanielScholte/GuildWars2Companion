@@ -11,3 +11,13 @@ class Changelog {
     this.changes,
   });
 }
+
+class ChangelogData {
+  List<Changelog> changelog;
+  List<String> allChanges;
+
+  ChangelogData({
+    this.changelog,
+    this.allChanges
+  });
+}

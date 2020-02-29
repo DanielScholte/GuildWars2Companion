@@ -2,16 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guildwars2_companion/blocs/configuration/configuration_bloc.dart';
 import 'package:guildwars2_companion/blocs/event/event_bloc.dart';
+import 'package:guildwars2_companion/models/other/configuration.dart';
 import 'package:guildwars2_companion/models/other/meta_event.dart';
-import 'package:guildwars2_companion/providers/configuration.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:timer_builder/timer_builder.dart';
 
 import 'event.dart';
@@ -61,9 +61,10 @@ class _MetaEventPageState extends State<MetaEventPage> {
           foregroundColor: Colors.white,
           elevation: 4.0,
         ),
-        body: Consumer<ConfigurationProvider>(
-          builder: (context, state, child) {
-            final DateFormat timeFormat = state.timeNotation24Hours ? DateFormat.Hm() : DateFormat.jm();
+        body: BlocBuilder<ConfigurationBloc, ConfigurationState>(
+          builder: (context, configurationState) {
+            final Configuration configuration = (configurationState as LoadedConfiguration).configuration;
+            final DateFormat timeFormat = configuration.timeNotation24Hours ? DateFormat.Hm() : DateFormat.jm();
 
             return BlocBuilder<EventBloc, EventState>(
               builder: (context, state) {
