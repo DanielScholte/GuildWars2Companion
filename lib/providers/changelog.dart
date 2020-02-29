@@ -7,18 +7,36 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ChangelogProvider extends ChangeNotifier {
   int lastLaunchBuildNumber = 0;
   int currentBuildNumber = 0;
-  List<Changelog> _changelog = [
+  List<Changelog> changelog = [
     Changelog(
-      version: 7,
+      version: '1.2.0',
+      build: 7,
+      newFeatures: true,
       changes: [
         "Dark theme",
         "Language configuration",
       ],
     ),
     Changelog(
-      version: 5,
+      version: '1.1.0',
+      build: 5,
+      newFeatures: true,
       changes: [
         "The new PvP section",
+      ],
+    ),
+    Changelog(
+      version: '1.0.3',
+      build: 3,
+      changes: [
+        "Bug fixes",
+      ],
+    ),
+    Changelog(
+      version: '1.0.0',
+      build: 1,
+      changes: [
+        "Initial release",
       ],
     ),
   ];
@@ -31,14 +49,20 @@ class ChangelogProvider extends ChangeNotifier {
     currentBuildNumber = int.tryParse(platformInfo.buildNumber) ?? 0;
   }
 
+  Future<void> saveNewFeaturesSeen() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt("lastlaunch_buildnumber", currentBuildNumber);
+    lastLaunchBuildNumber = currentBuildNumber;
+  }
+
   bool anyNewChangelog() {
     return 
       currentBuildNumber > lastLaunchBuildNumber &&
-      _changelog.any((c) => c.version > lastLaunchBuildNumber) &&
+      changelog.any((c) => c.build > lastLaunchBuildNumber && c.newFeatures) &&
       (lastLaunchBuildNumber != 0 || DateTime.now().isBefore(DateTime.utc(2020, 3, 6)));
   }
 
-  List<String> getChanges() {
-    return _changelog.map((c) => c.changes).expand((i) => i).take(10).toList();
+  List<String> getNewFeatures() {
+    return changelog.where((c) => c.newFeatures).map((c) => c.changes).expand((i) => i).take(10).toList();
   }
 }

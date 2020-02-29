@@ -12,6 +12,8 @@ import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:package_info/package_info.dart';
 
+import 'changelog.dart';
+
 class ConfigurationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -122,6 +124,18 @@ class ConfigurationPage extends StatelessWidget {
                   height: 64.0,
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => FaqPage()
+                  )),
+                ),
+                CompanionButton(
+                  title: 'Changelog',
+                  color: Colors.blue,
+                  leading: Icon(
+                    FontAwesomeIcons.listOl,
+                    color: Colors.white,
+                  ),
+                  height: 64.0,
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ChangelogPage()
                   )),
                 ),
                 Container(height: 8.0,),
