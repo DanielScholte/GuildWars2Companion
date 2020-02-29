@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:guildwars2_companion/main.dart';
@@ -6,11 +5,11 @@ import 'package:guildwars2_companion/models/account/account.dart';
 import 'package:guildwars2_companion/models/account/token_info.dart';
 import 'package:guildwars2_companion/models/character/character.dart';
 import 'package:guildwars2_companion/models/character/profession.dart';
+import 'package:guildwars2_companion/providers/changelog.dart';
 import 'package:guildwars2_companion/providers/configuration.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/info_box.dart';
 import 'package:mockito/mockito.dart';
-
 import 'mocks/services.dart';
 
 main() {
@@ -29,6 +28,8 @@ main() {
     MockTradingPostService tradingPostService;
     MockWalletService walletService;
     MockWorldBossService worldBossService;
+    ChangelogProvider changelogProvider;
+    ConfigurationProvider configurationProvider;
 
     setUp(() {
       accountService = MockAccountService();
@@ -45,6 +46,9 @@ main() {
       tradingPostService = MockTradingPostService();
       walletService = MockWalletService();
       worldBossService = MockWorldBossService();
+
+      changelogProvider = ChangelogProvider();
+      configurationProvider = ConfigurationProvider();
 
       when(tokenService.tokenPresent())
         .thenAnswer((_) async => true);
@@ -111,7 +115,8 @@ main() {
         tradingPostService: tradingPostService,
         walletService: walletService,
         worldBossService: worldBossService,
-        configurationProvider: ConfigurationProvider(),
+        changelogProvider: changelogProvider,
+        configurationProvider: configurationProvider,
         isAuthenticated: true,
       ));
 
@@ -183,7 +188,8 @@ main() {
         tradingPostService: tradingPostService,
         walletService: walletService,
         worldBossService: worldBossService,
-        configurationProvider: ConfigurationProvider(),
+        changelogProvider: changelogProvider,
+        configurationProvider: configurationProvider,
         isAuthenticated: true,
       ));
 
@@ -248,7 +254,8 @@ main() {
         tradingPostService: tradingPostService,
         walletService: walletService,
         worldBossService: worldBossService,
-        configurationProvider: ConfigurationProvider(),
+        changelogProvider: changelogProvider,
+        configurationProvider: configurationProvider,
         isAuthenticated: true,
       ));
 

@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:guildwars2_companion/widgets/changelog.dart';
 import '../blocs/account/bloc.dart';
 import '../blocs/achievement/bloc.dart';
 import '../blocs/bank/bloc.dart';
@@ -91,7 +92,12 @@ class _TabPageState extends State<TabPage> {
               );
             }
 
-            return _buildTabPage(context, state);
+            return Stack(
+              children: <Widget>[
+                _buildTabPage(context, state),
+                CompanionChangelog(),
+              ],
+            );
           },
         ),
       ),
