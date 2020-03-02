@@ -55,7 +55,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
         tokenInfo
       );
     } catch (_) {
-      yield await _getUnauthenticated("Invalid token");
+      yield await _getUnauthenticated("Invalid Api Key");
     }
   }
 
@@ -68,15 +68,15 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
         date: DateTime.now().toIso8601String(),
         token: token,
       ));
-      yield await _getUnauthenticated("Token added", tokenAdded: true);
+      yield await _getUnauthenticated("Api Key added", tokenAdded: true);
     } catch (_) {
-      yield await _getUnauthenticated("Invalid token");
+      yield await _getUnauthenticated("Invalid Api Key");
     }
   }
 
   Stream<AccountState> _removeToken(int tokenId) async* {
     await accountRepository.removeToken(tokenId);
-    yield await _getUnauthenticated("Token removed");
+    yield await _getUnauthenticated("Api Key removed");
   }  
 
   Future<UnauthenticatedState> _getUnauthenticated(String message, { bool tokenAdded = false }) async {
