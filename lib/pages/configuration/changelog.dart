@@ -20,7 +20,7 @@ class ChangelogPage extends StatelessWidget {
           final List<Changelog> changelogs = (state as LoadedChangelog).changelogs;
 
           return ListView(
-            padding: EdgeInsets.all(8.0),
+            padding: EdgeInsets.symmetric(horizontal: 8.0),
             children: changelogs
               .map((c) => Padding(
                 padding: EdgeInsets.symmetric(vertical: 8.0),
