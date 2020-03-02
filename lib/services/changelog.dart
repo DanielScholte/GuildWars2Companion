@@ -28,13 +28,18 @@ class ChangelogService {
   }
 
   List<String> getNewFeatures() {
-    return changelog.where((c) => c.newFeatures).map((c) => c.changes).expand((i) => i).take(10).toList();
+    return changelog
+      .where((c) => c.newFeatures && c.build > lastLaunchBuildNumber)
+      .map((c) => c.changes)
+      .expand((i) => i)
+      .take(10)
+      .toList();
   }
 
   List<Changelog> changelog = [
     Changelog(
       version: '1.2.0',
-      build: 9,
+      build: 10,
       newFeatures: true,
       changes: [
         "Dark theme",
