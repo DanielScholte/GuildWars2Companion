@@ -13,7 +13,6 @@ import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_migration/sqflite_migration.dart';
-import 'package:flutter/foundation.dart' as Foundation;
 
 class AchievementService {
   List<Achievement> _cachedAchievements = [];
@@ -49,16 +48,36 @@ class AchievementService {
     final List<Map<String, dynamic>> achievements = await database.query('achievements');
     _cachedAchievements = List.generate(achievements.length, (i) => Achievement.fromDb(achievements[i]));
 
-    if (Foundation.kDebugMode) {
-      print('Cached achievements: ${_cachedAchievements.length}');
-    }
-
     database.close();
 
     return;
   }
 
-  int getCachedAchievementsCount() {
+  Future<void> clearCache() async {
+    Database database = await _getDatabase();
+
+    await database.delete(
+      'achievements',
+    );
+
+    _cachedAchievements.clear();
+
+    database.close();
+    
+    return;
+  }
+
+  Future<int> getCachedAchievementsCount() async {
+    if (_cachedAchievements.isEmpty) {
+      Database database = await _getDatabase();
+
+      var count = await database.rawQuery('SELECT COUNT (*) from achievements');
+
+      database.close();
+
+      return Sqflite.firstIntValue(count);
+    }
+
     return _cachedAchievements.length;
   }
 

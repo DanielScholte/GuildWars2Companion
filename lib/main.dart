@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
 import 'package:guildwars2_companion/blocs/bank/bloc.dart';
+import 'package:guildwars2_companion/blocs/changelog/changelog_bloc.dart';
+import 'package:guildwars2_companion/blocs/configuration/configuration_bloc.dart';
 import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/blocs/event/event_bloc.dart';
 import 'package:guildwars2_companion/blocs/pvp/pvp_bloc.dart';
@@ -16,9 +18,12 @@ import 'package:guildwars2_companion/pages/token/token.dart';
 import 'package:guildwars2_companion/repositories/account.dart';
 import 'package:guildwars2_companion/repositories/achievement.dart';
 import 'package:guildwars2_companion/repositories/bank.dart';
+import 'package:guildwars2_companion/repositories/changelog.dart';
 import 'package:guildwars2_companion/repositories/character.dart';
+import 'package:guildwars2_companion/repositories/configuration.dart';
 import 'package:guildwars2_companion/repositories/dungeon.dart';
 import 'package:guildwars2_companion/repositories/event.dart';
+import 'package:guildwars2_companion/repositories/item.dart';
 import 'package:guildwars2_companion/repositories/pvp.dart';
 import 'package:guildwars2_companion/repositories/raid.dart';
 import 'package:guildwars2_companion/repositories/trading_post.dart';
@@ -27,7 +32,9 @@ import 'package:guildwars2_companion/repositories/world_boss.dart';
 import 'package:guildwars2_companion/services/account.dart';
 import 'package:guildwars2_companion/services/achievement.dart';
 import 'package:guildwars2_companion/services/bank.dart';
+import 'package:guildwars2_companion/services/changelog.dart';
 import 'package:guildwars2_companion/services/character.dart';
+import 'package:guildwars2_companion/services/configuration.dart';
 import 'package:guildwars2_companion/services/dungeon.dart';
 import 'package:guildwars2_companion/services/event.dart';
 import 'package:guildwars2_companion/services/item.dart';
@@ -39,16 +46,25 @@ import 'package:guildwars2_companion/services/trading_post.dart';
 import 'package:guildwars2_companion/services/wallet.dart';
 import 'package:guildwars2_companion/services/world_boss.dart';
 import 'package:guildwars2_companion/utils/dio.dart';
+import 'package:guildwars2_companion/utils/theme.dart';
 
 import 'blocs/dungeon/bloc.dart';
+import 'models/other/configuration.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final TokenService tokenService = TokenService();
 
+  final ConfigurationService configurationService = ConfigurationService();
+  await configurationService.loadConfiguration();
+
+  final ChangelogService changelogService = ChangelogService();
+  await changelogService.loadChangelogData();
+
   final DioUtil dioUtil = DioUtil(
-    tokenService: tokenService
+    tokenService: tokenService,
+    configurationService: configurationService
   );
 
   final AccountService accountService = AccountService(
@@ -77,6 +93,8 @@ Future main() async {
     tradingPostService: TradingPostService(dio: dioUtil.getDioInstance()),
     walletService: WalletService(dio: dioUtil.getDioInstance()),
     worldBossService: WorldBossService(dio: dioUtil.getDioInstance()),
+    changelogService: changelogService,
+    configurationService: configurationService,
     isAuthenticated: await tokenService.tokenPresent(),
   ));
 }
@@ -85,7 +103,9 @@ class GuildWars2Companion extends StatelessWidget {
   final AccountService accountService;
   final AchievementService achievementService;
   final BankService bankService;
+  final ChangelogService changelogService;
   final CharacterService characterService;
+  final ConfigurationService configurationService;
   final DungeonService dungeonService;
   final EventService eventService;
   final ItemService itemService;
@@ -103,7 +123,9 @@ class GuildWars2Companion extends StatelessWidget {
     @required this.accountService,
     @required this.achievementService,
     @required this.bankService,
+    @required this.changelogService,
     @required this.characterService,
+    @required this.configurationService,
     @required this.dungeonService,
     @required this.eventService,
     @required this.itemService,
@@ -123,34 +145,18 @@ class GuildWars2Companion extends StatelessWidget {
 
     return _initializeRepositories(
       child: _initializeBlocs(
-        child: MaterialApp(
-          title: 'Guild Wars 2 Companion',
-          theme: ThemeData(
-            brightness: Brightness.light,
-            primarySwatch: Colors.red,
-            primaryColor: Color(0xFFAA0404),
-            accentColor: Colors.red,
-            scaffoldBackgroundColor: Color(0xFFEEEEEE),
-            cursorColor: Color(0xFFAA0404),
-            textTheme: TextTheme(
-              display1: TextStyle(
-                fontSize: 22.0,
-                color: Colors.white,
-                fontWeight: FontWeight.normal
-              ),
-              display2: TextStyle(
-                fontSize: 18.0,
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-              ),
-              display3: TextStyle(
-                fontSize: 16.0,
-                color: Colors.white,
-                fontWeight: FontWeight.normal,
-              )
-            )
-          ),
-          home: isAuthenticated ? TabPage() : TokenPage(),
+        child: BlocBuilder<ConfigurationBloc, ConfigurationState>(
+          builder: (context, state) {
+            final Configuration configuration = (state as LoadedConfiguration).configuration;
+
+            return MaterialApp(
+              title: 'Guild Wars 2 Companion',
+              theme: ThemeUtil.getLightTheme(),
+              darkTheme: ThemeUtil.getDarkTheme(),
+              themeMode: configuration.themeMode,
+              home: isAuthenticated ? TabPage() : TokenPage(),
+            );
+          }
         ),
       ),
     );
@@ -179,10 +185,20 @@ class GuildWars2Companion extends StatelessWidget {
             itemService: itemService,
           ),
         ),
+        RepositoryProvider<ChangelogRepository>(
+          create: (BuildContext context) => ChangelogRepository(
+            changelogService: changelogService
+          ),
+        ),
         RepositoryProvider<CharacterRepository>(
           create: (BuildContext context) => CharacterRepository(
             characterService: characterService,
             itemService: itemService,
+          ),
+        ),
+        RepositoryProvider<ConfigurationRepository>(
+          create: (BuildContext context) => ConfigurationRepository(
+            configurationService: configurationService
           ),
         ),
         RepositoryProvider<DungeonRepository>(
@@ -193,6 +209,11 @@ class GuildWars2Companion extends StatelessWidget {
         RepositoryProvider<EventRepository>(
           create: (BuildContext context) => EventRepository(
             eventService: eventService,
+          ),
+        ),
+        RepositoryProvider<ItemRepository>(
+          create: (BuildContext context) => ItemRepository(
+            itemService: itemService,
           ),
         ),
         RepositoryProvider<PvpRepository>(
@@ -245,9 +266,19 @@ class GuildWars2Companion extends StatelessWidget {
             bankRepository: RepositoryProvider.of<BankRepository>(context),
           ),
         ),
+        BlocProvider<ChangelogBloc>(
+          create: (BuildContext context) => ChangelogBloc(
+            changelogRepository: RepositoryProvider.of<ChangelogRepository>(context),
+          ),
+        ),
         BlocProvider<CharacterBloc>(
           create: (BuildContext context) => CharacterBloc(
             characterRepository: RepositoryProvider.of<CharacterRepository>(context),
+          ),
+        ),
+        BlocProvider<ConfigurationBloc>(
+          create: (BuildContext context) => ConfigurationBloc(
+            configurationRepository: RepositoryProvider.of<ConfigurationRepository>(context),
           ),
         ),
         BlocProvider<DungeonBloc>(

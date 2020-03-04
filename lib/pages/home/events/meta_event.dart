@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guildwars2_companion/blocs/configuration/configuration_bloc.dart';
 import 'package:guildwars2_companion/blocs/event/event_bloc.dart';
+import 'package:guildwars2_companion/models/other/configuration.dart';
 import 'package:guildwars2_companion/models/other/meta_event.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
@@ -24,9 +27,6 @@ class MetaEventPage extends StatefulWidget {
 }
 
 class _MetaEventPageState extends State<MetaEventPage> {
-
-  final DateFormat timeFormat = DateFormat.Hm();
-
   Timer _timer;
   int _refreshTimeout = 0;
 
@@ -52,8 +52,8 @@ class _MetaEventPageState extends State<MetaEventPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: GuildWarsUtil.regionColor(widget.metaEventSequence.region)),
+    return CompanionAccent(
+      lightColor: GuildWarsUtil.regionColor(widget.metaEventSequence.region),
       child: Scaffold(
         appBar: CompanionAppBar(
           title: widget.metaEventSequence.name,
@@ -61,47 +61,54 @@ class _MetaEventPageState extends State<MetaEventPage> {
           foregroundColor: Colors.white,
           elevation: 4.0,
         ),
-        body: BlocBuilder<EventBloc, EventState>(
-          builder: (context, state) {
-            if (state is ErrorEventsState) {
-              return Center(
-                child: CompanionError(
-                  title: 'the meta event',
-                  onTryAgain: () =>
-                    BlocProvider.of<EventBloc>(context).add(LoadEventsEvent()),
-                ),
-              );
-            }
+        body: BlocBuilder<ConfigurationBloc, ConfigurationState>(
+          builder: (context, configurationState) {
+            final Configuration configuration = (configurationState as LoadedConfiguration).configuration;
+            final DateFormat timeFormat = configuration.timeNotation24Hours ? DateFormat.Hm() : DateFormat.jm();
 
-            if (state is LoadedEventsState) {
-              MetaEventSequence _sequence = state.events.firstWhere((e) => e.id == widget.metaEventSequence.id);
+            return BlocBuilder<EventBloc, EventState>(
+              builder: (context, state) {
+                if (state is ErrorEventsState) {
+                  return Center(
+                    child: CompanionError(
+                      title: 'the meta event',
+                      onTryAgain: () =>
+                        BlocProvider.of<EventBloc>(context).add(LoadEventsEvent()),
+                    ),
+                  );
+                }
 
-              return RefreshIndicator(
-                backgroundColor: Theme.of(context).accentColor,
-                color: Colors.white,
-                onRefresh: () async {
-                  BlocProvider.of<EventBloc>(context).add(LoadEventsEvent(id: widget.metaEventSequence.id));
-                  await Future.delayed(Duration(milliseconds: 200), () {});
-                },
-                child: ListView(
-                  children: _sequence.segments
-                    .where((e) => e.name != null)
-                    .map((e) => _buildEventButton(context, e))
-                    .toList(),
-                ),
-              );
-            }
+                if (state is LoadedEventsState) {
+                  MetaEventSequence _sequence = state.events.firstWhere((e) => e.id == widget.metaEventSequence.id);
 
-            return Center(
-              child: CircularProgressIndicator(),
+                  return RefreshIndicator(
+                    backgroundColor: Theme.of(context).accentColor,
+                    color: Theme.of(context).cardColor,
+                    onRefresh: () async {
+                      BlocProvider.of<EventBloc>(context).add(LoadEventsEvent(id: widget.metaEventSequence.id));
+                      await Future.delayed(Duration(milliseconds: 200), () {});
+                    },
+                    child: ListView(
+                      children: _sequence.segments
+                        .where((e) => e.name != null)
+                        .map((e) => _buildEventButton(context, timeFormat, e))
+                        .toList(),
+                    ),
+                  );
+                }
+
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
             );
-          },
+          }
         ),
       ),
     );
   }
 
-  Widget _buildEventButton(BuildContext context, MetaEventSegment segment) {
+  Widget _buildEventButton(BuildContext context, DateFormat timeFormat, MetaEventSegment segment) {
     DateTime time = segment.time.toLocal();
 
     return CompanionButton(
@@ -134,19 +141,25 @@ class _MetaEventPageState extends State<MetaEventPage> {
                 if (isActive) {
                   return Text(
                     'Active',
-                    style: Theme.of(context).textTheme.display2,
+                    style: Theme.of(context).textTheme.display2.copyWith(
+                      color: Colors.white,
+                    ),
                   );
                 }
                   
                 return Text(
                   GuildWarsUtil.durationToString(time.difference(DateTime.now())),
-                  style: Theme.of(context).textTheme.display2,
+                  style: Theme.of(context).textTheme.display2.copyWith(
+                    color: Colors.white
+                  ),
                 );
               },
             ),
             Text(
               timeFormat.format(time),
-              style: Theme.of(context).textTheme.display3,
+              style: Theme.of(context).textTheme.display3.copyWith(
+                color: Colors.white
+              ),
             )
           ],
         ),

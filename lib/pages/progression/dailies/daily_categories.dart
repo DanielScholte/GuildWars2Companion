@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
@@ -10,8 +11,8 @@ import 'dailies.dart';
 class DailyCategoriesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.indigo),
+    return CompanionAccent(
+      lightColor: Colors.indigo,
       child: Scaffold(
         appBar: CompanionAppBar(
           title: 'Dailies',
@@ -36,7 +37,7 @@ class DailyCategoriesPage extends StatelessWidget {
             if (state is LoadedAchievementsState) {
               return RefreshIndicator(
                 backgroundColor: Theme.of(context).accentColor,
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 onRefresh: () async {
                   BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
                     includeProgress: state.includesProgress

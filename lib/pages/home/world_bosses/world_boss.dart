@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guildwars2_companion/blocs/configuration/configuration_bloc.dart';
+import 'package:guildwars2_companion/models/other/configuration.dart';
 import 'package:guildwars2_companion/models/other/world_boss.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_row.dart';
@@ -9,14 +13,12 @@ class WorldBossPage extends StatelessWidget {
 
   final WorldBoss worldBoss;
 
-  final DateFormat timeFormat = DateFormat.Hm();
-
   WorldBossPage(this.worldBoss);
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: worldBoss.color),
+    return CompanionAccent(
+      lightColor: worldBoss.color,
       child: Scaffold(
         body: Column(
           children: <Widget>[
@@ -40,6 +42,7 @@ class WorldBossPage extends StatelessWidget {
     return CompanionHeader(
       color: worldBoss.color,
       wikiName: worldBoss.name,
+      wikiRequiresEnglish: true,
       includeBack: true,
       child: Column(
         children: <Widget>[
@@ -49,10 +52,11 @@ class WorldBossPage extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6.0),
               boxShadow: [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 4.0,
-                ),
+                if (Theme.of(context).brightness == Brightness.light)
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 4.0,
+                  ),
               ],
             ),
             child: Hero(
@@ -73,7 +77,9 @@ class WorldBossPage extends StatelessWidget {
           ),
           Text(
             worldBoss.location,
-            style: Theme.of(context).textTheme.display3,
+            style: Theme.of(context).textTheme.display3.copyWith(
+              color: Colors.white
+            ),
             textAlign: TextAlign.center,
           ),
         ],
@@ -89,9 +95,7 @@ class WorldBossPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Stats',
-              style: Theme.of(context).textTheme.display2.copyWith(
-                color: Colors.black
-              )
+              style: Theme.of(context).textTheme.display2,
             ),
           ),
           CompanionInfoRow(
@@ -112,34 +116,41 @@ class WorldBossPage extends StatelessWidget {
   }
 
   Widget _buildTimes(BuildContext context) {
-    return CompanionCard(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              'Spawn Times',
-              style: Theme.of(context).textTheme.display2.copyWith(
-                color: Colors.black
-              )
-            ),
-          ),
-          Wrap(
-            alignment: WrapAlignment.spaceEvenly,
-            spacing: 16.0,
-            runSpacing: 4.0,
-            children: _getSpawnTimes(worldBoss.times)
-              .map((t) => Chip(
-                backgroundColor: worldBoss.color,
-                label: Text(
-                  timeFormat.format(t),
-                  style: Theme.of(context).textTheme.display3,
+    return BlocBuilder<ConfigurationBloc, ConfigurationState>(
+      builder: (context, state) {
+        final Configuration configuration = (state as LoadedConfiguration).configuration;
+        final DateFormat timeFormat = configuration.timeNotation24Hours ? DateFormat.Hm() : DateFormat.jm();
+
+        return CompanionCard(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(bottom: 8.0),
+                child: Text(
+                  'Spawn Times',
+                  style: Theme.of(context).textTheme.display2,
                 ),
-              ))
-              .toList()
-          )
-        ],
-      ),
+              ),
+              Wrap(
+                alignment: WrapAlignment.spaceEvenly,
+                spacing: 16.0,
+                runSpacing: 4.0,
+                children: _getSpawnTimes(worldBoss.times)
+                  .map((t) => Chip(
+                    backgroundColor: Theme.of(context).brightness == Brightness.light ? worldBoss.color : Colors.white12,
+                    label: Text(
+                      timeFormat.format(t),
+                      style: Theme.of(context).textTheme.display3.copyWith(
+                        color: Colors.white
+                      ),
+                    ),
+                  ))
+                  .toList()
+              )
+            ],
+          ),
+        );
+      }
     );
   }
 

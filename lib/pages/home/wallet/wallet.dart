@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/models/wallet/currency.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
@@ -11,8 +12,8 @@ import 'package:guildwars2_companion/widgets/error.dart';
 class WalletPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.orange),
+    return CompanionAccent(
+      lightColor: Colors.orange,
       child: Scaffold(
         appBar: CompanionAppBar(
           title: 'Wallet',
@@ -34,8 +35,8 @@ class WalletPage extends StatelessWidget {
 
             if (state is LoadedWalletState) {
               return RefreshIndicator(
-                backgroundColor: Colors.orange,
-                color: Colors.white,
+                backgroundColor: Theme.of(context).accentColor,
+                color: Theme.of(context).cardColor,
                 onRefresh: () async {
                   BlocProvider.of<WalletBloc>(context).add(LoadWalletEvent());
                   await Future.delayed(Duration(milliseconds: 200), () {});
@@ -64,7 +65,6 @@ class WalletPage extends StatelessWidget {
             child: Text(
               currency.name,
               style: Theme.of(context).textTheme.display3.copyWith(
-                color: Colors.black,
                 fontWeight: FontWeight.w500
               )
             ),
@@ -77,12 +77,13 @@ class WalletPage extends StatelessWidget {
   }
 
   Widget _buildCurrency(BuildContext context, Currency currency) {
-    if (currency.name == 'Coin') {
+    if (currency.name == 'Coin' || currency.id == 1) {
       return Padding(
         padding: EdgeInsets.only(right: 2.0),
         child: CompanionCoin(
           currency.value,
           innerPadding: 6.0,
+          color: Theme.of(context).textTheme.display3.color
         ),
       );
     }
@@ -93,9 +94,7 @@ class WalletPage extends StatelessWidget {
         children: <Widget>[
           Text(
             GuildWarsUtil.intToString(currency.value),
-            style: Theme.of(context).textTheme.display3.copyWith(
-              color: Colors.black
-            )
+            style: Theme.of(context).textTheme.display3,
           ),
           Container(
             width: 20.0,

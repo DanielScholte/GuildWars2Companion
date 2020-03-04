@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/models/pvp/season.dart';
 import 'package:guildwars2_companion/models/pvp/standing.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
@@ -20,8 +21,8 @@ class SeasonPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.blueGrey),
+    return CompanionAccent(
+      lightColor: Colors.blueGrey,
       child: Scaffold(
         body: Column(
           children: <Widget>[
@@ -47,7 +48,9 @@ class SeasonPage extends StatelessWidget {
                   Text(
                     _dateFormat.format(DateTime.parse(standing.season.start)) +
                           (standing.season.end != null ? ' - ' + _dateFormat.format(DateTime.parse(standing.season.end)) : ''),
-                    style: Theme.of(context).textTheme.display3,
+                    style: Theme.of(context).textTheme.display3.copyWith(
+                      color: Colors.white
+                    ),
                   )
                 ],
               ),
@@ -74,9 +77,7 @@ class SeasonPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Rewards',
-              style: Theme.of(context).textTheme.display2.copyWith(
-                color: Colors.black
-              )
+              style: Theme.of(context).textTheme.display2,
             ),
           ),
           Container(
@@ -96,9 +97,7 @@ class SeasonPage extends StatelessWidget {
                         padding: EdgeInsets.only(bottom: 4.0),
                         child: Text(
                           d.name,
-                          style: Theme.of(context).textTheme.display3.copyWith(
-                            color: Colors.black
-                          ),
+                          style: Theme.of(context).textTheme.display3,
                           textAlign: TextAlign.center,
                         ),
                       ),

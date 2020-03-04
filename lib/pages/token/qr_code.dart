@@ -52,9 +52,7 @@ class _QrCodePageState extends State<QrCodePage> {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     'Taking too long? The app might not have permission to use the camera.',
-                    style: Theme.of(context).textTheme.display2.copyWith(
-                      color: Colors.black
-                    ),
+                    style: Theme.of(context).textTheme.display2,
                     textAlign: TextAlign.center,
                   ),
                 )
@@ -92,8 +90,10 @@ class _QrCodePageState extends State<QrCodePage> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            'Checking token...',
-                            style: Theme.of(context).textTheme.display2
+                            'Checking Api Key...',
+                            style: Theme.of(context).textTheme.display2.copyWith(
+                              color: Colors.white
+                            ),
                           ),
                         )
                       ],

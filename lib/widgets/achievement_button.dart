@@ -106,7 +106,9 @@ class CompanionAchievementButton extends StatelessWidget {
             children: <Widget>[
               Text(
                 points.toString(),
-                style: Theme.of(context).textTheme.display3,
+                style: Theme.of(context).textTheme.display3.copyWith(
+                  color: Colors.white
+                ),
               ),
               Container(width: 4.0,),
               Image.asset(

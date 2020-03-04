@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
 import 'package:guildwars2_companion/models/achievement/achievement.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/achievement_button.dart';
 import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
@@ -26,8 +27,8 @@ class AchievementPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.blueGrey),
+    return CompanionAccent(
+      lightColor: Colors.blueGrey,
       child: Scaffold(
         body: Column(
           children: <Widget>[
@@ -62,7 +63,9 @@ class AchievementPage extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             '${((achievement.progress.current / achievement.progress.max) * 100).round()}%',
-                            style: Theme.of(context).textTheme.display3,
+                            style: Theme.of(context).textTheme.display3.copyWith(
+                              color: Colors.white
+                            ),
                           ),
                           Theme(
                             data: Theme.of(context).copyWith(accentColor: Colors.white),
@@ -95,7 +98,9 @@ class AchievementPage extends StatelessWidget {
                       padding: EdgeInsets.only(top: 4.0),
                       child: Text(
                         achievement.categoryName,
-                        style: Theme.of(context).textTheme.display3,
+                        style: Theme.of(context).textTheme.display3.copyWith(
+                          color: Colors.white
+                        ),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -156,7 +161,7 @@ class AchievementPage extends StatelessWidget {
                       if (state.includesProgress) {
                         return RefreshIndicator(
                           backgroundColor: Theme.of(context).accentColor,
-                          color: Colors.white,
+                          color: Theme.of(context).cardColor,
                           onRefresh: () async {
                             BlocProvider.of<AchievementBloc>(context).add(RefreshAchievementProgressEvent(
                               achievementGroups: state.achievementGroups,
@@ -217,7 +222,9 @@ class AchievementPage extends StatelessWidget {
       children: <Widget>[
         Text(
           '${achievement.progress.points} / ${achievement.pointCap}',
-          style: Theme.of(context).textTheme.display3,
+          style: Theme.of(context).textTheme.display3.copyWith(
+            color: Colors.white
+          ),
         ),
         Container(width: 4.0,),
         Image.asset(
@@ -236,9 +243,7 @@ class AchievementPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Prerequisites',
-              style: Theme.of(context).textTheme.display2.copyWith(
-                color: Colors.black
-              )
+              style: Theme.of(context).textTheme.display2,
             ),
           ),
           Column(
@@ -263,9 +268,7 @@ class AchievementPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Rewards',
-              style: Theme.of(context).textTheme.display2.copyWith(
-                color: Colors.black
-              )
+              style: Theme.of(context).textTheme.display2,
             ),
           ),
           Column(
@@ -295,9 +298,7 @@ class AchievementPage extends StatelessWidget {
                           padding: EdgeInsets.all(4.0),
                           child: Text(
                             r.item.name,
-                            style: Theme.of(context).textTheme.display3.copyWith(
-                              color: Colors.black
-                            ),
+                            style: Theme.of(context).textTheme.display3,
                             textAlign: TextAlign.center,
                           ),
                         )
@@ -319,9 +320,7 @@ class AchievementPage extends StatelessWidget {
                           padding: EdgeInsets.all(4.0),
                           child: Text(
                             _masteryToName(r.region) + ' Mastery point',
-                            style: Theme.of(context).textTheme.display3.copyWith(
-                              color: Colors.black
-                            ),
+                            style: Theme.of(context).textTheme.display3,
                             textAlign: TextAlign.center,
                           ),
                         )
@@ -342,9 +341,7 @@ class AchievementPage extends StatelessWidget {
                           padding: EdgeInsets.all(4.0),
                           child: Text(
                             r.title.name,
-                            style: Theme.of(context).textTheme.display3.copyWith(
-                              color: Colors.black
-                            ),
+                            style: Theme.of(context).textTheme.display3,
                             textAlign: TextAlign.center,
                           ),
                         )
@@ -383,9 +380,7 @@ class AchievementPage extends StatelessWidget {
               padding: EdgeInsets.only(bottom: 8.0),
               child: Text(
                 'Objectives',
-                style: Theme.of(context).textTheme.display2.copyWith(
-                  color: Colors.black
-                ),
+                style: Theme.of(context).textTheme.display2,
               ),
             ),
             Column(
@@ -414,9 +409,7 @@ class AchievementPage extends StatelessWidget {
                         padding: EdgeInsets.all(4.0),
                         child: Text(
                           i.text,
-                          style: Theme.of(context).textTheme.display3.copyWith(
-                            color: Colors.black
-                          ),
+                          style: Theme.of(context).textTheme.display3,
                           textAlign: TextAlign.left,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -438,9 +431,7 @@ class AchievementPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Collection',
-              style: Theme.of(context).textTheme.display2.copyWith(
-                color: Colors.black
-              ),
+              style: Theme.of(context).textTheme.display2,
             ),
           ),
           Column(
@@ -473,9 +464,7 @@ class AchievementPage extends StatelessWidget {
         children: <Widget>[
           Text(
             'Unknown item',
-            style: Theme.of(context).textTheme.display3.copyWith(
-              color: Colors.black
-            ),
+            style: Theme.of(context).textTheme.display3,
           ),
         ],
       );
@@ -500,9 +489,7 @@ class AchievementPage extends StatelessWidget {
               padding: EdgeInsets.all(4.0),
               child: Text(
                 bit.item.name,
-                style: Theme.of(context).textTheme.display3.copyWith(
-                  color: Colors.black
-                ),
+                style: Theme.of(context).textTheme.display3,
                 textAlign: TextAlign.left,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -555,9 +542,7 @@ class AchievementPage extends StatelessWidget {
               padding: EdgeInsets.all(4.0),
               child: Text(
                 bit.type == 'Skin' ? bit.skin.name : bit.mini.name,
-                style: Theme.of(context).textTheme.display3.copyWith(
-                  color: Colors.black
-                ),
+                style: Theme.of(context).textTheme.display3,
                 textAlign: TextAlign.left,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -576,16 +561,12 @@ class AchievementPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               title,
-              style: Theme.of(context).textTheme.display2.copyWith(
-                color: Colors.black
-              ),
+              style: Theme.of(context).textTheme.display2,
             ),
           ),
           Text(
             text,
-            style: Theme.of(context).textTheme.display3.copyWith(
-              color: Colors.black
-            ),
+            style: Theme.of(context).textTheme.display3,
           ),
         ],
       ),

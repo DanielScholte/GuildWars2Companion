@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/models/character/character.dart';
 import 'package:guildwars2_companion/models/character/equipment.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
@@ -14,8 +15,8 @@ class EquipmentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.teal),
+    return CompanionAccent(
+      lightColor: Colors.teal,
       child: Scaffold(
         appBar: CompanionAppBar(
           title: 'Equipment',
@@ -63,7 +64,7 @@ class EquipmentPage extends StatelessWidget {
 
                 return RefreshIndicator(
                   backgroundColor: Theme.of(context).accentColor,
-                  color: Colors.white,
+                  color: Theme.of(context).cardColor,
                   onRefresh: () async {
                     BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterItemsEvent());
                     await Future.delayed(Duration(milliseconds: 200), () {});

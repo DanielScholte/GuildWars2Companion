@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 
 class CompanionCachedImage extends StatelessWidget {
 
@@ -30,8 +31,8 @@ class CompanionCachedImage extends StatelessWidget {
       height: height,
       width: width,
       imageUrl: imageUrl,
-      placeholder: (context, url) => Theme(
-        data: Theme.of(context).copyWith(accentColor: color),
+      placeholder: (context, url) => CompanionAccent(
+        lightColor: color,
         child: Center(child: CircularProgressIndicator()),
       ),
       errorWidget: (context, url, error) => Center(child: Icon(

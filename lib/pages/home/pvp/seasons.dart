@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/pvp/pvp_bloc.dart';
 import 'package:guildwars2_companion/models/pvp/season.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
@@ -16,8 +17,8 @@ class SeasonsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.orange),
+    return CompanionAccent(
+      lightColor: Colors.orange,
       child: Scaffold(
         appBar: CompanionAppBar(
           color: Colors.orange,
@@ -41,9 +42,7 @@ class SeasonsPage extends StatelessWidget {
               return Center(
                 child: Text(
                   'No ranked seasons with participation found',
-                  style: Theme.of(context).textTheme.display2.copyWith(
-                    color: Colors.black
-                  )
+                  style: Theme.of(context).textTheme.display2,
                 ),
               );
             }

@@ -10,13 +10,13 @@ import 'package:guildwars2_companion/blocs/pvp/pvp_bloc.dart';
 import 'package:guildwars2_companion/blocs/raid/raid_bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/blocs/world_boss/bloc.dart';
+import 'package:guildwars2_companion/pages/configuration/configuration.dart';
 import 'package:guildwars2_companion/pages/home/dungeons/dungeons.dart';
 import 'package:guildwars2_companion/pages/home/events/meta_events.dart';
 import 'package:guildwars2_companion/pages/home/pvp/pvp.dart';
 import 'package:guildwars2_companion/pages/home/raids/raids.dart';
 import 'package:guildwars2_companion/pages/home/wallet/wallet.dart';
 import 'package:guildwars2_companion/pages/home/world_bosses/world_bosses.dart';
-import 'package:guildwars2_companion/pages/info.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
@@ -39,7 +39,7 @@ class HomePage extends StatelessWidget {
         if (state is AuthenticatedState) {
           return Scaffold(
             appBar: AppBar(
-              backgroundColor: Colors.red,
+              backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.red : Theme.of(context).cardColor,
               centerTitle: true,
               elevation: 0.0,
               title: RichText(
@@ -63,11 +63,11 @@ class HomePage extends StatelessWidget {
               actions: <Widget>[
                 IconButton(
                   icon: Icon(
-                    FontAwesomeIcons.infoCircle,
+                    FontAwesomeIcons.cog,
                     size: 20.0,
                   ),
                   onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => InfoPage()
+                    builder: (context) => ConfigurationPage()
                   )),
                 ),
                 IconButton(
@@ -85,6 +85,7 @@ class HomePage extends StatelessWidget {
             body: Column(
               children: <Widget>[
                 CompanionHeader(
+                  color: Colors.red,
                   child: Column(
                     children: <Widget>[
                       Container(
@@ -222,9 +223,9 @@ class HomePage extends StatelessWidget {
             leading: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                state.currencies.firstWhere((c) => c.name == 'Coin', orElse: null),
-                state.currencies.firstWhere((c) => c.name == 'Karma', orElse: null),
-                state.currencies.firstWhere((c) => c.name == 'Gem', orElse: null),
+                state.currencies.firstWhere((c) => c.name == 'Coin' || c.id == 1, orElse: null),
+                state.currencies.firstWhere((c) => c.name == 'Karma' || c.id == 2, orElse: null),
+                state.currencies.firstWhere((c) => c.name == 'Gem' || c.id == 4, orElse: null),
               ] .where((c) => c != null)
                 .map((c) => Row(
                   children: <Widget>[
@@ -239,7 +240,7 @@ class HomePage extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    if (c.name == 'Coin')
+                    if (c.name == 'Coin' || c.id == 1)
                       Text(
                         (c.value ~/ 10000).toString(),
                         style: TextStyle(
@@ -247,7 +248,7 @@ class HomePage extends StatelessWidget {
                           fontWeight: FontWeight.w500
                         ),
                       ),
-                    if (c.name == 'Karma' && c.value < 1000000)
+                    if ((c.name == 'Karma' || c.id == 2) && c.value < 1000000)
                       Text(
                         (c.value ~/ 1000).toString() + 'k',
                         style: TextStyle(
@@ -255,7 +256,7 @@ class HomePage extends StatelessWidget {
                           fontWeight: FontWeight.w500
                         ),
                       ),
-                    if (c.name == 'Karma' && c.value >= 1000000 && c.value < 10000000)
+                    if ((c.name == 'Karma' || c.id == 2) && c.value >= 1000000 && c.value < 10000000)
                       Text(
                         (c.value / 1000000).toStringAsFixed(1) + 'm',
                         style: TextStyle(
@@ -263,7 +264,7 @@ class HomePage extends StatelessWidget {
                           fontWeight: FontWeight.w500
                         ),
                       ),
-                    if (c.name == 'Karma' && c.value >= 10000000)
+                    if ((c.name == 'Karma' || c.id == 2) && c.value >= 10000000)
                       Text(
                         (c.value ~/ 1000000).toString() + 'm',
                         style: TextStyle(
@@ -271,7 +272,7 @@ class HomePage extends StatelessWidget {
                           fontWeight: FontWeight.w500
                         ),
                       ),
-                    if (c.name == 'Gem')
+                    if (c.name == 'Gem' || c.id == 4)
                       Text(
                         c.value.toString(),
                         style: TextStyle(

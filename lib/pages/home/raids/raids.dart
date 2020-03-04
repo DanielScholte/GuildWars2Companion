@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/raid/raid_bloc.dart';
 import 'package:guildwars2_companion/models/other/raid.dart';
+import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
@@ -12,8 +13,8 @@ import 'raid.dart';
 class RaidsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.blue),
+    return CompanionAccent(
+      lightColor: Colors.blue,
       child: Scaffold(
         appBar: CompanionAppBar(
           title: 'Raids',
@@ -36,7 +37,7 @@ class RaidsPage extends StatelessWidget {
             if (state is LoadedRaidsState) {
               return RefreshIndicator(
                 backgroundColor: Theme.of(context).accentColor,
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 onRefresh: () async {
                   BlocProvider.of<RaidBloc>(context).add(LoadRaidsEvent(state.includeProgress));
                   await Future.delayed(Duration(milliseconds: 200), () {});
@@ -92,7 +93,9 @@ class RaidsPage extends StatelessWidget {
                   padding: EdgeInsets.only(left: 4.0),
                   child: Text(
                     c.name,
-                    style: Theme.of(context).textTheme.display3,
+                    style: Theme.of(context).textTheme.display3.copyWith(
+                      color: Colors.white
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

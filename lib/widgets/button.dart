@@ -34,13 +34,14 @@ class CompanionButton extends StatelessWidget {
       width: double.infinity,
       height: height,
       decoration: BoxDecoration(
-        color: color,
+        color: Theme.of(context).brightness == Brightness.light ? color : Color(0xFF323232),
         borderRadius: BorderRadius.circular(12.0),
         boxShadow: [
-          BoxShadow(
-            color: Colors.black26,
-            blurRadius: 8.0,
-          ),
+          if (Theme.of(context).brightness == Brightness.light)
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 8.0,
+            ),
         ],
       ),
       margin: EdgeInsets.all(8.0),
@@ -55,17 +56,17 @@ class CompanionButton extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 _buildLeadingContainer(context),
-                _buildTitle(),
+                _buildTitle(context),
                 if (trailing != null)
                   trailing,
-                _buildArrow()
+                _buildArrow(context)
               ],
             ),
           ),
         ) : Row(
           children: <Widget>[
             _buildLeadingContainer(context),
-            _buildTitle(),
+            _buildTitle(context),
             if (trailing != null)
               trailing,
           ],
@@ -106,12 +107,12 @@ class CompanionButton extends StatelessWidget {
     return leading;
   }
 
-  Widget _buildTitle() {
+  Widget _buildTitle(BuildContext context) {
     List<Widget> titles = [
       Text(
         this.title,
         style: TextStyle(
-          color: foregroundColor,
+          color: Theme.of(context).brightness == Brightness.light ? foregroundColor : Colors.white,
           fontSize: 18.0,
           fontWeight: FontWeight.w500
         ),
@@ -130,7 +131,7 @@ class CompanionButton extends StatelessWidget {
           (s) => Text(
             s,
             style: TextStyle(
-              color: foregroundColor,
+              color: Theme.of(context).brightness == Brightness.light ? foregroundColor : Colors.white,
               fontSize: 16.0,
             ),
           )
@@ -147,12 +148,12 @@ class CompanionButton extends StatelessWidget {
     );
   }
 
-  Widget _buildArrow() {
+  Widget _buildArrow(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: Icon(
         FontAwesomeIcons.chevronRight,
-        color: foregroundColor,
+        color: Theme.of(context).brightness == Brightness.light ? foregroundColor : Colors.white,
         size: 18.0,
       ),
     );
