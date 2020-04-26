@@ -36,6 +36,15 @@ class ChangelogService {
 
   List<Changelog> changelog = [
     Changelog(
+      version: '1.3.0',
+      build: 12,
+      newFeatures: true,
+      changes: [
+        'Favorite achievements',
+        'Achievement category progression'
+      ],
+    ),
+    Changelog(
       version: '1.2.1',
       build: 11,
       newFeatures: false,

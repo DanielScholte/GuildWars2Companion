@@ -92,6 +92,7 @@ class AchievementRepository {
     achievementCategories.forEach((c) {
       c.achievementsInfo = [];
       c.regions = [];
+      c.completedAchievements = includeProgress ? 0 : null;
       c.achievements.forEach((i) {
         Achievement achievement = achievements.firstWhere((a) => a.id == i);
 
@@ -106,6 +107,10 @@ class AchievementRepository {
           if (achievement.rewards != null && (achievement.progress == null || !achievement.progress.done)
             && achievement.rewards.any((r) => r.type == 'Mastery')) {
             c.regions.addAll(achievement.rewards.where((r) => r.type == 'Mastery').map((r) => r.region).toList());
+          }
+
+          if (includeProgress && achievement.progress != null && achievement.progress.done) {
+            c.completedAchievements++;
           }
         }
       });
