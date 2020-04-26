@@ -14,6 +14,7 @@ class LoadedAchievementsState extends AchievementState {
   final DailyGroup dailies;
   final DailyGroup dailiesTomorrow;
   final List<Achievement> achievements;
+  final List<Achievement> favoriteAchievements;
   final List<Mastery> masteries;
   final bool includesProgress;
   final int achievementPoints;
@@ -25,6 +26,7 @@ class LoadedAchievementsState extends AchievementState {
     @required this.dailies,
     @required this.dailiesTomorrow,
     @required this.achievements,
+    @required this.favoriteAchievements,
     @required this.masteries,
     @required this.includesProgress,
     @required this.achievementPoints,

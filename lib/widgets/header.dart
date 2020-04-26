@@ -15,6 +15,8 @@ class CompanionHeader extends StatelessWidget {
   final bool wikiRequiresEnglish;
   final bool includeShadow;
   final bool enforceColor;
+  final bool isFavorite;
+  final VoidCallback onFavoriteToggle;
 
   CompanionHeader({
     @required this.child,
@@ -24,7 +26,9 @@ class CompanionHeader extends StatelessWidget {
     this.includeShadow = true,
     this.wikiName,
     this.wikiRequiresEnglish = false,
-    this.enforceColor = false
+    this.enforceColor = false,
+    this.isFavorite,
+    this.onFavoriteToggle,
   });
 
   @override
@@ -59,39 +63,23 @@ class CompanionHeader extends StatelessWidget {
                 ),
               ),
             ),
-          if (wikiName != null)
-            BlocBuilder<ConfigurationBloc, ConfigurationState>(
-              builder: (context, state) {
-                final Configuration configuration = (state as LoadedConfiguration).configuration;
-
-                if (wikiRequiresEnglish && configuration.language != 'en') {
-                  return Container();
-                }
-
-                if (!['en', 'es', 'de', 'fr'].contains(configuration.language)) {
-                  return Container();
-                }
-
-                return SafeArea(
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: Padding(
-                      padding: EdgeInsets.all(4.0),
-                      child: Material(
-                        color: Colors.transparent,
-                        child: IconButton(
-                          icon: Icon(
-                            FontAwesomeIcons.wikipediaW,
-                            color: foregroundColor,
-                            size: 20.0,
-                          ),
-                          onPressed: () => Urls.launchUrl('${_getWikiUrl(configuration.language)}${wikiName.replaceAll(' ', '+')}'),
-                        ),
-                      )
-                    ),
+          if (wikiName != null || isFavorite != null)
+            SafeArea(
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: EdgeInsets.all(4.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      if (isFavorite != null)
+                        _buildFavorite(isFavorite),
+                      if (wikiName != null)
+                        _buildWiki(),
+                    ],
                   ),
-                );
-              }
+                ),
+              ),
             ),
           SafeArea(
             bottom: false,
@@ -102,6 +90,48 @@ class CompanionHeader extends StatelessWidget {
           ),
         ],
       )
+    );
+  }
+
+  Widget _buildFavorite(bool favorite) {
+    return Material(
+      color: Colors.transparent,
+      child: IconButton(
+        icon: Icon(
+          favorite ? Icons.star : Icons.star_border,
+          color: foregroundColor,
+          size: 28.0,
+        ),
+        onPressed: () => onFavoriteToggle(),
+      ),
+    );
+  }
+
+  Widget _buildWiki() {
+    return BlocBuilder<ConfigurationBloc, ConfigurationState>(
+      builder: (context, state) {
+        final Configuration configuration = (state as LoadedConfiguration).configuration;
+
+        if (wikiRequiresEnglish && configuration.language != 'en') {
+          return Container();
+        }
+
+        if (!['en', 'es', 'de', 'fr'].contains(configuration.language)) {
+          return Container();
+        }
+
+        return Material(
+          color: Colors.transparent,
+          child: IconButton(
+            icon: Icon(
+              FontAwesomeIcons.wikipediaW,
+              color: foregroundColor,
+              size: 20.0,
+            ),
+            onPressed: () => Urls.launchUrl('${_getWikiUrl(configuration.language)}${wikiName.replaceAll(' ', '+')}'),
+          ),
+        );
+      }
     );
   }
 

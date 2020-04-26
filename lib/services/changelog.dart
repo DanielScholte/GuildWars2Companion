@@ -20,12 +20,10 @@ class ChangelogService {
     lastLaunchBuildNumber = currentBuildNumber;
   }
 
-  bool anyNewChanges() {
-    return 
+  bool anyNewChanges() =>
       currentBuildNumber > lastLaunchBuildNumber &&
       changelog.any((c) => c.build > lastLaunchBuildNumber && c.newFeatures) &&
-      (lastLaunchBuildNumber != 0 || DateTime.now().isBefore(DateTime.utc(2020, 3, 6)));
-  }
+      lastLaunchBuildNumber != 0;
 
   List<String> getNewFeatures() {
     return changelog

@@ -7,7 +7,8 @@ class AchievementData {
   final DailyGroup dailies;
   final DailyGroup dailiesTomorrow;
   final List<Achievement> achievements;
+  final List<Achievement> favoriteAchievements;
   final int achievementPoints;
 
-  AchievementData({this.achievementGroups, this.dailies, this.dailiesTomorrow, this.achievements, this.achievementPoints});
+  AchievementData({this.achievementGroups, this.dailies, this.dailiesTomorrow, this.achievements, this.favoriteAchievements, this.achievementPoints});
 }
