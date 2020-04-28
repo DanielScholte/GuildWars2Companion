@@ -142,11 +142,13 @@ class AchievementCategoriesPage extends StatelessWidget {
                   Text(
                     '${(ratio * 100).round()}%',
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
                     ),
                   ),
                   Theme(
-                    data: Theme.of(context).copyWith(accentColor: Colors.black),
+                    data: Theme.of(context).copyWith(
+                      accentColor: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white
+                    ),
                     child: LinearProgressIndicator(
                       value: ratio,
                       backgroundColor: Colors.transparent,
