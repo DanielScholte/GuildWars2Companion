@@ -27,6 +27,8 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
       yield* _loadAchievementDetails(event);
     } else if (event is RefreshAchievementProgressEvent) {
       yield* _refreshAchievementProgress(event);
+    } else if (event is ChangeFavoriteAchievementEvent) {
+      yield* _changeFavoriteAchievement(event);
     }
   }
 
@@ -43,6 +45,7 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
         masteries: masteryData.masteries,
         dailiesTomorrow: achievementData.dailiesTomorrow,
         achievements: achievementData.achievements,
+        favoriteAchievements: achievementData.favoriteAchievements,
         includesProgress: includeProgress,
         achievementPoints: achievementData.achievementPoints,
         masteryLevel: masteryData.masteryLevel,
@@ -62,6 +65,7 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
         dailies: event.dialies,
         dailiesTomorrow: event.dialiesTomorrow,
         achievements: event.achievements,
+        favoriteAchievements: event.favoriteAchievements,
         masteries: event.masteries,
         includesProgress: event.includeProgress,
         achievementPoints: event.achievementPoints,
@@ -75,6 +79,7 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
         dailies: event.dialies,
         dailiesTomorrow: event.dialiesTomorrow,
         achievements: event.achievements,
+        favoriteAchievements: event.favoriteAchievements,
         masteries: event.masteries,
         includesProgress: event.includeProgress,
         achievementPoints: event.achievementPoints,
@@ -93,6 +98,7 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
         dailies: event.dialies,
         dailiesTomorrow: event.dialiesTomorrow,
         achievements: event.achievements,
+        favoriteAchievements: event.favoriteAchievements,
         masteries: event.masteries,
         includesProgress: event.includeProgress,
         achievementPoints: event.achievementPoints,
@@ -112,6 +118,7 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
         dailies: event.dialies,
         dailiesTomorrow: event.dialiesTomorrow,
         achievements: event.achievements,
+        favoriteAchievements: event.favoriteAchievements,
         masteries: event.masteries,
         includesProgress: event.includeProgress,
         achievementPoints: event.achievementPoints,
@@ -125,6 +132,7 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
         dailies: event.dialies,
         dailiesTomorrow: event.dialiesTomorrow,
         achievements: event.achievements,
+        favoriteAchievements: event.favoriteAchievements,
         masteries: event.masteries,
         includesProgress: event.includeProgress,
         achievementPoints: event.achievementPoints,
@@ -142,6 +150,44 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
         dailies: event.dialies,
         dailiesTomorrow: event.dialiesTomorrow,
         achievements: event.achievements,
+        favoriteAchievements: event.favoriteAchievements,
+        masteries: event.masteries,
+        includesProgress: event.includeProgress,
+        achievementPoints: event.achievementPoints,
+        masteryLevel: event.masteryLevel,
+        hasError: true
+      );
+    }
+  }
+
+  Stream<AchievementState> _changeFavoriteAchievement(ChangeFavoriteAchievementEvent event) async* {
+    try {
+      if (event.addAchievementId != null) {
+        await achievementRepository.setFavoriteAchievement(event.addAchievementId);
+      }
+
+      if (event.removeAchievementId != null) {
+        await achievementRepository.removeFavoriteAchievement(event.removeAchievementId);
+      }
+
+      yield LoadedAchievementsState(
+        achievementGroups: event.achievementGroups,
+        dailies: event.dialies,
+        dailiesTomorrow: event.dialiesTomorrow,
+        achievements: event.achievements,
+        favoriteAchievements: await achievementRepository.getFavoriteAchievements(event.achievements),
+        masteries: event.masteries,
+        includesProgress: event.includeProgress,
+        achievementPoints: event.achievementPoints,
+        masteryLevel: event.masteryLevel,
+      );
+    } catch (_) {
+      yield LoadedAchievementsState(
+        achievementGroups: event.achievementGroups,
+        dailies: event.dialies,
+        dailiesTomorrow: event.dialiesTomorrow,
+        achievements: event.achievements,
+        favoriteAchievements: event.favoriteAchievements,
         masteries: event.masteries,
         includesProgress: event.includeProgress,
         achievementPoints: event.achievementPoints,

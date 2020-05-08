@@ -92,6 +92,7 @@ class AchievementRepository {
     achievementCategories.forEach((c) {
       c.achievementsInfo = [];
       c.regions = [];
+      c.completedAchievements = includeProgress ? 0 : null;
       c.achievements.forEach((i) {
         Achievement achievement = achievements.firstWhere((a) => a.id == i);
 
@@ -106,6 +107,10 @@ class AchievementRepository {
           if (achievement.rewards != null && (achievement.progress == null || !achievement.progress.done)
             && achievement.rewards.any((r) => r.type == 'Mastery')) {
             c.regions.addAll(achievement.rewards.where((r) => r.type == 'Mastery').map((r) => r.region).toList());
+          }
+
+          if (includeProgress && achievement.progress != null && achievement.progress.done) {
+            c.completedAchievements++;
           }
         }
       });
@@ -140,14 +145,26 @@ class AchievementRepository {
     });
     achievementGroups.sort((a, b) => a.order.compareTo(b.order));
 
+    List<Achievement> favoriteAchievements = await getFavoriteAchievements(achievements);
+
     return AchievementData(
       achievementGroups: achievementGroups,
       achievementPoints: achievementPoints,
       achievements: achievements,
+      favoriteAchievements: favoriteAchievements,
       dailies: dailies,
       dailiesTomorrow: dailiesTomorrow
     );
   }
+
+  Future<List<Achievement>> getFavoriteAchievements(List<Achievement> achievements) async {
+    List<int> favoriteAchievementsIds = await achievementService.getFavoriteAchievements();
+    achievements.forEach((a) => a.favorite = favoriteAchievementsIds.contains(a.id));
+    return achievements.where((a) => a.favorite).toList();
+  }
+
+  Future<void> setFavoriteAchievement(int id) => achievementService.setFavoriteAchievement(id);
+  Future<void> removeFavoriteAchievement(int id) => achievementService.removeFavoriteAchievement(id);
 
   Future<void> updateAchievementProgress(Achievement achievement) async {
     List<AchievementProgress> progress = await achievementService.getAchievementProgress();

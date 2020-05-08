@@ -30,106 +30,79 @@ class AchievementPage extends StatelessWidget {
     return CompanionAccent(
       lightColor: Colors.blueGrey,
       child: Scaffold(
-        body: Column(
-          children: <Widget>[
-            CompanionHeader(
-              includeBack: true,
-              wikiName: achievement.name,
-              color: Colors.blueGrey,
-              child: Column(
-                children: <Widget>[
-                  if (achievement.icon == null && categoryIcon != null && categoryIcon.contains('assets'))
-                    Hero(
-                      tag: hero,
-                      child: Image.asset(categoryIcon, height: 42.0,)
-                    )
-                  else
-                    Hero(
-                      tag: hero,
-                      child: CompanionCachedImage(
-                        height: 42.0,
-                        imageUrl: achievement.icon != null ? achievement.icon : categoryIcon,
-                        color: Colors.white,
-                        iconSize: 28,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  if (achievement.progress != null)
-                    _buildProgress(context),
-                  if (achievement.progress != null && achievement.progress.current != null && achievement.progress.max != null)
-                    Padding(
-                      padding: EdgeInsets.only(top: 4.0),
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            '${((achievement.progress.current / achievement.progress.max) * 100).round()}%',
-                            style: Theme.of(context).textTheme.display3.copyWith(
-                              color: Colors.white
-                            ),
-                          ),
-                          Theme(
-                            data: Theme.of(context).copyWith(accentColor: Colors.white),
-                            child: Container(
-                              margin: EdgeInsets.all(4.0),
-                              width: 128.0,
-                              height: 8.0,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(4.0),
-                                child: LinearProgressIndicator(
-                                  value: achievement.progress.current / achievement.progress.max,
-                                  backgroundColor: Colors.white24
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 4.0),
-                    child: Text(
-                      achievement.name,
-                      style: Theme.of(context).textTheme.display1,
-                      textAlign: TextAlign.center,
+        body: BlocBuilder<AchievementBloc, AchievementState>(
+          builder: (context, state) {
+            if (state is ErrorAchievementsState) {
+              return _buildLayout(
+                context: context,
+                child: Center(
+                  child: CompanionError(
+                    title: 'the achievement',
+                    onTryAgain: () =>
+                      BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
+                        includeProgress: state.includesProgress
+                      )),
+                  ),
+                )
+              );
+            }
+
+            if (state is LoadedAchievementsState && state.hasError) {
+              return _buildLayout(
+                context: context,
+                child: Center(
+                  child: CompanionError(
+                    title: 'the achievement',
+                    onTryAgain: () =>
+                      BlocProvider.of<AchievementBloc>(context).add(LoadAchievementDetailsEvent(
+                      achievementGroups: state.achievementGroups,
+                      achievements: state.achievements,
+                      favoriteAchievements: state.favoriteAchievements,
+                      masteries: state.masteries,
+                      dialies: state.dailies,
+                      dialiesTomorrow: state.dailiesTomorrow,
+                      includeProgress: state.includesProgress,
+                      achievementPoints: state.achievementPoints,
+                      masteryLevel: state.masteryLevel,
+                      achievementId: achievement.id,
+                    )),
+                  ),
+                ),
+              );
+            }
+
+            if (state is LoadedAchievementsState) {
+              Achievement _achievement = state.achievements.firstWhere((a) => a.id == achievement.id);
+
+              if (_achievement == null) {
+                return _buildLayout(
+                  context: context,
+                  child: Center(
+                    child: CompanionError(
+                      title: 'the achievement',
+                      onTryAgain: () =>
+                        BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
+                          includeProgress: state.includesProgress
+                        )),
                     ),
                   ),
-                  if (achievement.categoryName != null)
-                    Padding(
-                      padding: EdgeInsets.only(top: 4.0),
-                      child: Text(
-                        achievement.categoryName,
-                        style: Theme.of(context).textTheme.display3.copyWith(
-                          color: Colors.white
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: BlocBuilder<AchievementBloc, AchievementState>(
-                builder: (context, state) {
-                  if (state is ErrorAchievementsState) {
-                    return Center(
-                      child: CompanionError(
-                        title: 'the achievement',
-                        onTryAgain: () =>
-                          BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
-                            includeProgress: state.includesProgress
-                          )),
-                      ),
-                    );
-                  }
+                );
+              }
 
-                  if (state is LoadedAchievementsState && state.hasError) {
-                    return Center(
-                      child: CompanionError(
-                        title: 'the achievement',
-                        onTryAgain: () =>
-                          BlocProvider.of<AchievementBloc>(context).add(LoadAchievementDetailsEvent(
+              if (_achievement != null && _achievement.loaded) {
+                if (state.includesProgress) {
+                  return _buildLayout(
+                    context: context,
+                    favorite: _achievement.favorite,
+                    state: state,
+                    child: RefreshIndicator(
+                      backgroundColor: Theme.of(context).accentColor,
+                      color: Theme.of(context).cardColor,
+                      onRefresh: () async {
+                        BlocProvider.of<AchievementBloc>(context).add(RefreshAchievementProgressEvent(
                           achievementGroups: state.achievementGroups,
                           achievements: state.achievements,
+                          favoriteAchievements: state.favoriteAchievements,
                           masteries: state.masteries,
                           dialies: state.dailies,
                           dialiesTomorrow: state.dailiesTomorrow,
@@ -137,62 +110,134 @@ class AchievementPage extends StatelessWidget {
                           achievementPoints: state.achievementPoints,
                           masteryLevel: state.masteryLevel,
                           achievementId: achievement.id,
-                        )),
-                      ),
-                    );
-                  }
-
-                  if (state is LoadedAchievementsState) {
-                    Achievement _achievement = state.achievements.firstWhere((a) => a.id == achievement.id);
-
-                    if (_achievement == null) {
-                      return Center(
-                        child: CompanionError(
-                          title: 'the achievement',
-                          onTryAgain: () =>
-                            BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
-                              includeProgress: state.includesProgress
-                            )),
-                        ),
-                      );
-                    }
-
-                    if (_achievement != null && _achievement.loaded) {
-                      if (state.includesProgress) {
-                        return RefreshIndicator(
-                          backgroundColor: Theme.of(context).accentColor,
-                          color: Theme.of(context).cardColor,
-                          onRefresh: () async {
-                            BlocProvider.of<AchievementBloc>(context).add(RefreshAchievementProgressEvent(
-                              achievementGroups: state.achievementGroups,
-                              achievements: state.achievements,
-                              masteries: state.masteries,
-                              dialies: state.dailies,
-                              dialiesTomorrow: state.dailiesTomorrow,
-                              includeProgress: state.includesProgress,
-                              achievementPoints: state.achievementPoints,
-                              masteryLevel: state.masteryLevel,
-                              achievementId: achievement.id,
-                            ));
-                            await Future.delayed(Duration(milliseconds: 200), () {});
-                          },
-                          child: _buildContent(context, _achievement, state),
-                        );
-                      }
-
-                      return _buildContent(context, _achievement, state);
-                    }
-                  }
-
-                  return Center(
-                    child: CircularProgressIndicator(),
+                        ));
+                        await Future.delayed(Duration(milliseconds: 200), () {});
+                      },
+                      child: _buildContent(context, _achievement, state),
+                    ),
                   );
-                },
+                }
+
+                return _buildLayout(
+                  context: context,
+                  favorite: _achievement.favorite,
+                  state: state,
+                  child: _buildContent(context, _achievement, state),
+                );
+              }
+            }
+
+            return _buildLayout(
+              context: context,
+              child: Center(
+                child: CircularProgressIndicator(),
               ),
-            ),
-          ],
+            );
+          },
         ),
-      )
+      ),
+    );
+  }
+
+  Widget _buildLayout({ BuildContext context, bool favorite, Widget child, LoadedAchievementsState state }) {
+    return Column(
+      children: <Widget>[
+        CompanionHeader(
+          isFavorite: favorite,
+          onFavoriteToggle: () {
+            BlocProvider.of<AchievementBloc>(context).add(ChangeFavoriteAchievementEvent(
+              achievementGroups: state.achievementGroups,
+              achievements: state.achievements,
+              favoriteAchievements: state.favoriteAchievements,
+              masteries: state.masteries,
+              dialies: state.dailies,
+              dialiesTomorrow: state.dailiesTomorrow,
+              includeProgress: state.includesProgress,
+              achievementPoints: state.achievementPoints,
+              masteryLevel: state.masteryLevel,
+
+              addAchievementId: !favorite ? achievement.id : null,
+              removeAchievementId: favorite ? achievement.id : null,
+            ));
+          },
+          includeBack: true,
+          wikiName: achievement.name,
+          color: Colors.blueGrey,
+          child: Column(
+            children: <Widget>[
+              if (achievement.icon == null && categoryIcon != null && categoryIcon.contains('assets'))
+                Hero(
+                  tag: hero,
+                  child: Image.asset(categoryIcon, height: 42.0,)
+                )
+              else
+                Hero(
+                  tag: hero,
+                  child: CompanionCachedImage(
+                    height: 42.0,
+                    imageUrl: achievement.icon != null ? achievement.icon : categoryIcon,
+                    color: Colors.white,
+                    iconSize: 28,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              if (achievement.progress != null)
+                _buildProgress(context),
+              if (achievement.progress != null && achievement.progress.current != null && achievement.progress.max != null)
+                Padding(
+                  padding: EdgeInsets.only(top: 4.0),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        '${((achievement.progress.current / achievement.progress.max) * 100).round()}%',
+                        style: Theme.of(context).textTheme.display3.copyWith(
+                          color: Colors.white
+                        ),
+                      ),
+                      Theme(
+                        data: Theme.of(context).copyWith(accentColor: Colors.white),
+                        child: Container(
+                          margin: EdgeInsets.all(4.0),
+                          width: 128.0,
+                          height: 8.0,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(4.0),
+                            child: LinearProgressIndicator(
+                              value: achievement.progress.current / achievement.progress.max,
+                              backgroundColor: Colors.white24
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              Padding(
+                padding: EdgeInsets.only(top: 4.0),
+                child: Text(
+                  achievement.name,
+                  style: Theme.of(context).textTheme.display1,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              if (achievement.categoryName != null)
+                Padding(
+                  padding: EdgeInsets.only(top: 4.0),
+                  child: Text(
+                    achievement.categoryName,
+                    style: Theme.of(context).textTheme.display3.copyWith(
+                      color: Colors.white
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+            ],
+          ),
+        ),
+        Expanded(
+          child: child,
+        )
+      ],
     );
   }
 

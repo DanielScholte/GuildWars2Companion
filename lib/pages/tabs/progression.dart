@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
 import 'package:guildwars2_companion/pages/progression/achievements/achievement_categories.dart';
+import 'package:guildwars2_companion/pages/progression/achievements/favorite_achievements.dart';
 import 'package:guildwars2_companion/pages/progression/dailies/daily_categories.dart';
 import 'package:guildwars2_companion/pages/progression/masteries/masteries.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
@@ -70,6 +71,18 @@ class ProgressionPage extends StatelessWidget {
           title: 'Achievements',
           leading: Icon(
             GuildWarsIcons.achievement,
+            size: 42.0,
+            color: Colors.white,
+          ),
+        ),
+        CompanionButton(
+          color: Colors.blue,
+          onTap: () => Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => FavoriteAchievementsPage()
+          )),
+          title: 'Favorite achievements',
+          leading: Icon(
+            Icons.star,
             size: 42.0,
             color: Colors.white,
           ),

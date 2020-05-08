@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../migrations/achievement.dart';
 import '../models/achievement/achievement.dart';
 import '../models/achievement/achievement_category.dart';
@@ -211,5 +212,29 @@ class AchievementService {
     }
 
     throw Exception();
+  }
+
+  Future<void> _setFavoriteAchievements(List<int> ids) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList('favorite_achievements', ids.map((i) => i.toString()).toList());
+  }
+
+  Future<List<int>> getFavoriteAchievements() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return (prefs.getStringList('favorite_achievements') ?? [])
+      .map((i) => int.parse(i))
+      .toList();
+  }
+
+  Future<void> setFavoriteAchievement(int id) async {
+    List<int> favoriteAchievementIds = await getFavoriteAchievements();
+    favoriteAchievementIds.add(id);
+    await _setFavoriteAchievements(favoriteAchievementIds);
+  }
+
+  Future<void> removeFavoriteAchievement(int id) async {
+    List<int> favoriteAchievementIds = await getFavoriteAchievements();
+    favoriteAchievementIds.remove(id);
+    await _setFavoriteAchievements(favoriteAchievementIds);
   }
 }

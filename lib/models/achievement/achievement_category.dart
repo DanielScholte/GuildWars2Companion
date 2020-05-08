@@ -9,6 +9,7 @@ class AchievementCategory {
   List<int> achievements;
   List<String> regions;
   List<Achievement> achievementsInfo;
+  int completedAchievements;
 
   AchievementCategory(
       {this.id,

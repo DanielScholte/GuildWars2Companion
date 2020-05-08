@@ -23,6 +23,7 @@ class Achievement {
   bool loading;
   bool loaded;
   String categoryName;
+  bool favorite;
 
   Achievement(
       {this.id,

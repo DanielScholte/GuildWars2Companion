@@ -91,34 +91,83 @@ class AchievementCategoriesPage extends StatelessWidget {
         ),
         child: Column(
           children: categories
-            .map((c) => CompanionButton(
-              title: c.name,
-              height: 64.0,
-              color: Colors.white,
-              foregroundColor: Colors.black,
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => AchievementsPage(c)
-              )),
-              leading: CompanionCachedImage(
-                height: 48.0,
-                imageUrl: c.icon,
+            .map((c) => _buildCategoryButton(c, context))
+            .toList()
+        ),
+      ),
+    );
+  }
+
+  CompanionButton _buildCategoryButton(AchievementCategory category, BuildContext context) {
+    return CompanionButton(
+      title: category.name,
+      height: 64.0,
+      color: Colors.white,
+      foregroundColor: Colors.black,
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => AchievementsPage(category)
+      )),
+      leading: _buildCategoryButtonLeading(category, context),
+      trailing: Row(
+        children: category.regions
+          .map((r) => Image.asset(
+            GuildWarsUtil.masteryIcon(r),
+            height: 28.0,
+            width: 28.0,
+          ))
+          .toList(),
+      ),
+    );
+  }
+
+  Widget _buildCategoryButtonLeading(AchievementCategory category, BuildContext context) {
+    if (category.completedAchievements != null) {
+      double ratio = category.completedAchievements / category.achievementsInfo.length;
+
+      return Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              CompanionCachedImage(
+                height: 40.0,
+                imageUrl: category.icon,
                 color: Colors.black,
                 iconSize: 28,
                 fit: BoxFit.fill,
               ),
-              trailing: Row(
-                children: c.regions
-                  .map((r) => Image.asset(
-                    GuildWarsUtil.masteryIcon(r),
-                    height: 28.0,
-                    width: 28.0,
-                  ))
-                  .toList(),
-              ),
-            ))
-            .toList()
-        ),
-      ),
+              Column(
+                children: <Widget>[
+                  Text(
+                    '${(ratio * 100).round()}%',
+                    style: TextStyle(
+                      color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
+                    ),
+                  ),
+                  Theme(
+                    data: Theme.of(context).copyWith(
+                      accentColor: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white
+                    ),
+                    child: LinearProgressIndicator(
+                      value: ratio,
+                      backgroundColor: Colors.transparent,
+                    ),
+                  )
+                ],
+              )
+            ],
+          )
+        ],
+      );
+    }
+
+    return CompanionCachedImage(
+      height: 48.0,
+      imageUrl: category.icon,
+      color: Colors.black,
+      iconSize: 28,
+      fit: BoxFit.fill,
     );
   }
 }

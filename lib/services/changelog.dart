@@ -20,12 +20,10 @@ class ChangelogService {
     lastLaunchBuildNumber = currentBuildNumber;
   }
 
-  bool anyNewChanges() {
-    return 
+  bool anyNewChanges() =>
       currentBuildNumber > lastLaunchBuildNumber &&
       changelog.any((c) => c.build > lastLaunchBuildNumber && c.newFeatures) &&
-      (lastLaunchBuildNumber != 0 || DateTime.now().isBefore(DateTime.utc(2020, 3, 6)));
-  }
+      lastLaunchBuildNumber != 0;
 
   List<String> getNewFeatures() {
     return changelog
@@ -37,6 +35,23 @@ class ChangelogService {
   }
 
   List<Changelog> changelog = [
+    Changelog(
+      version: '1.3.0',
+      build: 13,
+      newFeatures: true,
+      changes: [
+        'Favorite achievements',
+        'Achievement category progression'
+      ],
+    ),
+    Changelog(
+      version: '1.2.1',
+      build: 11,
+      newFeatures: false,
+      changes: [
+        'Fixed Dark Theme bugs',
+      ],
+    ),
     Changelog(
       version: '1.2.0',
       build: 10,
