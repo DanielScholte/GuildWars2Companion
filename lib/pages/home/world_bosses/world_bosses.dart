@@ -146,7 +146,7 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
                 if (isActive) {
                   return Text(
                     'Active',
-                    style: Theme.of(context).textTheme.display2.copyWith(
+                    style: Theme.of(context).textTheme.headline2.copyWith(
                       color: Colors.white
                     ),
                   );
@@ -154,7 +154,7 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
                   
                 return Text(
                   GuildWarsUtil.durationToString(worldBoss.dateTime.toLocal().difference(DateTime.now())),
-                  style: Theme.of(context).textTheme.display2.copyWith(
+                  style: Theme.of(context).textTheme.headline2.copyWith(
                     color: Colors.white
                   ),
                 );
@@ -162,7 +162,7 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
             ),
             Text(
               timeFormat.format(worldBoss.dateTime.toLocal()),
-              style: Theme.of(context).textTheme.display3.copyWith(
+              style: Theme.of(context).textTheme.bodyText1.copyWith(
                 color: Colors.white
               ),
             )

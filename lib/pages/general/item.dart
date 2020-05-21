@@ -79,13 +79,13 @@ class ItemPage extends StatelessWidget {
             padding: EdgeInsets.all(4.0),
             child: Text(
               skin != null ? skin.name : item.name,
-              style: Theme.of(context).textTheme.display1,
+              style: Theme.of(context).textTheme.headline1,
               textAlign: TextAlign.center,
             ),
           ),
           Text(
             item.type != null ? typeToName(item.type) : '',
-            style: Theme.of(context).textTheme.display3.copyWith(
+            style: Theme.of(context).textTheme.bodyText1.copyWith(
               color: Colors.white
             ),
             textAlign: TextAlign.center,
@@ -103,7 +103,7 @@ class ItemPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Transmuted',
-              style: Theme.of(context).textTheme.display2,
+              style: Theme.of(context).textTheme.headline2,
             ),
           ),
           Row(
@@ -118,7 +118,7 @@ class ItemPage extends StatelessWidget {
                 padding: EdgeInsets.all(8.0),
                 child: Text(
                   item.name,
-                  style: Theme.of(context).textTheme.display3,
+                  style: Theme.of(context).textTheme.bodyText1,
                   textAlign: TextAlign.center,
                 ),
               )
@@ -145,7 +145,7 @@ class ItemPage extends StatelessWidget {
             padding: EdgeInsets.all(4.0),
             child: Text(
               items[i].name,
-              style: Theme.of(context).textTheme.display3,
+              style: Theme.of(context).textTheme.bodyText1,
               textAlign: TextAlign.center,
             ),
           )
@@ -160,7 +160,7 @@ class ItemPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               header,
-              style: Theme.of(context).textTheme.display2,
+              style: Theme.of(context).textTheme.headline2,
             ),
           ),
           Column(
@@ -179,12 +179,12 @@ class ItemPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Description',
-              style: Theme.of(context).textTheme.display2,
+              style: Theme.of(context).textTheme.headline2,
             ),
           ),
           Text(
             removeAllHtmlTags(item.description),
-            style: Theme.of(context).textTheme.display3,
+            style: Theme.of(context).textTheme.bodyText1,
           ),
         ],
       ),
@@ -199,12 +199,12 @@ class ItemPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Effect description',
-              style: Theme.of(context).textTheme.display2,
+              style: Theme.of(context).textTheme.headline2,
             ),
           ),
           Text(
             removeAllHtmlTags(item.details.description),
-            style: Theme.of(context).textTheme.display3,
+            style: Theme.of(context).textTheme.bodyText1,
           ),
         ],
       ),
@@ -239,7 +239,7 @@ class ItemPage extends StatelessWidget {
               padding: EdgeInsets.only(bottom: 8.0),
               child: Text(
                 'Stats',
-                style: Theme.of(context).textTheme.display2,
+                style: Theme.of(context).textTheme.headline2,
               ),
             ),
             CompanionInfoRow(
@@ -347,7 +347,7 @@ class ItemPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Stats',
-              style: Theme.of(context).textTheme.display2,
+              style: Theme.of(context).textTheme.headline2,
             ),
           ),
           CompanionInfoRow(
@@ -391,7 +391,7 @@ class ItemPage extends StatelessWidget {
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     'Value',
-                    style: Theme.of(context).textTheme.display2,
+                    style: Theme.of(context).textTheme.headline2,
                   ),
                 ),
                 CompanionInfoRow(
@@ -419,7 +419,7 @@ class ItemPage extends StatelessWidget {
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     'Value',
-                    style: Theme.of(context).textTheme.display2,
+                    style: Theme.of(context).textTheme.headline2,
                   ),
                 ),
                 CompanionInfoRow(
@@ -458,7 +458,7 @@ class ItemPage extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 8.0),
                 child: Text(
                   'Value',
-                  style: Theme.of(context).textTheme.display2,
+                  style: Theme.of(context).textTheme.headline2,
                 ),
               ),
               CompanionInfoRow(

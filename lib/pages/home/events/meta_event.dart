@@ -141,7 +141,7 @@ class _MetaEventPageState extends State<MetaEventPage> {
                 if (isActive) {
                   return Text(
                     'Active',
-                    style: Theme.of(context).textTheme.display2.copyWith(
+                    style: Theme.of(context).textTheme.headline2.copyWith(
                       color: Colors.white,
                     ),
                   );
@@ -149,7 +149,7 @@ class _MetaEventPageState extends State<MetaEventPage> {
                   
                 return Text(
                   GuildWarsUtil.durationToString(time.difference(DateTime.now())),
-                  style: Theme.of(context).textTheme.display2.copyWith(
+                  style: Theme.of(context).textTheme.headline2.copyWith(
                     color: Colors.white
                   ),
                 );
@@ -157,7 +157,7 @@ class _MetaEventPageState extends State<MetaEventPage> {
             ),
             Text(
               timeFormat.format(time),
-              style: Theme.of(context).textTheme.display3.copyWith(
+              style: Theme.of(context).textTheme.bodyText1.copyWith(
                 color: Colors.white
               ),
             )

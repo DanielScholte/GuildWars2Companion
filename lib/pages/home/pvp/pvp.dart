@@ -78,7 +78,7 @@ class PvpPage extends StatelessWidget {
                 ),
                 Text(
                   'Rank ${state.pvpStats.pvpRank}',
-                  style: Theme.of(context).textTheme.display1,
+                  style: Theme.of(context).textTheme.headline1,
                 ),
                 if (state.pvpStats.pvpRankPointsNeeded != null && state.pvpStats.pvpRank < 80)
                   _buildProgress(context, state),

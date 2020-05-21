@@ -14,6 +14,8 @@ class CompanionButton extends StatelessWidget {
   final Color foregroundColor;
   final String hero;
 
+  final Widget Function(BuildContext, Widget) wrapper;
+
   CompanionButton({
     @required this.title,
     @required this.color,
@@ -26,6 +28,7 @@ class CompanionButton extends StatelessWidget {
     this.trailing,
     this.loading = false,
     this.hero,
+    this.wrapper
   });
 
   @override
@@ -47,31 +50,35 @@ class CompanionButton extends StatelessWidget {
       margin: EdgeInsets.all(8.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12.0),
-        child: onTap != null ? Material(
-          color: Colors.transparent,
-          child: InkWell(
-            splashColor: Colors.black12,
-            highlightColor: Colors.black12,
-            onTap: () => onTap(),
-            child: Row(
-              children: <Widget>[
-                _buildLeadingContainer(context),
-                _buildTitle(context),
-                if (trailing != null)
-                  trailing,
-                _buildArrow(context)
-              ],
-            ),
-          ),
-        ) : Row(
+        child: wrapper != null ? wrapper(context, _buildBody(context)) : _buildBody(context),
+      ),
+    );
+  }
+
+  Widget _buildBody(BuildContext context) {
+    return onTap != null ? Material(
+      color: Colors.transparent,
+      child: InkWell(
+        splashColor: Colors.black12,
+        highlightColor: Colors.black12,
+        onTap: () => onTap(),
+        child: Row(
           children: <Widget>[
             _buildLeadingContainer(context),
             _buildTitle(context),
             if (trailing != null)
               trailing,
+            _buildArrow(context)
           ],
         ),
       ),
+    ) : Row(
+      children: <Widget>[
+        _buildLeadingContainer(context),
+        _buildTitle(context),
+        if (trailing != null)
+          trailing,
+      ],
     );
   }
 

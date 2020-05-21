@@ -69,7 +69,7 @@ Caching allows GW2 Companion to load quicker while saving bandwidth and reducing
 Only mostly static data such as Achievements and Items are cached. Progression isn't cached.
 Experiencing issues with cached data, such as outdated information? Try clearing the cache.
             ''',
-            style: Theme.of(context).textTheme.display3,
+            style: Theme.of(context).textTheme.bodyText1,
             textAlign: TextAlign.left,
           )
         ],

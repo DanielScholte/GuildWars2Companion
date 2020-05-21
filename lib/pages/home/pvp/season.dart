@@ -42,13 +42,13 @@ class SeasonPage extends StatelessWidget {
                     padding: EdgeInsets.only(bottom: 4.0),
                     child: Text(
                       standing.season.name,
-                      style: Theme.of(context).textTheme.display1,
+                      style: Theme.of(context).textTheme.headline1,
                     ),
                   ),
                   Text(
                     _dateFormat.format(DateTime.parse(standing.season.start)) +
                           (standing.season.end != null ? ' - ' + _dateFormat.format(DateTime.parse(standing.season.end)) : ''),
-                    style: Theme.of(context).textTheme.display3.copyWith(
+                    style: Theme.of(context).textTheme.bodyText1.copyWith(
                       color: Colors.white
                     ),
                   )
@@ -77,7 +77,7 @@ class SeasonPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Rewards',
-              style: Theme.of(context).textTheme.display2,
+              style: Theme.of(context).textTheme.headline2,
             ),
           ),
           Container(
@@ -97,7 +97,7 @@ class SeasonPage extends StatelessWidget {
                         padding: EdgeInsets.only(bottom: 4.0),
                         child: Text(
                           d.name,
-                          style: Theme.of(context).textTheme.display3,
+                          style: Theme.of(context).textTheme.bodyText1,
                           textAlign: TextAlign.center,
                         ),
                       ),

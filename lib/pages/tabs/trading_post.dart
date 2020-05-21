@@ -217,7 +217,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
                             RichText(
                               text: TextSpan(
                                 text: 'Items: ',
-                                style: Theme.of(context).textTheme.display3.copyWith(
+                                style: Theme.of(context).textTheme.bodyText1.copyWith(
                                   fontWeight: FontWeight.w500
                                 ),
                                 children: [
@@ -234,7 +234,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
                               children: <Widget>[
                                 Text(
                                   'Funds: ',
-                                  style: Theme.of(context).textTheme.display3.copyWith(
+                                  style: Theme.of(context).textTheme.bodyText1.copyWith(
                                     fontWeight: FontWeight.w500
                                   ),
                                 ),
@@ -277,7 +277,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
         child: Center(
           child: Text(
             'No items found',
-            style: Theme.of(context).textTheme.display2,
+            style: Theme.of(context).textTheme.headline2,
           ),
         ),
       );
@@ -324,7 +324,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
                 padding: EdgeInsets.all(16.0),
                 child: Text(
                   'No items found',
-                  style: Theme.of(context).textTheme.display2,
+                  style: Theme.of(context).textTheme.headline2,
                 ),
               ),
             ),

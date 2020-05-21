@@ -64,13 +64,13 @@ class DungeonPage extends StatelessWidget {
             padding: EdgeInsets.all(4.0),
             child: Text(
               dungeon.name,
-              style: Theme.of(context).textTheme.display1,
+              style: Theme.of(context).textTheme.headline1,
               textAlign: TextAlign.center,
             ),
           ),
           Text(
             dungeon.location,
-            style: Theme.of(context).textTheme.display3.copyWith(
+            style: Theme.of(context).textTheme.bodyText1.copyWith(
               color: Colors.white
             ),
             textAlign: TextAlign.center,
@@ -129,7 +129,7 @@ class DungeonPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               includeProgress ? 'Daily Progress' : 'Paths',
-              style: Theme.of(context).textTheme.display2,
+              style: Theme.of(context).textTheme.headline2,
             ),
           ),
           Column(
@@ -154,7 +154,7 @@ class DungeonPage extends StatelessWidget {
                       padding: EdgeInsets.all(4.0),
                       child: Text(
                         p.name,
-                        style: Theme.of(context).textTheme.display3,
+                        style: Theme.of(context).textTheme.bodyText1,
                         textAlign: TextAlign.left,
                         overflow: TextOverflow.ellipsis,
                       ),

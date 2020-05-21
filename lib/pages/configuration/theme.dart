@@ -38,7 +38,7 @@ class ThemeConfigurationPage extends StatelessWidget {
       value: themeMode,
       title: Text(
         title,
-        style: Theme.of(context).textTheme.display3,
+        style: Theme.of(context).textTheme.bodyText1,
       ),
       onChanged: (ThemeMode themeMode) {
         if (themeMode == ThemeMode.light || themeMode == ThemeMode.dark) {

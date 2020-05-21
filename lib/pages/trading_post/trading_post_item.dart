@@ -179,7 +179,7 @@ class TradingPostItemPage extends StatelessWidget {
                 padding: EdgeInsets.all(16.0),
                 child: Text(
                   error,
-                  style: Theme.of(context).textTheme.display2,
+                  style: Theme.of(context).textTheme.headline2,
                 ),
               ),
             ),

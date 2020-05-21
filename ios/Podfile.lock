@@ -73,17 +73,17 @@ SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   MTBBarcodeScanner: f453b33c4b7dfe545d8c6484ed744d55671788cb
-  package_info: 48b108e75b8802c2d5e126f208ef540561c98aef
+  package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
   qr_code_scanner: 16107718bdad7d708cdf6a5eacdca24b56cdf471
-  shared_preferences: 430726339841afefe5142b9c1f50cb6bd7793e01
+  shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   shared_preferences_macos: f3f29b71ccbb56bf40c9dd6396c9acf15e214087
   shared_preferences_web: 141cce0c3ed1a1c5bf2a0e44f52d31eeb66e5ea9
   sqflite: 4001a31ff81d210346b500c55b17f4d6c7589dd0
-  url_launcher: a1c0cc845906122c4784c542523d8cacbded5626
+  url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
   url_launcher_macos: fd7894421cd39320dce5f292fc99ea9270b2a313
   url_launcher_web: e5527357f037c87560776e36436bf2b0288b965c
 
 PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1

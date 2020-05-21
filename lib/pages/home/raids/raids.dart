@@ -93,7 +93,7 @@ class RaidsPage extends StatelessWidget {
                   padding: EdgeInsets.only(left: 4.0),
                   child: Text(
                     c.name,
-                    style: Theme.of(context).textTheme.display3.copyWith(
+                    style: Theme.of(context).textTheme.bodyText1.copyWith(
                       color: Colors.white
                     ),
                     maxLines: 1,

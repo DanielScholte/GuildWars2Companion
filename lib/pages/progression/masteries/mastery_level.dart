@@ -56,7 +56,7 @@ class MasteryLevelPage extends StatelessWidget {
                       padding: EdgeInsets.only(top: 4.0),
                       child: Text(
                         'Completed',
-                        style: Theme.of(context).textTheme.display3.copyWith(
+                        style: Theme.of(context).textTheme.bodyText1.copyWith(
                           color: Colors.white
                         )
                       ),
@@ -65,7 +65,7 @@ class MasteryLevelPage extends StatelessWidget {
                     padding: EdgeInsets.only(top: 4.0),
                     child: Text(
                       level.name,
-                      style: Theme.of(context).textTheme.display1,
+                      style: Theme.of(context).textTheme.headline1,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -73,7 +73,7 @@ class MasteryLevelPage extends StatelessWidget {
                     padding: EdgeInsets.only(top: 4.0),
                     child: Text(
                       mastery.name,
-                      style: Theme.of(context).textTheme.display3.copyWith(
+                      style: Theme.of(context).textTheme.bodyText1.copyWith(
                         color: Colors.white
                       ),
                       textAlign: TextAlign.center,
@@ -97,7 +97,7 @@ class MasteryLevelPage extends StatelessWidget {
                           padding: EdgeInsets.only(bottom: 8.0),
                           child: Text(
                             'Information',
-                            style: Theme.of(context).textTheme.display2,
+                            style: Theme.of(context).textTheme.headline2,
                           ),
                         ),
                         CompanionInfoRow(
@@ -132,12 +132,12 @@ class MasteryLevelPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               title,
-              style: Theme.of(context).textTheme.display2,
+              style: Theme.of(context).textTheme.headline2,
             ),
           ),
           Text(
             text,
-            style: Theme.of(context).textTheme.display3,
+            style: Theme.of(context).textTheme.bodyText1,
           ),
         ],
       ),

@@ -40,7 +40,7 @@ class LanguageConfigurationPage extends StatelessWidget {
       value: language,
       title: Text(
         title,
-        style: Theme.of(context).textTheme.display3,
+        style: Theme.of(context).textTheme.bodyText1,
       ),
       onChanged: (String lang) =>  _clearCacheDialog(
         context: context,

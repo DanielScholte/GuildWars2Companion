@@ -9,7 +9,7 @@ import 'package:guildwars2_companion/pages/configuration/configuration.dart';
 import 'package:guildwars2_companion/pages/tab.dart';
 import 'package:guildwars2_companion/pages/token/how_to.dart';
 import 'package:guildwars2_companion/pages/token/qr_code.dart';
-import 'package:guildwars2_companion/widgets/button.dart';
+import 'package:guildwars2_companion/widgets/dismissible_button.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:intl/intl.dart';
 
@@ -53,57 +53,9 @@ class TokenPage extends StatelessWidget {
                         Expanded(
                           child: ListView(
                             padding: Theme.of(context).brightness == Brightness.light ? EdgeInsets.zero : EdgeInsets.only(top: 8.0),
-                            children: state.tokens.map((t) => 
-                              Dismissible(
-                                child: _tokenCard(context, t),
-                                key: ValueKey(t),
-                                // direction: DismissDirection.startToEnd,
-                                onDismissed: (_) => BlocProvider.of<AccountBloc>(context).add(RemoveTokenEvent(t.id)),
-                                secondaryBackground: Container(
-                                  color: Colors.red,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: <Widget>[
-                                      Text(
-                                        'Delete Api Key',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18.0
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Icon(
-                                          Icons.delete,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                background: Container(
-                                  color: Colors.red,
-                                  child: Row(
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Icon(
-                                          Icons.delete,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      Text(
-                                        'Delete Api Key',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18.0
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              )
-                            ).toList(),
+                            children: state.tokens
+                              .map((t) => _tokenCard(context, t))
+                              .toList(),
                           ),
                         ),
                       if (state.tokens.isEmpty)
@@ -245,7 +197,7 @@ class TokenPage extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: Theme.of(context).textTheme.display3.copyWith(
+        style: Theme.of(context).textTheme.bodyText1.copyWith(
           fontWeight: FontWeight.w500
         ),
       ),
@@ -255,7 +207,9 @@ class TokenPage extends StatelessWidget {
   Widget _tokenCard(BuildContext context, TokenEntry token) {
     DateTime added = DateTime.tryParse(token.date);
 
-    return CompanionButton(
+    return DismissibleButton(
+      key: ValueKey(token.id),
+      onDismissed: () => BlocProvider.of<AccountBloc>(context).add(RemoveTokenEvent(token.id)),
       color: Colors.blue,
       leading: Icon(
         FontAwesomeIcons.key,
@@ -287,13 +241,13 @@ class TokenPage extends StatelessWidget {
               children: <Widget>[
                 Text(
                   'GW2 Companion',
-                  style: Theme.of(context).textTheme.display1.copyWith(
+                  style: Theme.of(context).textTheme.headline1.copyWith(
                     fontWeight: FontWeight.w500
                   ),
                 ),
                 Text(
                   'Api Keys',
-                  style: Theme.of(context).textTheme.display1.copyWith(
+                  style: Theme.of(context).textTheme.headline1.copyWith(
                     fontWeight: FontWeight.w300
                   ),
                 ),

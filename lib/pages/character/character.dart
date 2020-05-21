@@ -54,7 +54,7 @@ class CharacterPage extends StatelessWidget {
                       ),
                       Text(
                         _character.name,
-                        style: Theme.of(context).textTheme.title.copyWith(
+                        style: Theme.of(context).textTheme.headline6.copyWith(
                           color: Colors.white
                         )
                       )
@@ -63,7 +63,7 @@ class CharacterPage extends StatelessWidget {
                   if (_character.titleName != null && _character.titleName.isNotEmpty)
                     Text(
                       _character.titleName,
-                      style: Theme.of(context).textTheme.display3.copyWith(
+                      style: Theme.of(context).textTheme.bodyText1.copyWith(
                         color: Colors.white
                       )
                     ),

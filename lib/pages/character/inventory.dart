@@ -109,7 +109,7 @@ class InventoryPage extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       bag.itemInfo.name,
-                      style: Theme.of(context).textTheme.display3.copyWith(
+                      style: Theme.of(context).textTheme.bodyText1.copyWith(
                         fontWeight: FontWeight.w500
                       )
                     ),
@@ -119,7 +119,7 @@ class InventoryPage extends StatelessWidget {
                 Spacer(),
               Text(
                 '$usedSlots/${bag.size}',
-                style: Theme.of(context).textTheme.display3,
+                style: Theme.of(context).textTheme.bodyText1,
               )
             ],
           ),
