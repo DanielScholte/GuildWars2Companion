@@ -22,8 +22,7 @@ class ChangelogService {
 
   bool anyNewChanges() =>
       currentBuildNumber > lastLaunchBuildNumber &&
-      changelog.any((c) => c.build > lastLaunchBuildNumber && c.newFeatures) &&
-      lastLaunchBuildNumber != 0;
+      changelog.any((c) => c.build > lastLaunchBuildNumber && c.newFeatures);
 
   List<String> getNewFeatures() {
     return changelog
@@ -37,7 +36,7 @@ class ChangelogService {
   List<Changelog> changelog = [
     Changelog(
       version: '1.3.1',
-      build: 14,
+      build: 15,
       newFeatures: true,
       changes: [
         'User interface improvements'
