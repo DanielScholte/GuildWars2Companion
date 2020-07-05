@@ -24,159 +24,156 @@ class TokenPage extends StatelessWidget {
       systemNavigationBarIconBrightness: Theme.of(context).brightness == Brightness.dark ? Brightness.light : Brightness.dark
     ));
 
-    return BlocListener<AccountBloc, AccountState>(
-      listenWhen: (previous, current) => current is AuthenticatedState || current is UnauthenticatedState,
-      listener: (BuildContext context, state) {
-        if (state is UnauthenticatedState) {
-          if (state.message != null) {
-            _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(state.message)));
-          }
-
-          return;
-        }
-
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (BuildContext context) => TabPage()));
-      },
-      child: Scaffold(
-        key: _scaffoldKey,
-        body: BlocBuilder<AccountBloc, AccountState>(
-          builder: (BuildContext context, state) {
-            if (state is UnauthenticatedState) {
-              return Stack(
-                children: <Widget>[
-                  _getFooter(context),
-                  Column(
-                    children: <Widget>[
-                      _getHeader(context),
-                      if (state.tokens.isNotEmpty)
-                        Expanded(
-                          child: ListView(
-                            padding: Theme.of(context).brightness == Brightness.light ? EdgeInsets.zero : EdgeInsets.only(top: 8.0),
-                            children: state.tokens
-                              .map((t) => _tokenCard(context, t))
-                              .toList(),
-                          ),
-                        ),
-                      if (state.tokens.isEmpty)
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Column(
-                                  children: <Widget>[
-                                    Text(
-                                      'No Api Keys found',
-                                      style: TextStyle(
-                                        fontSize: 24.0,
-                                        fontWeight: FontWeight.w500
-                                      ),
-                                    ),
-                                    Text(
-                                      'Add one using the button in the bottom right corner.',
-                                      style: TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w300
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                                
-                              ],
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                ],
-              );
+    return Scaffold(
+      key: _scaffoldKey,
+      body: BlocConsumer<AccountBloc, AccountState>(
+        listenWhen: (previous, current) => current is AuthenticatedState || current is UnauthenticatedState,
+        listener: (BuildContext context, state) {
+          if (state is UnauthenticatedState) {
+            if (state.message != null) {
+              _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(state.message)));
             }
 
+            return;
+          }
+
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (BuildContext context) => TabPage()));
+        },
+        builder: (BuildContext context, state) {
+          if (state is UnauthenticatedState) {
             return Stack(
               children: <Widget>[
                 _getFooter(context),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     _getHeader(context),
-                    CircularProgressIndicator(),
-                    Container()
+                    if (state.tokens.isNotEmpty)
+                      Expanded(
+                        child: ListView(
+                          padding: Theme.of(context).brightness == Brightness.light ? EdgeInsets.zero : EdgeInsets.only(top: 8.0),
+                          children: state.tokens
+                            .map((t) => _tokenCard(context, t))
+                            .toList(),
+                        ),
+                      ),
+                    if (state.tokens.isEmpty)
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Column(
+                                children: <Widget>[
+                                  Text(
+                                    'No Api Keys found',
+                                    style: TextStyle(
+                                      fontSize: 24.0,
+                                      fontWeight: FontWeight.w500
+                                    ),
+                                  ),
+                                  Text(
+                                    'Add one using the button in the bottom right corner.',
+                                    style: TextStyle(
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.w300
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                              
+                            ],
+                          ),
+                        ),
+                      ),
                   ],
                 ),
               ],
             );
-          },
-        ),
-        floatingActionButton: BlocBuilder<AccountBloc, AccountState>(
-          builder: (BuildContext context, state) {
-            if (state is UnauthenticatedState) {
+          }
 
-              return SpeedDial(
-                animatedIcon: AnimatedIcons.menu_close,
-                animatedIconTheme: IconThemeData(size: 26.0),
-                overlayColor: Colors.black,
-                overlayOpacity: .6,
-                backgroundColor: Colors.blue,
-                foregroundColor: Colors.white,
-                elevation: Theme.of(context).brightness == Brightness.light ? 6.0 : 0.0,
-                children: [
-                  SpeedDialChild(
-                    child: Icon(
-                      FontAwesomeIcons.qrcode,
-                      color: Colors.white,
-                      size: 18.0,
-                    ),
-                    backgroundColor: Colors.blue,
-                    labelWidget: _speedDailLabel(context, 'Enter Api Key by Qr Code'),
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => QrCodePage()
-                    )),
-                  ),
-                  SpeedDialChild(
-                    child: Icon(
-                      FontAwesomeIcons.solidEdit,
-                      color: Colors.white,
-                      size: 18.0,
-                    ),
-                    backgroundColor: Colors.blue,
-                    labelWidget: _speedDailLabel(context, 'Enter Api Key by text'),
-                    onTap: () => _addTokenByText(context),
-                  ),
-                  SpeedDialChild(
-                    child: Icon(
-                      FontAwesomeIcons.question,
-                      color: Colors.white,
-                      size: 18.0,
-                    ),
-                    backgroundColor: Colors.deepOrange,
-                    labelWidget: _speedDailLabel(context, 'How do I get an Api Key?'),
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => HowToTokenPage()
-                    )),
-                  ),
-                  SpeedDialChild(
-                    child: Icon(
-                      FontAwesomeIcons.cog,
-                      color: Colors.white,
-                      size: 18.0,
-                    ),
-                    backgroundColor: Colors.deepOrange,
-                    labelWidget: _speedDailLabel(context, 'Settings'),
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => ConfigurationPage()
-                    )),
-                  ),
+          return Stack(
+            children: <Widget>[
+              _getFooter(context),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  _getHeader(context),
+                  CircularProgressIndicator(),
+                  Container()
                 ],
-              );
-            }
-
-            return Container();
-          },
-        ),
+              ),
+            ],
+          );
+        },
       ),
+      floatingActionButton: BlocBuilder<AccountBloc, AccountState>(
+        builder: (BuildContext context, state) {
+          if (state is UnauthenticatedState) {
+            return SpeedDial(
+              animatedIcon: AnimatedIcons.menu_close,
+              animatedIconTheme: IconThemeData(size: 26.0),
+              overlayColor: Colors.black,
+              overlayOpacity: .6,
+              backgroundColor: Colors.blue,
+              foregroundColor: Colors.white,
+              elevation: Theme.of(context).brightness == Brightness.light ? 6.0 : 0.0,
+              children: [
+                SpeedDialChild(
+                  child: Icon(
+                    FontAwesomeIcons.qrcode,
+                    color: Colors.white,
+                    size: 18.0,
+                  ),
+                  backgroundColor: Colors.blue,
+                  labelWidget: _speedDailLabel(context, 'Enter Api Key by Qr Code'),
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => QrCodePage()
+                  )),
+                ),
+                SpeedDialChild(
+                  child: Icon(
+                    FontAwesomeIcons.solidEdit,
+                    color: Colors.white,
+                    size: 18.0,
+                  ),
+                  backgroundColor: Colors.blue,
+                  labelWidget: _speedDailLabel(context, 'Enter Api Key by text'),
+                  onTap: () => _addTokenByText(context),
+                ),
+                SpeedDialChild(
+                  child: Icon(
+                    FontAwesomeIcons.question,
+                    color: Colors.white,
+                    size: 18.0,
+                  ),
+                  backgroundColor: Colors.deepOrange,
+                  labelWidget: _speedDailLabel(context, 'How do I get an Api Key?'),
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => HowToTokenPage()
+                  )),
+                ),
+                SpeedDialChild(
+                  child: Icon(
+                    FontAwesomeIcons.cog,
+                    color: Colors.white,
+                    size: 18.0,
+                  ),
+                  backgroundColor: Colors.deepOrange,
+                  labelWidget: _speedDailLabel(context, 'Settings'),
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ConfigurationPage()
+                  )),
+                ),
+              ],
+            );
+          }
+
+          return Container();
+        },
+      )
     );
   }
 

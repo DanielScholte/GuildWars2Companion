@@ -27,12 +27,34 @@ class InventoryPage extends StatelessWidget {
           foregroundColor: Colors.white,
           elevation: 4.0,
         ),
-        body: BlocListener<CharacterBloc, CharacterState>(
+        body: BlocConsumer<CharacterBloc, CharacterState>(
           listenWhen: (previous, current) => current is ErrorCharactersState,
           listener: (context, state) => Navigator.of(context).pop(),
-          child: BlocBuilder<CharacterBloc, CharacterState>(
-            builder: (context, state) {
-              if (state is ErrorCharactersState) {
+          builder: (context, state) {
+            if (state is ErrorCharactersState) {
+              return Center(
+                child: CompanionError(
+                  title: 'the character',
+                  onTryAgain: () =>
+                    BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterItemsEvent()),
+                ),
+              );
+            }
+
+            if (state is LoadedCharactersState && state.hasError) {
+              return Center(
+                child: CompanionError(
+                  title: 'the character items',
+                  onTryAgain: () =>
+                    BlocProvider.of<CharacterBloc>(context).add(LoadCharacterItemsEvent(state.characters)),
+                ),
+              );
+            }
+
+            if (state is LoadedCharactersState && state.itemsLoaded) {
+              Character character = state.characters.firstWhere((c) => c.name == _character.name);
+
+              if (character == null) {
                 return Center(
                   child: CompanionError(
                     title: 'the character',
@@ -42,47 +64,23 @@ class InventoryPage extends StatelessWidget {
                 );
               }
 
-              if (state is LoadedCharactersState && state.hasError) {
-                return Center(
-                  child: CompanionError(
-                    title: 'the character items',
-                    onTryAgain: () =>
-                      BlocProvider.of<CharacterBloc>(context).add(LoadCharacterItemsEvent(state.characters)),
-                  ),
-                );
-              }
-
-              if (state is LoadedCharactersState && state.itemsLoaded) {
-                Character character = state.characters.firstWhere((c) => c.name == _character.name);
-
-                if (character == null) {
-                  return Center(
-                    child: CompanionError(
-                      title: 'the character',
-                      onTryAgain: () =>
-                        BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterItemsEvent()),
-                    ),
-                  );
-                }
-
-                return RefreshIndicator(
-                  backgroundColor: Theme.of(context).accentColor,
-                  color: Theme.of(context).cardColor,
-                  onRefresh: () async {
-                    BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterItemsEvent());
-                    await Future.delayed(Duration(milliseconds: 200), () {});
-                  },
-                  child: ListView(
-                    children: character.bags.map((b) => _buildBag(context, b, character.bags.indexOf(b))).toList(),
-                  ),
-                );
-              }
-
-              return Center(
-                child: CircularProgressIndicator(),
+              return RefreshIndicator(
+                backgroundColor: Theme.of(context).accentColor,
+                color: Theme.of(context).cardColor,
+                onRefresh: () async {
+                  BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterItemsEvent());
+                  await Future.delayed(Duration(milliseconds: 200), () {});
+                },
+                child: ListView(
+                  children: character.bags.map((b) => _buildBag(context, b, character.bags.indexOf(b))).toList(),
+                ),
               );
-            },
-          ),
+            }
+
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
         ),
       ),
     );
