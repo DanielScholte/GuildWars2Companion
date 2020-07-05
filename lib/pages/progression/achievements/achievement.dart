@@ -55,15 +55,6 @@ class AchievementPage extends StatelessWidget {
                     title: 'the achievement',
                     onTryAgain: () =>
                       BlocProvider.of<AchievementBloc>(context).add(LoadAchievementDetailsEvent(
-                      achievementGroups: state.achievementGroups,
-                      achievements: state.achievements,
-                      favoriteAchievements: state.favoriteAchievements,
-                      masteries: state.masteries,
-                      dialies: state.dailies,
-                      dialiesTomorrow: state.dailiesTomorrow,
-                      includeProgress: state.includesProgress,
-                      achievementPoints: state.achievementPoints,
-                      masteryLevel: state.masteryLevel,
                       achievementId: achievement.id,
                     )),
                   ),
@@ -100,15 +91,6 @@ class AchievementPage extends StatelessWidget {
                       color: Theme.of(context).cardColor,
                       onRefresh: () async {
                         BlocProvider.of<AchievementBloc>(context).add(RefreshAchievementProgressEvent(
-                          achievementGroups: state.achievementGroups,
-                          achievements: state.achievements,
-                          favoriteAchievements: state.favoriteAchievements,
-                          masteries: state.masteries,
-                          dialies: state.dailies,
-                          dialiesTomorrow: state.dailiesTomorrow,
-                          includeProgress: state.includesProgress,
-                          achievementPoints: state.achievementPoints,
-                          masteryLevel: state.masteryLevel,
                           achievementId: achievement.id,
                         ));
                         await Future.delayed(Duration(milliseconds: 200), () {});
@@ -146,16 +128,6 @@ class AchievementPage extends StatelessWidget {
           isFavorite: favorite,
           onFavoriteToggle: () {
             BlocProvider.of<AchievementBloc>(context).add(ChangeFavoriteAchievementEvent(
-              achievementGroups: state.achievementGroups,
-              achievements: state.achievements,
-              favoriteAchievements: state.favoriteAchievements,
-              masteries: state.masteries,
-              dialies: state.dailies,
-              dialiesTomorrow: state.dailiesTomorrow,
-              includeProgress: state.includesProgress,
-              achievementPoints: state.achievementPoints,
-              masteryLevel: state.masteryLevel,
-
               addAchievementId: !favorite ? achievement.id : null,
               removeAchievementId: favorite ? achievement.id : null,
             ));

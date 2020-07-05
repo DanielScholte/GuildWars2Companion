@@ -35,15 +35,6 @@ class CompanionAchievementButton extends StatelessWidget {
       onTap: () {
         if (!achievement.loaded && !achievement.loading) {
           BlocProvider.of<AchievementBloc>(context).add(LoadAchievementDetailsEvent(
-            achievementGroups: state.achievementGroups,
-            achievements: state.achievements,
-            favoriteAchievements: state.favoriteAchievements,
-            masteries: state.masteries,
-            dialies: state.dailies,
-            dialiesTomorrow: state.dailiesTomorrow,
-            includeProgress: state.includesProgress,
-            achievementPoints: state.achievementPoints,
-            masteryLevel: state.masteryLevel,
             achievementId: achievement.id,
           ));
         }
