@@ -27,21 +27,22 @@ class CompanionPvpSeasonRank extends StatelessWidget {
             iconSize: 20,
             fit: null,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: rank.tiers
-              .map((r) => Container(
-                height: 12.0,
-                width: 12.0,
-                margin: EdgeInsets.symmetric(horizontal: 2.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(9.0),
-                  border: Border.all(color: Colors.white, width: 2.0),
-                  color: standing.current.rating >= r.rating ? Colors.white : null,
-                ),
-              ))
-              .toList(),
-          )
+          if (standing.current.rating != null)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: rank.tiers
+                .map((r) => Container(
+                  height: 12.0,
+                  width: 12.0,
+                  margin: EdgeInsets.symmetric(horizontal: 2.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(9.0),
+                    border: Border.all(color: Colors.white, width: 2.0),
+                    color: standing.current.rating >= r.rating ? Colors.white : null,
+                  ),
+                ))
+                .toList(),
+            )
         ],
       ),
     );

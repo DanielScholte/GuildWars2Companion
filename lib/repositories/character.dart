@@ -21,9 +21,15 @@ class CharacterRepository {
   });
 
   Future<List<Character>> getCharacters() async {
-    List<Character> characters = await characterService.getCharacters();
-    List<AccountTitle> titles = await characterService.getTitles();
-    List<Profession> professions = await characterService.getProfessions();
+    List networkResults = await Future.wait([
+      characterService.getCharacters(),
+      characterService.getTitles(),
+      characterService.getProfessions()
+    ]);
+
+    List<Character> characters = networkResults[0];
+    List<AccountTitle> titles = networkResults[1];
+    List<Profession> professions = networkResults[2];
 
     characters.forEach((c) {
       c.titleName = titles.firstWhere((t) => t.id == c.title, orElse: () => AccountTitle(name: '')).name;
@@ -40,8 +46,13 @@ class CharacterRepository {
     List<int> itemIds = _getItemIds(characters);
     List<int> skinIds = _getSkinIds(characters);
 
-    List<Item> items = await itemService.getItems(itemIds);
-    List<Skin> skins = await itemService.getSkins(skinIds);
+    List networkResults = await Future.wait([
+      itemService.getItems(itemIds),
+      itemService.getSkins(skinIds),
+    ]);
+
+    List<Item> items = networkResults[0];
+    List<Skin> skins = networkResults[1];
     
     characters.forEach((c) {
       if (c.bags != null) {

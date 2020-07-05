@@ -19,11 +19,19 @@ class TradingPostRepository {
   });
 
   Future<TradingPostData> getTradingPostData() async {
-    List<TradingPostTransaction> buying = await tradingPostService.getTransactions('current', 'buys');
-    List<TradingPostTransaction> selling = await tradingPostService.getTransactions('current', 'sells');
-    List<TradingPostTransaction> bought = await tradingPostService.getTransactions('history', 'buys');
-    List<TradingPostTransaction> sold = await tradingPostService.getTransactions('history', 'sells');
-    TradingPostDelivery tradingPostDelivery = await tradingPostService.getDelivery();
+    List networkResults = await Future.wait([
+      tradingPostService.getTransactions('current', 'buys'),
+      tradingPostService.getTransactions('current', 'sells'),
+      tradingPostService.getTransactions('history', 'buys'),
+      tradingPostService.getTransactions('history', 'sells'),
+      tradingPostService.getDelivery()
+    ]);
+
+    List<TradingPostTransaction> buying = networkResults[0];
+    List<TradingPostTransaction> selling = networkResults[1];
+    List<TradingPostTransaction> bought = networkResults[2];
+    List<TradingPostTransaction> sold = networkResults[3];
+    TradingPostDelivery tradingPostDelivery = networkResults[4];
 
     List<int> itemIds = [];
     buying.forEach((t) => itemIds.add(t.itemId));

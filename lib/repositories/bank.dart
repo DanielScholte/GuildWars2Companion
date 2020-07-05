@@ -19,10 +19,17 @@ class BankRepository {
   });
 
   Future<BankData> getBankData() async {
-    List<InventoryItem> inventory = await bankService.getInventory();
-    List<InventoryItem> bank = await bankService.getBank();
-    List<Material> materials = await bankService.getMaterials();
-    List<MaterialCategory> materialCategories = await bankService.getMaterialCategories();
+    List networkResults = await Future.wait([
+      bankService.getInventory(),
+      bankService.getBank(),
+      bankService.getMaterials(),
+      bankService.getMaterialCategories()
+    ]);
+
+    List<InventoryItem> inventory = networkResults[0];
+    List<InventoryItem> bank = networkResults[1];
+    List<Material> materials = networkResults[2];
+    List<MaterialCategory> materialCategories = networkResults[3];
 
     List<int> itemIds = [];
     List<int> skinIds = [];

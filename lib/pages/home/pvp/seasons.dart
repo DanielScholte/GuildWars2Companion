@@ -54,7 +54,7 @@ class SeasonsPage extends StatelessWidget {
                   .map((s) {
                     PvpSeasonRank rank = s.season.ranks
                       .lastWhere((r) => 
-                        r.tiers.any((t) => t.rating <= s.current.rating),
+                        s.current.rating != null && r.tiers.any((t) => t.rating <= s.current.rating),
                         orElse: () => s.season.ranks.first
                       );
                     return CompanionButton(

@@ -20,10 +20,17 @@ class PvpRepository {
   });
 
   Future<PvpData> getPvpData() async {
-    PvpStats stats = await pvpService.getStats();
-    List<PvpRank> ranks = await pvpService.getRanks();
-    List<PvpStanding> standings = await pvpService.getStandings();
-    List<PvpGame> games = await pvpService.getGames();
+    List networkResults = await Future.wait([
+      pvpService.getStats(),
+      pvpService.getRanks(),
+      pvpService.getStandings(),
+      pvpService.getGames()
+    ]);
+
+    PvpStats stats = networkResults[0];
+    List<PvpRank> ranks = networkResults[1];
+    List<PvpStanding> standings = networkResults[2];
+    List<PvpGame> games = networkResults[3];
 
     List<int> mapIds = [];
     List<String> seasonIds = [];
