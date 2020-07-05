@@ -40,7 +40,7 @@ class CompanionHeader extends StatelessWidget {
           if (includeShadow && Theme.of(context).brightness == Brightness.light)
             BoxShadow(
               color: Colors.black38,
-              blurRadius: 8.0,
+              blurRadius: 6.0,
             ),
         ],
       ),
