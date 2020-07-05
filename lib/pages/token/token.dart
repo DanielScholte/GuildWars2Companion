@@ -112,12 +112,15 @@ class TokenPage extends StatelessWidget {
       floatingActionButton: BlocBuilder<AccountBloc, AccountState>(
         builder: (BuildContext context, state) {
           if (state is UnauthenticatedState) {
+            Color backgroundColor = Theme.of(context).brightness == Brightness.light ? Colors.blue : Color(0xFF323232);
+            Color backgroundColorAccent = Theme.of(context).brightness == Brightness.light ? Colors.deepOrange : Color(0xFF323232);
+
             return SpeedDial(
               animatedIcon: AnimatedIcons.menu_close,
               animatedIconTheme: IconThemeData(size: 26.0),
               overlayColor: Colors.black,
               overlayOpacity: .6,
-              backgroundColor: Colors.blue,
+              backgroundColor: backgroundColor,
               foregroundColor: Colors.white,
               elevation: Theme.of(context).brightness == Brightness.light ? 6.0 : 0.0,
               children: [
@@ -127,7 +130,7 @@ class TokenPage extends StatelessWidget {
                     color: Colors.white,
                     size: 18.0,
                   ),
-                  backgroundColor: Colors.blue,
+                  backgroundColor: backgroundColor,
                   labelWidget: _speedDailLabel(context, 'Enter Api Key by Qr Code'),
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => QrCodePage()
@@ -139,7 +142,7 @@ class TokenPage extends StatelessWidget {
                     color: Colors.white,
                     size: 18.0,
                   ),
-                  backgroundColor: Colors.blue,
+                  backgroundColor: backgroundColor,
                   labelWidget: _speedDailLabel(context, 'Enter Api Key by text'),
                   onTap: () => _addTokenByText(context),
                 ),
@@ -149,7 +152,7 @@ class TokenPage extends StatelessWidget {
                     color: Colors.white,
                     size: 18.0,
                   ),
-                  backgroundColor: Colors.deepOrange,
+                  backgroundColor: backgroundColorAccent,
                   labelWidget: _speedDailLabel(context, 'How do I get an Api Key?'),
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => HowToTokenPage()
@@ -161,7 +164,7 @@ class TokenPage extends StatelessWidget {
                     color: Colors.white,
                     size: 18.0,
                   ),
-                  backgroundColor: Colors.deepOrange,
+                  backgroundColor: backgroundColorAccent,
                   labelWidget: _speedDailLabel(context, 'Settings'),
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => ConfigurationPage()
