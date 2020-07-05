@@ -113,6 +113,7 @@ class ItemPage extends StatelessWidget {
                 item: item,
                 size: 45.0,
                 enablePopup: false,
+                includeMargin: true,
               ),
               Padding(
                 padding: EdgeInsets.all(8.0),
