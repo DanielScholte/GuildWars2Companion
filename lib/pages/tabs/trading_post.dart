@@ -391,11 +391,6 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
             onTap: () {
               if (!t.loading && t.listing == null) {
                 BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostListingsEvent(
-                  buying: state.buying,
-                  selling: state.selling,
-                  bought: state.bought,
-                  sold: state.sold,
-                  tradingPostDelivery: state.tradingPostDelivery,
                   itemId: t.itemId
                 ));
               }

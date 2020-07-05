@@ -119,11 +119,6 @@ class TradingPostItemPage extends StatelessWidget {
                         title: 'the listings',
                         onTryAgain: () =>
                           BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostListingsEvent(
-                            buying: state.buying,
-                            selling: state.selling,
-                            bought: state.bought,
-                            sold: state.sold,
-                            tradingPostDelivery: state.tradingPostDelivery,
                             itemId: item.id,
                           )),
                       ),
@@ -163,11 +158,6 @@ class TradingPostItemPage extends StatelessWidget {
         color: Theme.of(context).cardColor,
         onRefresh: () async {
           BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostListingsEvent(
-            buying: state.buying,
-            selling: state.selling,
-            bought: state.bought,
-            sold: state.sold,
-            tradingPostDelivery: state.tradingPostDelivery,
             itemId: item.id,
           ));
           await Future.delayed(Duration(milliseconds: 200), () {});
@@ -193,11 +183,6 @@ class TradingPostItemPage extends StatelessWidget {
       color: Theme.of(context).cardColor,
       onRefresh: () async {
         BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostListingsEvent(
-          buying: state.buying,
-          selling: state.selling,
-          bought: state.bought,
-          sold: state.sold,
-          tradingPostDelivery: state.tradingPostDelivery,
           itemId: item.id,
         ));
         await Future.delayed(Duration(milliseconds: 200), () {});

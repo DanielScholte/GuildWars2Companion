@@ -9,6 +9,8 @@ import './bloc.dart';
 class TradingPostBloc extends Bloc<TradingPostEvent, TradingPostState> {
   final TradingPostRepository tradingPostRepository;
 
+  TradingPostData _tradingPostData;
+
   TradingPostBloc({
     @required this.tradingPostRepository,
   }): super(LoadingTradingPostState());
@@ -28,15 +30,9 @@ class TradingPostBloc extends Bloc<TradingPostEvent, TradingPostState> {
     try {
       yield LoadingTradingPostState();
 
-      TradingPostData tradingPostData = await tradingPostRepository.getTradingPostData();
+      _tradingPostData = await tradingPostRepository.getTradingPostData();
 
-      yield LoadedTradingPostState(
-        buying: tradingPostData.buying,
-        selling: tradingPostData.selling,
-        bought: tradingPostData.bought,
-        sold: tradingPostData.sold,
-        tradingPostDelivery: tradingPostData.tradingPostDelivery
-      );
+      yield _getLoadedTradingPostState();
     } catch (_) {
       yield ErrorTradingPostState();
     }
@@ -44,53 +40,45 @@ class TradingPostBloc extends Bloc<TradingPostEvent, TradingPostState> {
 
   Stream<TradingPostState> _loadTradingPostListing(LoadTradingPostListingsEvent event) async* {
     try {
-      TradingPostTransaction transaction = _getTradingPostTransaction(state, event.itemId);
+      TradingPostTransaction transaction = _getTradingPostTransaction(event.itemId);
       transaction.loading = true;
 
-      yield LoadedTradingPostState(
-        buying: event.buying,
-        selling: event.selling,
-        bought: event.bought,
-        sold: event.sold,
-        tradingPostDelivery: event.tradingPostDelivery,
-      );
+      yield _getLoadedTradingPostState();
 
       await tradingPostRepository.loadTradingPostListings(transaction);
 
       if (transaction.listing != null) {
-        event.buying.where((t) => t.itemId == event.itemId).forEach((t) => t.listing = transaction.listing);
-        event.selling.where((t) => t.itemId == event.itemId).forEach((t) => t.listing = transaction.listing);
-        event.bought.where((t) => t.itemId == event.itemId).forEach((t) => t.listing = transaction.listing);
-        event.sold.where((t) => t.itemId == event.itemId).forEach((t) => t.listing = transaction.listing);
+        _tradingPostData.buying.where((t) => t.itemId == event.itemId).forEach((t) => t.listing = transaction.listing);
+        _tradingPostData.selling.where((t) => t.itemId == event.itemId).forEach((t) => t.listing = transaction.listing);
+        _tradingPostData.bought.where((t) => t.itemId == event.itemId).forEach((t) => t.listing = transaction.listing);
+        _tradingPostData.sold.where((t) => t.itemId == event.itemId).forEach((t) => t.listing = transaction.listing);
       }
 
-      yield LoadedTradingPostState(
-        buying: event.buying,
-        selling: event.selling,
-        bought: event.bought,
-        sold: event.sold,
-        tradingPostDelivery: event.tradingPostDelivery
-      );
+      yield _getLoadedTradingPostState();
     } catch (_) {
-      yield LoadedTradingPostState(
-        buying: event.buying,
-        selling: event.selling,
-        bought: event.bought,
-        sold: event.sold,
-        tradingPostDelivery: event.tradingPostDelivery,
-        hasError: true
-      );
+      yield _getLoadedTradingPostState(hasError: true);
     }
   }
 
-  TradingPostTransaction _getTradingPostTransaction(LoadedTradingPostState state, int itemId) {
+  LoadedTradingPostState _getLoadedTradingPostState({ bool hasError = false }) {
+    return LoadedTradingPostState(
+      bought: _tradingPostData.bought,
+      buying: _tradingPostData.buying,
+      selling: _tradingPostData.selling,
+      sold: _tradingPostData.sold,
+      tradingPostDelivery: _tradingPostData.tradingPostDelivery,
+      hasError: hasError
+    );
+  }
+
+  TradingPostTransaction _getTradingPostTransaction(int itemId) {
     TradingPostTransaction transaction;
 
     [
-      state.buying,
-      state.selling,
-      state.bought,
-      state.sold
+      _tradingPostData.buying,
+      _tradingPostData.selling,
+      _tradingPostData.bought,
+      _tradingPostData.sold
     ].forEach((transactionList) {
       if (transaction == null) {
         transaction = transactionList.firstWhere((t) => t.itemId == itemId, orElse: () => null);
