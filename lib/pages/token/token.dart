@@ -25,7 +25,7 @@ class TokenPage extends StatelessWidget {
     ));
 
     return BlocListener<AccountBloc, AccountState>(
-      condition: (previous, current) => current is AuthenticatedState || current is UnauthenticatedState,
+      listenWhen: (previous, current) => current is AuthenticatedState || current is UnauthenticatedState,
       listener: (BuildContext context, state) {
         if (state is UnauthenticatedState) {
           if (state.message != null) {

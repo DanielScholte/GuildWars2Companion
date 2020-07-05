@@ -59,7 +59,7 @@ class _TabPageState extends State<TabPage> {
         return true;
       },
       child: BlocListener<AccountBloc, AccountState>(
-        condition: (previous, current) => current is UnauthenticatedState || current is AuthenticatedState,
+        listenWhen: (previous, current) => current is UnauthenticatedState || current is AuthenticatedState,
         listener: (BuildContext context, state) async {
           if (state is AuthenticatedState) {
             await _handleAuth(context, state);
@@ -70,7 +70,7 @@ class _TabPageState extends State<TabPage> {
               MaterialPageRoute(builder: (BuildContext context) => TokenPage()));
         },
         child: BlocBuilder<AccountBloc, AccountState>(
-          condition: (previous, current) => current is LoadingAccountState || current is AuthenticatedState,
+          buildWhen: (previous, current) => current is LoadingAccountState || current is AuthenticatedState,
           builder: (BuildContext context, state) {
             if (state is UnauthenticatedState) {
               return Scaffold(

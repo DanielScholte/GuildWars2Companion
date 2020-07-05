@@ -4,14 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/repositories/world_boss.dart';
 import './bloc.dart';
 class WorldBossBloc extends Bloc<WorldBossEvent, WorldBossState> {
-  @override
-  WorldBossState get initialState => LoadingWorldbossesState();
-
   final WorldBossRepository worldBossRepository;
 
   WorldBossBloc({
     @required this.worldBossRepository
-  });
+  }): super(LoadingWorldbossesState());
 
   @override
   Stream<WorldBossState> mapEventToState(

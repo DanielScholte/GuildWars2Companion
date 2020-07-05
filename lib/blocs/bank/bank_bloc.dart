@@ -6,14 +6,11 @@ import 'package:guildwars2_companion/repositories/bank.dart';
 import './bloc.dart';
 
 class BankBloc extends Bloc<BankEvent, BankState> {
-  @override
-  BankState get initialState => LoadingBankState();
-
   final BankRepository bankRepository;
 
   BankBloc({
     @required this.bankRepository,
-  });
+  }): super(LoadingBankState());
 
   @override
   Stream<BankState> mapEventToState(

@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AccountBloc, AccountState>(
-      condition: (previous, current) {
+      buildWhen: (previous, current) {
         if (previous is AuthenticatedState && current is UnauthenticatedState) {
           return false;
         }

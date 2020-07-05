@@ -7,14 +7,11 @@ import 'package:guildwars2_companion/repositories/trading_post.dart';
 import './bloc.dart';
 
 class TradingPostBloc extends Bloc<TradingPostEvent, TradingPostState> {
-  @override
-  TradingPostState get initialState => LoadingTradingPostState();
-
   final TradingPostRepository tradingPostRepository;
 
   TradingPostBloc({
     @required this.tradingPostRepository,
-  });
+  }): super(LoadingTradingPostState());
 
   @override
   Stream<TradingPostState> mapEventToState(

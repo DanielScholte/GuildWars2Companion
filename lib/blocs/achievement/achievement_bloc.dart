@@ -8,14 +8,12 @@ import 'package:guildwars2_companion/repositories/achievement.dart';
 import './bloc.dart';
 
 class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
-  @override
-  AchievementState get initialState => LoadingAchievementsState();
 
   final AchievementRepository achievementRepository;
 
   AchievementBloc({
     @required this.achievementRepository,
-  });
+  }): super(LoadingAchievementsState());
 
   @override
   Stream<AchievementState> mapEventToState(

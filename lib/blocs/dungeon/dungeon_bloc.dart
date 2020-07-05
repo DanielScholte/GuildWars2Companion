@@ -4,14 +4,11 @@ import 'package:guildwars2_companion/repositories/dungeon.dart';
 import './bloc.dart';
 
 class DungeonBloc extends Bloc<DungeonEvent, DungeonState> {
-  @override
-  DungeonState get initialState => LoadingDungeonsState();
-
   final DungeonRepository dungeonRepository;
 
   DungeonBloc({
     this.dungeonRepository
-  });
+  }): super(LoadingDungeonsState());
 
   @override
   Stream<DungeonState> mapEventToState(

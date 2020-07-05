@@ -25,7 +25,7 @@ class EquipmentPage extends StatelessWidget {
           elevation: 4.0,
         ),
         body: BlocListener<CharacterBloc, CharacterState>(
-          condition: (previous, current) => current is ErrorCharactersState,
+          listenWhen: (previous, current) => current is ErrorCharactersState,
           listener: (context, state) => Navigator.of(context).pop(),
           child: BlocBuilder<CharacterBloc, CharacterState>(
             builder: (context, state) {

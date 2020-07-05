@@ -21,7 +21,7 @@ class _QrCodePageState extends State<QrCodePage> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<AccountBloc, AccountState>(
-      condition: (previous, current) => current is UnauthenticatedState || current is LoadingAccountState,
+      listenWhen: (previous, current) => current is UnauthenticatedState || current is LoadingAccountState,
       listener: (context, state) {
         canScan = !(state is LoadingAccountState);
 

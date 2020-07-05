@@ -6,14 +6,11 @@ import 'package:guildwars2_companion/repositories/character.dart';
 import './bloc.dart';
 
 class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
-  @override
-  CharacterState get initialState => LoadingCharactersState();
-
   final CharacterRepository characterRepository;
 
   CharacterBloc({
     @required this.characterRepository,
-  });
+  }): super(LoadingCharactersState());
 
   @override
   Stream<CharacterState> mapEventToState(
