@@ -45,7 +45,7 @@ class PvpGamesPage extends StatelessWidget {
 
             if (state is LoadedPvpState) {
               return ListView(
-                padding: EdgeInsets.only(top: 8.0),
+                padding: EdgeInsets.zero,
                 children: state.pvpGames
                   .map((g) => CompanionCard(
                     child: ConstrainedBox(

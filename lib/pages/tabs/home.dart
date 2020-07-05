@@ -105,25 +105,21 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                MediaQuery.removePadding(
-                  removeTop: true,
-                  context: context,
-                  child: Expanded(
-                    child: ListView(
-                      padding: EdgeInsets.only(top: 8.0),
-                      children: <Widget>[
-                        if (state.tokenInfo.permissions.contains('wallet'))
-                          _buildWallet(context),
-                        _buildWorldBosses(context, state.tokenInfo.permissions.contains('progression')),
-                        _buildEvents(context),
-                        if (state.tokenInfo.permissions.contains('pvp'))
-                          _buildPvp(context),
-                        _buildRaids(context, state.tokenInfo.permissions.contains('progression')),
-                        _buildDungeons(context, state.tokenInfo.permissions.contains('progression'))
-                      ],
-                    ),
+                Expanded(
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    children: <Widget>[
+                      if (state.tokenInfo.permissions.contains('wallet'))
+                        _buildWallet(context),
+                      _buildWorldBosses(context, state.tokenInfo.permissions.contains('progression')),
+                      _buildEvents(context),
+                      if (state.tokenInfo.permissions.contains('pvp'))
+                        _buildPvp(context),
+                      _buildRaids(context, state.tokenInfo.permissions.contains('progression')),
+                      _buildDungeons(context, state.tokenInfo.permissions.contains('progression'))
+                    ],
                   ),
-                )
+                ),
               ],
             ),
           );

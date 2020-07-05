@@ -28,7 +28,7 @@ class EventPage extends StatelessWidget {
             _buildHeader(context),
             Expanded(
               child: ListView(
-                padding: EdgeInsets.only(top: 8.0),
+                padding: EdgeInsets.zero,
                 children: <Widget>[
                   _buildTimes(context)
                 ],

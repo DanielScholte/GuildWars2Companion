@@ -105,7 +105,7 @@ class DungeonPage extends StatelessWidget {
                 await Future.delayed(Duration(milliseconds: 200), () {});
               },
               child: ListView(
-                padding: EdgeInsets.only(top: 8.0),
+                padding: EdgeInsets.zero,
                 children: [
                   _buildProgress(context, state.includeProgress, _dungeon)
                 ],

@@ -177,61 +177,57 @@ class CharacterPage extends StatelessWidget {
     return BlocBuilder<AccountBloc, AccountState>(
       builder: (context, state) {
         if (state is AuthenticatedState) {
-          return MediaQuery.removePadding(
-            removeTop: true,
-            context: context,
-            child: Expanded(
-              child: RefreshIndicator(
-                backgroundColor: Theme.of(context).accentColor,
-                color: Theme.of(context).cardColor,
-                onRefresh: () async {
-                  BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent());
-                  await Future.delayed(Duration(milliseconds: 200), () {});
-                },
-                child: ListView(
-                  padding: EdgeInsets.only(top: 8.0),
-                  children: <Widget>[
-                    if (state.tokenInfo.permissions.contains('inventories')
-                      && state.tokenInfo.permissions.contains('builds'))
-                      CompanionButton(
-                        color: Colors.teal,
-                        onTap: () {
-                          if (!characterState.itemsLoaded && !characterState.itemsLoading) {
-                            BlocProvider.of<CharacterBloc>(context).add(LoadCharacterItemsEvent(characterState.characters));
-                          }
+          return Expanded(
+            child: RefreshIndicator(
+              backgroundColor: Theme.of(context).accentColor,
+              color: Theme.of(context).cardColor,
+              onRefresh: () async {
+                BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent());
+                await Future.delayed(Duration(milliseconds: 200), () {});
+              },
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: <Widget>[
+                  if (state.tokenInfo.permissions.contains('inventories')
+                    && state.tokenInfo.permissions.contains('builds'))
+                    CompanionButton(
+                      color: Colors.teal,
+                      onTap: () {
+                        if (!characterState.itemsLoaded && !characterState.itemsLoading) {
+                          BlocProvider.of<CharacterBloc>(context).add(LoadCharacterItemsEvent(characterState.characters));
+                        }
 
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => EquipmentPage(_character),
-                          ));
-                        },
-                        title: 'Equipment',
-                        leading: Icon(
-                          GuildWarsIcons.equipment,
-                          size: 48.0,
-                          color: Colors.white,
-                        ),
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => EquipmentPage(_character),
+                        ));
+                      },
+                      title: 'Equipment',
+                      leading: Icon(
+                        GuildWarsIcons.equipment,
+                        size: 48.0,
+                        color: Colors.white,
                       ),
-                    if (state.tokenInfo.permissions.contains('inventories'))
-                      CompanionButton(
-                        color: Colors.indigo,
-                        onTap: () {
-                          if (!characterState.itemsLoaded && !characterState.itemsLoading) {
-                            BlocProvider.of<CharacterBloc>(context).add(LoadCharacterItemsEvent(characterState.characters));
-                          }
+                    ),
+                  if (state.tokenInfo.permissions.contains('inventories'))
+                    CompanionButton(
+                      color: Colors.indigo,
+                      onTap: () {
+                        if (!characterState.itemsLoaded && !characterState.itemsLoading) {
+                          BlocProvider.of<CharacterBloc>(context).add(LoadCharacterItemsEvent(characterState.characters));
+                        }
 
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => InventoryPage(_character),
-                          ));
-                        },
-                        title: 'Inventory',
-                        leading: Icon(
-                          GuildWarsIcons.inventory,
-                          size: 48.0,
-                          color: Colors.white,
-                        ),
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => InventoryPage(_character),
+                        ));
+                      },
+                      title: 'Inventory',
+                      leading: Icon(
+                        GuildWarsIcons.inventory,
+                        size: 48.0,
+                        color: Colors.white,
                       ),
-                  ],
-                ),
+                    ),
+                ],
               ),
             ),
           );

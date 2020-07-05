@@ -49,7 +49,7 @@ class SeasonsPage extends StatelessWidget {
 
             if (state is LoadedPvpState) {
               return ListView(
-                padding: EdgeInsets.only(top: 8.0),
+                padding: EdgeInsets.zero,
                 children: state.pvpStandings
                   .map((s) {
                     PvpSeasonRank rank = s.season.ranks

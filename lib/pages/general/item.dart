@@ -35,7 +35,7 @@ class ItemPage extends StatelessWidget {
           _buildHeader(context),
           Expanded(
             child: ListView(
-              padding: EdgeInsets.only(top: 8.0),
+              padding: EdgeInsets.zero,
               children: <Widget>[
                 if (skin != null)
                   _buildTransmutedItemInfo(context),

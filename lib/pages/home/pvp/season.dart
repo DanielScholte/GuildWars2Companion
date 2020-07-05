@@ -57,7 +57,7 @@ class SeasonPage extends StatelessWidget {
             ),
             Expanded(
               child: ListView(
-                padding: EdgeInsets.only(top: 8.0),
+                padding: EdgeInsets.zero,
                 children: <Widget>[
                   _buildRewards(context)
                 ],

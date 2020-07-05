@@ -84,7 +84,7 @@ class MasteryLevelPage extends StatelessWidget {
             ),
             Expanded(
               child: ListView(
-                padding: EdgeInsets.only(top: 8.0),
+                padding: EdgeInsets.zero,
                 children: <Widget>[
                   if (level.description != null && level.description.isNotEmpty)
                     _buildDescription(context, 'Description', level.description),

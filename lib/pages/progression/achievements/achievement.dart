@@ -243,7 +243,7 @@ class AchievementPage extends StatelessWidget {
 
   Widget _buildContent(BuildContext context, Achievement _achievement, LoadedAchievementsState state) {
     return ListView(
-      padding: EdgeInsets.only(top: 8.0),
+      padding: EdgeInsets.zero,
       children: <Widget>[
         if (_achievement.description != null && _achievement.description.isNotEmpty)
           _buildDescription(context, 'Description', removeAllHtmlTags(_achievement.description)),
