@@ -14,6 +14,7 @@ class SkillMigrations {
         tier INTEGER,
         facts TEXT,
         traitedFacts TEXT,
+        expiration_date DATE
       )
     '''
   ];

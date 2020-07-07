@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class SkillTrait {
   String name;
   List<Fact> facts;
@@ -23,18 +25,21 @@ class SkillTrait {
 
   SkillTrait.fromJson(Map<String, dynamic> json) {
     name = json['name'];
+    description = json['description'];
+    icon = json['icon'];
+    type = json['type'];
+    tier = json['tier'];
+    slot = json['slot'];
+    id = json['id'];
+    chatLink = json['chat_link'];
+
     if (json['facts'] != null) {
       facts = new List<Fact>();
       json['facts'].forEach((v) {
         facts.add(new Fact.fromJson(v));
       });
     }
-    description = json['description'];
-    icon = json['icon'];
-    type = json['type'];
-    slot = json['slot'];
-    id = json['id'];
-    chatLink = json['chat_link'];
+
     if (json['traited_facts'] != null) {
       traitedFacts = new List<Fact>();
       json['traited_facts'].forEach((v) {
@@ -43,21 +48,45 @@ class SkillTrait {
     }
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    if (this.facts != null) {
-      data['facts'] = this.facts.map((v) => v.toJson()).toList();
+  SkillTrait.fromDb(Map<String, dynamic> data) {
+    name = data['name'];
+    description = data['description'];
+    icon = data['icon'];
+    type = data['type'];
+    slot = data['slot'];
+    id = data['id'];
+    chatLink = data['chatLink'];
+
+    if (data['facts'] != null) {
+      List factsMap = json.decode(data['facts']);
+      facts = factsMap.map((b) => Fact.fromJson(b)).toList();
     }
-    data['description'] = this.description;
+
+    if (data['traited_facts'] != null) {
+      List traitedFactsMap = json.decode(data['traitedFacts']);
+      traitedFacts = traitedFactsMap.map((b) => Fact.fromJson(b)).toList();
+    }
+  }
+
+  Map<String, dynamic> toDb(String expirationDate) {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
     data['icon'] = this.icon;
+    data['name'] = this.name;
+    data['description'] = this.description;
     data['type'] = this.type;
     data['slot'] = this.slot;
-    data['id'] = this.id;
-    data['chat_link'] = this.chatLink;
-    if (this.traitedFacts != null) {
-      data['traited_facts'] = this.traitedFacts.map((v) => v.toJson()).toList();
+    data['chatLink'] = this.chatLink;
+    data['expiration_date'] = expirationDate;
+
+    if (this.facts != null && this.facts.isNotEmpty) {
+      data['facts'] = json.encode(this.facts.map((b) => b.toJson()).toList());
     }
+
+    if (this.traitedFacts != null && this.traitedFacts.isNotEmpty) {
+      data['traitedFacts'] = json.encode(this.traitedFacts.map((t) => t.toJson()).toList());
+    }
+    
     return data;
   }
 }
