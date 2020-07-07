@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:guildwars2_companion/models/build/build.dart';
 import 'package:guildwars2_companion/models/character/profession.dart';
 
 import 'bags.dart';
@@ -22,9 +23,10 @@ class Character {
 	int title;
   String titleName;
 	List<Equipment> equipment;
+  List<BuildTab> buildTabs;
 	List<Bags> bags;
 
-	Character({this.name, this.race, this.gender, this.profession, this.level, this.guild, this.age, this.created, this.deaths, this.crafting, this.title, this.equipment, this.bags});
+	Character({this.buildTabs, this.name, this.race, this.gender, this.profession, this.level, this.guild, this.age, this.created, this.deaths, this.crafting, this.title, this.equipment, this.bags});
 
 	Character.fromJson(Map<String, dynamic> json) {
 		name = json['name'];
@@ -39,6 +41,10 @@ class Character {
 		if (json['crafting'] != null) {
 			crafting = new List<Crafting>();
 			json['crafting'].forEach((v) { crafting.add(new Crafting.fromJson(v)); });
+		}
+    if (json['build_tabs'] != null) {
+			buildTabs = new List<BuildTab>();
+			json['build_tabs'].forEach((v) { buildTabs.add(new BuildTab.fromJson(v)); });
 		}
 		title = json['title'];
 		if (json['equipment'] != null) {
@@ -71,6 +77,30 @@ class Character {
     }
 		if (this.bags != null) {
       data['bags'] = this.bags.map((v) => v.toJson()).toList();
+    }
+		return data;
+	}
+}
+
+class BuildTab {
+	int tab;
+	bool isActive;
+	Build build;
+
+	BuildTab({this.tab, this.isActive, this.build});
+
+	BuildTab.fromJson(Map<String, dynamic> json) {
+		tab = json['tab'];
+		isActive = json['is_active'];
+		build = json['build'] != null ? new Build.fromJson(json['build']) : null;
+	}
+
+	Map<String, dynamic> toJson() {
+		final Map<String, dynamic> data = new Map<String, dynamic>();
+		data['tab'] = this.tab;
+		data['is_active'] = this.isActive;
+		if (this.build != null) {
+      data['build'] = this.build.toJson();
     }
 		return data;
 	}
