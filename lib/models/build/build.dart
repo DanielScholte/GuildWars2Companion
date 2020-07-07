@@ -1,3 +1,6 @@
+import 'package:guildwars2_companion/models/build/skill_trait.dart';
+import 'package:guildwars2_companion/models/build/specialization.dart';
+
 class Build {
   String name;
   String profession;
@@ -52,6 +55,9 @@ class BuildSpecialization {
   int id;
   List<int> traits;
 
+  Specialization specializationDetails;
+  List<SkillTrait> traitDetails;
+
   BuildSpecialization({this.id, this.traits});
 
   BuildSpecialization.fromJson(Map<String, dynamic> json) {
@@ -71,6 +77,10 @@ class BuildSkillset {
   int heal;
   List<int> utilities;
   int elite;
+
+  SkillTrait healDetails;
+  List<SkillTrait> utilityDetails;
+  SkillTrait eliteDetails;
 
   BuildSkillset({this.heal, this.utilities, this.elite});
 

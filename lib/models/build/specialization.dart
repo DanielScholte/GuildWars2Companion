@@ -1,3 +1,5 @@
+import 'package:guildwars2_companion/models/build/skill_trait.dart';
+
 class Specialization {
   int id;
   String name;
@@ -7,6 +9,9 @@ class Specialization {
   List<int> majorTraits;
   String icon;
   String background;
+
+  List<SkillTrait> minorTraitDetails;
+  List<SkillTrait> majorTraitDetails;
 
   Specialization(
       {this.id,
