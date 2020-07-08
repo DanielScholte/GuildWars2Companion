@@ -22,11 +22,12 @@ class Character {
 	List<Crafting> crafting;
 	int title;
   String titleName;
-	List<Equipment> equipment;
+  List<Equipment> equipment;
   List<BuildTab> buildTabs;
+  List<EquipmentTab> equipmentTabs;
 	List<Bags> bags;
 
-	Character({this.buildTabs, this.name, this.race, this.gender, this.profession, this.level, this.guild, this.age, this.created, this.deaths, this.crafting, this.title, this.equipment, this.bags});
+	Character({this.buildTabs, this.name, this.race, this.gender, this.profession, this.level, this.guild, this.age, this.created, this.deaths, this.crafting, this.title, this.bags});
 
 	Character.fromJson(Map<String, dynamic> json) {
 		name = json['name'];
@@ -46,8 +47,12 @@ class Character {
 			buildTabs = new List<BuildTab>();
 			json['build_tabs'].forEach((v) { buildTabs.add(new BuildTab.fromJson(v)); });
 		}
+    if (json['equipment_tabs'] != null) {
+			equipmentTabs = new List<EquipmentTab>();
+			json['equipment_tabs'].forEach((v) { equipmentTabs.add(new EquipmentTab.fromJson(v)); });
+		}
 		title = json['title'];
-		if (json['equipment'] != null) {
+    if (json['equipment'] != null) {
 			equipment = new List<Equipment>();
 			json['equipment'].forEach((v) { equipment.add(new Equipment.fromJson(v)); });
 		}
@@ -72,12 +77,35 @@ class Character {
       data['crafting'] = this.crafting.map((v) => v.toJson()).toList();
     }
 		data['title'] = this.title;
-		if (this.equipment != null) {
-      data['equipment'] = this.equipment.map((v) => v.toJson()).toList();
-    }
 		if (this.bags != null) {
       data['bags'] = this.bags.map((v) => v.toJson()).toList();
     }
+		return data;
+	}
+}
+
+class EquipmentTab {
+	int tab;
+	bool isActive;
+  String name;
+	List<Equipment> equipment;
+
+	EquipmentTab({this.tab, this.isActive, this.name, this.equipment});
+
+	EquipmentTab.fromJson(Map<String, dynamic> json) {
+		tab = json['tab'];
+		isActive = json['is_active'];
+    name = json['name'];
+		if (json['equipment'] != null) {
+			equipment = new List<Equipment>();
+			json['equipment'].forEach((v) { equipment.add(new Equipment.fromJson(v)); });
+		}
+	}
+
+	Map<String, dynamic> toJson() {
+		final Map<String, dynamic> data = new Map<String, dynamic>();
+		data['tab'] = this.tab;
+		data['is_active'] = this.isActive;
 		return data;
 	}
 }

@@ -5,6 +5,7 @@ import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/models/character/character.dart';
 import 'package:guildwars2_companion/models/character/crafting.dart';
 import 'package:guildwars2_companion/pages/character/equipment.dart';
+import 'package:guildwars2_companion/pages/character/equipment_selection.dart';
 import 'package:guildwars2_companion/pages/character/inventory.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
@@ -197,8 +198,19 @@ class CharacterPage extends StatelessWidget {
                           BlocProvider.of<CharacterBloc>(context).add(LoadCharacterItemsEvent(characterState.characters));
                         }
 
+                        if (_character.equipmentTabs != null && _character.equipmentTabs.length == 1) {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => EquipmentPage(_character, EquipmentTab(
+                              equipment: _character.equipment,
+                              name: 'Equipment'
+                            )),
+                          ));
+
+                          return;
+                        }
+
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => EquipmentPage(_character),
+                          builder: (context) => EquipmentSelectionPage(_character),
                         ));
                       },
                       title: 'Equipment',

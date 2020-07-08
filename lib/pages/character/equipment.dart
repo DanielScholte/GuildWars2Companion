@@ -10,17 +10,18 @@ import 'package:guildwars2_companion/widgets/item_box.dart';
 
 class EquipmentPage extends StatelessWidget {
   final Character _character;
+  final EquipmentTab _equipmentTab;
 
-  EquipmentPage(this._character);
+  EquipmentPage(this._character, this._equipmentTab);
 
   @override
   Widget build(BuildContext context) {
     return CompanionAccent(
-      lightColor: Colors.teal,
+      lightColor: _character.professionColor,
       child: Scaffold(
         appBar: CompanionAppBar(
-          title: 'Equipment',
-          color: Colors.teal,
+          title: _equipmentTab.name != null && _equipmentTab.name.isNotEmpty ? _equipmentTab.name : 'Unnamed equipment build',
+          color: _character.professionColor,
           foregroundColor: Colors.white,
           elevation: 4.0,
         ),
@@ -41,7 +42,7 @@ class EquipmentPage extends StatelessWidget {
             if ((state is LoadedCharactersState && state.hasError)) {
               return Center(
                 child: CompanionError(
-                  title: 'the character items',
+                  title: 'the character builds',
                   onTryAgain: () =>
                     BlocProvider.of<CharacterBloc>(context).add(LoadCharacterItemsEvent(state.characters)),
                 ),
@@ -75,8 +76,8 @@ class EquipmentPage extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          _buildGear(character.equipment),
-                          _buildAccessories(character.equipment)
+                          _buildGear(),
+                          _buildAccessories()
                         ],
                       ),
                     )
@@ -94,59 +95,68 @@ class EquipmentPage extends StatelessWidget {
     );
   }
 
-  Widget _buildGear(List<Equipment> equipment) {
+  Widget _buildGear() {
     return Column(
       children: <Widget>[
-        _buildSlot(equipment.firstWhere((e) => e.slot == 'Helm', orElse: () => null)),
-        _buildSlot(equipment.firstWhere((e) => e.slot == 'Shoulders', orElse: () => null)),
-        _buildSlot(equipment.firstWhere((e) => e.slot == 'Coat', orElse: () => null)),
-        _buildSlot(equipment.firstWhere((e) => e.slot == 'Gloves', orElse: () => null)),
-        _buildSlot(equipment.firstWhere((e) => e.slot == 'Leggings', orElse: () => null)),
-        _buildSlot(equipment.firstWhere((e) => e.slot == 'Boots', orElse: () => null)),
+        _buildSlot(_getEquipmentPiece('Helm')),
+        _buildSlot(_getEquipmentPiece('Shoulders')),
+        _buildSlot(_getEquipmentPiece('Coat')),
+        _buildSlot(_getEquipmentPiece('Gloves')),
+        _buildSlot(_getEquipmentPiece('Leggings')),
+        _buildSlot(_getEquipmentPiece('Boots')),
         Container(height: 16.0,),
-        _buildSlot(equipment.firstWhere((e) => e.slot == 'WeaponA1', orElse: () => null)),
-        _buildSlot(equipment.firstWhere((e) => e.slot == 'WeaponA2', orElse: () => null), small: true),
+        _buildSlot(_getEquipmentPiece('WeaponA1')),
+        _buildSlot(_getEquipmentPiece('WeaponA2'), small: true),
         Container(height: 16.0,),
-        _buildSlot(equipment.firstWhere((e) => e.slot == 'WeaponB1', orElse: () => null)),
-        _buildSlot(equipment.firstWhere((e) => e.slot == 'WeaponB2', orElse: () => null), small: true),
+        _buildSlot(_getEquipmentPiece('WeaponB1')),
+        _buildSlot(_getEquipmentPiece('WeaponB2'), small: true),
       ],
     );
   }
 
-  Widget _buildAccessories(List<Equipment> equipment) {
+  Widget _buildAccessories() {
     return Column(
       children: <Widget>[
         Row(
           children: <Widget>[
-            _buildSlot(equipment.firstWhere((e) => e.slot == 'Backpack', orElse: () => null)),
-            _buildSlot(equipment.firstWhere((e) => e.slot == 'Accessory1', orElse: () => null)),
-            _buildSlot(equipment.firstWhere((e) => e.slot == 'Accessory2', orElse: () => null)),
+            _buildSlot(_getEquipmentPiece('Backpack')),
+            _buildSlot(_getEquipmentPiece('Accessory1')),
+            _buildSlot(_getEquipmentPiece('Accessory2')),
           ],
         ),
         Row(
           children: <Widget>[
-            _buildSlot(equipment.firstWhere((e) => e.slot == 'Amulet', orElse: () => null)),
-            _buildSlot(equipment.firstWhere((e) => e.slot == 'Ring1', orElse: () => null)),
-            _buildSlot(equipment.firstWhere((e) => e.slot == 'Ring2', orElse: () => null)),
-          ],
-        ),
-        Container(height: 16.0,),
-        Row(
-          children: <Widget>[
-            _buildSlot(equipment.firstWhere((e) => e.slot == 'Sickle', orElse: () => null)),
-            _buildSlot(equipment.firstWhere((e) => e.slot == 'Axe', orElse: () => null)),
-            _buildSlot(equipment.firstWhere((e) => e.slot == 'Pick', orElse: () => null)),
+            _buildSlot(_getEquipmentPiece('Amulet')),
+            _buildSlot(_getEquipmentPiece('Ring1')),
+            _buildSlot(_getEquipmentPiece('Ring2')),
           ],
         ),
         Container(height: 16.0,),
         Row(
           children: <Widget>[
-            _buildSlot(equipment.firstWhere((e) => e.slot == 'HelmAquatic', orElse: () => null)),
-            _buildSlot(equipment.firstWhere((e) => e.slot == 'WeaponAquaticA', orElse: () => null)),
-            _buildSlot(equipment.firstWhere((e) => e.slot == 'WeaponAquaticB', orElse: () => null)),
+            _buildSlot(_getEquipmentPiece('Sickle')),
+            _buildSlot(_getEquipmentPiece('Axe')),
+            _buildSlot(_getEquipmentPiece('Pick')),
+          ],
+        ),
+        Container(height: 16.0,),
+        Row(
+          children: <Widget>[
+            _buildSlot(_getEquipmentPiece('HelmAquatic')),
+            _buildSlot(_getEquipmentPiece('WeaponAquaticA')),
+            _buildSlot(_getEquipmentPiece('WeaponAquaticB')),
           ],
         ),
       ],
+    );
+  }
+
+  Equipment _getEquipmentPiece(String name) {
+    return _equipmentTab.equipment.firstWhere(
+      (e) => e.slot == name,
+      orElse: () => _character.equipment.firstWhere(
+        (e) => e.slot == name,
+        orElse: () => null)
     );
   }
 
