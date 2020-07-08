@@ -200,10 +200,14 @@ class CharacterPage extends StatelessWidget {
 
                         if (_character.equipmentTabs != null && _character.equipmentTabs.length == 1) {
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => EquipmentPage(_character, EquipmentTab(
-                              equipment: _character.equipment,
-                              name: 'Equipment'
-                            )),
+                            builder: (context) => EquipmentPage(
+                              _character,
+                              EquipmentTab(
+                                equipment: _character.equipment,
+                                name: 'Equipment'
+                              ),
+                              singular: true,
+                            ),
                           ));
 
                           return;

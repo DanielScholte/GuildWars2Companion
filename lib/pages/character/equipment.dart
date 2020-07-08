@@ -11,17 +11,18 @@ import 'package:guildwars2_companion/widgets/item_box.dart';
 class EquipmentPage extends StatelessWidget {
   final Character _character;
   final EquipmentTab _equipmentTab;
+  final bool singular;
 
-  EquipmentPage(this._character, this._equipmentTab);
+  EquipmentPage(this._character, this._equipmentTab, {this.singular = false});
 
   @override
   Widget build(BuildContext context) {
     return CompanionAccent(
-      lightColor: _character.professionColor,
+      lightColor: singular ? Colors.teal : _character.professionColor,
       child: Scaffold(
         appBar: CompanionAppBar(
           title: _equipmentTab.name != null && _equipmentTab.name.isNotEmpty ? _equipmentTab.name : 'Unnamed equipment build',
-          color: _character.professionColor,
+          color: singular ? Colors.teal : _character.professionColor,
           foregroundColor: Colors.white,
           elevation: 4.0,
         ),
