@@ -2,7 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:guildwars2_companion/migrations/skill.dart';
 import 'package:guildwars2_companion/migrations/traits.dart';
+import 'package:guildwars2_companion/models/build/build.dart';
 import 'package:guildwars2_companion/models/build/skill_trait.dart';
+import 'package:guildwars2_companion/models/build/specialization.dart';
 import 'package:guildwars2_companion/utils/urls.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
@@ -12,6 +14,7 @@ import 'package:sqflite_migration/sqflite_migration.dart';
 class BuildService {
   List<SkillTrait> _cachedSkills;
   List<SkillTrait> _cachedTraits;
+  List<Specialization> _specializations;
 
   Dio dio;
 
@@ -90,6 +93,33 @@ class BuildService {
 
   int getCachedTraitsCount() {
     return _cachedTraits.length;
+  }
+
+  Future<List<Specialization>> getSpecializations() async {
+    if (_specializations != null && _specializations.isNotEmpty) {
+      return _specializations;
+    }
+
+    final response = await dio.get(Urls.specializationsUrl);
+
+    if (response.statusCode == 200) {
+      List specializations = response.data;
+      _specializations = specializations.map((a) => Specialization.fromJson(a)).toList();
+      return _specializations;
+    }
+
+    throw Exception();
+  }
+
+  Future<List<Build>> getBuildStorage() async {
+    final response = await dio.get(Urls.buildStorageUrl);
+
+    if (response.statusCode == 200) {
+      List builds = response.data;
+      return builds.map((a) => Build.fromJson(a)).toList();
+    }
+
+    throw Exception();
   }
 
   Future<List<SkillTrait>> getSkills(List<int> skillIds) async {
