@@ -153,11 +153,18 @@ class EquipmentPage extends StatelessWidget {
   }
 
   Equipment _getEquipmentPiece(String name) {
-    return _equipmentTab.equipment.firstWhere(
+    Equipment equipment = _equipmentTab.equipment.firstWhere(
       (e) => e.slot == name,
-      orElse: () => _character.equipment.firstWhere(
-        (e) => e.slot == name,
-        orElse: () => null)
+      orElse: () => null
+    );
+
+    if (equipment != null || !['Sickle', 'Axe', 'Pick'].contains(name)) {
+      return equipment;
+    }
+
+    return _character.equipment.firstWhere(
+      (e) => e.slot == name,
+      orElse: () => null
     );
   }
 
