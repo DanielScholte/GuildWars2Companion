@@ -63,27 +63,19 @@ class EquipmentPage extends StatelessWidget {
                 );
               }
 
-              return RefreshIndicator(
-                backgroundColor: Theme.of(context).accentColor,
-                color: Theme.of(context).cardColor,
-                onRefresh: () async {
-                  BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterItemsEvent());
-                  await Future.delayed(Duration(milliseconds: 200), () {});
-                },
-                child: ListView(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          _buildGear(),
-                          _buildAccessories()
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+              return ListView(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        _buildGear(),
+                        _buildAccessories()
+                      ],
+                    ),
+                  )
+                ],
               );
             }
 

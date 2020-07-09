@@ -116,8 +116,10 @@ class CharacterPage extends StatelessWidget {
                   return _buildButtons(context, state);
                 }
 
-                return Center(
-                  child: CircularProgressIndicator(),
+                return Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
                 );
               },
             )
