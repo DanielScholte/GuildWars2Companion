@@ -30,7 +30,7 @@ class Urls {
   static final String minisUrl = '/minis?ids=';
 
   static final String specializationsUrl = '/specializations?ids=all';
-  static final String buildStorageUrl = '/account/buildstorage';
+  static final String buildStorageUrl = '/account/buildstorage?ids=all';
   static final String skillsUrl = '/skills?ids=';
   static final String traitsUrl = '/traits?ids=';
 

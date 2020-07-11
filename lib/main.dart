@@ -273,6 +273,7 @@ class GuildWars2Companion extends StatelessWidget {
         BlocProvider<BankBloc>(
           create: (BuildContext context) => BankBloc(
             bankRepository: RepositoryProvider.of<BankRepository>(context),
+            buildRepository: RepositoryProvider.of<BuildRepository>(context),
           ),
         ),
         BlocProvider<ChangelogBloc>(

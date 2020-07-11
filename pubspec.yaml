@@ -81,6 +81,7 @@ flutter:
    - assets/dungeons/
    - assets/dungeons_square/
    - assets/progression/
+   - assets/professions/
    - assets/raids/
    - assets/raids_square/
   #  - images/a_dot_ham.jpeg
