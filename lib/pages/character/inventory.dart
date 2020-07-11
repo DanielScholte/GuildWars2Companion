@@ -9,6 +9,7 @@ import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class InventoryPage extends StatelessWidget {
 
@@ -71,7 +72,7 @@ class InventoryPage extends StatelessWidget {
                   BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterDetailsEvent());
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
-                child: ListView(
+                child: CompanionListView(
                   children: character.bags.map((b) => _buildBag(context, b, character.bags.indexOf(b))).toList(),
                 ),
               );

@@ -8,6 +8,7 @@ import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class WalletPage extends StatelessWidget {
   @override
@@ -41,7 +42,7 @@ class WalletPage extends StatelessWidget {
                   BlocProvider.of<WalletBloc>(context).add(LoadWalletEvent());
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
-                child: ListView(
+                child: CompanionListView(
                   children: state.currencies.map((c) => _buildCurrencyRow(context, c)).toList(),
                 ),
               );

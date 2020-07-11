@@ -7,6 +7,7 @@ import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class EquipmentPage extends StatelessWidget {
   final Character _character;
@@ -63,7 +64,7 @@ class EquipmentPage extends StatelessWidget {
                 );
               }
 
-              return ListView(
+              return CompanionListView(
                 children: [
                   Padding(
                     padding: EdgeInsets.all(8.0),

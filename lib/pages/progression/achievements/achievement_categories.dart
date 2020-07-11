@@ -11,6 +11,7 @@ import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/expandable_header.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 import 'achievements.dart';
 
@@ -50,7 +51,7 @@ class AchievementCategoriesPage extends StatelessWidget {
                   ));
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
-                child: ListView(
+                child: CompanionListView(
                   children: state.achievementGroups
                     .map((g) => _buildGroup(context, g))
                     .toList(),

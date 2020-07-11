@@ -5,6 +5,7 @@ import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 import 'package:intl/intl.dart';
 
 class PvpGamesPage extends StatelessWidget {
@@ -44,8 +45,7 @@ class PvpGamesPage extends StatelessWidget {
             }
 
             if (state is LoadedPvpState) {
-              return ListView(
-                padding: EdgeInsets.zero,
+              return CompanionListView(
                 children: state.pvpGames
                   .map((g) => CompanionCard(
                     child: ConstrainedBox(

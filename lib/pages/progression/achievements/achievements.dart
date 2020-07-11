@@ -6,6 +6,7 @@ import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/achievement_button.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class AchievementsPage extends StatelessWidget {
 
@@ -51,7 +52,7 @@ class AchievementsPage extends StatelessWidget {
                     ));
                     await Future.delayed(Duration(milliseconds: 200), () {});
                   },
-                  child: ListView(
+                  child: CompanionListView(
                     children: _achievementCategory.achievementsInfo
                       .map((a) => CompanionAchievementButton(
                         state: state,

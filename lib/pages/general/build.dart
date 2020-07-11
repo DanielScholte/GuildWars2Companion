@@ -8,6 +8,7 @@ import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 import 'package:guildwars2_companion/widgets/skill_trait_box.dart';
 
 class BuildPage extends StatelessWidget {
@@ -27,8 +28,7 @@ class BuildPage extends StatelessWidget {
           foregroundColor: Colors.white,
           elevation: 4.0,
         ),
-        body: ListView(
-          padding: EdgeInsets.zero,
+        body: CompanionListView(
           children: <Widget>[
             _buildSkillCard(context),
             SafeArea(child: _buildSpecializationsCard(context), top: false, right: false, left: false,)

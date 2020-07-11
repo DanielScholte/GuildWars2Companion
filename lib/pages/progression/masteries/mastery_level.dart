@@ -6,6 +6,7 @@ import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_row.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class MasteryLevelPage extends StatelessWidget {
 
@@ -83,8 +84,7 @@ class MasteryLevelPage extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: ListView(
-                padding: EdgeInsets.zero,
+              child: CompanionListView(
                 children: <Widget>[
                   if (level.description != null && level.description.isNotEmpty)
                     _buildDescription(context, 'Description', level.description),

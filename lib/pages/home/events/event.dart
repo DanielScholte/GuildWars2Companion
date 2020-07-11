@@ -6,6 +6,7 @@ import 'package:guildwars2_companion/models/other/meta_event.dart';
 import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 import 'package:intl/intl.dart';
 
 class EventPage extends StatelessWidget {
@@ -27,8 +28,7 @@ class EventPage extends StatelessWidget {
           children: <Widget>[
             _buildHeader(context),
             Expanded(
-              child: ListView(
-                padding: EdgeInsets.zero,
+              child: CompanionListView(
                 children: <Widget>[
                   _buildTimes(context)
                 ],

@@ -51,7 +51,7 @@ class TokenPage extends StatelessWidget {
                     if (state.tokens.isNotEmpty)
                       Expanded(
                         child: ListView(
-                          padding: Theme.of(context).brightness == Brightness.light ? EdgeInsets.zero : EdgeInsets.only(top: 8.0),
+                          padding: Theme.of(context).brightness == Brightness.light ? EdgeInsets.zero : EdgeInsets.only(top: 6.0),
                           children: state.tokens
                             .map((t) => _tokenCard(context, t))
                             .toList(),

@@ -23,6 +23,7 @@ import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_box.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -106,8 +107,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: ListView(
-                    padding: EdgeInsets.zero,
+                  child: CompanionListView(
                     children: <Widget>[
                       if (state.tokenInfo.permissions.contains('wallet'))
                         _buildWallet(context),

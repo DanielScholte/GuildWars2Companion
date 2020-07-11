@@ -10,6 +10,7 @@ import 'package:guildwars2_companion/widgets/coin.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_row.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class ItemPage extends StatelessWidget {
 
@@ -34,8 +35,7 @@ class ItemPage extends StatelessWidget {
         children: <Widget>[
           _buildHeader(context),
           Expanded(
-            child: ListView(
-              padding: EdgeInsets.zero,
+            child: CompanionListView(
               children: <Widget>[
                 if (skin != null)
                   _buildTransmutedItemInfo(context),
