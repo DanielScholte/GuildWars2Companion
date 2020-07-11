@@ -9,14 +9,14 @@ class LoadingCharactersState extends CharacterState {}
 class LoadedCharactersState extends CharacterState {
   final List<Character> characters;
 
-  final bool itemsLoaded;
-  final bool itemsLoading;
-  final bool hasError;
+  final bool detailsLoaded;
+  final bool detailsLoading;
+  final bool detailsError;
 
   LoadedCharactersState(this.characters, {
-    this.itemsLoaded = false,
-    this.itemsLoading = false,
-    this.hasError = false,
+    this.detailsLoaded = false,
+    this.detailsLoading = false,
+    this.detailsError = false,
   });
 }
 

@@ -8,6 +8,9 @@ import './bloc.dart';
 class BankBloc extends Bloc<BankEvent, BankState> {
   final BankRepository bankRepository;
 
+  bool loadBank;
+  bool loadBuilds;
+
   BankBloc({
     @required this.bankRepository,
   }): super(LoadingBankState());
@@ -19,6 +22,11 @@ class BankBloc extends Bloc<BankEvent, BankState> {
     if (event is LoadBankEvent) {
       try {
         yield LoadingBankState();
+
+        if (event.loadBank != null) {
+          loadBank = event.loadBank;
+          loadBuilds = event.loadBuilds;
+        }
 
         BankData bankData = await bankRepository.getBankData();
 

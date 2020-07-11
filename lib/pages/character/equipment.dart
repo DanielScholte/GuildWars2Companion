@@ -35,22 +35,22 @@ class EquipmentPage extends StatelessWidget {
                 child: CompanionError(
                   title: 'the character',
                   onTryAgain: () =>
-                    BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterItemsEvent()),
+                    BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterDetailsEvent()),
                 ),
               );
             }
 
-            if ((state is LoadedCharactersState && state.hasError)) {
+            if ((state is LoadedCharactersState && state.detailsError)) {
               return Center(
                 child: CompanionError(
                   title: 'the character builds',
                   onTryAgain: () =>
-                    BlocProvider.of<CharacterBloc>(context).add(LoadCharacterItemsEvent(state.characters)),
+                    BlocProvider.of<CharacterBloc>(context).add(LoadCharacterDetailsEvent()),
                 ),
               );
             }
 
-            if (state is LoadedCharactersState && state.itemsLoaded) {
+            if (state is LoadedCharactersState && state.detailsLoaded) {
               Character character = state.characters.firstWhere((c) => c.name == _character.name);
 
               if (character == null) {
@@ -58,7 +58,7 @@ class EquipmentPage extends StatelessWidget {
                   child: CompanionError(
                     title: 'the character',
                     onTryAgain: () =>
-                      BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterItemsEvent()),
+                      BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterDetailsEvent()),
                   ),
                 );
               }

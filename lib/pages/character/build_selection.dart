@@ -2,26 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/models/character/character.dart';
-import 'package:guildwars2_companion/pages/character/equipment.dart';
+import 'package:guildwars2_companion/pages/general/build.dart';
 import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 
-class EquipmentSelectionPage extends StatelessWidget {
+class CharacterBuildSelectionPage extends StatelessWidget {
   final Character _character;
 
-  EquipmentSelectionPage(this._character);
+  CharacterBuildSelectionPage(this._character);
 
   @override
   Widget build(BuildContext context) {
     return CompanionAccent(
-      lightColor: Colors.teal,
+      lightColor: Colors.purple,
       child: Scaffold(
         appBar: CompanionAppBar(
-          title: 'Equipment',
-          color: Colors.teal,
+          title: 'Builds',
+          color: Colors.purple,
           foregroundColor: Colors.white,
           elevation: 4.0,
         ),
@@ -70,13 +70,13 @@ class EquipmentSelectionPage extends StatelessWidget {
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
                 child: ListView(
-                  children: character.equipmentTabs
-                    .map((e) => CompanionButton(
+                  children: character.buildTabs
+                    .map((b) => CompanionButton(
                       color: character.professionColor,
-                      title: e.name != null && e.name.isNotEmpty ? e.name : 'Unnamed equipment build',
+                      title: b.build.name != null && b.build.name.isNotEmpty ? b.build.name : 'Unnamed build',
                       height: 64,
                       subtitles: [
-                        if (e.isActive)
+                        if (b.isActive)
                           'Active'
                       ],
                       leading: ColorFiltered(
@@ -90,7 +90,7 @@ class EquipmentSelectionPage extends StatelessWidget {
                         colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcATop),
                       ),
                       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => EquipmentPage(character, e),
+                        builder: (context) => BuildPage(b.build)
                       )),
                     ))
                     .toList()

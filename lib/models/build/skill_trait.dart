@@ -121,10 +121,10 @@ class Fact {
     text = json['text'];
     type = json['type'];
     icon = json['icon'];
-    value = json['value'];
+    value = json['value'] != null && json['value'] is int ? json['value'] : null;
     duration = json['duration'];
     hitCount = json['hit_count'];
-    dmgMultiplier = json['dmg_multiplier'];
+    dmgMultiplier = json['dmg_multiplier'] != null ? json['dmg_multiplier'].toDouble() : null;
     status = json['status'];
     description = json['description'];
     applyCount = json['apply_count'];

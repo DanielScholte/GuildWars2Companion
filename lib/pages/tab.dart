@@ -154,8 +154,12 @@ class _TabPageState extends State<TabPage> {
       tabs.add(TabEntry(CharactersPage(), "Characters", GuildWarsIcons.hero, 24.0, Colors.blue));
     }
 
-    if (state.tokenInfo.permissions.contains('inventories')) {
-      BlocProvider.of<BankBloc>(context).add(LoadBankEvent());
+    if (state.tokenInfo.permissions.contains('inventories')
+      || state.tokenInfo.permissions.contains('builds')) {
+      BlocProvider.of<BankBloc>(context).add(LoadBankEvent(
+        loadBank: state.tokenInfo.permissions.contains('inventories'),
+        loadBuilds: state.tokenInfo.permissions.contains('builds')
+      ));
       tabs.add(TabEntry(BankPage(), "Bank", GuildWarsIcons.inventory, 24.0, Colors.indigo));
     }
 

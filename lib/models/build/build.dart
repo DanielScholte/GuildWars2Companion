@@ -7,7 +7,6 @@ class Build {
   List<BuildSpecialization> specializations;
   BuildSkillset skills;
   BuildSkillset aquaticSkills;
-  bool isActive;
 
   Build(
       {this.name,
@@ -30,7 +29,6 @@ class Build {
     aquaticSkills = json['aquatic_skills'] != null
         ? new BuildSkillset.fromJson(json['aquatic_skills'])
         : null;
-    isActive = false;
   }
 
   Map<String, dynamic> toJson() {
@@ -56,7 +54,6 @@ class BuildSpecialization {
   List<int> traits;
 
   Specialization specializationDetails;
-  List<SkillTrait> traitDetails;
 
   BuildSpecialization({this.id, this.traits});
 

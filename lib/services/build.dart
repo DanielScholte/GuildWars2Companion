@@ -43,13 +43,13 @@ class BuildService {
     DateTime now = DateTime.now().toUtc();
 
     await skillDatabase.delete(
-      'items',
+      'skills',
       where: "expiration_date <= ?",
       whereArgs: [DateFormat('yyyyMMdd').format(now)],
     );
 
     await traitDatabase.delete(
-      'skins',
+      'traits',
       where: "expiration_date <= ?",
       whereArgs: [DateFormat('yyyyMMdd').format(now)],
     );

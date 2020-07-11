@@ -18,6 +18,7 @@ import 'package:guildwars2_companion/pages/token/token.dart';
 import 'package:guildwars2_companion/repositories/account.dart';
 import 'package:guildwars2_companion/repositories/achievement.dart';
 import 'package:guildwars2_companion/repositories/bank.dart';
+import 'package:guildwars2_companion/repositories/build.dart';
 import 'package:guildwars2_companion/repositories/changelog.dart';
 import 'package:guildwars2_companion/repositories/character.dart';
 import 'package:guildwars2_companion/repositories/configuration.dart';
@@ -32,6 +33,7 @@ import 'package:guildwars2_companion/repositories/world_boss.dart';
 import 'package:guildwars2_companion/services/account.dart';
 import 'package:guildwars2_companion/services/achievement.dart';
 import 'package:guildwars2_companion/services/bank.dart';
+import 'package:guildwars2_companion/services/build.dart';
 import 'package:guildwars2_companion/services/changelog.dart';
 import 'package:guildwars2_companion/services/character.dart';
 import 'package:guildwars2_companion/services/configuration.dart';
@@ -67,11 +69,10 @@ Future main() async {
     configurationService: configurationService
   );
 
-  final AccountService accountService = AccountService(
-    dio: dioUtil.getDioInstance(
-      includeTokenInterceptor: false
-    )
+  final BuildService buildService = BuildService(
+    dio: dioUtil.getDioInstance()
   );
+  await buildService.loadCachedData();
 
   final ItemService itemService = ItemService(
     dio: dioUtil.getDioInstance()
@@ -79,9 +80,10 @@ Future main() async {
   await itemService.loadCachedData();
 
   runApp(GuildWars2Companion(
-    accountService: accountService,
+    accountService: AccountService(dio: dioUtil.getDioInstance(includeTokenInterceptor: false)),
     achievementService: AchievementService(dio: dioUtil.getDioInstance()),
     bankService: BankService(dio: dioUtil.getDioInstance()),
+    buildService: buildService,
     characterService: CharacterService(dio: dioUtil.getDioInstance()),
     dungeonService: DungeonService(dio: dioUtil.getDioInstance()),
     eventService: EventService(),
@@ -103,6 +105,7 @@ class GuildWars2Companion extends StatelessWidget {
   final AccountService accountService;
   final AchievementService achievementService;
   final BankService bankService;
+  final BuildService buildService;
   final ChangelogService changelogService;
   final CharacterService characterService;
   final ConfigurationService configurationService;
@@ -123,6 +126,7 @@ class GuildWars2Companion extends StatelessWidget {
     @required this.accountService,
     @required this.achievementService,
     @required this.bankService,
+    @required this.buildService,
     @required this.changelogService,
     @required this.characterService,
     @required this.configurationService,
@@ -183,6 +187,11 @@ class GuildWars2Companion extends StatelessWidget {
           create: (BuildContext context) => BankRepository(
             bankService: bankService,
             itemService: itemService,
+          ),
+        ),
+        RepositoryProvider<BuildRepository>(
+          create: (BuildContext context) => BuildRepository(
+            buildService: buildService,
           ),
         ),
         RepositoryProvider<ChangelogRepository>(
@@ -273,6 +282,7 @@ class GuildWars2Companion extends StatelessWidget {
         ),
         BlocProvider<CharacterBloc>(
           create: (BuildContext context) => CharacterBloc(
+            buildRepository: RepositoryProvider.of<BuildRepository>(context),
             characterRepository: RepositoryProvider.of<CharacterRepository>(context),
           ),
         ),

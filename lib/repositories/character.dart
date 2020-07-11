@@ -40,9 +40,7 @@ class CharacterRepository {
     return characters;
   }
 
-  Future<List<Character>> getCharacterItems(List<Character> characterList) async {
-    List<Character> characters = characterList;
-    
+  Future<void> getCharacterItems(List<Character> characters) async {
     List<int> itemIds = _getItemIds(characters);
     List<int> skinIds = _getSkinIds(characters);
 
@@ -78,8 +76,6 @@ class CharacterRepository {
         });
       }
     });
-
-    return characters;
   }
 
   List<int> _getItemIds(List<Character> characters) {
