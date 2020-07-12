@@ -74,7 +74,7 @@ class CharacterBuildSelectionPage extends StatelessWidget {
                   children: character.buildTabs
                     .map((b) => CompanionButton(
                       color: character.professionColor,
-                      title: b.build.name != null && b.build.name.isNotEmpty ? b.build.name : 'Unnamed build',
+                      title: b.build.name != null && b.build.name.isNotEmpty ? b.build.name : 'Nameless build',
                       height: 64,
                       subtitles: [
                         if (b.isActive)

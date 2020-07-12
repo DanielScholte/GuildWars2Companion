@@ -74,7 +74,7 @@ class EquipmentSelectionPage extends StatelessWidget {
                   children: character.equipmentTabs
                     .map((e) => CompanionButton(
                       color: character.professionColor,
-                      title: e.name != null && e.name.isNotEmpty ? e.name : 'Unnamed equipment build',
+                      title: e.name != null && e.name.isNotEmpty ? e.name : 'Nameless equipment build',
                       height: 64,
                       subtitles: [
                         if (e.isActive)

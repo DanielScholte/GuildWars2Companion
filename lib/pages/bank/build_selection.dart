@@ -46,7 +46,7 @@ class BankBuildSelectionPage extends StatelessWidget {
                   children: state.builds
                     .map((b) => CompanionButton(
                       color: GuildWarsUtil.getProfessionColor(b.profession),
-                      title: b.name != null && b.name.isNotEmpty ? b.name : 'Unnamed build',
+                      title: b.name != null && b.name.isNotEmpty ? b.name : 'Nameless build',
                       height: 64,
                       onTap: () => Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => BuildPage(b)

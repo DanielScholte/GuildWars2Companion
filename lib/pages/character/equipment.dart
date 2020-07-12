@@ -22,7 +22,7 @@ class EquipmentPage extends StatelessWidget {
       lightColor: singular ? Colors.teal : _character.professionColor,
       child: Scaffold(
         appBar: CompanionAppBar(
-          title: _equipmentTab.name != null && _equipmentTab.name.isNotEmpty ? _equipmentTab.name : 'Unnamed equipment build',
+          title: _equipmentTab.name != null && _equipmentTab.name.isNotEmpty ? _equipmentTab.name : 'Nameless equipment build',
           color: singular ? Colors.teal : _character.professionColor,
           foregroundColor: Colors.white,
           elevation: 4.0,

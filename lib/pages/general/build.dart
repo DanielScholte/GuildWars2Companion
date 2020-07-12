@@ -23,7 +23,7 @@ class BuildPage extends StatelessWidget {
       lightColor: singular ? Colors.purple : GuildWarsUtil.getProfessionColor(_build.profession),
       child: Scaffold(
         appBar: CompanionAppBar(
-          title: _build.name != null && _build.name.isNotEmpty ? _build.name : 'Unnamed build',
+          title: _build.name != null && _build.name.isNotEmpty ? _build.name : 'Nameless build',
           color: singular ? Colors.purple : GuildWarsUtil.getProfessionColor(_build.profession),
           foregroundColor: Colors.white,
           elevation: 4.0,
