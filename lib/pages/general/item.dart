@@ -213,13 +213,18 @@ class ItemPage extends StatelessWidget {
   }
 
   String removeAllHtmlTags(String htmlText) {
-    RegExp exp = RegExp(
+    RegExp tagContextExp = RegExp(
+      r"\>([^\<]*)\<",
+      multiLine: true,
+    );
+
+    RegExp tagExp = RegExp(
       r"<[^>]*>",
       multiLine: true,
       caseSensitive: true
     );
 
-    return htmlText.replaceAll(exp, '');
+    return htmlText.replaceAll(tagContextExp, '').replaceAll(tagExp, '');
   }
 
   Widget _buildItemDetails(BuildContext context) {
