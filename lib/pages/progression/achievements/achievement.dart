@@ -12,6 +12,7 @@ import 'package:guildwars2_companion/widgets/coin.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class AchievementPage extends StatelessWidget {
 
@@ -214,8 +215,7 @@ class AchievementPage extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context, Achievement _achievement, LoadedAchievementsState state) {
-    return ListView(
-      padding: EdgeInsets.zero,
+    return CompanionListView(
       children: <Widget>[
         if (_achievement.description != null && _achievement.description.isNotEmpty)
           _buildDescription(context, 'Description', removeAllHtmlTags(_achievement.description)),

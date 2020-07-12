@@ -6,6 +6,7 @@ import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 import 'package:guildwars2_companion/widgets/pvp_season_rank.dart';
 import 'package:intl/intl.dart';
 
@@ -48,8 +49,7 @@ class SeasonsPage extends StatelessWidget {
             }
 
             if (state is LoadedPvpState) {
-              return ListView(
-                padding: EdgeInsets.zero,
+              return CompanionListView(
                 children: state.pvpStandings
                   .map((s) {
                     PvpSeasonRank rank = s.season.ranks

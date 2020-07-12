@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/repositories/achievement.dart';
+import 'package:guildwars2_companion/repositories/build.dart';
 import 'package:guildwars2_companion/repositories/item.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
@@ -17,6 +18,7 @@ class _CachingConfigurationPageState extends State<CachingConfigurationPage> {
 
   AchievementRepository _achievementRepository;
   ItemRepository _itemRepository;
+  BuildRepository _buildRepository;
 
   Future<int> _cachedAchievementsFuture;
 
@@ -26,6 +28,7 @@ class _CachingConfigurationPageState extends State<CachingConfigurationPage> {
 
     _achievementRepository = RepositoryProvider.of<AchievementRepository>(context);
     _itemRepository = RepositoryProvider.of<ItemRepository>(context);
+    _buildRepository = RepositoryProvider.of<BuildRepository>(context);
 
     _cachedAchievementsFuture = _achievementRepository.getCachedAchievementsCount();
   }
@@ -55,12 +58,21 @@ class _CachingConfigurationPageState extends State<CachingConfigurationPage> {
             header: 'Cached minis',
             text: GuildWarsUtil.intToString(_itemRepository.getCachedMinisCount()),
           ),
+          CompanionInfoRow(
+            header: 'Cached skills',
+            text: GuildWarsUtil.intToString(_buildRepository.getCachedSkillsCount()),
+          ),
+          CompanionInfoRow(
+            header: 'Cached traits',
+            text: GuildWarsUtil.intToString(_buildRepository.getCachedTraitsCount()),
+          ),
           CompanionSimpleButton(
             text: allowClearCache ? 'Clear cache' : 'Clearing cache...',
             onPressed: allowClearCache ? () => _clearCacheDialog(
               context: context,
               achievementRepository: _achievementRepository,
-              itemRepository: _itemRepository
+              itemRepository: _itemRepository,
+              buildRepository: _buildRepository
             ) : null,
           ),
           Text(
@@ -106,7 +118,8 @@ Experiencing issues with cached data, such as outdated information? Try clearing
   _clearCacheDialog({
     BuildContext context,
     AchievementRepository achievementRepository,
-    ItemRepository itemRepository
+    ItemRepository itemRepository,
+    BuildRepository buildRepository
   }) async {
     return showDialog(
       context: context,
@@ -143,6 +156,7 @@ Experiencing issues with cached data, such as outdated information? Try clearing
 
                 await achievementRepository.clearCache();
                 await itemRepository.clearCache();
+                await buildRepository.clearCache();
 
                 setState(() {
                   allowClearCache = true;

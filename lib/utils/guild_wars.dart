@@ -65,7 +65,7 @@ class GuildWarsUtil {
       case 'Elementalist':
         return Color(0xFFb33d3d);
       case 'Mesmer':
-        return Color(0xFF86308e);
+        return Colors.purple;
       case 'Necromancer':
         return Color(0xFF1f6557);
       default:
@@ -108,6 +108,26 @@ class GuildWarsUtil {
       'Tailor',
       'Weaponsmith'
     ];
+  }
+
+  static String removeOnlyHtml(String htmlText) {
+    RegExp tagExp = RegExp(
+      r"<[^>]*>",
+      multiLine: true,
+      caseSensitive: true
+    );
+
+    return htmlText.replaceAll(tagExp, '');
+  }
+
+  static String removeFullHtml(String htmlText) {
+    RegExp tagExp = RegExp(
+      r"<.*>",
+      multiLine: true,
+      caseSensitive: true
+    );
+
+    return htmlText.replaceAll(tagExp, '');
   }
 
   static String durationToString(Duration duration) {

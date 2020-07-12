@@ -10,6 +10,7 @@ import 'package:guildwars2_companion/widgets/coin.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_row.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class ItemPage extends StatelessWidget {
 
@@ -34,8 +35,7 @@ class ItemPage extends StatelessWidget {
         children: <Widget>[
           _buildHeader(context),
           Expanded(
-            child: ListView(
-              padding: EdgeInsets.zero,
+            child: CompanionListView(
               children: <Widget>[
                 if (skin != null)
                   _buildTransmutedItemInfo(context),
@@ -184,7 +184,7 @@ class ItemPage extends StatelessWidget {
             ),
           ),
           Text(
-            removeAllHtmlTags(item.description),
+            GuildWarsUtil.removeFullHtml(item.description),
             style: Theme.of(context).textTheme.bodyText1,
           ),
         ],
@@ -204,7 +204,7 @@ class ItemPage extends StatelessWidget {
             ),
           ),
           Text(
-            removeAllHtmlTags(item.details.description),
+            GuildWarsUtil.removeFullHtml(item.details.description),
             style: Theme.of(context).textTheme.bodyText1,
           ),
         ],
@@ -212,15 +212,7 @@ class ItemPage extends StatelessWidget {
     );
   }
 
-  String removeAllHtmlTags(String htmlText) {
-    RegExp exp = RegExp(
-      r"<[^>]*>",
-      multiLine: true,
-      caseSensitive: true
-    );
-
-    return htmlText.replaceAll(exp, '');
-  }
+  
 
   Widget _buildItemDetails(BuildContext context) {
     if ([

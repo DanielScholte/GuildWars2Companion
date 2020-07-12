@@ -12,6 +12,7 @@ import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_box.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class PvpPage extends StatelessWidget {
   @override
@@ -109,8 +110,7 @@ class PvpPage extends StatelessWidget {
                 BlocProvider.of<PvpBloc>(context).add(LoadPvpEvent());
                 await Future.delayed(Duration(milliseconds: 200), () {});
               },
-              child: ListView(
-                padding: EdgeInsets.zero,
+              child: CompanionListView(
                 children: <Widget>[
                   CompanionButton(
                     color: Colors.orange,

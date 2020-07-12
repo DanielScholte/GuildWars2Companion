@@ -4,11 +4,13 @@ class CompanionInfoRow extends StatelessWidget {
   
   final String header;
   final String text;
+  final Widget leadingWidget;
   final Widget widget;
 
   CompanionInfoRow({
     @required this.header,
     this.text,
+    this.leadingWidget,
     this.widget
   });
 
@@ -19,19 +21,35 @@ class CompanionInfoRow extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 2.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Text(
-            header,
-            style: Theme.of(context).textTheme.bodyText1.copyWith(
-              fontWeight: FontWeight.w500
-            ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              if (leadingWidget != null)
+                leadingWidget,
+              Column(
+                children: <Widget>[
+                  Text(
+                    header,
+                    style: Theme.of(context).textTheme.bodyText1.copyWith(
+                      fontWeight: FontWeight.w500
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
           if (widget != null)
             widget
           else
-            Text(
-              text,
-              style: Theme.of(context).textTheme.bodyText1,
+            Expanded(
+              child: Text(
+                text,
+                style: Theme.of(context).textTheme.bodyText1,
+                textAlign: TextAlign.end,
+              ),
             )
         ],
       ),

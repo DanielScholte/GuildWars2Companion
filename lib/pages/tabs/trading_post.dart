@@ -13,6 +13,7 @@ import 'package:guildwars2_companion/widgets/coin.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class TradingPostPage extends StatefulWidget {
   @override
@@ -340,7 +341,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
         BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostEvent());
         await Future.delayed(Duration(milliseconds: 200), () {});
       },
-      child: ListView(
+      child: CompanionListView(
         children: transactions
           .where((t) => t.itemInfo != null)
           .map((t) => CompanionButton(

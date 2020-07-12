@@ -9,6 +9,7 @@ import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class InventoryPage extends StatelessWidget {
 
@@ -36,22 +37,22 @@ class InventoryPage extends StatelessWidget {
                 child: CompanionError(
                   title: 'the character',
                   onTryAgain: () =>
-                    BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterItemsEvent()),
+                    BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterDetailsEvent()),
                 ),
               );
             }
 
-            if (state is LoadedCharactersState && state.hasError) {
+            if (state is LoadedCharactersState && state.detailsError) {
               return Center(
                 child: CompanionError(
                   title: 'the character items',
                   onTryAgain: () =>
-                    BlocProvider.of<CharacterBloc>(context).add(LoadCharacterItemsEvent(state.characters)),
+                    BlocProvider.of<CharacterBloc>(context).add(LoadCharacterDetailsEvent()),
                 ),
               );
             }
 
-            if (state is LoadedCharactersState && state.itemsLoaded) {
+            if (state is LoadedCharactersState && state.detailsLoaded) {
               Character character = state.characters.firstWhere((c) => c.name == _character.name);
 
               if (character == null) {
@@ -59,7 +60,7 @@ class InventoryPage extends StatelessWidget {
                   child: CompanionError(
                     title: 'the character',
                     onTryAgain: () =>
-                      BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterItemsEvent()),
+                      BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterDetailsEvent()),
                   ),
                 );
               }
@@ -68,10 +69,10 @@ class InventoryPage extends StatelessWidget {
                 backgroundColor: Theme.of(context).accentColor,
                 color: Theme.of(context).cardColor,
                 onRefresh: () async {
-                  BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterItemsEvent());
+                  BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterDetailsEvent());
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
-                child: ListView(
+                child: CompanionListView(
                   children: character.bags.map((b) => _buildBag(context, b, character.bags.indexOf(b))).toList(),
                 ),
               );

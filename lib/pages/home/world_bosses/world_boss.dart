@@ -7,6 +7,7 @@ import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_row.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 import 'package:intl/intl.dart';
 
 class WorldBossPage extends StatelessWidget {
@@ -24,8 +25,7 @@ class WorldBossPage extends StatelessWidget {
           children: <Widget>[
             _buildHeader(context),
             Expanded(
-              child: ListView(
-                padding: EdgeInsets.zero,
+              child: CompanionListView(
                 children: <Widget>[
                   _buildStats(context),
                   _buildTimes(context)

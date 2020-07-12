@@ -20,7 +20,8 @@ class DioUtil {
       BaseOptions(
         baseUrl: Urls.baseUrl,
         followRedirects: false,
-        validateStatus: (status) => status < 500
+        validateStatus: (status) => status < 500,
+        connectTimeout: 7500,
       ),
     );
 

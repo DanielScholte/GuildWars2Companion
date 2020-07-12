@@ -7,6 +7,7 @@ import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 import 'raid.dart';
 
@@ -42,7 +43,7 @@ class RaidsPage extends StatelessWidget {
                   BlocProvider.of<RaidBloc>(context).add(LoadRaidsEvent(state.includeProgress));
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
-                child: ListView(
+                child: CompanionListView(
                   children: state.raids
                     .map((d) => _buildRaidRow(context, d))
                     .toList(),

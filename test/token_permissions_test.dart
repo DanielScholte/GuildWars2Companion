@@ -17,6 +17,7 @@ main() {
     MockAccountService accountService;
     MockAchievementService achievementService;
     MockBankService bankService;
+    MockBuildService buildService;
     MockCharacterService characterService;
     MockDungeonService dungeonService;
     MockEventService eventService;
@@ -35,6 +36,7 @@ main() {
       accountService = MockAccountService();
       achievementService = MockAchievementService();
       bankService = MockBankService();
+      buildService = MockBuildService();
       characterService = MockCharacterService();
       dungeonService = MockDungeonService();
       eventService = MockEventService();
@@ -104,6 +106,7 @@ main() {
         accountService: accountService,
         achievementService: achievementService,
         bankService: bankService,
+        buildService: buildService,
         characterService: characterService,
         dungeonService: dungeonService,
         eventService: eventService,
@@ -177,6 +180,7 @@ main() {
         accountService: accountService,
         achievementService: achievementService,
         bankService: bankService,
+        buildService: buildService,
         characterService: characterService,
         dungeonService: dungeonService,
         eventService: eventService,
@@ -243,6 +247,7 @@ main() {
         accountService: accountService,
         achievementService: achievementService,
         bankService: bankService,
+        buildService: buildService,
         characterService: characterService,
         dungeonService: dungeonService,
         eventService: eventService,

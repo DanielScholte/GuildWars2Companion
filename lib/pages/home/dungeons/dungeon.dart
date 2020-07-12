@@ -7,6 +7,7 @@ import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class DungeonPage extends StatelessWidget {
 
@@ -104,8 +105,7 @@ class DungeonPage extends StatelessWidget {
                 BlocProvider.of<DungeonBloc>(context).add(LoadDungeonsEvent(state.includeProgress));
                 await Future.delayed(Duration(milliseconds: 200), () {});
               },
-              child: ListView(
-                padding: EdgeInsets.zero,
+              child: CompanionListView(
                 children: [
                   _buildProgress(context, state.includeProgress, _dungeon)
                 ],

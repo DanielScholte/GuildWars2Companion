@@ -11,6 +11,7 @@ import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 import 'package:intl/intl.dart';
 import 'package:timer_builder/timer_builder.dart';
 
@@ -88,7 +89,7 @@ class _MetaEventPageState extends State<MetaEventPage> {
                       BlocProvider.of<EventBloc>(context).add(LoadEventsEvent(id: widget.metaEventSequence.id));
                       await Future.delayed(Duration(milliseconds: 200), () {});
                     },
-                    child: ListView(
+                    child: CompanionListView(
                       children: _sequence.segments
                         .where((e) => e.name != null)
                         .map((e) => _buildEventButton(context, timeFormat, e))

@@ -9,6 +9,7 @@ import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/expandable_header.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 import 'meta_event.dart';
 
@@ -44,7 +45,7 @@ class MetaEventsPage extends StatelessWidget {
                   BlocProvider.of<EventBloc>(context).add(LoadEventsEvent());
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
-                child: ListView(
+                child: CompanionListView(
                   children: <Widget>[
                     _buildCategory(context, 'Tyria', 'Tyria', state.events),
                     _buildCategory(context, 'Heart of Thorns', 'Maguuma', state.events),

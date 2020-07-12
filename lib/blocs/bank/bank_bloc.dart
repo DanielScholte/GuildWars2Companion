@@ -2,14 +2,21 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:guildwars2_companion/models/bank/bank_data.dart';
+import 'package:guildwars2_companion/models/build/build.dart';
 import 'package:guildwars2_companion/repositories/bank.dart';
+import 'package:guildwars2_companion/repositories/build.dart';
 import './bloc.dart';
 
 class BankBloc extends Bloc<BankEvent, BankState> {
   final BankRepository bankRepository;
+  final BuildRepository buildRepository;
+
+  bool loadBank;
+  bool loadBuilds;
 
   BankBloc({
     @required this.bankRepository,
+    @required this.buildRepository,
   }): super(LoadingBankState());
 
   @override
@@ -20,9 +27,28 @@ class BankBloc extends Bloc<BankEvent, BankState> {
       try {
         yield LoadingBankState();
 
-        BankData bankData = await bankRepository.getBankData();
+        if (event.loadBank != null) {
+          loadBank = event.loadBank;
+          loadBuilds = event.loadBuilds;
+        }
 
-        yield LoadedBankState(bankData.bank, bankData.inventory, bankData.materialCategories);
+        BankData bankData;
+        List<Build> builds;
+
+        if (loadBank) {
+          bankData = await bankRepository.getBankData();
+        }
+
+        if (loadBuilds) {
+          builds = await buildRepository.getBuildStorage();
+        }
+
+        yield LoadedBankState(
+          bank: loadBank ? bankData.bank : null,
+          inventory: loadBank ? bankData.inventory : null,
+          materialCategories: loadBank ? bankData.materialCategories : null,
+          builds: loadBuilds ? builds : null,
+        );
       } catch (_) {
         yield ErrorBankState();
       }

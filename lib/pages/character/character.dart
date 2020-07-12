@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/models/character/character.dart';
 import 'package:guildwars2_companion/models/character/crafting.dart';
+import 'package:guildwars2_companion/pages/character/build_selection.dart';
 import 'package:guildwars2_companion/pages/character/equipment.dart';
+import 'package:guildwars2_companion/pages/character/equipment_selection.dart';
 import 'package:guildwars2_companion/pages/character/inventory.dart';
+import 'package:guildwars2_companion/pages/general/build.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
 import 'package:guildwars2_companion/widgets/accent.dart';
@@ -14,6 +18,7 @@ import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_box.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class CharacterPage extends StatelessWidget {
 
@@ -115,8 +120,10 @@ class CharacterPage extends StatelessWidget {
                   return _buildButtons(context, state);
                 }
 
-                return Center(
-                  child: CircularProgressIndicator(),
+                return Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
                 );
               },
             )
@@ -185,20 +192,34 @@ class CharacterPage extends StatelessWidget {
                 BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent());
                 await Future.delayed(Duration(milliseconds: 200), () {});
               },
-              child: ListView(
-                padding: EdgeInsets.zero,
+              child: CompanionListView(
                 children: <Widget>[
                   if (state.tokenInfo.permissions.contains('inventories')
                     && state.tokenInfo.permissions.contains('builds'))
                     CompanionButton(
                       color: Colors.teal,
                       onTap: () {
-                        if (!characterState.itemsLoaded && !characterState.itemsLoading) {
-                          BlocProvider.of<CharacterBloc>(context).add(LoadCharacterItemsEvent(characterState.characters));
+                        if (!characterState.detailsLoaded && !characterState.detailsLoading) {
+                          BlocProvider.of<CharacterBloc>(context).add(LoadCharacterDetailsEvent());
+                        }
+
+                        if (_character.equipmentTabs != null && _character.equipmentTabs.length == 1) {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => EquipmentPage(
+                              _character,
+                              EquipmentTab(
+                                equipment: _character.equipment,
+                                name: 'Equipment'
+                              ),
+                              singular: true,
+                            ),
+                          ));
+
+                          return;
                         }
 
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => EquipmentPage(_character),
+                          builder: (context) => EquipmentSelectionPage(_character),
                         ));
                       },
                       title: 'Equipment',
@@ -208,12 +229,39 @@ class CharacterPage extends StatelessWidget {
                         color: Colors.white,
                       ),
                     ),
+                  if (state.tokenInfo.permissions.contains('builds'))
+                    CompanionButton(
+                      color: Colors.purple,
+                      onTap: () {
+                        if (!characterState.detailsLoaded && !characterState.detailsLoading) {
+                          BlocProvider.of<CharacterBloc>(context).add(LoadCharacterDetailsEvent());
+                        }
+
+                        if (_character.buildTabs != null && _character.buildTabs.length == 1) {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => BuildPage(_character.buildTabs.first.build, singular: true,),
+                          ));
+
+                          return;
+                        }
+
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => CharacterBuildSelectionPage(_character),
+                        ));
+                      },
+                      title: 'Builds',
+                      leading: Icon(
+                        FontAwesomeIcons.hammer,
+                        size: 35.0,
+                        color: Colors.white,
+                      ),
+                    ),
                   if (state.tokenInfo.permissions.contains('inventories'))
                     CompanionButton(
                       color: Colors.indigo,
                       onTap: () {
-                        if (!characterState.itemsLoaded && !characterState.itemsLoading) {
-                          BlocProvider.of<CharacterBloc>(context).add(LoadCharacterItemsEvent(characterState.characters));
+                        if (!characterState.detailsLoaded && !characterState.detailsLoading) {
+                          BlocProvider.of<CharacterBloc>(context).add(LoadCharacterDetailsEvent());
                         }
 
                         Navigator.of(context).push(MaterialPageRoute(

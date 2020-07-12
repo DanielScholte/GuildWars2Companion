@@ -47,7 +47,7 @@ class CompanionButton extends StatelessWidget {
             ),
         ],
       ),
-      margin: EdgeInsets.all(8.0),
+      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12.0),
         child: wrapper != null ? wrapper(context, _buildBody(context)) : _buildBody(context),

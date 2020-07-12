@@ -2,13 +2,18 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:guildwars2_companion/models/character/character.dart';
+import 'package:guildwars2_companion/repositories/build.dart';
 import 'package:guildwars2_companion/repositories/character.dart';
 import './bloc.dart';
 
 class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
+  final BuildRepository buildRepository;
   final CharacterRepository characterRepository;
 
+  List<Character> _characters;
+
   CharacterBloc({
+    @required this.buildRepository,
     @required this.characterRepository,
   }): super(LoadingCharactersState());
 
@@ -18,10 +23,10 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
   ) async* {
     if (event is LoadCharactersEvent) {
       yield* _loadCharacters();
-    } else if (event is LoadCharacterItemsEvent) {
-      yield* _loadCharacterItems(event.characters);
-    } else if (event is RefreshCharacterItemsEvent) {
-      yield* _refreshCharacterItems();
+    } else if (event is LoadCharacterDetailsEvent) {
+      yield* _loadCharacterDetails();
+    } else if (event is RefreshCharacterDetailsEvent) {
+      yield* _refreshCharacterDetails();
     }
   }
   
@@ -29,29 +34,37 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
     try {
       yield LoadingCharactersState();
 
-      yield LoadedCharactersState(await characterRepository.getCharacters());
+      _characters = await characterRepository.getCharacters();
+
+      yield LoadedCharactersState(_characters);
     } catch (_) {
       yield ErrorCharactersState();
     }
   }
 
-  Stream<CharacterState> _loadCharacterItems(List<Character> characters) async* {
+  Stream<CharacterState> _loadCharacterDetails() async* {
     try {
-      yield LoadedCharactersState(characters, itemsLoading: true);
+      yield LoadedCharactersState(_characters, detailsLoading: true);
 
-      yield LoadedCharactersState(await characterRepository.getCharacterItems(characters), itemsLoaded: true);
+      await characterRepository.getCharacterItems(_characters);
+      await buildRepository.fillBuildInformation(_characters.map((c) => c.buildTabs.map((e) => e.build)).expand((b) => b).toList());
+
+      yield LoadedCharactersState(_characters, detailsLoaded: true);
     } catch(_) {
-      yield LoadedCharactersState(characters, hasError: true);
+      yield LoadedCharactersState(_characters, detailsError: true);
     }
   }
 
-  Stream<CharacterState> _refreshCharacterItems() async* {
+  Stream<CharacterState> _refreshCharacterDetails() async* {
     try {
       yield LoadingCharactersState();
 
-      List<Character> characters = await characterRepository.getCharacters();
+      _characters = await characterRepository.getCharacters();
 
-      yield LoadedCharactersState(await characterRepository.getCharacterItems(characters), itemsLoaded: true);
+      await characterRepository.getCharacterItems(_characters);
+      await buildRepository.fillBuildInformation(_characters.map((c) => c.buildTabs.map((e) => e.build)).expand((b) => b).toList());
+
+      yield LoadedCharactersState(_characters, detailsLoaded: true);
     } catch (_) {
       yield ErrorCharactersState();
     }
