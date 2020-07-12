@@ -147,6 +147,7 @@ class BuildPage extends StatelessWidget {
                   skillTrait: details != null ? details.minorTraitDetails[0] : null,
                   size: 32.0,
                   horizontalMargin: 4.0,
+                  skillTraitType: 'Minor trait',
                 ),
                 _buildTraitColumn(index, 0, details, specialization.traits[0]),
                 CompanionSkillTraitBox(
@@ -154,6 +155,7 @@ class BuildPage extends StatelessWidget {
                   skillTrait: details != null ? details.minorTraitDetails[1] : null,
                   size: 32.0,
                   horizontalMargin: 4.0,
+                  skillTraitType: 'Minor trait',
                 ),
                 _buildTraitColumn(index, 3, details, specialization.traits[1]),
                 CompanionSkillTraitBox(
@@ -161,6 +163,7 @@ class BuildPage extends StatelessWidget {
                   skillTrait: details != null ? details.minorTraitDetails[2] : null,
                   size: 32.0,
                   horizontalMargin: 4.0,
+                  skillTraitType: 'Minor trait',
                 ),
                 _buildTraitColumn(index, 6, details, specialization.traits[2]),
               ],
@@ -191,6 +194,7 @@ class BuildPage extends StatelessWidget {
           greyedOut: major.id != chosen,
           size: 38.0,
           horizontalMargin: 4.0,
+          skillTraitType: 'Major trait',
         );
       }).toList(),
     );

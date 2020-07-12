@@ -103,6 +103,10 @@ class Fact {
   String description;
   int applyCount;
   int distance;
+  double percent;
+  String finisherType;
+  String fieldType;
+  String target;
 
   Fact(
       {this.text,
@@ -129,6 +133,10 @@ class Fact {
     description = json['description'];
     applyCount = json['apply_count'];
     distance = json['distance'];
+    percent = json['percent'] != null ? json['percent'].toDouble() : null;
+    finisherType = json['finisher_type'];
+    fieldType = json['field_type'];
+    target = json['target'];
   }
 
   Map<String, dynamic> toJson() {
@@ -144,6 +152,10 @@ class Fact {
     data['description'] = this.description;
     data['apply_count'] = this.applyCount;
     data['distance'] = this.distance;
+    data['percent'] = this.percent;
+    data['finisher_type'] = this.finisherType;
+    data['field_type'] = this.fieldType;
+    data['target'] = this.target;
     return data;
   }
 }

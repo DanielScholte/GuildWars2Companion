@@ -110,6 +110,26 @@ class GuildWarsUtil {
     ];
   }
 
+  static String removeOnlyHtml(String htmlText) {
+    RegExp tagExp = RegExp(
+      r"<[^>]*>",
+      multiLine: true,
+      caseSensitive: true
+    );
+
+    return htmlText.replaceAll(tagExp, '');
+  }
+
+  static String removeFullHtml(String htmlText) {
+    RegExp tagExp = RegExp(
+      r"<.*>",
+      multiLine: true,
+      caseSensitive: true
+    );
+
+    return htmlText.replaceAll(tagExp, '');
+  }
+
   static String durationToString(Duration duration) {
     String twoDigits(int n) {
       if (n >= 10) return "$n";

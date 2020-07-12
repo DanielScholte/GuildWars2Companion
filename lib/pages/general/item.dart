@@ -184,7 +184,7 @@ class ItemPage extends StatelessWidget {
             ),
           ),
           Text(
-            removeAllHtmlTags(item.description),
+            GuildWarsUtil.removeFullHtml(item.description),
             style: Theme.of(context).textTheme.bodyText1,
           ),
         ],
@@ -204,7 +204,7 @@ class ItemPage extends StatelessWidget {
             ),
           ),
           Text(
-            removeAllHtmlTags(item.details.description),
+            GuildWarsUtil.removeFullHtml(item.details.description),
             style: Theme.of(context).textTheme.bodyText1,
           ),
         ],
@@ -212,20 +212,7 @@ class ItemPage extends StatelessWidget {
     );
   }
 
-  String removeAllHtmlTags(String htmlText) {
-    RegExp tagContextExp = RegExp(
-      r"\>([^\<]*)\<",
-      multiLine: true,
-    );
-
-    RegExp tagExp = RegExp(
-      r"<[^>]*>",
-      multiLine: true,
-      caseSensitive: true
-    );
-
-    return htmlText.replaceAll(tagContextExp, '').replaceAll(tagExp, '');
-  }
+  
 
   Widget _buildItemDetails(BuildContext context) {
     if ([

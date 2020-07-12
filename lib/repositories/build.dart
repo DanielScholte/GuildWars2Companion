@@ -111,4 +111,16 @@ class BuildRepository {
         });
     });
   }
+
+  int getCachedSkillsCount() {
+    return buildService.getCachedSkillsCount();
+  }
+
+  int getCachedTraitsCount() {
+    return buildService.getCachedTraitsCount();
+  }
+
+  Future<void> clearCache() {
+    return buildService.clearCache();
+  }
 }

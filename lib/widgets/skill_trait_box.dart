@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/models/build/skill_trait.dart';
+import 'package:guildwars2_companion/pages/general/skill_trait.dart';
 
 import 'cached_image.dart';
 
 class CompanionSkillTraitBox extends StatelessWidget {
   final SkillTrait skillTrait;
   final String hero;
+  final String skillTraitType;
   final double size;
   final double horizontalMargin;
   final bool greyedOut;
+  final bool enablePopup;
 
   CompanionSkillTraitBox({
     @required this.skillTrait,
     @required this.hero,
+    this.skillTraitType,
     this.size = 45.0,
     this.greyedOut = false,
-    this.horizontalMargin = 6.0
+    this.horizontalMargin = 6.0,
+    this.enablePopup = true,
   });
 
   @override
@@ -40,11 +45,13 @@ class CompanionSkillTraitBox extends StatelessWidget {
         child: skillTrait != null ? ClipRRect(
           borderRadius: BorderRadius.circular(4.0),
           child: Stack(
+            alignment: Alignment.center,
             children: <Widget>[
               _buildImage(),
               if (greyedOut)
                 _buildGreyOverlay(),
-              _buildInkwell(context),
+              if (enablePopup)
+                _buildInkwell(context),
             ],
           ),
         ) : null,
@@ -76,7 +83,13 @@ class CompanionSkillTraitBox extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () => {}
+          onTap: () => Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => SkillTraitPage(
+              skillTrait: skillTrait,
+              hero: hero,
+              slotType: skillTraitType,
+            )
+          ))
         ),
       ),
     );
