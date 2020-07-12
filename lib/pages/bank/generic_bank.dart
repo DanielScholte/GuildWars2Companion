@@ -17,7 +17,7 @@ class GenericBankPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CompanionAccent(
-      lightColor: bankType == BankType.bank ? Colors.blueGrey : Colors.blue,
+      lightColor: bankType == BankType.bank ? Colors.green : Colors.blue,
       child: Scaffold(
         appBar: CompanionAppBar(
           title: bankType == BankType.bank ? 'Bank' : 'Shared inventory',
