@@ -90,10 +90,13 @@ class AchievementCategoriesPage extends StatelessWidget {
               .toList(),
           ),
         ),
-        child: Column(
-          children: categories
-            .map((c) => _buildCategoryButton(c, context))
-            .toList()
+        child: Padding(
+          padding: EdgeInsets.only(bottom: 4.0),
+          child: Column(
+            children: categories
+              .map((c) => _buildCategoryButton(c, context))
+              .toList()
+          ),
         ),
       ),
     );

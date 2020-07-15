@@ -73,6 +73,4 @@ class BankBuildSelectionPage extends StatelessWidget {
       ),
     );
   }
-
-
 }

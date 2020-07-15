@@ -36,7 +36,7 @@ class ChangelogService {
   List<Changelog> changelog = [
     Changelog(
       version: '1.4.0',
-      build: 16,
+      build: 17,
       newFeatures: true,
       changes: [
         'Equipment tabs',

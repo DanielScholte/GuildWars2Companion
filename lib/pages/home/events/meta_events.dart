@@ -72,27 +72,30 @@ class MetaEventsPage extends StatelessWidget {
       child: CompanionExpandableHeader(
         header: name,
         foreground: Colors.white,
-        child: Column(
-          children: sequences
-            .where((s) => s.region == region)
-            .map((s) => CompanionButton(
-              height: 64.0,
-              title: s.name,
-              leading: Image.asset(
-                'assets/button_headers/event_icon.png',
-                height: 48.0,
-                width: 48.0,
-              ),
-              color: Colors.white,
-              foregroundColor: Colors.black,
-              onTap: () {
-                BlocProvider.of<EventBloc>(context).add(LoadEventsEvent(id: s.id));
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => MetaEventPage(s)
-                ));
-              },
-            ))
-            .toList()
+        child: Padding(
+          padding: EdgeInsets.only(bottom: 4.0),
+          child: Column(
+            children: sequences
+              .where((s) => s.region == region)
+              .map((s) => CompanionButton(
+                height: 64.0,
+                title: s.name,
+                leading: Image.asset(
+                  'assets/button_headers/event_icon.png',
+                  height: 48.0,
+                  width: 48.0,
+                ),
+                color: Colors.white,
+                foregroundColor: Colors.black,
+                onTap: () {
+                  BlocProvider.of<EventBloc>(context).add(LoadEventsEvent(id: s.id));
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => MetaEventPage(s)
+                  ));
+                },
+              ))
+              .toList()
+          ),
         ),
       ),
     );

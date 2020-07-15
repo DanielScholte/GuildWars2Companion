@@ -254,10 +254,11 @@ class AchievementPage extends StatelessWidget {
 
   Widget _buildPrerequisites(BuildContext context, Achievement _achievement, LoadedAchievementsState state) {
     return CompanionCard(
+      padding: EdgeInsets.zero,
       child: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(bottom: 8.0),
+            padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
             child: Text(
               'Prerequisites',
               style: Theme.of(context).textTheme.headline2,
@@ -271,7 +272,8 @@ class AchievementPage extends StatelessWidget {
                 hero: 'pre ${p.id} ${_achievement.prerequisitesInfo.indexOf(p)}',
               ))
               .toList(),
-          )
+          ),
+          Container(height: 4.0,)
         ],
       ),
     );
