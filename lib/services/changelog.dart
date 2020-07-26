@@ -35,6 +35,14 @@ class ChangelogService {
 
   List<Changelog> changelog = [
     Changelog(
+      version: '1.4.1',
+      build: 18,
+      newFeatures: false,
+      changes: [
+        'Fixed Dark Theme bugs'
+      ],
+    ),
+    Changelog(
       version: '1.4.0',
       build: 17,
       newFeatures: true,
