@@ -164,7 +164,10 @@ class EquipmentPage extends StatelessWidget {
       return equipment;
     }
 
-    if (equipment != null && equipment.itemInfo != null && equipment.itemInfo.rarity != "Legendary") { // Due to current legendary equipmenttab bug
+    if (equipment != null && equipment.itemInfo != null && equipment.itemInfo.rarity != "Legendary") { 
+      // Due to current legendary equipmenttab bug.
+      // Grab the correct index. Important when using two of the same weapon, like two identical daggers with different upgrades.
+      // Wrapped in a try catch to prevent potential errors, and use the equipment without upgrades instead.
       try {
         int index = _equipmentTab.equipment
           .where((e) => e.id == equipment.id && e.skin == equipment.skin)
