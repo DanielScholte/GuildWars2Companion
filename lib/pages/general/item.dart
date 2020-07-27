@@ -184,7 +184,7 @@ class ItemPage extends StatelessWidget {
             ),
           ),
           Text(
-            GuildWarsUtil.removeFullHtml(item.description),
+            GuildWarsUtil.removeOnlyHtml(item.description),
             style: Theme.of(context).textTheme.bodyText1,
           ),
         ],
