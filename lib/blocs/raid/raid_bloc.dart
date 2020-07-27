@@ -9,14 +9,11 @@ part 'raid_event.dart';
 part 'raid_state.dart';
 
 class RaidBloc extends Bloc<RaidEvent, RaidState> {
-  @override
-  RaidState get initialState => LoadingRaidsState();
-
   final RaidRepository raidRepository;
 
   RaidBloc({
     this.raidRepository,
-  });
+  }): super(LoadingRaidsState());
 
   @override
   Stream<RaidState> mapEventToState(

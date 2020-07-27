@@ -9,6 +9,7 @@ import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class CharactersPage extends StatelessWidget {
   @override
@@ -42,7 +43,7 @@ class CharactersPage extends StatelessWidget {
                   BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent());
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
-                child: ListView(
+                child: CompanionListView(
                   children: state.characters.map((c) => _buildCharacterRow(context, c)).toList(),
                 ),
               );

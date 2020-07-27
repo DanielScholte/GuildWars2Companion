@@ -22,8 +22,7 @@ class ChangelogService {
 
   bool anyNewChanges() =>
       currentBuildNumber > lastLaunchBuildNumber &&
-      changelog.any((c) => c.build > lastLaunchBuildNumber && c.newFeatures) &&
-      lastLaunchBuildNumber != 0;
+      changelog.any((c) => c.build > lastLaunchBuildNumber && c.newFeatures);
 
   List<String> getNewFeatures() {
     return changelog
@@ -35,6 +34,34 @@ class ChangelogService {
   }
 
   List<Changelog> changelog = [
+    Changelog(
+      version: '1.4.1',
+      build: 18,
+      newFeatures: false,
+      changes: [
+        'Fixed Dark Theme bugs'
+      ],
+    ),
+    Changelog(
+      version: '1.4.0',
+      build: 17,
+      newFeatures: true,
+      changes: [
+        'Equipment tabs',
+        'Build tabs',
+        'Build storage',
+        'User interface improvements',
+        'Network improvements'
+      ],
+    ),
+    Changelog(
+      version: '1.3.1',
+      build: 15,
+      newFeatures: true,
+      changes: [
+        'User interface improvements'
+      ],
+    ),
     Changelog(
       version: '1.3.0',
       build: 13,

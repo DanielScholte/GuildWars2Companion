@@ -12,14 +12,11 @@ part 'pvp_event.dart';
 part 'pvp_state.dart';
 
 class PvpBloc extends Bloc<PvpEvent, PvpState> {
-  @override
-  PvpState get initialState => LoadingPvpState();
-
   final PvpRepository pvpRepository;
 
   PvpBloc({
     @required this.pvpRepository,
-  });
+  }): super(LoadingPvpState());
 
   @override
   Stream<PvpState> mapEventToState(

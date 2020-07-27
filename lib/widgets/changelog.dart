@@ -55,7 +55,7 @@ class _CompanionChangelogState extends State<CompanionChangelog> {
                           ),
                           Text(
                             'Welcome back!',
-                            style: Theme.of(context).textTheme.display1.copyWith(
+                            style: Theme.of(context).textTheme.headline1.copyWith(
                               fontSize: 28,
                               fontWeight: FontWeight.w500
                             ),
@@ -66,7 +66,7 @@ class _CompanionChangelogState extends State<CompanionChangelog> {
                         children: <Widget>[
                           Text(
                             'Since your last visit, the following new features have been added to the app:',
-                            style: Theme.of(context).textTheme.display2.copyWith(
+                            style: Theme.of(context).textTheme.headline2.copyWith(
                               color: Colors.white
                             ),
                             textAlign: TextAlign.center,
@@ -87,7 +87,7 @@ class _CompanionChangelogState extends State<CompanionChangelog> {
                                     ),
                                     Text(
                                       c,
-                                      style: Theme.of(context).textTheme.display3.copyWith(
+                                      style: Theme.of(context).textTheme.bodyText1.copyWith(
                                         color: Colors.white
                                       ),
                                     )

@@ -12,6 +12,7 @@ import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_box.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class PvpPage extends StatelessWidget {
   @override
@@ -78,7 +79,7 @@ class PvpPage extends StatelessWidget {
                 ),
                 Text(
                   'Rank ${state.pvpStats.pvpRank}',
-                  style: Theme.of(context).textTheme.display1,
+                  style: Theme.of(context).textTheme.headline1,
                 ),
                 if (state.pvpStats.pvpRankPointsNeeded != null && state.pvpStats.pvpRank < 80)
                   _buildProgress(context, state),
@@ -109,8 +110,7 @@ class PvpPage extends StatelessWidget {
                 BlocProvider.of<PvpBloc>(context).add(LoadPvpEvent());
                 await Future.delayed(Duration(milliseconds: 200), () {});
               },
-              child: ListView(
-                padding: EdgeInsets.only(top: 8.0),
+              child: CompanionListView(
                 children: <Widget>[
                   CompanionButton(
                     color: Colors.orange,

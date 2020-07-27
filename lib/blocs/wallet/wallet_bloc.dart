@@ -5,14 +5,11 @@ import 'package:guildwars2_companion/repositories/wallet.dart';
 import './bloc.dart';
 
 class WalletBloc extends Bloc<WalletEvent, WalletState> {
-  @override
-  WalletState get initialState => LoadingWalletState();
-
   final WalletRepository walletRepository;
 
   WalletBloc({
     @required this.walletRepository
-  });
+  }): super(LoadingWalletState());
 
   @override
   Stream<WalletState> mapEventToState(

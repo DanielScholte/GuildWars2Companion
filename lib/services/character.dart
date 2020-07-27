@@ -15,7 +15,14 @@ class CharacterService {
   });
 
   Future<List<Character>> getCharacters() async {
-    final response = await dio.get(Urls.charactersUrl);
+    final response = await dio.get(
+      Urls.charactersUrl,
+      options: Options(
+        headers: {
+          'X-Schema-Version': '2020-07-01T00:00:00Z'
+        }
+      )
+    );
 
     if (response.statusCode == 200) {
       List characters = response.data;

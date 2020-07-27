@@ -9,14 +9,14 @@ part 'changelog_event.dart';
 part 'changelog_state.dart';
 
 class ChangelogBloc extends Bloc<ChangelogEvent, ChangelogState> {
-  @override
-  ChangelogState get initialState => getChangelog();
-
   final ChangelogRepository changelogRepository;
 
   ChangelogBloc({
     this.changelogRepository
-  });
+  }): super(LoadedChangelog(
+    changelogs: changelogRepository.getChangelogData().changelog,
+    allChanges: changelogRepository.getChangelogData().allChanges,
+  ));
 
   @override
   Stream<ChangelogState> mapEventToState(

@@ -7,6 +7,7 @@ import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_row.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 import 'package:intl/intl.dart';
 
 class WorldBossPage extends StatelessWidget {
@@ -24,8 +25,7 @@ class WorldBossPage extends StatelessWidget {
           children: <Widget>[
             _buildHeader(context),
             Expanded(
-              child: ListView(
-                padding: EdgeInsets.only(top: 8.0),
+              child: CompanionListView(
                 children: <Widget>[
                   _buildStats(context),
                   _buildTimes(context)
@@ -71,13 +71,13 @@ class WorldBossPage extends StatelessWidget {
             padding: EdgeInsets.all(4.0),
             child: Text(
               worldBoss.name,
-              style: Theme.of(context).textTheme.display1,
+              style: Theme.of(context).textTheme.headline1,
               textAlign: TextAlign.center,
             ),
           ),
           Text(
             worldBoss.location,
-            style: Theme.of(context).textTheme.display3.copyWith(
+            style: Theme.of(context).textTheme.bodyText1.copyWith(
               color: Colors.white
             ),
             textAlign: TextAlign.center,
@@ -95,7 +95,7 @@ class WorldBossPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Stats',
-              style: Theme.of(context).textTheme.display2,
+              style: Theme.of(context).textTheme.headline2,
             ),
           ),
           CompanionInfoRow(
@@ -128,7 +128,7 @@ class WorldBossPage extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 8.0),
                 child: Text(
                   'Spawn Times',
-                  style: Theme.of(context).textTheme.display2,
+                  style: Theme.of(context).textTheme.headline2,
                 ),
               ),
               Wrap(
@@ -140,7 +140,7 @@ class WorldBossPage extends StatelessWidget {
                     backgroundColor: Theme.of(context).brightness == Brightness.light ? worldBoss.color : Colors.white12,
                     label: Text(
                       timeFormat.format(t),
-                      style: Theme.of(context).textTheme.display3.copyWith(
+                      style: Theme.of(context).textTheme.bodyText1.copyWith(
                         color: Colors.white
                       ),
                     ),

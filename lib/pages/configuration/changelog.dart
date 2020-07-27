@@ -29,7 +29,7 @@ class ChangelogPage extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       'Version ${c.version}',
-                      style: Theme.of(context).textTheme.display2,
+                      style: Theme.of(context).textTheme.headline2,
                     ),
                     Column(
                       children: c.changes
@@ -44,7 +44,7 @@ class ChangelogPage extends StatelessWidget {
                             ),
                             Text(
                               change,
-                              style: Theme.of(context).textTheme.display3
+                              style: Theme.of(context).textTheme.bodyText1
                             ),
                           ]
                         ))

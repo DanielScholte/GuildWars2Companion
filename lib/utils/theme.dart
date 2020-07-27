@@ -11,17 +11,17 @@ class ThemeUtil {
       scaffoldBackgroundColor: Color(0xFFEEEEEE),
       cursorColor: Color(0xFFAA0404),
       textTheme: TextTheme(
-        display1: TextStyle(
+        headline1: TextStyle(
           fontSize: 22.0,
           color: Colors.white,
           fontWeight: FontWeight.normal
         ),
-        display2: TextStyle(
+        headline2: TextStyle(
           fontSize: 18.0,
           color: Colors.black,
           fontWeight: FontWeight.w500,
         ),
-        display3: TextStyle(
+        bodyText1: TextStyle(
           fontSize: 16.0,
           color: Colors.black,
           fontWeight: FontWeight.normal,
@@ -40,23 +40,20 @@ class ThemeUtil {
       scaffoldBackgroundColor: Color(0xFF111111),
       cursorColor: Color(0xFFAA0404),
       textTheme: TextTheme(
-        display1: TextStyle(
+        headline1: TextStyle(
           fontSize: 22.0,
           color: Colors.white,
           fontWeight: FontWeight.normal
         ),
-        display2: TextStyle(
+        headline2: TextStyle(
           fontSize: 18.0,
           color: Colors.white,
           fontWeight: FontWeight.w500,
         ),
-        display3: TextStyle(
+        bodyText1: TextStyle(
           fontSize: 16.0,
           color: Colors.white,
           fontWeight: FontWeight.normal,
-        ),
-        display4: TextStyle(
-          color: Colors.white,
         ),
       )
     );

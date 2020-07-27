@@ -13,6 +13,7 @@ import 'package:guildwars2_companion/widgets/coin.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class TradingPostPage extends StatefulWidget {
   @override
@@ -217,7 +218,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
                             RichText(
                               text: TextSpan(
                                 text: 'Items: ',
-                                style: Theme.of(context).textTheme.display3.copyWith(
+                                style: Theme.of(context).textTheme.bodyText1.copyWith(
                                   fontWeight: FontWeight.w500
                                 ),
                                 children: [
@@ -234,7 +235,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
                               children: <Widget>[
                                 Text(
                                   'Funds: ',
-                                  style: Theme.of(context).textTheme.display3.copyWith(
+                                  style: Theme.of(context).textTheme.bodyText1.copyWith(
                                     fontWeight: FontWeight.w500
                                   ),
                                 ),
@@ -277,7 +278,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
         child: Center(
           child: Text(
             'No items found',
-            style: Theme.of(context).textTheme.display2,
+            style: Theme.of(context).textTheme.headline2,
           ),
         ),
       );
@@ -324,7 +325,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
                 padding: EdgeInsets.all(16.0),
                 child: Text(
                   'No items found',
-                  style: Theme.of(context).textTheme.display2,
+                  style: Theme.of(context).textTheme.headline2,
                 ),
               ),
             ),
@@ -340,7 +341,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
         BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostEvent());
         await Future.delayed(Duration(milliseconds: 200), () {});
       },
-      child: ListView(
+      child: CompanionListView(
         children: transactions
           .where((t) => t.itemInfo != null)
           .map((t) => CompanionButton(
@@ -391,11 +392,6 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
             onTap: () {
               if (!t.loading && t.listing == null) {
                 BlocProvider.of<TradingPostBloc>(context).add(LoadTradingPostListingsEvent(
-                  buying: state.buying,
-                  selling: state.selling,
-                  bought: state.bought,
-                  sold: state.sold,
-                  tradingPostDelivery: state.tradingPostDelivery,
                   itemId: t.itemId
                 ));
               }

@@ -9,6 +9,7 @@ import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class InventoryPage extends StatelessWidget {
 
@@ -27,62 +28,60 @@ class InventoryPage extends StatelessWidget {
           foregroundColor: Colors.white,
           elevation: 4.0,
         ),
-        body: BlocListener<CharacterBloc, CharacterState>(
-          condition: (previous, current) => current is ErrorCharactersState,
+        body: BlocConsumer<CharacterBloc, CharacterState>(
+          listenWhen: (previous, current) => current is ErrorCharactersState,
           listener: (context, state) => Navigator.of(context).pop(),
-          child: BlocBuilder<CharacterBloc, CharacterState>(
-            builder: (context, state) {
-              if (state is ErrorCharactersState) {
+          builder: (context, state) {
+            if (state is ErrorCharactersState) {
+              return Center(
+                child: CompanionError(
+                  title: 'the character',
+                  onTryAgain: () =>
+                    BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterDetailsEvent()),
+                ),
+              );
+            }
+
+            if (state is LoadedCharactersState && state.detailsError) {
+              return Center(
+                child: CompanionError(
+                  title: 'the character items',
+                  onTryAgain: () =>
+                    BlocProvider.of<CharacterBloc>(context).add(LoadCharacterDetailsEvent()),
+                ),
+              );
+            }
+
+            if (state is LoadedCharactersState && state.detailsLoaded) {
+              Character character = state.characters.firstWhere((c) => c.name == _character.name);
+
+              if (character == null) {
                 return Center(
                   child: CompanionError(
                     title: 'the character',
                     onTryAgain: () =>
-                      BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterItemsEvent()),
+                      BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterDetailsEvent()),
                   ),
                 );
               }
 
-              if (state is LoadedCharactersState && state.hasError) {
-                return Center(
-                  child: CompanionError(
-                    title: 'the character items',
-                    onTryAgain: () =>
-                      BlocProvider.of<CharacterBloc>(context).add(LoadCharacterItemsEvent(state.characters)),
-                  ),
-                );
-              }
-
-              if (state is LoadedCharactersState && state.itemsLoaded) {
-                Character character = state.characters.firstWhere((c) => c.name == _character.name);
-
-                if (character == null) {
-                  return Center(
-                    child: CompanionError(
-                      title: 'the character',
-                      onTryAgain: () =>
-                        BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterItemsEvent()),
-                    ),
-                  );
-                }
-
-                return RefreshIndicator(
-                  backgroundColor: Theme.of(context).accentColor,
-                  color: Theme.of(context).cardColor,
-                  onRefresh: () async {
-                    BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterItemsEvent());
-                    await Future.delayed(Duration(milliseconds: 200), () {});
-                  },
-                  child: ListView(
-                    children: character.bags.map((b) => _buildBag(context, b, character.bags.indexOf(b))).toList(),
-                  ),
-                );
-              }
-
-              return Center(
-                child: CircularProgressIndicator(),
+              return RefreshIndicator(
+                backgroundColor: Theme.of(context).accentColor,
+                color: Theme.of(context).cardColor,
+                onRefresh: () async {
+                  BlocProvider.of<CharacterBloc>(context).add(RefreshCharacterDetailsEvent());
+                  await Future.delayed(Duration(milliseconds: 200), () {});
+                },
+                child: CompanionListView(
+                  children: character.bags.map((b) => _buildBag(context, b, character.bags.indexOf(b))).toList(),
+                ),
               );
-            },
-          ),
+            }
+
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
         ),
       ),
     );
@@ -109,7 +108,7 @@ class InventoryPage extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       bag.itemInfo.name,
-                      style: Theme.of(context).textTheme.display3.copyWith(
+                      style: Theme.of(context).textTheme.bodyText1.copyWith(
                         fontWeight: FontWeight.w500
                       )
                     ),
@@ -119,7 +118,7 @@ class InventoryPage extends StatelessWidget {
                 Spacer(),
               Text(
                 '$usedSlots/${bag.size}',
-                style: Theme.of(context).textTheme.display3,
+                style: Theme.of(context).textTheme.bodyText1,
               )
             ],
           ),

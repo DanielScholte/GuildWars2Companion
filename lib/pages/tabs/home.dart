@@ -23,12 +23,13 @@ import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_box.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AccountBloc, AccountState>(
-      condition: (previous, current) {
+      buildWhen: (previous, current) {
         if (previous is AuthenticatedState && current is UnauthenticatedState) {
           return false;
         }
@@ -105,25 +106,20 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                MediaQuery.removePadding(
-                  removeTop: true,
-                  context: context,
-                  child: Expanded(
-                    child: ListView(
-                      padding: EdgeInsets.only(top: 8.0),
-                      children: <Widget>[
-                        if (state.tokenInfo.permissions.contains('wallet'))
-                          _buildWallet(context),
-                        _buildWorldBosses(context, state.tokenInfo.permissions.contains('progression')),
-                        _buildEvents(context),
-                        if (state.tokenInfo.permissions.contains('pvp'))
-                          _buildPvp(context),
-                        _buildRaids(context, state.tokenInfo.permissions.contains('progression')),
-                        _buildDungeons(context, state.tokenInfo.permissions.contains('progression'))
-                      ],
-                    ),
+                Expanded(
+                  child: CompanionListView(
+                    children: <Widget>[
+                      if (state.tokenInfo.permissions.contains('wallet'))
+                        _buildWallet(context),
+                      _buildWorldBosses(context, state.tokenInfo.permissions.contains('progression')),
+                      _buildEvents(context),
+                      if (state.tokenInfo.permissions.contains('pvp'))
+                        _buildPvp(context),
+                      _buildRaids(context, state.tokenInfo.permissions.contains('progression')),
+                      _buildDungeons(context, state.tokenInfo.permissions.contains('progression'))
+                    ],
                   ),
-                )
+                ),
               ],
             ),
           );

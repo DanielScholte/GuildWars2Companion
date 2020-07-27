@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/models/character/character.dart';
 import 'package:guildwars2_companion/models/character/crafting.dart';
+import 'package:guildwars2_companion/pages/character/build_selection.dart';
 import 'package:guildwars2_companion/pages/character/equipment.dart';
+import 'package:guildwars2_companion/pages/character/equipment_selection.dart';
 import 'package:guildwars2_companion/pages/character/inventory.dart';
+import 'package:guildwars2_companion/pages/general/build.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
 import 'package:guildwars2_companion/widgets/accent.dart';
@@ -14,6 +18,7 @@ import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_box.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class CharacterPage extends StatelessWidget {
 
@@ -54,7 +59,7 @@ class CharacterPage extends StatelessWidget {
                       ),
                       Text(
                         _character.name,
-                        style: Theme.of(context).textTheme.title.copyWith(
+                        style: Theme.of(context).textTheme.headline6.copyWith(
                           color: Colors.white
                         )
                       )
@@ -63,7 +68,7 @@ class CharacterPage extends StatelessWidget {
                   if (_character.titleName != null && _character.titleName.isNotEmpty)
                     Text(
                       _character.titleName,
-                      style: Theme.of(context).textTheme.display3.copyWith(
+                      style: Theme.of(context).textTheme.bodyText1.copyWith(
                         color: Colors.white
                       )
                     ),
@@ -115,8 +120,10 @@ class CharacterPage extends StatelessWidget {
                   return _buildButtons(context, state);
                 }
 
-                return Center(
-                  child: CircularProgressIndicator(),
+                return Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
                 );
               },
             )
@@ -177,61 +184,98 @@ class CharacterPage extends StatelessWidget {
     return BlocBuilder<AccountBloc, AccountState>(
       builder: (context, state) {
         if (state is AuthenticatedState) {
-          return MediaQuery.removePadding(
-            removeTop: true,
-            context: context,
-            child: Expanded(
-              child: RefreshIndicator(
-                backgroundColor: Theme.of(context).accentColor,
-                color: Theme.of(context).cardColor,
-                onRefresh: () async {
-                  BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent());
-                  await Future.delayed(Duration(milliseconds: 200), () {});
-                },
-                child: ListView(
-                  padding: EdgeInsets.only(top: 8.0),
-                  children: <Widget>[
-                    if (state.tokenInfo.permissions.contains('inventories')
-                      && state.tokenInfo.permissions.contains('builds'))
-                      CompanionButton(
-                        color: Colors.teal,
-                        onTap: () {
-                          if (!characterState.itemsLoaded && !characterState.itemsLoading) {
-                            BlocProvider.of<CharacterBloc>(context).add(LoadCharacterItemsEvent(characterState.characters));
-                          }
+          return Expanded(
+            child: RefreshIndicator(
+              backgroundColor: Theme.of(context).accentColor,
+              color: Theme.of(context).cardColor,
+              onRefresh: () async {
+                BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent());
+                await Future.delayed(Duration(milliseconds: 200), () {});
+              },
+              child: CompanionListView(
+                children: <Widget>[
+                  if (state.tokenInfo.permissions.contains('inventories')
+                    && state.tokenInfo.permissions.contains('builds'))
+                    CompanionButton(
+                      color: Colors.teal,
+                      onTap: () {
+                        if (!characterState.detailsLoaded && !characterState.detailsLoading) {
+                          BlocProvider.of<CharacterBloc>(context).add(LoadCharacterDetailsEvent());
+                        }
 
+                        if (_character.equipmentTabs != null && _character.equipmentTabs.length == 1) {
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => EquipmentPage(_character),
+                            builder: (context) => EquipmentPage(
+                              _character,
+                              EquipmentTab(
+                                equipment: _character.equipment,
+                                name: 'Equipment'
+                              ),
+                              singular: true,
+                            ),
                           ));
-                        },
-                        title: 'Equipment',
-                        leading: Icon(
-                          GuildWarsIcons.equipment,
-                          size: 48.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                    if (state.tokenInfo.permissions.contains('inventories'))
-                      CompanionButton(
-                        color: Colors.indigo,
-                        onTap: () {
-                          if (!characterState.itemsLoaded && !characterState.itemsLoading) {
-                            BlocProvider.of<CharacterBloc>(context).add(LoadCharacterItemsEvent(characterState.characters));
-                          }
 
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => InventoryPage(_character),
-                          ));
-                        },
-                        title: 'Inventory',
-                        leading: Icon(
-                          GuildWarsIcons.inventory,
-                          size: 48.0,
-                          color: Colors.white,
-                        ),
+                          return;
+                        }
+
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => EquipmentSelectionPage(_character),
+                        ));
+                      },
+                      title: 'Equipment',
+                      leading: Icon(
+                        GuildWarsIcons.equipment,
+                        size: 48.0,
+                        color: Colors.white,
                       ),
-                  ],
-                ),
+                    ),
+                  if (state.tokenInfo.permissions.contains('builds'))
+                    CompanionButton(
+                      color: Colors.purple,
+                      onTap: () {
+                        if (!characterState.detailsLoaded && !characterState.detailsLoading) {
+                          BlocProvider.of<CharacterBloc>(context).add(LoadCharacterDetailsEvent());
+                        }
+
+                        if (_character.buildTabs != null && _character.buildTabs.length == 1) {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => BuildPage(_character.buildTabs.first.build, singular: true,),
+                          ));
+
+                          return;
+                        }
+
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => CharacterBuildSelectionPage(_character),
+                        ));
+                      },
+                      title: 'Builds',
+                      leading: Icon(
+                        FontAwesomeIcons.hammer,
+                        size: 35.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                  if (state.tokenInfo.permissions.contains('inventories'))
+                    CompanionButton(
+                      color: Colors.indigo,
+                      onTap: () {
+                        if (!characterState.detailsLoaded && !characterState.detailsLoading) {
+                          BlocProvider.of<CharacterBloc>(context).add(LoadCharacterDetailsEvent());
+                        }
+
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => InventoryPage(_character),
+                        ));
+                      },
+                      title: 'Inventory',
+                      leading: Icon(
+                        GuildWarsIcons.inventory,
+                        size: 48.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                ],
               ),
             ),
           );

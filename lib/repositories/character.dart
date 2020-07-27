@@ -21,9 +21,15 @@ class CharacterRepository {
   });
 
   Future<List<Character>> getCharacters() async {
-    List<Character> characters = await characterService.getCharacters();
-    List<AccountTitle> titles = await characterService.getTitles();
-    List<Profession> professions = await characterService.getProfessions();
+    List networkResults = await Future.wait([
+      characterService.getCharacters(),
+      characterService.getTitles(),
+      characterService.getProfessions()
+    ]);
+
+    List<Character> characters = networkResults[0];
+    List<AccountTitle> titles = networkResults[1];
+    List<Profession> professions = networkResults[2];
 
     characters.forEach((c) {
       c.titleName = titles.firstWhere((t) => t.id == c.title, orElse: () => AccountTitle(name: '')).name;
@@ -34,14 +40,17 @@ class CharacterRepository {
     return characters;
   }
 
-  Future<List<Character>> getCharacterItems(List<Character> characterList) async {
-    List<Character> characters = characterList;
-    
+  Future<void> getCharacterItems(List<Character> characters) async {
     List<int> itemIds = _getItemIds(characters);
     List<int> skinIds = _getSkinIds(characters);
 
-    List<Item> items = await itemService.getItems(itemIds);
-    List<Skin> skins = await itemService.getSkins(skinIds);
+    List networkResults = await Future.wait([
+      itemService.getItems(itemIds),
+      itemService.getSkins(skinIds),
+    ]);
+
+    List<Item> items = networkResults[0];
+    List<Skin> skins = networkResults[1];
     
     characters.forEach((c) {
       if (c.bags != null) {
@@ -57,9 +66,16 @@ class CharacterRepository {
           _fillEquipmentInfo(e, items, skins);
         });
       }
+      if (c.equipmentTabs != null) {
+        c.equipmentTabs.forEach((et) {
+          if (et.equipment != null) {
+            et.equipment.forEach((e) {
+              _fillEquipmentInfo(e, items, skins);
+            });
+          }
+        });
+      }
     });
-
-    return characters;
   }
 
   List<int> _getItemIds(List<Character> characters) {
@@ -88,6 +104,17 @@ class CharacterRepository {
         c.equipment.where((e) => e.upgrades != null && e.upgrades.isNotEmpty)
           .forEach((e) => itemIds.addAll(e.upgrades.where((up) => up != null).toList()));
       }
+      if (c.equipmentTabs != null) {
+        c.equipmentTabs.forEach((et) {
+          if (et.equipment != null) {
+            itemIds.addAll(et.equipment.map((e) => e.id).toList());
+            et.equipment.where((e) => e.infusions != null && e.infusions.isNotEmpty)
+              .forEach((e) => itemIds.addAll(e.infusions.where((inf) => inf != null).toList()));
+            et.equipment.where((e) => e.upgrades != null && e.upgrades.isNotEmpty)
+              .forEach((e) => itemIds.addAll(e.upgrades.where((up) => up != null).toList()));
+          }
+        });
+      }
     });
     return itemIds.toSet().toList();
   }
@@ -102,6 +129,13 @@ class CharacterRepository {
       }
       if (c.equipment != null) {
         skinIds.addAll(c.equipment.where((e) => e.skin != null).map((e) => e.skin).toList());
+      }
+      if (c.equipmentTabs != null) {
+        c.equipmentTabs.forEach((et) {
+          if (et.equipment != null) {
+            skinIds.addAll(et.equipment.where((e) => e.skin != null).map((e) => e.skin).toList());
+          }
+        });
       }
     });
     return skinIds.toSet().toList();

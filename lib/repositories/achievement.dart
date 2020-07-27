@@ -30,10 +30,17 @@ class AchievementRepository {
   Future<AchievementData> getAchievements(bool includeProgress) async {
     await achievementService.loadCachedData();
 
-    List<AchievementGroup> achievementGroups = await achievementService.getAchievementGroups();
-    List<AchievementCategory> achievementCategories = await achievementService.getAchievementCategories();
-    DailyGroup dailies = await achievementService.getDailies();
-    DailyGroup dailiesTomorrow = await achievementService.getDailies(tomorrow: true);
+    List networkResults = await Future.wait([
+      achievementService.getAchievementGroups(),
+      achievementService.getAchievementCategories(),
+      achievementService.getDailies(),
+      achievementService.getDailies(tomorrow: true)
+    ]);
+
+    List<AchievementGroup> achievementGroups = networkResults[0];
+    List<AchievementCategory> achievementCategories = networkResults[1];
+    DailyGroup dailies = networkResults[2];
+    DailyGroup dailiesTomorrow = networkResults[3];
 
     List<int> achievementIds = [];
     achievementCategories.forEach((c) => achievementIds.addAll(c.achievements));
@@ -200,12 +207,18 @@ class AchievementRepository {
   }
 
   Future<MasteryData> getMasteries(bool includeProgress) async {
-    List<Mastery> masteries = await achievementService.getMasteries();
+    List networkResults = await Future.wait([
+      achievementService.getMasteries(),
+      if (includeProgress)
+        achievementService.getMasteryProgress()
+    ]);
+
+    List<Mastery> masteries = networkResults[0];
 
     int masteryLevel = 0;
 
     if (includeProgress) {
-      List<MasteryProgress> masteryProgress = await achievementService.getMasteryProgress();
+      List<MasteryProgress> masteryProgress = networkResults[1];
 
       masteries.forEach((mastery) {
         MasteryProgress progress = masteryProgress.firstWhere((m) => m.id == mastery.id, orElse: () => null);

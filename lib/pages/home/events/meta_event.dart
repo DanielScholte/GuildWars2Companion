@@ -11,6 +11,7 @@ import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 import 'package:intl/intl.dart';
 import 'package:timer_builder/timer_builder.dart';
 
@@ -88,7 +89,7 @@ class _MetaEventPageState extends State<MetaEventPage> {
                       BlocProvider.of<EventBloc>(context).add(LoadEventsEvent(id: widget.metaEventSequence.id));
                       await Future.delayed(Duration(milliseconds: 200), () {});
                     },
-                    child: ListView(
+                    child: CompanionListView(
                       children: _sequence.segments
                         .where((e) => e.name != null)
                         .map((e) => _buildEventButton(context, timeFormat, e))
@@ -141,7 +142,7 @@ class _MetaEventPageState extends State<MetaEventPage> {
                 if (isActive) {
                   return Text(
                     'Active',
-                    style: Theme.of(context).textTheme.display2.copyWith(
+                    style: Theme.of(context).textTheme.headline2.copyWith(
                       color: Colors.white,
                     ),
                   );
@@ -149,7 +150,7 @@ class _MetaEventPageState extends State<MetaEventPage> {
                   
                 return Text(
                   GuildWarsUtil.durationToString(time.difference(DateTime.now())),
-                  style: Theme.of(context).textTheme.display2.copyWith(
+                  style: Theme.of(context).textTheme.headline2.copyWith(
                     color: Colors.white
                   ),
                 );
@@ -157,7 +158,7 @@ class _MetaEventPageState extends State<MetaEventPage> {
             ),
             Text(
               timeFormat.format(time),
-              style: Theme.of(context).textTheme.display3.copyWith(
+              style: Theme.of(context).textTheme.bodyText1.copyWith(
                 color: Colors.white
               ),
             )

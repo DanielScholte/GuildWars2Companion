@@ -5,6 +5,7 @@ import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 import 'dailies.dart';
 
@@ -44,7 +45,7 @@ class DailyCategoriesPage extends StatelessWidget {
                   ));
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
-                child: ListView(
+                child: CompanionListView(
                   children: [
                     CompanionButton(
                       title: 'PvE',

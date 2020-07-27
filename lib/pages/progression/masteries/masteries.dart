@@ -7,6 +7,7 @@ import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 import 'mastery_levels.dart';
 
@@ -44,7 +45,7 @@ class MasteriesPage extends StatelessWidget {
                 ));
                 await Future.delayed(Duration(milliseconds: 200), () {});
               },
-              child: ListView(
+              child: CompanionListView(
                 children: state.masteries
                   .map((g) => _buildMastery(context, g))
                   .toList(),

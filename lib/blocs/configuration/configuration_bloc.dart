@@ -10,14 +10,13 @@ part 'configuration_event.dart';
 part 'configuration_state.dart';
 
 class ConfigurationBloc extends Bloc<ConfigurationEvent, ConfigurationState> {
-  @override
-  ConfigurationState get initialState => getConfiguration();
-
   final ConfigurationRepository configurationRepository;
 
   ConfigurationBloc({
     this.configurationRepository
-  });
+  }): super(LoadedConfiguration(
+    configuration: configurationRepository.getConfiguration()
+  ));
 
   @override
   Stream<ConfigurationState> mapEventToState(

@@ -11,8 +11,13 @@ class WalletRepository {
   });
 
   Future<List<Currency>> getWallet() async {
-    List<Currency> currencies = await walletService.getCurrency();
-    List<WalletEntry> walletEntries = await walletService.getWallet();
+    List networkResults = await Future.wait([
+      walletService.getCurrency(),
+      walletService.getWallet()
+    ]);
+
+    List<Currency> currencies = networkResults[0];
+    List<WalletEntry> walletEntries = networkResults[1];
 
     currencies.forEach((c) {
       WalletEntry walletEntry = walletEntries.firstWhere((w) => w.id == c.id, orElse: () => null);

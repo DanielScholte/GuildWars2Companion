@@ -9,14 +9,12 @@ import './bloc.dart';
 
 
 class AccountBloc extends Bloc<AccountEvent, AccountState> {
-  @override
-  AccountState get initialState => LoadingAccountState();
 
   final AccountRepository accountRepository;
 
   AccountBloc({
     @required this.accountRepository
-  }) {
+  }): super(LoadingAccountState()) {
     add(SetupAccountEvent());
   }
 

@@ -7,6 +7,7 @@ import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class RaidPage extends StatelessWidget {
 
@@ -64,7 +65,7 @@ class RaidPage extends StatelessWidget {
             padding: EdgeInsets.all(4.0),
             child: Text(
               raid.name,
-              style: Theme.of(context).textTheme.display1,
+              style: Theme.of(context).textTheme.headline1,
               textAlign: TextAlign.center,
             ),
           ),
@@ -97,8 +98,7 @@ class RaidPage extends StatelessWidget {
                 BlocProvider.of<RaidBloc>(context).add(LoadRaidsEvent(state.includeProgress));
                 await Future.delayed(Duration(milliseconds: 200), () {});
               },
-              child: ListView(
-                padding: EdgeInsets.only(top: 8.0),
+              child: CompanionListView(
                 children: [
                   _buildProgress(context, state.includeProgress, _raid)
                 ],
@@ -122,7 +122,7 @@ class RaidPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               includeProgress ? 'Weekly Progress' : 'Bosses',
-              style: Theme.of(context).textTheme.display2,
+              style: Theme.of(context).textTheme.headline2,
             ),
           ),
           Column(
@@ -147,7 +147,7 @@ class RaidPage extends StatelessWidget {
                       padding: EdgeInsets.all(4.0),
                       child: Text(
                         p.name,
-                        style: Theme.of(context).textTheme.display3,
+                        style: Theme.of(context).textTheme.bodyText1,
                         textAlign: TextAlign.left,
                         overflow: TextOverflow.ellipsis,
                       ),

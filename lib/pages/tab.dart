@@ -58,8 +58,8 @@ class _TabPageState extends State<TabPage> {
         }
         return true;
       },
-      child: BlocListener<AccountBloc, AccountState>(
-        condition: (previous, current) => current is UnauthenticatedState || current is AuthenticatedState,
+      child: BlocConsumer<AccountBloc, AccountState>(
+        listenWhen: (previous, current) => current is UnauthenticatedState || current is AuthenticatedState,
         listener: (BuildContext context, state) async {
           if (state is AuthenticatedState) {
             await _handleAuth(context, state);
@@ -69,37 +69,35 @@ class _TabPageState extends State<TabPage> {
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (BuildContext context) => TokenPage()));
         },
-        child: BlocBuilder<AccountBloc, AccountState>(
-          condition: (previous, current) => current is LoadingAccountState || current is AuthenticatedState,
-          builder: (BuildContext context, state) {
-            if (state is UnauthenticatedState) {
-              return Scaffold(
-                body: Center(
-                  child: CompanionError(
-                    title: 'the account',
-                    onTryAgain: () async =>
-                      BlocProvider.of<AccountBloc>(context).add(SetupAccountEvent()),
-                  ),
+        buildWhen: (previous, current) => current is LoadingAccountState || current is AuthenticatedState,
+        builder: (BuildContext context, state) {
+          if (state is UnauthenticatedState) {
+            return Scaffold(
+              body: Center(
+                child: CompanionError(
+                  title: 'the account',
+                  onTryAgain: () async =>
+                    BlocProvider.of<AccountBloc>(context).add(SetupAccountEvent()),
                 ),
-              );
-            }
-
-            if (state is LoadingAccountState) {
-              return Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            }
-
-            return Stack(
-              children: <Widget>[
-                _buildTabPage(context, state),
-                CompanionChangelog(),
-              ],
+              ),
             );
-          },
-        ),
+          }
+
+          if (state is LoadingAccountState) {
+            return Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+
+          return Stack(
+            children: <Widget>[
+              _buildTabPage(context, state),
+              CompanionChangelog(),
+            ],
+          );
+        },
       ),
     );
   }
@@ -156,8 +154,12 @@ class _TabPageState extends State<TabPage> {
       tabs.add(TabEntry(CharactersPage(), "Characters", GuildWarsIcons.hero, 24.0, Colors.blue));
     }
 
-    if (state.tokenInfo.permissions.contains('inventories')) {
-      BlocProvider.of<BankBloc>(context).add(LoadBankEvent());
+    if (state.tokenInfo.permissions.contains('inventories')
+      || state.tokenInfo.permissions.contains('builds')) {
+      BlocProvider.of<BankBloc>(context).add(LoadBankEvent(
+        loadBank: state.tokenInfo.permissions.contains('inventories'),
+        loadBuilds: state.tokenInfo.permissions.contains('builds')
+      ));
       tabs.add(TabEntry(BankPage(), "Bank", GuildWarsIcons.inventory, 24.0, Colors.indigo));
     }
 

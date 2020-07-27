@@ -6,6 +6,7 @@ import 'package:guildwars2_companion/models/other/meta_event.dart';
 import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 import 'package:intl/intl.dart';
 
 class EventPage extends StatelessWidget {
@@ -27,8 +28,7 @@ class EventPage extends StatelessWidget {
           children: <Widget>[
             _buildHeader(context),
             Expanded(
-              child: ListView(
-                padding: EdgeInsets.only(top: 8.0),
+              child: CompanionListView(
                 children: <Widget>[
                   _buildTimes(context)
                 ],
@@ -60,13 +60,13 @@ class EventPage extends StatelessWidget {
             padding: EdgeInsets.all(4.0),
             child: Text(
               segment.name,
-              style: Theme.of(context).textTheme.display1,
+              style: Theme.of(context).textTheme.headline1,
               textAlign: TextAlign.center,
             ),
           ),
           Text(
             sequence.name,
-            style: Theme.of(context).textTheme.display3.copyWith(
+            style: Theme.of(context).textTheme.bodyText1.copyWith(
               color: Colors.white
             ),
             textAlign: TextAlign.center,
@@ -92,7 +92,7 @@ class EventPage extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 8.0),
                 child: Text(
                   'Spawn Times',
-                  style: Theme.of(context).textTheme.display2,
+                  style: Theme.of(context).textTheme.headline2,
                 ),
               ),
               Wrap(
@@ -104,7 +104,7 @@ class EventPage extends StatelessWidget {
                     backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.orange : Colors.white12,
                     label: Text(
                       timeFormat.format(t),
-                      style: Theme.of(context).textTheme.display3.copyWith(
+                      style: Theme.of(context).textTheme.bodyText1.copyWith(
                         color: Colors.white
                       ),
                     ),

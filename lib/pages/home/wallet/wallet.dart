@@ -8,6 +8,7 @@ import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class WalletPage extends StatelessWidget {
   @override
@@ -41,7 +42,7 @@ class WalletPage extends StatelessWidget {
                   BlocProvider.of<WalletBloc>(context).add(LoadWalletEvent());
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
-                child: ListView(
+                child: CompanionListView(
                   children: state.currencies.map((c) => _buildCurrencyRow(context, c)).toList(),
                 ),
               );
@@ -64,7 +65,7 @@ class WalletPage extends StatelessWidget {
           Expanded(
             child: Text(
               currency.name,
-              style: Theme.of(context).textTheme.display3.copyWith(
+              style: Theme.of(context).textTheme.bodyText1.copyWith(
                 fontWeight: FontWeight.w500
               )
             ),
@@ -83,7 +84,7 @@ class WalletPage extends StatelessWidget {
         child: CompanionCoin(
           currency.value,
           innerPadding: 6.0,
-          color: Theme.of(context).textTheme.display3.color
+          color: Theme.of(context).textTheme.bodyText1.color
         ),
       );
     }
@@ -94,7 +95,7 @@ class WalletPage extends StatelessWidget {
         children: <Widget>[
           Text(
             GuildWarsUtil.intToString(currency.value),
-            style: Theme.of(context).textTheme.display3,
+            style: Theme.of(context).textTheme.bodyText1,
           ),
           Container(
             width: 20.0,

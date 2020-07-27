@@ -99,6 +99,7 @@ class CompanionItemBox extends StatelessWidget {
       child: Icon(
         FontAwesomeIcons.check,
         size: 20.0,
+        color: Colors.black,
       ),
     );
   }

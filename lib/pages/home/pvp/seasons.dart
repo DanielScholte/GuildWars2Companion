@@ -6,6 +6,7 @@ import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 import 'package:guildwars2_companion/widgets/pvp_season_rank.dart';
 import 'package:intl/intl.dart';
 
@@ -42,19 +43,18 @@ class SeasonsPage extends StatelessWidget {
               return Center(
                 child: Text(
                   'No ranked seasons with participation found',
-                  style: Theme.of(context).textTheme.display2,
+                  style: Theme.of(context).textTheme.headline2,
                 ),
               );
             }
 
             if (state is LoadedPvpState) {
-              return ListView(
-                padding: EdgeInsets.only(top: 8.0),
+              return CompanionListView(
                 children: state.pvpStandings
                   .map((s) {
                     PvpSeasonRank rank = s.season.ranks
                       .lastWhere((r) => 
-                        r.tiers.any((t) => t.rating <= s.current.rating),
+                        s.current.rating != null && r.tiers.any((t) => t.rating <= s.current.rating),
                         orElse: () => s.season.ranks.first
                       );
                     return CompanionButton(

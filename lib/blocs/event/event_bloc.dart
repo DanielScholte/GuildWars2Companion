@@ -9,14 +9,11 @@ part 'event_event.dart';
 part 'event_state.dart';
 
 class EventBloc extends Bloc<EventEvent, EventState> {
-  @override
-  EventState get initialState => LoadingEventsState();
-
   final EventRepository eventRepository;
 
   EventBloc({
     @required this.eventRepository,
-  });
+  }): super(LoadingEventsState());
 
   @override
   Stream<EventState> mapEventToState(

@@ -6,6 +6,7 @@ import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class MaterialPage extends StatelessWidget {
   @override
@@ -39,7 +40,7 @@ class MaterialPage extends StatelessWidget {
                   BlocProvider.of<BankBloc>(context).add(LoadBankEvent());
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
-                child: ListView(
+                child: CompanionListView(
                   children: state.materialCategories
                     .map((c) => _buildMaterialCategory(context, c))
                     .toList(),
@@ -65,7 +66,7 @@ class MaterialPage extends StatelessWidget {
             padding: EdgeInsets.all(8.0),
             child: Text(
               category.name,
-              style: Theme.of(context).textTheme.display2,
+              style: Theme.of(context).textTheme.headline2,
             ),
           ),
           Container(

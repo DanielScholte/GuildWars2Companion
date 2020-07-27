@@ -6,6 +6,7 @@ import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class GenericBankPage extends StatelessWidget {
 
@@ -16,11 +17,11 @@ class GenericBankPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CompanionAccent(
-      lightColor: bankType == BankType.bank ? Colors.blueGrey : Colors.blue,
+      lightColor: bankType == BankType.bank ? Colors.green : Colors.blue,
       child: Scaffold(
         appBar: CompanionAppBar(
           title: bankType == BankType.bank ? 'Bank' : 'Shared inventory',
-          color: bankType == BankType.bank ? Colors.blueGrey : Colors.blue,
+          color: bankType == BankType.bank ? Colors.green : Colors.blue,
           foregroundColor: Colors.white,
           elevation: 4.0,
         ),
@@ -46,7 +47,7 @@ class GenericBankPage extends StatelessWidget {
                   BlocProvider.of<BankBloc>(context).add(LoadBankEvent());
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
-                child: ListView(
+                child: CompanionListView(
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.all(8.0),

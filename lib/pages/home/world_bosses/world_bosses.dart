@@ -12,6 +12,7 @@ import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 import 'package:intl/intl.dart';
 import 'package:timer_builder/timer_builder.dart';
 
@@ -82,7 +83,7 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
                       BlocProvider.of<WorldBossBloc>(context).add(LoadWorldbossesEvent(true, state.includeProgress));
                       await Future.delayed(Duration(milliseconds: 200), () {});
                     },
-                    child: ListView(
+                    child: CompanionListView(
                       children: state.worldBosses
                         .map((w) => _buildWorldbossRow(context, timeFormat, w, state.includeProgress))
                         .toList(),
@@ -146,7 +147,7 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
                 if (isActive) {
                   return Text(
                     'Active',
-                    style: Theme.of(context).textTheme.display2.copyWith(
+                    style: Theme.of(context).textTheme.headline2.copyWith(
                       color: Colors.white
                     ),
                   );
@@ -154,7 +155,7 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
                   
                 return Text(
                   GuildWarsUtil.durationToString(worldBoss.dateTime.toLocal().difference(DateTime.now())),
-                  style: Theme.of(context).textTheme.display2.copyWith(
+                  style: Theme.of(context).textTheme.headline2.copyWith(
                     color: Colors.white
                   ),
                 );
@@ -162,7 +163,7 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
             ),
             Text(
               timeFormat.format(worldBoss.dateTime.toLocal()),
-              style: Theme.of(context).textTheme.display3.copyWith(
+              style: Theme.of(context).textTheme.bodyText1.copyWith(
                 color: Colors.white
               ),
             )

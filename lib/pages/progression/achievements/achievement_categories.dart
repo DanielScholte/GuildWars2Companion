@@ -11,6 +11,7 @@ import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/expandable_header.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 import 'achievements.dart';
 
@@ -50,7 +51,7 @@ class AchievementCategoriesPage extends StatelessWidget {
                   ));
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
-                child: ListView(
+                child: CompanionListView(
                   children: state.achievementGroups
                     .map((g) => _buildGroup(context, g))
                     .toList(),
@@ -89,10 +90,13 @@ class AchievementCategoriesPage extends StatelessWidget {
               .toList(),
           ),
         ),
-        child: Column(
-          children: categories
-            .map((c) => _buildCategoryButton(c, context))
-            .toList()
+        child: Padding(
+          padding: EdgeInsets.only(bottom: 4.0),
+          child: Column(
+            children: categories
+              .map((c) => _buildCategoryButton(c, context))
+              .toList()
+          ),
         ),
       ),
     );

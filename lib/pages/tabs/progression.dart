@@ -10,6 +10,7 @@ import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class ProgressionPage extends StatelessWidget {
   @override
@@ -61,7 +62,7 @@ class ProgressionPage extends StatelessWidget {
   }
 
   Widget _buildButtonList(BuildContext context) {
-    return ListView(
+    return CompanionListView(
       children: <Widget>[
         CompanionButton(
           color: Colors.orange,

@@ -29,6 +29,11 @@ class Urls {
   static final String skinsUrl = '/skins?ids=';
   static final String minisUrl = '/minis?ids=';
 
+  static final String specializationsUrl = '/specializations?ids=all';
+  static final String buildStorageUrl = '/account/buildstorage?ids=all';
+  static final String skillsUrl = '/skills?ids=';
+  static final String traitsUrl = '/traits?ids=';
+
   static final String inventoryUrl = '/account/inventory';
   static final String bankUrl = '/account/bank';
   static final String materialUrl = '/account/materials';

@@ -10,6 +10,7 @@ import 'package:guildwars2_companion/widgets/coin.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_row.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
+import 'package:guildwars2_companion/widgets/listview.dart';
 
 class ItemPage extends StatelessWidget {
 
@@ -34,8 +35,7 @@ class ItemPage extends StatelessWidget {
         children: <Widget>[
           _buildHeader(context),
           Expanded(
-            child: ListView(
-              padding: EdgeInsets.only(top: 8.0),
+            child: CompanionListView(
               children: <Widget>[
                 if (skin != null)
                   _buildTransmutedItemInfo(context),
@@ -79,13 +79,13 @@ class ItemPage extends StatelessWidget {
             padding: EdgeInsets.all(4.0),
             child: Text(
               skin != null ? skin.name : item.name,
-              style: Theme.of(context).textTheme.display1,
+              style: Theme.of(context).textTheme.headline1,
               textAlign: TextAlign.center,
             ),
           ),
           Text(
             item.type != null ? typeToName(item.type) : '',
-            style: Theme.of(context).textTheme.display3.copyWith(
+            style: Theme.of(context).textTheme.bodyText1.copyWith(
               color: Colors.white
             ),
             textAlign: TextAlign.center,
@@ -103,7 +103,7 @@ class ItemPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Transmuted',
-              style: Theme.of(context).textTheme.display2,
+              style: Theme.of(context).textTheme.headline2,
             ),
           ),
           Row(
@@ -113,12 +113,13 @@ class ItemPage extends StatelessWidget {
                 item: item,
                 size: 45.0,
                 enablePopup: false,
+                includeMargin: true,
               ),
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text(
                   item.name,
-                  style: Theme.of(context).textTheme.display3,
+                  style: Theme.of(context).textTheme.bodyText1,
                   textAlign: TextAlign.center,
                 ),
               )
@@ -145,7 +146,7 @@ class ItemPage extends StatelessWidget {
             padding: EdgeInsets.all(4.0),
             child: Text(
               items[i].name,
-              style: Theme.of(context).textTheme.display3,
+              style: Theme.of(context).textTheme.bodyText1,
               textAlign: TextAlign.center,
             ),
           )
@@ -160,7 +161,7 @@ class ItemPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               header,
-              style: Theme.of(context).textTheme.display2,
+              style: Theme.of(context).textTheme.headline2,
             ),
           ),
           Column(
@@ -179,12 +180,12 @@ class ItemPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Description',
-              style: Theme.of(context).textTheme.display2,
+              style: Theme.of(context).textTheme.headline2,
             ),
           ),
           Text(
-            removeAllHtmlTags(item.description),
-            style: Theme.of(context).textTheme.display3,
+            GuildWarsUtil.removeFullHtml(item.description),
+            style: Theme.of(context).textTheme.bodyText1,
           ),
         ],
       ),
@@ -199,27 +200,19 @@ class ItemPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Effect description',
-              style: Theme.of(context).textTheme.display2,
+              style: Theme.of(context).textTheme.headline2,
             ),
           ),
           Text(
-            removeAllHtmlTags(item.details.description),
-            style: Theme.of(context).textTheme.display3,
+            GuildWarsUtil.removeFullHtml(item.details.description),
+            style: Theme.of(context).textTheme.bodyText1,
           ),
         ],
       ),
     );
   }
 
-  String removeAllHtmlTags(String htmlText) {
-    RegExp exp = RegExp(
-      r"<[^>]*>",
-      multiLine: true,
-      caseSensitive: true
-    );
-
-    return htmlText.replaceAll(exp, '');
-  }
+  
 
   Widget _buildItemDetails(BuildContext context) {
     if ([
@@ -239,7 +232,7 @@ class ItemPage extends StatelessWidget {
               padding: EdgeInsets.only(bottom: 8.0),
               child: Text(
                 'Stats',
-                style: Theme.of(context).textTheme.display2,
+                style: Theme.of(context).textTheme.headline2,
               ),
             ),
             CompanionInfoRow(
@@ -347,7 +340,7 @@ class ItemPage extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Stats',
-              style: Theme.of(context).textTheme.display2,
+              style: Theme.of(context).textTheme.headline2,
             ),
           ),
           CompanionInfoRow(
@@ -391,7 +384,7 @@ class ItemPage extends StatelessWidget {
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     'Value',
-                    style: Theme.of(context).textTheme.display2,
+                    style: Theme.of(context).textTheme.headline2,
                   ),
                 ),
                 CompanionInfoRow(
@@ -419,7 +412,7 @@ class ItemPage extends StatelessWidget {
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     'Value',
-                    style: Theme.of(context).textTheme.display2,
+                    style: Theme.of(context).textTheme.headline2,
                   ),
                 ),
                 CompanionInfoRow(
@@ -458,7 +451,7 @@ class ItemPage extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 8.0),
                 child: Text(
                   'Value',
-                  style: Theme.of(context).textTheme.display2,
+                  style: Theme.of(context).textTheme.headline2,
                 ),
               ),
               CompanionInfoRow(
