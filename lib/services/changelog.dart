@@ -36,7 +36,7 @@ class ChangelogService {
   List<Changelog> changelog = [
     Changelog(
       version: '1.4.2',
-      build: 19,
+      build: 20,
       newFeatures: false,
       changes: [
         'Fixed an issue where non-legendary gear might not contain any upgrades'
