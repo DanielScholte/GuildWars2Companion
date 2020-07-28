@@ -72,6 +72,7 @@ class EquipmentSelectionPage extends StatelessWidget {
                 },
                 child: CompanionListView(
                   children: character.equipmentTabs
+                    .where((e) => e.equipment != null && e.equipment.length > 0)
                     .map((e) => CompanionButton(
                       color: character.professionColor,
                       title: e.name != null && e.name.isNotEmpty ? e.name : 'Nameless equipment build',

@@ -203,14 +203,15 @@ class CharacterPage extends StatelessWidget {
                           BlocProvider.of<CharacterBloc>(context).add(LoadCharacterDetailsEvent());
                         }
 
-                        if (_character.equipmentTabs != null && _character.equipmentTabs.length == 1) {
+                        if (_character.equipmentTabs != null &&
+                          _character.equipmentTabs.where((e) => e.equipment != null && e.equipment.length > 0).length == 1) {
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => EquipmentPage(
                               _character,
-                              EquipmentTab(
-                                equipment: _character.equipment,
-                                name: 'Equipment'
-                              ),
+                              _character.equipmentTabs
+                                .where((e) => e.equipment != null && e.equipment.length > 0)
+                                .first
+                                ..name = 'Equipment',
                               singular: true,
                             ),
                           ));

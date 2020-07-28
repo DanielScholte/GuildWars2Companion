@@ -117,7 +117,7 @@ class GuildWarsUtil {
       caseSensitive: true
     );
 
-    return htmlText.replaceAll(tagExp, '');
+    return htmlText.replaceAll('<br>', '. ').replaceAll(tagExp, '');
   }
 
   static String removeFullHtml(String htmlText) {

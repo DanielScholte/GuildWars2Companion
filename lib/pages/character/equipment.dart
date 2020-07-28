@@ -9,6 +9,8 @@ import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
 import 'package:guildwars2_companion/widgets/listview.dart';
 
+import '../../models/character/equipment.dart';
+
 class EquipmentPage extends StatelessWidget {
   final Character _character;
   final EquipmentTab _equipmentTab;
@@ -151,14 +153,45 @@ class EquipmentPage extends StatelessWidget {
       orElse: () => null
     );
 
-    if (equipment != null || !['Sickle', 'Axe', 'Pick'].contains(name)) {
+    if (['Sickle', 'Axe', 'Pick'].contains(name)) {
+      if (equipment == null) {
+        return _character.equipment.firstWhere(
+          (e) => e.slot == name,
+          orElse: () => null
+        );
+      }
+
       return equipment;
     }
 
-    return _character.equipment.firstWhere(
-      (e) => e.slot == name,
-      orElse: () => null
-    );
+    if (equipment != null && equipment.itemInfo != null && equipment.itemInfo.rarity != "Legendary") { 
+      // Due to current legendary equipmenttab bug.
+      // Grab the correct index. Important when using two of the same weapon, like two identical daggers with different upgrades.
+      // Wrapped in a try catch to prevent potential errors, and use the equipment without upgrades instead.
+      try {
+        int index = _equipmentTab.equipment
+          .where((e) => e.id == equipment.id && e.skin == equipment.skin)
+          .toList()
+          .indexOf(equipment);
+      
+        List<Equipment> alternatives = _character.equipment
+          .where((e) => e.id == equipment.id
+            && e.skin == equipment.skin
+            && e.tabs != null
+            && e.tabs.contains(_equipmentTab.tab))
+          .toList();
+
+        if (alternatives.length >= index + 1) {
+          Equipment alternative = alternatives[index];
+
+          alternative.slot = name;
+
+          return alternative;
+        }
+      } catch (_) {}
+    }
+
+    return equipment;
   }
 
   Widget _buildSlot(Equipment equipment, { bool small = false }) {

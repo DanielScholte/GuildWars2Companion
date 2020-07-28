@@ -42,9 +42,11 @@ class ChangelogPage extends StatelessWidget {
                                 size: 6.0,
                               ),
                             ),
-                            Text(
-                              change,
-                              style: Theme.of(context).textTheme.bodyText1
+                            Expanded(
+                              child: Text(
+                                change,
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
                             ),
                           ]
                         ))

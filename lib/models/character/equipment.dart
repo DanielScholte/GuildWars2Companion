@@ -9,6 +9,7 @@ class Equipment {
 	String binding;
 	List<int> infusions;
   List<Item> infusionsInfo;
+  List<int> tabs;
 	int skin;
   Item itemInfo;
   Skin skinInfo;
@@ -24,6 +25,9 @@ class Equipment {
     }
     if (json.containsKey('infusions')) {
       infusions = json['infusions'].cast<int>();
+    }
+    if (json.containsKey('tabs')) {
+      tabs = json['tabs'].cast<int>();
     }
 		skin = json['skin'];
 	}
