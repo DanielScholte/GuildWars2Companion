@@ -1,61 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:guildwars2_companion/factory.dart';
 import 'package:guildwars2_companion/main.dart';
 import 'package:guildwars2_companion/models/account/account.dart';
 import 'package:guildwars2_companion/models/account/token_info.dart';
 import 'package:guildwars2_companion/models/character/character.dart';
 import 'package:guildwars2_companion/models/character/profession.dart';
-import 'package:guildwars2_companion/services/changelog.dart';
-import 'package:guildwars2_companion/services/configuration.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/info_box.dart';
 import 'package:mockito/mockito.dart';
-import 'mocks/services.dart';
+import 'mocks/factory.dart';
 
 main() {
   group('Token Permissions', () {
-    MockAccountService accountService;
-    MockAchievementService achievementService;
-    MockBankService bankService;
-    MockBuildService buildService;
-    MockCharacterService characterService;
-    MockDungeonService dungeonService;
-    MockEventService eventService;
-    MockItemService itemService;
-    MockRaidService raidService;
-    MockMapService mapService;
-    MockPvpService pvpService;
-    MockTokenService tokenService;
-    MockTradingPostService tradingPostService;
-    MockWalletService walletService;
-    MockWorldBossService worldBossService;
-    ChangelogService changelogService;
-    ConfigurationService configurationService;
+    CompanionFactory companionFactory;
 
-    setUp(() {
-      accountService = MockAccountService();
-      achievementService = MockAchievementService();
-      bankService = MockBankService();
-      buildService = MockBuildService();
-      characterService = MockCharacterService();
-      dungeonService = MockDungeonService();
-      eventService = MockEventService();
-      itemService = MockItemService();
-      raidService = MockRaidService();
-      mapService = MockMapService();
-      pvpService = MockPvpService();
-      tokenService = MockTokenService();
-      tradingPostService = MockTradingPostService();
-      walletService = MockWalletService();
-      worldBossService = MockWorldBossService();
+    setUp(() async {
+      companionFactory = MockCompanionFactory();
+      await companionFactory.initializeServices();
 
-      changelogService = ChangelogService();
-      configurationService = ConfigurationService();
-
-      when(tokenService.tokenPresent())
+      when(companionFactory.tokenService.tokenPresent())
         .thenAnswer((_) async => true);
 
-      when(accountService.getAccount(any))
+      when(companionFactory.accountService.getAccount(any))
         .thenAnswer((_) async => Account(
           name: 'Unit Test Account',
           age: 10000,
@@ -63,7 +30,7 @@ main() {
           monthlyAp: 0,
         ));
       
-      when(characterService.getCharacters())
+      when(companionFactory.characterService.getCharacters())
         .thenAnswer((_) async => [
           Character(
             name: 'Unit Test Character',
@@ -74,19 +41,19 @@ main() {
             title: 0,
           ),
         ]);
-      when(characterService.getProfessions())
+      when(companionFactory.characterService.getProfessions())
         .thenAnswer((_) async => [
           Profession(
             id: 'Guardian',
             name: 'Guardian',
           ),
         ]);
-      when(characterService.getTitles())
+      when(companionFactory.characterService.getTitles())
         .thenAnswer((_) async => []);
     });
 
     testWidgets('All permissions', (WidgetTester tester) async {
-      when(accountService.getTokenInfo(any))
+      when(companionFactory.accountService.getTokenInfo(any))
         .thenAnswer((_) async => TokenInfo(
           permissions: [
             'account',
@@ -103,23 +70,7 @@ main() {
         ));
 
       await tester.pumpWidget(GuildWars2Companion(
-        accountService: accountService,
-        achievementService: achievementService,
-        bankService: bankService,
-        buildService: buildService,
-        characterService: characterService,
-        dungeonService: dungeonService,
-        eventService: eventService,
-        itemService: itemService,
-        raidService: raidService,
-        mapService: mapService,
-        pvpService: pvpService,
-        tokenService: tokenService,
-        tradingPostService: tradingPostService,
-        walletService: walletService,
-        worldBossService: worldBossService,
-        changelogService: changelogService,
-        configurationService: configurationService,
+        companionFactory: companionFactory,
         isAuthenticated: true,
       ));
 
@@ -162,7 +113,7 @@ main() {
     });
 
     testWidgets('No builds & inventory', (WidgetTester tester) async {
-      when(accountService.getTokenInfo(any))
+      when(companionFactory.accountService.getTokenInfo(any))
         .thenAnswer((_) async => TokenInfo(
           permissions: [
             'account',
@@ -177,23 +128,7 @@ main() {
         ));
 
       await tester.pumpWidget(GuildWars2Companion(
-        accountService: accountService,
-        achievementService: achievementService,
-        bankService: bankService,
-        buildService: buildService,
-        characterService: characterService,
-        dungeonService: dungeonService,
-        eventService: eventService,
-        itemService: itemService,
-        raidService: raidService,
-        mapService: mapService,
-        pvpService: pvpService,
-        tokenService: tokenService,
-        tradingPostService: tradingPostService,
-        walletService: walletService,
-        worldBossService: worldBossService,
-        changelogService: changelogService,
-        configurationService: configurationService,
+        companionFactory: companionFactory,
         isAuthenticated: true,
       ));
 
@@ -236,7 +171,7 @@ main() {
     });
 
     testWidgets('No permissions', (WidgetTester tester) async {
-      when(accountService.getTokenInfo(any))
+      when(companionFactory.accountService.getTokenInfo(any))
         .thenAnswer((_) async => TokenInfo(
           permissions: [
             'account',
@@ -244,23 +179,7 @@ main() {
         ));
 
       await tester.pumpWidget(GuildWars2Companion(
-        accountService: accountService,
-        achievementService: achievementService,
-        bankService: bankService,
-        buildService: buildService,
-        characterService: characterService,
-        dungeonService: dungeonService,
-        eventService: eventService,
-        itemService: itemService,
-        raidService: raidService,
-        mapService: mapService,
-        pvpService: pvpService,
-        tokenService: tokenService,
-        tradingPostService: tradingPostService,
-        walletService: walletService,
-        worldBossService: worldBossService,
-        changelogService: changelogService,
-        configurationService: configurationService,
+        companionFactory: companionFactory,
         isAuthenticated: true,
       ));
 
