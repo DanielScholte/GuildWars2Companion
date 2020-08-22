@@ -24,49 +24,63 @@ class EventRepository {
         return;
       }
 
-      DateTime now = DateTime.now().toUtc();
-      DateTime offset = DateTime.utc(now.year, now.month, now.day).subtract(event.offset);
-
-      while(_getDayValue(offset) <= _getDayValue(now)) {
-        event.segments.forEach((segment) {
-          if (_getDayValue(offset) > _getDayValue(now)) {
-            return;
-          }
-
-          segment.times.add(offset);
-          offset = offset.add(segment.duration);
-        });
-      }
-
-      event.segments.forEach((segment) {
-        if (segment.times.isEmpty) {
-          return;
-        }
-
-        List<MetaEventSegment> duplicates = 
-          event.segments.where((s) => s.name == segment.name && s != segment && s.duration.inMinutes == segment.duration.inMinutes).toList();
-
-        if (duplicates.isNotEmpty) {
-          duplicates.forEach((d) {
-            segment.times.addAll(d.times);
-            d.times = [];
-          });
-
-          segment.times.sort((a, b) => a.compareTo(b));
-        }
-
-        segment.time = segment.times
-          .firstWhere((t) => t.add(segment.duration).isAfter(now), orElse: () => segment.times[0].add(Duration(days: 1)));
-      });
-
-      event.segments.removeWhere((s) => s.times.isEmpty || s.time == null);
-
-      event.segments.sort((a, b) => a.time.compareTo(b.time));
-
-      event.segments.forEach((s) => s.times.removeWhere((t) => t.day != now.day));
+      processMetaEventSequence(event);
     });
 
     return events;
+  }
+
+  void processMetaEventSequence(MetaEventSequence sequence) {
+    sequence.segments.forEach((segment) {
+      segment.time = null;
+      segment.times = [];
+    });
+
+    DateTime now = DateTime.now().toUtc();
+    DateTime offset = DateTime.utc(now.year, now.month, now.day).subtract(sequence.offset);
+
+    while(_getDayValue(offset) <= _getDayValue(now)) {
+      sequence.segments.forEach((segment) {
+        if (_getDayValue(offset) > _getDayValue(now)) {
+          return;
+        }
+
+        segment.times.add(offset);
+        offset = offset.add(segment.duration);
+      });
+    }
+
+    sequence.segments.forEach((segment) {
+      if (segment.times.isEmpty) {
+        return;
+      }
+
+      List<MetaEventSegment> duplicates = 
+        sequence.segments
+          .where((s) => 
+            s.name == segment.name
+            && s != segment
+            && s.duration.inMinutes == segment.duration.inMinutes
+          ).toList();
+
+      if (duplicates.isNotEmpty) {
+        duplicates.forEach((d) {
+          segment.times.addAll(d.times);
+          d.times = [];
+        });
+
+        segment.times.sort((a, b) => a.compareTo(b));
+      }
+
+      segment.time = segment.times
+        .firstWhere((t) => t.add(segment.duration).isAfter(now), orElse: () => segment.times[0].add(Duration(days: 1)));
+    });
+
+    sequence.segments.removeWhere((s) => s.times.isEmpty || s.time == null);
+
+    sequence.segments.sort((a, b) => a.time.compareTo(b.time));
+
+    sequence.segments.forEach((s) => s.times.removeWhere((t) => t.day != now.day));
   }
 
   int _getDayValue(DateTime date) {

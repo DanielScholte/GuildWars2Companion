@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:guildwars2_companion/models/other/meta_event.dart';
 import '../models/other/world_boss.dart';
 import '../utils/urls.dart';
 
@@ -31,16 +32,6 @@ class WorldBossService {
         waypoint: 'Laughing Gull Waypoint',
         level: 50,
         color: Colors.green,
-        times: [
-          '00:00',
-          '03:00',
-          '06:00',
-          '09:00',
-          '12:00',
-          '15:00',
-          '18:00',
-          '21:00',
-        ]
       ),
       WorldBoss(
         name: 'Claw of Jormag',
@@ -48,17 +39,7 @@ class WorldBossService {
         location: 'Frostgorge Sound',
         waypoint: 'Earthshake Waypoint',
         level: 80,
-        color: Colors.blue,
-        times: [
-          '02:30',
-          '05:30',
-          '08:30',
-          '11:30',
-          '14:30',
-          '17:30',
-          '20:30',
-          '23:30',
-        ]
+        color: Colors.green,
       ),
       WorldBoss(
         name: 'Fire Elemental',
@@ -66,21 +47,7 @@ class WorldBossService {
         location: 'Metrica Province',
         waypoint: 'Muridian Waypoint',
         level: 15,
-        color: Colors.deepOrange,
-        times: [
-          '00:45',
-          '02:45',
-          '04:45',
-          '06:45',
-          '08:45',
-          '10:45',
-          '12:45',
-          '14:45',
-          '16:45',
-          '18:45',
-          '20:45',
-          '22:45',
-        ]
+        color: Colors.green,
       ),
       WorldBoss(
         name: 'Great Jungle Wurm',
@@ -89,20 +56,6 @@ class WorldBossService {
         waypoint: 'Twilight Arbor Waypoint',
         level: 15,
         color: Colors.green,
-        times: [
-          '01:15',
-          '03:15',
-          '05:15',
-          '07:15',
-          '09:15',
-          '11:15',
-          '13:15',
-          '15:15',
-          '17:15',
-          '19:15',
-          '21:15',
-          '23:15',
-        ]
       ),
       WorldBoss(
         name: 'Inquest Golem Mark II',
@@ -110,17 +63,7 @@ class WorldBossService {
         location: 'Mount Maelstrom',
         waypoint: 'Old Sledge Site Waypoint',
         level: 68,
-        color: Colors.blueGrey,
-        times: [
-          '02:00',
-          '05:00',
-          '08:00',
-          '11:00',
-          '14:00',
-          '17:00',
-          '20:00',
-          '23:00',
-        ]
+        color: Colors.green,
       ),
       WorldBoss(
         name: 'Karka Queen',
@@ -129,14 +72,6 @@ class WorldBossService {
         waypoint: 'Camp Karka Waypoint',
         level: 80,
         color: Colors.pink,
-        times: [
-          '02:00',
-          '06:00',
-          '10:30',
-          '15:00',
-          '18:00',
-          '23:00',
-        ]
       ),
       WorldBoss(
         name: 'Megadestroyer',
@@ -144,17 +79,7 @@ class WorldBossService {
         location: 'Mount Maelstrom',
         waypoint: "Maelstrom's Waypoint",
         level: 66,
-        color: Colors.red,
-        times: [
-          '00:30',
-          '03:30',
-          '06:30',
-          '09:30',
-          '12:30',
-          '15:30',
-          '18:30',
-          '21:30',
-        ]
+        color: Colors.green,
       ),
       WorldBoss(
         name: 'Modniir Ulgoth',
@@ -162,17 +87,7 @@ class WorldBossService {
         location: 'Harathi Hinterlands',
         waypoint: 'Cloven Hoof Waypoint',
         level: 43,
-        color: Colors.brown,
-        times: [
-          '01:30',
-          '04:30',
-          '07:30',
-          '10:30',
-          '13:30',
-          '16:30',
-          '19:30',
-          '22:30',
-        ]
+        color: Colors.green,
       ),
       WorldBoss(
         name: 'Shadow Behemoth',
@@ -180,21 +95,7 @@ class WorldBossService {
         location: 'Queensdale',
         waypoint: 'Swamplost Haven Waypoint',
         level: 15,
-        color: Colors.brown,
-        times: [
-          '01:45',
-          '03:45',
-          '05:45',
-          '07:45',
-          '09:45',
-          '11:45',
-          '13:45',
-          '15:45',
-          '17:45',
-          '19:45',
-          '21:45',
-          '23:45',
-        ]
+        color: Colors.green,
       ),
       WorldBoss(
         name: 'Svanir Shaman Chief',
@@ -202,21 +103,7 @@ class WorldBossService {
         location: 'Wayfarer Foothills',
         waypoint: "Krennak's Homestead Waypoint",
         level: 10,
-        color: Colors.lightBlue,
-        times: [
-          '00:15',
-          '02:15',
-          '04:15',
-          '06:15',
-          '08:15',
-          '10:15',
-          '12:15',
-          '14:15',
-          '16:15',
-          '18:15',
-          '20:15',
-          '22:15',
-        ]
+        color: Colors.green,
       ),
       WorldBoss(
         name: 'Tequatl the Sunless',
@@ -224,15 +111,7 @@ class WorldBossService {
         location: 'Sparkfly Fen',
         waypoint: 'Splintered Coast Waypoint',
         level: 65,
-        color: Colors.green,
-        times: [
-          '00:00',
-          '03:00',
-          '07:00',
-          '11:30',
-          '16:00',
-          '19:00',
-        ]
+        color: Colors.pink,
       ),
       WorldBoss(
         name: 'The Shatterer',
@@ -240,17 +119,7 @@ class WorldBossService {
         location: 'Blazeridge Steppes',
         waypoint: 'Lowland Burns Waypoint',
         level: 50,
-        color: Colors.deepPurple,
-        times: [
-          '01:00',
-          '04:00',
-          '07:00',
-          '10:00',
-          '13:00',
-          '16:00',
-          '19:00',
-          '22:00',
-        ]
+        color: Colors.green,
       ),
       WorldBoss(
         name: 'Triple Trouble Wurm',
@@ -258,14 +127,255 @@ class WorldBossService {
         location: 'Bloodtide Coast',
         waypoint: 'Firthside Vigil Waypoint',
         level: 55,
-        color: Colors.green,
-        times: [
-          '01:00',
-          '04:00',
-          '08:00',
-          '12:30',
-          '17:00',
-          '20:00',
+        color: Colors.pink,
+      ),
+    ];
+  }
+
+  List<MetaEventSequence> getWorldBossSequences() {
+    return [
+      MetaEventSequence(
+        segments: [
+          MetaEventSegment(
+            name: 'admiral_taidha_covington',
+            duration: Duration(minutes: 15),
+          ),
+          MetaEventSegment(
+            name: 'svanir_shaman_chief',
+            duration: Duration(minutes: 15),
+          ),
+          MetaEventSegment(
+            name: 'megadestroyer',
+            duration: Duration(minutes: 15),
+          ),
+          MetaEventSegment(
+            name: 'fire_elemental',
+            duration: Duration(minutes: 15),
+          ),
+          MetaEventSegment(
+            name: 'the_shatterer',
+            duration: Duration(minutes: 15),
+          ),
+          MetaEventSegment(
+            name: 'great_jungle_wurm',
+            duration: Duration(minutes: 15),
+          ),
+          MetaEventSegment(
+            name: 'modniir_ulgoth',
+            duration: Duration(minutes: 15),
+          ),
+          MetaEventSegment(
+            name: 'shadow_behemoth',
+            duration: Duration(minutes: 15),
+          ),
+          MetaEventSegment(
+            name: 'inquest_golem_mark_ii',
+            duration: Duration(minutes: 15),
+          ),
+          MetaEventSegment(
+            name: 'svanir_shaman_chief',
+            duration: Duration(minutes: 15),
+          ),
+          MetaEventSegment(
+            name: 'claw_of_jormag',
+            duration: Duration(minutes: 15),
+          ),
+          MetaEventSegment(
+            name: 'fire_elemental',
+            duration: Duration(minutes: 15),
+          ),
+          MetaEventSegment(
+            name: 'admiral_taidha_covington',
+            duration: Duration(minutes: 15),
+          ),
+          MetaEventSegment(
+            name: 'great_jungle_wurm',
+            duration: Duration(minutes: 15),
+          ),
+          MetaEventSegment(
+            name: 'megadestroyer',
+            duration: Duration(minutes: 15),
+          ),
+          MetaEventSegment(
+            name: 'shadow_behemoth',
+            duration: Duration(minutes: 15),
+          ),
+          MetaEventSegment(
+            name: 'the_shatterer',
+            duration: Duration(minutes: 15),
+          ),
+          MetaEventSegment(
+            name: 'svanir_shaman_chief',
+            duration: Duration(minutes: 15),
+          ),
+          MetaEventSegment(
+            name: 'modniir_ulgoth',
+            duration: Duration(minutes: 15),
+          ),
+          MetaEventSegment(
+            name: 'fire_elemental',
+            duration: Duration(minutes: 15),
+          ),
+          MetaEventSegment(
+            name: 'inquest_golem_mark_ii',
+            duration: Duration(minutes: 15),
+          ),
+          MetaEventSegment(
+            name: 'great_jungle_wurm',
+            duration: Duration(minutes: 15),
+          ),
+          MetaEventSegment(
+            name: 'claw_of_jormag',
+            duration: Duration(minutes: 15),
+          ),
+          MetaEventSegment(
+            name: 'shadow_behemoth',
+            duration: Duration(minutes: 15),
+          ),
+        ]
+      ),
+      MetaEventSequence(
+        segments: [
+          MetaEventSegment(
+            name: 'tequatl_the_sunless',
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            name: 'triple_trouble_wurm',
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            name: 'karka_queen',
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            name: 'tequatl_the_sunless',
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            name: 'triple_trouble_wurm',
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 90),
+          ),
+          MetaEventSegment(
+            name: 'karka_queen',
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            name: 'tequatl_the_sunless',
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            name: 'triple_trouble_wurm',
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 120),
+          ),
+          MetaEventSegment(
+            name: 'karka_queen',
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            name: 'tequatl_the_sunless',
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            name: 'triple_trouble_wurm',
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 120),
+          ),
+          MetaEventSegment(
+            name: 'karka_queen',
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            name: 'tequatl_the_sunless',
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            name: 'triple_trouble_wurm',
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            name: 'karka_queen',
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            name: 'tequatl_the_sunless',
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            name: 'triple_trouble_wurm',
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 150),
+          ),
+          MetaEventSegment(
+            name: 'karka_queen',
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            name: 'tequatl_the_sunless',
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            name: 'triple_trouble_wurm',
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 30),
+          ),
         ]
       ),
     ];

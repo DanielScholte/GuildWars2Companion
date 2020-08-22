@@ -262,6 +262,7 @@ class CompanionFactory {
         ),
         BlocProvider<WorldBossBloc>(
           create: (BuildContext context) => WorldBossBloc(
+            eventRepository: RepositoryProvider.of<EventRepository>(context),
             worldBossRepository: RepositoryProvider.of<WorldBossRepository>(context),
           ),
         ),

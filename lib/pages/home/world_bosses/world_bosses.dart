@@ -12,7 +12,7 @@ import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
-import 'package:guildwars2_companion/widgets/listview.dart';
+import 'package:guildwars2_companion/widgets/list_view.dart';
 import 'package:intl/intl.dart';
 import 'package:timer_builder/timer_builder.dart';
 
@@ -70,7 +70,7 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
                     child: CompanionError(
                       title: 'the world bosses',
                       onTryAgain: () =>
-                        BlocProvider.of<WorldBossBloc>(context).add(LoadWorldbossesEvent(true, state.includeProgress)),
+                        BlocProvider.of<WorldBossBloc>(context).add(LoadWorldbossesEvent(true, null)),
                     ),
                   );
                 }
@@ -80,12 +80,12 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
                     backgroundColor: Theme.of(context).accentColor,
                     color: Theme.of(context).cardColor,
                     onRefresh: () async {
-                      BlocProvider.of<WorldBossBloc>(context).add(LoadWorldbossesEvent(true, state.includeProgress));
+                      BlocProvider.of<WorldBossBloc>(context).add(LoadWorldbossesEvent(true, null));
                       await Future.delayed(Duration(milliseconds: 200), () {});
                     },
                     child: CompanionListView(
                       children: state.worldBosses
-                        .map((w) => _buildWorldbossRow(context, timeFormat, w, state.includeProgress))
+                        .map((w) => _buildWorldbossRow(context, timeFormat, w))
                         .toList(),
                     ),
                   );
@@ -102,7 +102,9 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
     );
   }
               
-  Widget _buildWorldbossRow(BuildContext context, DateFormat timeFormat, WorldBoss worldBoss, bool includeProgress) {
+  Widget _buildWorldbossRow(BuildContext context, DateFormat timeFormat, WorldBoss worldBoss) {
+    DateTime time = worldBoss.segment.time.toLocal();
+
     return CompanionButton(
       color: worldBoss.color,
       title: worldBoss.name,
@@ -137,11 +139,11 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
               builder: (context) {
                 DateTime now = DateTime.now();
 
-                bool isActive = worldBoss.dateTime.toLocal().isBefore(now);
+                bool isActive = time.isBefore(now);
 
-                if (worldBoss.refreshTime.toLocal().isBefore(now) && _refreshTimeout == 0) {
+                if (time.add(worldBoss.segment.duration).isBefore(now) && _refreshTimeout == 0) {
                   _refreshTimeout = 30;
-                  BlocProvider.of<WorldBossBloc>(context).add(LoadWorldbossesEvent(false, includeProgress));
+                  BlocProvider.of<WorldBossBloc>(context).add(LoadWorldbossesEvent(false, null));
                 }
 
                 if (isActive) {
@@ -154,7 +156,7 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
                 }
                   
                 return Text(
-                  GuildWarsUtil.durationToString(worldBoss.dateTime.toLocal().difference(DateTime.now())),
+                  GuildWarsUtil.durationToString(time.difference(DateTime.now())),
                   style: Theme.of(context).textTheme.headline2.copyWith(
                     color: Colors.white
                   ),
@@ -162,7 +164,7 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
               },
             ),
             Text(
-              timeFormat.format(worldBoss.dateTime.toLocal()),
+              timeFormat.format(time),
               style: Theme.of(context).textTheme.bodyText1.copyWith(
                 color: Colors.white
               ),

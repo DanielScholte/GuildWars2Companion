@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 
+import 'meta_event.dart';
+
 class WorldBoss {
   String name;
   String id;
@@ -10,20 +12,16 @@ class WorldBoss {
   int level;
   Color color;
   bool completed;
-  DateTime dateTime;
-  DateTime refreshTime;
-  List<String> times;
+  MetaEventSegment segment;
 
   WorldBoss({
     @required this.name,
     @required this.location,
     this.id,
-    this.dateTime,
     this.completed = false,
-    this.refreshTime,
-    this.times,
     this.color,
     this.level,
-    this.waypoint
+    this.waypoint,
+    this.segment
   });
 }

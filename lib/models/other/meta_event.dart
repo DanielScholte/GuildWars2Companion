@@ -8,9 +8,9 @@ class MetaEventSequence {
   List<MetaEventSegment> segments;
 
   MetaEventSequence({
-    @required this.id,
-    @required this.name,
-    @required this.region,
+    this.id,
+    this.name,
+    this.region,
     @required this.segments,
     this.offset = Duration.zero,
   });

@@ -7,7 +7,7 @@ import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_row.dart';
-import 'package:guildwars2_companion/widgets/listview.dart';
+import 'package:guildwars2_companion/widgets/list_view.dart';
 import 'package:intl/intl.dart';
 
 class WorldBossPage extends StatelessWidget {
@@ -116,6 +116,9 @@ class WorldBossPage extends StatelessWidget {
   }
 
   Widget _buildTimes(BuildContext context) {
+    List<DateTime> times = worldBoss.segment.times.map((d) => d.toLocal()).toList();
+    times.sort((a, b) => a.hour.compareTo(b.hour));
+
     return BlocBuilder<ConfigurationBloc, ConfigurationState>(
       builder: (context, state) {
         final Configuration configuration = (state as LoadedConfiguration).configuration;
@@ -135,7 +138,7 @@ class WorldBossPage extends StatelessWidget {
                 alignment: WrapAlignment.spaceEvenly,
                 spacing: 16.0,
                 runSpacing: 4.0,
-                children: _getSpawnTimes(worldBoss.times)
+                children: times
                   .map((t) => Chip(
                     backgroundColor: Theme.of(context).brightness == Brightness.light ? worldBoss.color : Colors.white12,
                     label: Text(
@@ -152,26 +155,5 @@ class WorldBossPage extends StatelessWidget {
         );
       }
     );
-  }
-
-  List<DateTime> _getSpawnTimes(List<String> times) {
-    DateTime now = DateTime.now().toUtc();
-
-    List<DateTime> dateTimes = worldBoss.times
-      .map((t) {
-        List<int> timeParts = t.split(':').map((p) => int.parse(p)).toList();
-        return DateTime.utc(
-          now.year,
-          now.month,
-          now.day,
-          timeParts[0],
-          timeParts[1]
-        ).toLocal();
-      })
-      .toList();
-
-    dateTimes.sort((a, b) => a.hour.compareTo(b.hour));
-
-    return dateTimes;
   }
 }
