@@ -8,7 +8,7 @@ import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
 import 'package:guildwars2_companion/widgets/listview.dart';
 
-class MaterialPage extends StatelessWidget {
+class MaterialBankPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CompanionAccent(

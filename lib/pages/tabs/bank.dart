@@ -66,7 +66,7 @@ class BankPage extends StatelessWidget {
                         color: Colors.deepOrange,
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => MaterialPage(),
+                            builder: (context) => MaterialBankPage(),
                           ));
                         },
                         title: 'Materials',
