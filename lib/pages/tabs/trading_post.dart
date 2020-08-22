@@ -13,7 +13,7 @@ import 'package:guildwars2_companion/widgets/coin.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
-import 'package:guildwars2_companion/widgets/listview.dart';
+import 'package:guildwars2_companion/widgets/list_view.dart';
 
 class TradingPostPage extends StatefulWidget {
   @override

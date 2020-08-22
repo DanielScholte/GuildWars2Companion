@@ -10,7 +10,14 @@ class CompanionListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.symmetric(vertical: 6.0),
+      padding: MediaQuery
+        .of(context)
+        .padding
+        .copyWith(
+          top: 6.0,
+          left: 0.0,
+          right: 0.0,
+        ),
       children: children,
     );
   }

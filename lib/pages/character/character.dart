@@ -18,7 +18,7 @@ import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_box.dart';
-import 'package:guildwars2_companion/widgets/listview.dart';
+import 'package:guildwars2_companion/widgets/list_view.dart';
 
 class CharacterPage extends StatelessWidget {
 

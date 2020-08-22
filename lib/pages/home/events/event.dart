@@ -6,7 +6,7 @@ import 'package:guildwars2_companion/models/other/meta_event.dart';
 import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
-import 'package:guildwars2_companion/widgets/listview.dart';
+import 'package:guildwars2_companion/widgets/list_view.dart';
 import 'package:intl/intl.dart';
 
 class EventPage extends StatelessWidget {
