@@ -7,7 +7,7 @@ import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
 import 'package:guildwars2_companion/widgets/item_box.dart';
-import 'package:guildwars2_companion/widgets/listview.dart';
+import 'package:guildwars2_companion/widgets/list_view.dart';
 
 import '../../models/character/equipment.dart';
 

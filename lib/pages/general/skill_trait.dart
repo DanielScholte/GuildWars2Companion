@@ -6,7 +6,7 @@ import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_column.dart';
 import 'package:guildwars2_companion/widgets/info_row.dart';
-import 'package:guildwars2_companion/widgets/listview.dart';
+import 'package:guildwars2_companion/widgets/list_view.dart';
 import 'package:guildwars2_companion/widgets/skill_trait_box.dart';
 
 class SkillTraitPage extends StatelessWidget {

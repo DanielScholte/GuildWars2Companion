@@ -8,13 +8,8 @@ class LoadingWorldbossesState extends WorldBossState {}
 
 class LoadedWorldbossesState extends WorldBossState {
   final List<WorldBoss> worldBosses;
-  final bool includeProgress;
 
-  LoadedWorldbossesState(this.worldBosses, this.includeProgress);
+  LoadedWorldbossesState(this.worldBosses);
 }
 
-class ErrorWorldbossesState extends WorldBossState {
-  final bool includeProgress;
-
-  ErrorWorldbossesState(this.includeProgress);
-}
+class ErrorWorldbossesState extends WorldBossState {}
