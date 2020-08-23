@@ -226,11 +226,11 @@ class AchievementPage extends StatelessWidget {
     return CompanionListView(
       children: <Widget>[
         if (_achievement.description != null && _achievement.description.isNotEmpty)
-          _buildDescription(context, 'Description', removeAllHtmlTags(_achievement.description)),
+          _buildDescription(context, 'Description', GuildWarsUtil.removeFullHtml(_achievement.description)),
         if (_achievement.lockedText != null && _achievement.lockedText.isNotEmpty)
-          _buildDescription(context, 'Locked description', removeAllHtmlTags(_achievement.lockedText)),
+          _buildDescription(context, 'Locked description', GuildWarsUtil.removeFullHtml(_achievement.lockedText)),
         if (_achievement.requirement != null && _achievement.requirement.isNotEmpty)
-          _buildDescription(context, 'Requirement', removeAllHtmlTags(_achievement.requirement)),
+          _buildDescription(context, 'Requirement', GuildWarsUtil.removeFullHtml(_achievement.requirement)),
         if (_achievement.rewards != null && _achievement.rewards.isNotEmpty)
           _buildRewards(context, _achievement),
         if (_achievement.prerequisitesInfo != null && _achievement.prerequisitesInfo.isNotEmpty)
@@ -598,15 +598,5 @@ class AchievementPage extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String removeAllHtmlTags(String htmlText) {
-    RegExp exp = RegExp(
-      r"<[^>]*>",
-      multiLine: true,
-      caseSensitive: true
-    );
-
-    return htmlText.replaceAll(exp, '');
   }
 }
