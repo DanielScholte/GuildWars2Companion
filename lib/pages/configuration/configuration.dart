@@ -138,6 +138,16 @@ class ConfigurationPage extends StatelessWidget {
                     builder: (context) => ChangelogPage()
                   )),
                 ),
+                CompanionButton(
+                  title: 'View the project on Github',
+                  color: Colors.blue,
+                  leading: Icon(
+                    FontAwesomeIcons.github,
+                    color: Colors.white,
+                  ),
+                  height: 64.0,
+                  onTap: () => Urls.launchUrl(Urls.repositoryUrl),
+                ),
                 Container(height: 8.0,),
                 Text(
                   'Enjoying the app?',
