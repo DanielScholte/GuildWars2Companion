@@ -65,27 +65,9 @@ class AchievementRepository {
     achievements.forEach((a) {
       a.progress = includeProgress ? progress.firstWhere((p) => p.id == a.id, orElse: () => null) : null;
       
-      int maxPoints = 0;
-      a.tiers.forEach((t) {
-        maxPoints += t.points;
+      processAchievementPoints(a);
 
-        if (a.progress != null) {
-          if ((a.progress.current != null && a.progress.current >= t.count) || a.progress.done) {
-            a.progress.points += t.points;
-          }
-        }
-      });
-
-      if (a.progress != null && a.progress.repeated != null) {
-        a.progress.points += maxPoints * a.progress.repeated;
-        if (a.pointCap != null && a.progress.points > a.pointCap) {
-          a.progress.points = a.pointCap;
-        }
-      }
-
-      a.maxPoints = a.pointCap ?? maxPoints;
-
-      if (a.progress != null) {
+      if (a.progress != null && a.progress.points > 0) {
         achievementPoints += a.progress.points;
       }
     });
@@ -171,33 +153,38 @@ class AchievementRepository {
     List<AchievementProgress> progress = await achievementService.getAchievementProgress();
 
     achievement.progress = progress.firstWhere((p) => p.id == achievement.id, orElse: () => null);
-
       
+    processAchievementPoints(achievement);
+
+    achievement.loading = false;
+
+    return;
+  }
+
+  void processAchievementPoints(Achievement achievement) {
     int maxPoints = 0;
     achievement.tiers.forEach((t) {
       maxPoints += t.points;
 
-      if (achievement.progress != null) {
-        if ((achievement.progress.current != null && achievement.progress.current >= t.count) || achievement.progress.done) {
-          achievement.progress.points += t.points;
-        }
+      if (achievement.progress != null 
+        && ((achievement.progress.current != null && achievement.progress.current >= t.count) 
+        || (achievement.progress.done && achievement.pointCap == null))) {
+        achievement.progress.points += t.points;
       }
     });
 
     if (achievement.progress != null && achievement.progress.repeated != null) {
       achievement.progress.points += maxPoints * achievement.progress.repeated;
+
       if (achievement.pointCap != null && achievement.progress.points > achievement.pointCap) {
         achievement.progress.points = achievement.pointCap;
+        achievement.progress.done = true;
+      } else if (achievement.pointCap != null && achievement.progress.points < achievement.pointCap) {
+        achievement.progress.done = false;
       }
     }
 
-    if (achievement.pointCap == null) {
-      achievement.pointCap = maxPoints;
-    }
-
-    achievement.loading = false;
-
-    return;
+    achievement.maxPoints = achievement.pointCap ?? maxPoints;
   }
 
   Future<MasteryData> getMasteries(bool includeProgress) async {
@@ -337,6 +324,10 @@ class AchievementRepository {
 
     if (progress.current == null || progress.max == null) {
       return 0;
+    }
+
+    if (progress.repeated != null) {
+      return ((progress.points / achievement.maxPoints) * 100).round();
     }
 
     return ((progress.current / progress.max) * 100).round();

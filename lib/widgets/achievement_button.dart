@@ -175,28 +175,36 @@ class CompanionAchievementButton extends StatelessWidget {
             else
               _buildIcon(height: 40.0),
             if (achievement.progress != null && achievement.progress.current != null && achievement.progress.max != null)
-              Column(
-                children: <Widget>[
-                  Text(
-                    '${((achievement.progress.current / achievement.progress.max) * 100).round()}%',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                  Theme(
-                    data: Theme.of(context).copyWith(accentColor: Colors.white),
-                    child: LinearProgressIndicator(
-                      value: achievement.progress.current / achievement.progress.max,
-                      backgroundColor: Colors.transparent,
-                    ),
-                  )
-                ],
+              Builder(
+                builder: (context) {
+                  double progress = achievement.progress.repeated != null
+                    ? achievement.progress.points / achievement.maxPoints
+                    : achievement.progress.current / achievement.progress.max;
+
+                  return Column(
+                    children: <Widget>[
+                      Text(
+                        '${(progress * 100).round()}%',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      Theme(
+                        data: Theme.of(context).copyWith(accentColor: Colors.white),
+                        child: LinearProgressIndicator(
+                          value: progress,
+                          backgroundColor: Colors.transparent,
+                        ),
+                      )
+                    ],
+                  );
+                },
               )
           ],
         ),
         if (achievement.progress != null && achievement.progress.done || (
           achievement.maxPoints != null && achievement.progress != null &&
-          achievement.progress.repeated != null && achievement.progress.repeated * points >= achievement.maxPoints
+          achievement.progress.repeated != null && achievement.progress.points >= achievement.maxPoints
         ))
           Container(
             width: double.infinity,
