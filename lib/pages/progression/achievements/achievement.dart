@@ -238,7 +238,7 @@ class AchievementPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          '${achievement.progress.points} / ${achievement.pointCap}',
+          '${achievement.progress.points} / ${achievement.maxPoints}',
           style: Theme.of(context).textTheme.bodyText1.copyWith(
             color: Colors.white
           ),

@@ -63,11 +63,7 @@ class AchievementRepository {
     }
 
     achievements.forEach((a) {
-      if (includeProgress) {
-        a.progress = progress.firstWhere((p) => p.id == a.id, orElse: () => null);
-      } else {
-        a.progress = null;
-      }
+      a.progress = includeProgress ? progress.firstWhere((p) => p.id == a.id, orElse: () => null) : null;
       
       int maxPoints = 0;
       a.tiers.forEach((t) {
@@ -87,9 +83,7 @@ class AchievementRepository {
         }
       }
 
-      if (a.pointCap == null || a.pointCap == -1) {
-        a.pointCap = maxPoints;
-      }
+      a.maxPoints = a.pointCap ?? maxPoints;
 
       if (a.progress != null) {
         achievementPoints += a.progress.points;

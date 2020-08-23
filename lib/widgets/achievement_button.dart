@@ -59,8 +59,8 @@ class CompanionAchievementButton extends StatelessWidget {
     int points = 0;
     achievement.tiers.forEach((t) => points += t.points);
 
-    if (achievement.pointCap != null) {
-      points = achievement.pointCap;
+    if (achievement.maxPoints != null) {
+      points = achievement.maxPoints;
     }
 
     int coin = 0;
@@ -195,8 +195,8 @@ class CompanionAchievementButton extends StatelessWidget {
           ],
         ),
         if (achievement.progress != null && achievement.progress.done || (
-          achievement.pointCap != null && achievement.progress != null &&
-          achievement.progress.repeated != null && achievement.progress.repeated * points >= achievement.pointCap
+          achievement.maxPoints != null && achievement.progress != null &&
+          achievement.progress.repeated != null && achievement.progress.repeated * points >= achievement.maxPoints
         ))
           Container(
             width: double.infinity,
