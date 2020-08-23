@@ -35,6 +35,16 @@ class ChangelogService {
 
   List<Changelog> changelog = [
     Changelog(
+      version: '1.4.3',
+      build: 23,
+      newFeatures: false,
+      changes: [
+        'Fixed an alignment bug on iOS',
+        'Fixed an issue where the achievement points were calculated incorrectly',
+        'Added a link to the github page'
+      ],
+    ),
+    Changelog(
       version: '1.4.2',
       build: 22,
       newFeatures: false,
