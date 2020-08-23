@@ -25,7 +25,7 @@
         <img alt="GitHub issues" src="https://img.shields.io/github/issues/danielscholte/guildwars2companion?style=for-the-badge">
     </a>
     <a href="https://www.buymeacoffee.com/danielscholte" target="_blank">
-        <img alt="GitHub closed issues" src="https://img.shields.io/badge/Support-Buy%20be%20a%20coffee-orange?style=for-the-badge">
+        <img alt="GitHub closed issues" src="https://img.shields.io/badge/Support-Buy%20me%20a%20coffee-orange?style=for-the-badge">
     </a>
 </p>
 
