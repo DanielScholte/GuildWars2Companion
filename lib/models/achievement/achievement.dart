@@ -25,6 +25,8 @@ class Achievement {
   String categoryName;
   bool favorite;
 
+  int maxPoints;
+
   Achievement(
       {this.id,
       this.icon,
@@ -40,6 +42,9 @@ class Achievement {
   Achievement.fromJson(Map<String, dynamic> json) {
     loading = false;
     loaded = false;
+
+    maxPoints = 0;
+
     id = json['id'];
     icon = json['icon'];
     name = json['name'];
@@ -73,6 +78,9 @@ class Achievement {
   Achievement.fromDb(Map<String, dynamic> item) {
     loading = false;
     loaded = false;
+
+    maxPoints = 0;
+    
     id =  item['id'];
     icon = item['icon'];
     name = item['name'];

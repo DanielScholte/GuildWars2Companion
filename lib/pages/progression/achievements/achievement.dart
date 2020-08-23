@@ -157,33 +157,41 @@ class AchievementPage extends StatelessWidget {
               if (achievement.progress != null)
                 _buildProgress(context),
               if (achievement.progress != null && achievement.progress.current != null && achievement.progress.max != null)
-                Padding(
-                  padding: EdgeInsets.only(top: 4.0),
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        '${((achievement.progress.current / achievement.progress.max) * 100).round()}%',
-                        style: Theme.of(context).textTheme.bodyText1.copyWith(
-                          color: Colors.white
-                        ),
-                      ),
-                      Theme(
-                        data: Theme.of(context).copyWith(accentColor: Colors.white),
-                        child: Container(
-                          margin: EdgeInsets.all(4.0),
-                          width: 128.0,
-                          height: 8.0,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(4.0),
-                            child: LinearProgressIndicator(
-                              value: achievement.progress.current / achievement.progress.max,
-                              backgroundColor: Colors.white24
+                Builder(
+                  builder: (context) {
+                    double progress = achievement.progress.repeated != null
+                      ? achievement.progress.points / achievement.maxPoints
+                      : achievement.progress.current / achievement.progress.max;
+
+                    return Padding(
+                      padding: EdgeInsets.only(top: 4.0),
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            '${(progress * 100).round()}%',
+                            style: Theme.of(context).textTheme.bodyText1.copyWith(
+                              color: Colors.white
                             ),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
+                          Theme(
+                            data: Theme.of(context).copyWith(accentColor: Colors.white),
+                            child: Container(
+                              margin: EdgeInsets.all(4.0),
+                              width: 128.0,
+                              height: 8.0,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(4.0),
+                                child: LinearProgressIndicator(
+                                  value: progress,
+                                  backgroundColor: Colors.white24
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  }
                 ),
               Padding(
                 padding: EdgeInsets.only(top: 4.0),
@@ -238,7 +246,7 @@ class AchievementPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          '${achievement.progress.points} / ${achievement.pointCap}',
+          '${achievement.progress.points} / ${achievement.maxPoints}',
           style: Theme.of(context).textTheme.bodyText1.copyWith(
             color: Colors.white
           ),
