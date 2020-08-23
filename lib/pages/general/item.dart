@@ -212,8 +212,6 @@ class ItemPage extends StatelessWidget {
     );
   }
 
-  
-
   Widget _buildItemDetails(BuildContext context) {
     if ([
       'Armor',
