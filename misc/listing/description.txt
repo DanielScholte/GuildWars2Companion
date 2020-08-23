@@ -1,17 +1,16 @@
-GW2 Companion - The unofficial Guild Wars 2 App
-
 <b>GW2 Companion helps you keep track of your account progression and characters, and provides information to help you on your journey in Tyria.</b>
 <i>GW2 Companion is an unofficial Guild Wars 2 app, and is not affiliated with Arenanet.</i>
 
 <b>Features</b>
+• Add multiple tokens to easily manage multiple accounts
 • Dynamic User Interface, based on the permissions of the api key
 • General overview of your account
 • World boss and Meta event timers
 • World boss, Raid and Dungeon progression since the daily or weekly reset
 • PvP season rank and game history
-• Inventory and Equipment of your characters
+• Inventory, Build templates and Equipment of your characters
 • Detailed item information, including TP prices and Infusions/Signets
-• The bank, including shared inventory and full material storage
+• The bank, including shared inventory, full material storage and build storage
 • Trading post history and current listing, with full delivery box (gold and items)
 • All achievements with progress
 • Pve, PvP, WvW and Fractal dalies of today and tomorrow
