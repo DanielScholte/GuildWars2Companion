@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/DanielScholte/GuildWars2Companion/master/misc/logo/logo-v2-shadow.png?raw=true" width="200">
+    <img src="https://raw.githubusercontent.com/DanielScholte/GuildWars2Companion/development/misc/readme/logo-v2.png?raw=true" width="200">
 </p>
 <h1 align="center" style="margin: 0px;">GW2 Companion</h1>
 <h3 align="center" style="margin: 0px;">The unofficial open-source Guild Wars 2 app</h3>
