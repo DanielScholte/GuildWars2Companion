@@ -116,6 +116,7 @@ class _TabPageState extends State<TabPage> {
         hasInk: true,
         inkColor: Color.fromRGBO(0, 0, 0, .15),
         onTap: (index) => setState(() => _currentIndex = index),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
         items: _tabs.map((t) =>
           BubbleBottomBarItem(
             icon: Icon(
