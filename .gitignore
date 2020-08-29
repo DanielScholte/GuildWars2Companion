@@ -37,3 +37,4 @@ lib/generated_plugin_registrant.dart
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 android/key.properties
 android/signing_key.jks
+ios/Flutter/.last_build_id
