@@ -1,6 +1,6 @@
 name: Flutter Testing
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   testing:
