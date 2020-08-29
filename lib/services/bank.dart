@@ -28,7 +28,7 @@ class BankService {
 
     if (response.statusCode == 200) {
       List items = response.data;
-      return items.where((a) => a != null).map((a) => InventoryItem.fromJson(a)).toList();
+      return items.map((a) => InventoryItem.fromJson(a)).toList();
     }
 
     throw Exception();
