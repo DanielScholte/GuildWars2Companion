@@ -57,13 +57,14 @@ class WalletPage extends StatelessWidget {
     );
   }
 
-  var rowCounter = 1;
-  var currencyRowColour = Colors.white;
+  int rowCounter = 1;
+  Color currencyRowColour = Colors.white;
   Widget _buildCurrencyRow(BuildContext context, Currency currency) {
-    currencyRowColour = (rowCounter % 2 == 0 ? currencyRowColour = Colors.amberAccent.shade100 : currencyRowColour = Colors.transparent);
+    Color highlightColor = Theme.of(context).brightness ==  Brightness.light ? Colors.black12 : Colors.white12;
+    currencyRowColour = (rowCounter % 2 == 0 ? currencyRowColour = highlightColor : currencyRowColour = Colors.transparent);
     rowCounter++;
     return Container(
-      margin: EdgeInsets.all(0.0),
+      margin: EdgeInsets.only(left: 0.0, right: 0.0, top: 4.0, bottom: 4.0),
       color: currencyRowColour,
       child: Row(
         children: <Widget>[
@@ -85,9 +86,19 @@ class WalletPage extends StatelessWidget {
   }
 
   Widget _buildCurrency(BuildContext context, Currency currency) {
+    if (currency.name == 'Coin' || currency.id == 1) {
+      return Padding(
+        padding: EdgeInsets.only(right: 2.0),
+        child: CompanionCoin(
+          currency.value,
+          innerPadding: 6.0,
+          color: Theme.of(context).textTheme.bodyText1.color
+        ),
+      );
+    }
 
     return Padding(
-      padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.only(left: 8.0),
       child: Row(
         children: <Widget>[
           Text(
