@@ -35,6 +35,11 @@ class WalletPage extends StatelessWidget {
             }
 
             if (state is LoadedWalletState) {
+
+              List<Currency> _currencies = new List.generate(state.currencies.length, (index) {
+                  return state.currencies[index];
+              });
+
               return RefreshIndicator(
                 backgroundColor: Theme.of(context).accentColor,
                 color: Theme.of(context).cardColor,
@@ -43,7 +48,7 @@ class WalletPage extends StatelessWidget {
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
                 child: CompanionListView(
-                  children: state.currencies.map((c) => _buildCurrencyRow(context, c)).toList(),
+                  children: _currencies.asMap().entries.map((entry) => _buildCurrencyRow(context, entry.key, entry.value)).toList(),
                 ),
               );
             }
@@ -57,14 +62,13 @@ class WalletPage extends StatelessWidget {
     );
   }
 
-  int rowCounter = 1;
-  Color currencyRowColour = Colors.white;
-  Widget _buildCurrencyRow(BuildContext context, Currency currency) {
+  Widget _buildCurrencyRow(BuildContext context, int index, Currency currency) {
+    Color currencyRowColour = Colors.white12;
     Color highlightColor = Theme.of(context).brightness ==  Brightness.light ? Colors.black12 : Colors.white12;
-    currencyRowColour = (rowCounter % 2 == 0 ? currencyRowColour = highlightColor : currencyRowColour = Colors.transparent);
-    rowCounter++;
+    currencyRowColour = (index % 2 != 0 ? currencyRowColour = highlightColor : currencyRowColour = Colors.transparent);
     return Container(
-      margin: EdgeInsets.only(left: 0.0, right: 0.0, top: 4.0, bottom: 4.0),
+      margin: EdgeInsets.all(0.0),
+      padding: EdgeInsets.only(left: 0.0, right: 8.0, top: 8.0, bottom: 8.0),
       color: currencyRowColour,
       child: Row(
         children: <Widget>[
