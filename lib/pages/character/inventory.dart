@@ -96,7 +96,6 @@ class InventoryPage extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Container(
-            color: Colors.indigo.shade100,
             padding: EdgeInsets.all(8.0),
             child: Row(
               children: <Widget>[
@@ -136,6 +135,8 @@ class InventoryPage extends StatelessWidget {
             ),
           ),
           if (usedSlots > 0)
+            Divider(),
+          if (usedSlots > 0)
             Container(
               width: double.infinity,
               margin: EdgeInsets.only(top: 8.0, bottom: 8.0),
@@ -144,17 +145,18 @@ class InventoryPage extends StatelessWidget {
                 spacing: 4.0,
                 runSpacing: 4.0,
                 children: inventory
-                  .where((i) => i.id != -1)
-                  .map((i) => CompanionItemBox(
-                    item: i.itemInfo,
-                    skin: i.skinInfo,
-                    hero: '$bagIndex ${inventory.indexOf(i)} ${i.id}',
-                    upgradesInfo: i.upgradesInfo,
-                    infusionsInfo: i.infusionsInfo,
-                    quantity: i.charges != null ? i.charges : i.count,
-                    includeMargin: false,
-                  ))
-                  .toList(),
+                    .where((i) => i.id != -1)
+                    .map((i) =>
+                    CompanionItemBox(
+                      item: i.itemInfo,
+                      skin: i.skinInfo,
+                      hero: '$bagIndex ${inventory.indexOf(i)} ${i.id}',
+                      upgradesInfo: i.upgradesInfo,
+                      infusionsInfo: i.infusionsInfo,
+                      quantity: i.charges != null ? i.charges : i.count,
+                      includeMargin: false,
+                    ))
+                    .toList(),
               ),
             ),
         ],
