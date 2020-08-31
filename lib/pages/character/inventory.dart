@@ -92,7 +92,7 @@ class InventoryPage extends StatelessWidget {
     int usedSlots = inventory.length;
     FontStyle fontStyle = (usedSlots == bag.size ? FontStyle.italic : FontStyle.normal);
     return CompanionCard(
-      padding: EdgeInsets.all(0.0),
+      padding: EdgeInsets.zero,
       child: Column(
         children: <Widget>[
           Container(
@@ -135,12 +135,14 @@ class InventoryPage extends StatelessWidget {
             ),
           ),
           if (usedSlots > 0)
-            Divider(),
+            Divider(
+              height: 2,
+              thickness: 1
+            ),
           if (usedSlots > 0)
             Container(
               width: double.infinity,
-              margin: EdgeInsets.only(top: 8.0, bottom: 8.0),
-              alignment: AlignmentDirectional.center,
+              margin: EdgeInsets.all(8.0),
               child: Wrap(
                 spacing: 4.0,
                 runSpacing: 4.0,

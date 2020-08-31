@@ -35,11 +35,6 @@ class WalletPage extends StatelessWidget {
             }
 
             if (state is LoadedWalletState) {
-
-              List<Currency> _currencies = new List.generate(state.currencies.length, (index) {
-                  return state.currencies[index];
-              });
-
               return RefreshIndicator(
                 backgroundColor: Theme.of(context).accentColor,
                 color: Theme.of(context).cardColor,
@@ -48,7 +43,7 @@ class WalletPage extends StatelessWidget {
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
                 child: CompanionListView(
-                  children: _currencies.asMap().entries.map((entry) => _buildCurrencyRow(context, entry.key, entry.value)).toList(),
+                  children: List.generate(state.currencies.length, (index) => _buildCurrencyRow(context, index, state.currencies[index])),
                 ),
               );
             }
@@ -63,18 +58,13 @@ class WalletPage extends StatelessWidget {
   }
 
   Widget _buildCurrencyRow(BuildContext context, int index, Currency currency) {
-    Color currencyRowColour = Colors.white12;
     Color highlightColor = Theme.of(context).brightness ==  Brightness.light ? Colors.black12 : Colors.white12;
-    currencyRowColour = (index % 2 != 0 ? currencyRowColour = highlightColor : currencyRowColour = Colors.transparent);
     return Container(
-      margin: EdgeInsets.all(0.0),
-      padding: EdgeInsets.only(left: 0.0, right: 8.0, top: 8.0, bottom: 8.0),
-      color: currencyRowColour,
+      padding: EdgeInsets.all(8.0),
+      color: index % 2 != 0 ? highlightColor : null,
       child: Row(
         children: <Widget>[
-          Padding(padding: EdgeInsets.only(left: 8.0)),
           Expanded(
-            
             child: Text(
               currency.name,
               style: Theme.of(context).textTheme.bodyText1.copyWith(
@@ -83,7 +73,6 @@ class WalletPage extends StatelessWidget {
             ),
           ),
           _buildCurrency(context, currency),
-          
         ],
       ),
     );
