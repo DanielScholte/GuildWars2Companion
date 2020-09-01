@@ -17,7 +17,7 @@ class CompanionSimpleButton extends StatelessWidget {
       padding: EdgeInsets.all(8.0),
       child: RaisedButton(
         shape: RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(4.0),
+          borderRadius: new BorderRadius.circular(12.0),
         ),
         color: Theme.of(context).brightness == Brightness.light
           ? Theme.of(context).accentColor : Theme.of(context).cardColor,

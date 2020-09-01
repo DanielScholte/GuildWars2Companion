@@ -51,7 +51,7 @@ class _CompanionExpandableHeaderState extends State<CompanionExpandableHeader> w
             child: Material(
               color: Colors.transparent,
               child: InkWell(
-                borderRadius: BorderRadius.circular(4.0),
+                borderRadius: BorderRadius.circular(12.0),
                 onTap: () => setState(() {
                   _expanded = !_expanded;
                   _rotationController.animateTo(_expanded ? 1.0 : 0.0);

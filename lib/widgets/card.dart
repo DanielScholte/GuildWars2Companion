@@ -10,7 +10,7 @@ class CompanionCard extends StatelessWidget {
   CompanionCard({
     @required this.child,
     this.padding = const EdgeInsets.all(8.0),
-    this.borderRadius = 4.0,
+    this.borderRadius = 12.0,
     this.backgroundColor,
   });
 

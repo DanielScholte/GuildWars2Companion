@@ -27,7 +27,7 @@ class CompanionInfoBox extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.transparent,
         border: Border.all(color: borderColor, width: 2.0),
-        borderRadius: BorderRadius.circular(4.0),
+        borderRadius: BorderRadius.circular(12.0),
       ),
       height: height,
       width: width,
