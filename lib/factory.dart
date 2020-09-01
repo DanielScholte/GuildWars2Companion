@@ -39,6 +39,7 @@ import 'package:guildwars2_companion/services/dungeon.dart';
 import 'package:guildwars2_companion/services/event.dart';
 import 'package:guildwars2_companion/services/item.dart';
 import 'package:guildwars2_companion/services/map.dart';
+import 'package:guildwars2_companion/services/notification.dart';
 import 'package:guildwars2_companion/services/pvp.dart';
 import 'package:guildwars2_companion/services/raid.dart';
 import 'package:guildwars2_companion/services/token.dart';
@@ -59,6 +60,7 @@ class CompanionFactory {
   EventService eventService;
   ItemService itemService;
   MapService mapService;
+  NotificationService notificationService;
   PvpService pvpService;
   RaidService raidService;
   TokenService tokenService;
@@ -74,6 +76,9 @@ class CompanionFactory {
 
     changelogService = ChangelogService();
     await changelogService.loadChangelogData();
+
+    notificationService = NotificationService();
+    await notificationService.initializeNotifications();
 
     final DioUtil dioUtil = DioUtil(
       tokenService: tokenService,
