@@ -15,7 +15,7 @@ class ScheduledNotification {
     @required this.eventId,
     @required this.eventName,
     @required this.eventType,
-    @required this.dateTime,
+    @required this.spawnDateTime,
     @required this.offset
   });
 

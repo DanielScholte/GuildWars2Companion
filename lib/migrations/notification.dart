@@ -9,7 +9,8 @@ class NotificationMigrations {
         event_id TEXT,
         event_name TEXT,
         date_time INTEGER,
-        offset INTEGER,
+        spawn_date_time INTEGER,
+        offset INTEGER
       )
     '''
   ];
