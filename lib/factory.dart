@@ -23,6 +23,7 @@ import 'package:guildwars2_companion/repositories/configuration.dart';
 import 'package:guildwars2_companion/repositories/dungeon.dart';
 import 'package:guildwars2_companion/repositories/event.dart';
 import 'package:guildwars2_companion/repositories/item.dart';
+import 'package:guildwars2_companion/repositories/notification.dart';
 import 'package:guildwars2_companion/repositories/pvp.dart';
 import 'package:guildwars2_companion/repositories/raid.dart';
 import 'package:guildwars2_companion/repositories/trading_post.dart';
@@ -166,6 +167,11 @@ class CompanionFactory {
         RepositoryProvider<ItemRepository>(
           create: (BuildContext context) => ItemRepository(
             itemService: itemService,
+          ),
+        ),
+        RepositoryProvider<NotificationRepository>(
+          create: (BuildContext context) => NotificationRepository(
+            notificationService: notificationService,
           ),
         ),
         RepositoryProvider<PvpRepository>(
