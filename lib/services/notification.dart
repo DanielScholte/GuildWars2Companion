@@ -43,11 +43,14 @@ class NotificationService {
     await _loadNotifications();
   }
 
+  List<ScheduledNotification> getScheduledNotifications() => _scheduledNotifications;
+
   Future<void> scheduleNotification(ScheduledNotification notification) async {
     await _requestPermissions();
 
     notification.id = _getUniqueId();
     notification.dateTime = notification.spawnDateTime.subtract(notification.offset);
+    notification.eventName = notification.eventName + (notification.eventType == EventType.META_EVENT ? " event" : "");
 
     bool isHour = notification.offset.inMinutes >= 60;
 
@@ -91,7 +94,7 @@ class NotificationService {
     await _loadNotifications(useConnection: database);
   }
 
-  Future<void> cancelScheduledNotification(int id) async {
+  Future<void> removeScheduledNotification(int id) async {
     await _flutterLocalNotificationsPlugin.cancel(id);
 
     Database database = await _getDatabase();

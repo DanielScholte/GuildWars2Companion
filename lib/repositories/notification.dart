@@ -9,9 +9,11 @@ class NotificationRepository {
     @required this.notificationService
   });
 
+  List<ScheduledNotification> getScheduledNotifications() => notificationService.getScheduledNotifications();
+
   Future<void> scheduleNotification(ScheduledNotification notification) => notificationService.scheduleNotification(notification);
 
-  Future<void> cancelScheduledNotification(int id) => notificationService.cancelScheduledNotification(id);
+  Future<void> removeScheduledNotification(int id) => notificationService.removeScheduledNotification(id);
 
   Future<bool> removeExpiredNotifications() => notificationService.removeExpiredNotifications();
 }

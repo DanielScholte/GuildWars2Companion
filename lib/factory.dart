@@ -8,6 +8,7 @@ import 'package:guildwars2_companion/blocs/configuration/configuration_bloc.dart
 import 'package:guildwars2_companion/blocs/dungeon/dungeon_bloc.dart';
 import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/blocs/event/event_bloc.dart';
+import 'package:guildwars2_companion/blocs/notification/notification_bloc.dart';
 import 'package:guildwars2_companion/blocs/pvp/pvp_bloc.dart';
 import 'package:guildwars2_companion/blocs/raid/raid_bloc.dart';
 import 'package:guildwars2_companion/blocs/trading_post/bloc.dart';
@@ -249,6 +250,11 @@ class CompanionFactory {
         BlocProvider<EventBloc>(
           create: (BuildContext context) => EventBloc(
             eventRepository: RepositoryProvider.of<EventRepository>(context),
+          ),
+        ),
+        BlocProvider<NotificationBloc>(
+          create: (BuildContext context) => NotificationBloc(
+            notificationRepository: RepositoryProvider.of<NotificationRepository>(context),
           ),
         ),
         BlocProvider<PvpBloc>(
