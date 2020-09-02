@@ -1,8 +1,16 @@
 import 'dart:async';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:guildwars2_companion/migrations/notification.dart';
+import 'package:guildwars2_companion/models/notifications/notification.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_migration/sqflite_migration.dart';
 
 class NotificationService {
   FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin;
+  NotificationDetails _defaultNotificationDetails;
+
+  List<ScheduledNotification> _scheduledNotifications = [];
 
   Future<void> initializeNotifications() async {
     _flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
@@ -11,36 +19,137 @@ class NotificationService {
       InitializationSettings(
         AndroidInitializationSettings("ic_notification"),
         IOSInitializationSettings(
-          requestAlertPermission: true,
-          requestBadgePermission: true,
-          requestSoundPermission: true,
+          requestAlertPermission: false,
+          requestBadgePermission: false,
+          requestSoundPermission: false,
         )
       )
     );
 
-    await _scheduleTestNotification();
+    _defaultNotificationDetails = NotificationDetails(
+      AndroidNotificationDetails(
+        'event_notifications',
+        'World bosses and Meta events',
+        'Notifications for upcoming World bosses and Meta events',
+        largeIcon: DrawableResourceAndroidBitmap("ic_notification_large")
+      ),
+      IOSNotificationDetails(
+        presentAlert: true,
+        presentBadge: false,
+        presentSound: true
+      )
+    );
+
+    await _loadNotifications();
   }
 
-  Future<void> _scheduleTestNotification() async {
-    await _flutterLocalNotificationsPlugin.schedule(
-      _getUniqueId(),
-      'Shadow Behemoth',
-      'Spawning in 10 minutes',
-      DateTime.now().add(Duration(minutes: 1)),
-      NotificationDetails(
-        AndroidNotificationDetails(
-          'event_notifications',
-          'World bosses and Meta events',
-          'Notifications for upcoming World bosses and Meta events',
-          largeIcon: DrawableResourceAndroidBitmap("ic_notification_large")
-        ),
-        IOSNotificationDetails(
-          presentAlert: true,
-          presentBadge: false,
-          presentSound: true
-        )
-      )
+  Future<void> scheduleNotification(ScheduledNotification notification) async {
+    await _requestPermissions();
+
+    notification.id = _getUniqueId();
+    notification.dateTime = notification.spawnDateTime.subtract(notification.offset);
+
+    bool isHour = notification.offset.inMinutes >= 60;
+
+    String description = 
+      (notification.eventType == EventType.META_EVENT ? "Starting" : "Spawning")
+      + " in " + (isHour ? notification.offset.inHours : notification.offset.inMinutes).toString()
+      + " " + (isHour ? "hours" : "minutes");
+
+    switch (notification.type) {
+      case NotificationType.SINGLE:
+        await _flutterLocalNotificationsPlugin.schedule(
+          notification.id,
+          notification.eventName,
+          description,
+          notification.dateTime,
+          _defaultNotificationDetails
+        );
+        break;
+      case NotificationType.DAILY:
+        await _flutterLocalNotificationsPlugin.showDailyAtTime(
+          notification.id,
+          notification.eventName,
+          description,
+          Time(
+            notification.dateTime.hour,
+            notification.dateTime.minute
+          ),
+          _defaultNotificationDetails
+        );
+        break;
+    }
+
+    Database database = await _getDatabase();
+
+    await database.insert(
+      "notifications",
+      notification.toDb(),
+      conflictAlgorithm: ConflictAlgorithm.replace
     );
+
+    await _loadNotifications(useConnection: database);
+  }
+
+  Future<void> cancelScheduledNotification(int id) async {
+    await _flutterLocalNotificationsPlugin.cancel(id);
+
+    Database database = await _getDatabase();
+
+    await database.delete(
+      'notifications',
+      where: "id = ?",
+      whereArgs: [id],
+    );
+
+    await _loadNotifications(useConnection: database);
+  }
+
+  Future<bool> removeExpiredNotifications() async {
+    if (_scheduledNotifications.any((n) => n.type == NotificationType.SINGLE && n.spawnDateTime.compareTo(DateTime.now()) <= 0)) {
+      await _loadNotifications();
+
+      return true;
+    }
+
+    return false;
+  }
+
+  Future<Database> _getDatabase() async {
+    return await openDatabaseWithMigration(
+      join(await getDatabasesPath(), 'notifications.db'),
+      NotificationMigrations.config
+    );
+  }
+
+  Future<void> _loadNotifications({ Database useConnection }) async {
+    Database notificationDatabase = useConnection != null ? useConnection : await _getDatabase();
+
+    await notificationDatabase.delete(
+      'notifications',
+      where: "date_time <= ? and type = ?",
+      whereArgs: [
+        (DateTime.now().millisecondsSinceEpoch / 60000).floor(),
+        NotificationType.SINGLE.index
+      ],
+    );
+
+    final List<Map<String, dynamic>> notifications = await notificationDatabase.query('notifications');
+    _scheduledNotifications = List.generate(notifications.length, (i) => ScheduledNotification.fromDb(notifications[i]));
+
+    notificationDatabase.close();
+
+    return;
+  }
+
+  Future<void> _requestPermissions() async {
+    await _flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
+      ?.requestPermissions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
   }
 
   int _getUniqueId() => DateTime.now().millisecondsSinceEpoch ~/ 1000;
