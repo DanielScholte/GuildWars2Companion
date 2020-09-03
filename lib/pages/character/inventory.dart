@@ -90,57 +90,75 @@ class InventoryPage extends StatelessWidget {
   Widget _buildBag(BuildContext context, Bags bag, int bagIndex) {
     List<InventoryItem> inventory = bag.inventory.where((i) => i.id != -1 && i.itemInfo != null).toList();
     int usedSlots = inventory.length;
+    FontStyle fontStyle = (usedSlots == bag.size ? FontStyle.italic : FontStyle.normal);
     return CompanionCard(
+      padding: EdgeInsets.zero,
       child: Column(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              if (bag.itemInfo != null)
-                CompanionItemBox(
-                  item: bag.itemInfo,
-                  hero: '$bagIndex ${bag.id}',
-                  size: 45.0,
-                  includeMargin: false,
-                ),
-              if (bag.itemInfo != null)
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      bag.itemInfo.name,
-                      style: Theme.of(context).textTheme.bodyText1.copyWith(
-                        fontWeight: FontWeight.w500
-                      )
+          Container(
+            padding: EdgeInsets.all(8.0),
+            child: Row(
+              children: <Widget>[
+                if (bag.itemInfo != null)
+                  CompanionItemBox(
+                    item: bag.itemInfo,
+                    hero: '$bagIndex ${bag.id}',
+                    size: 45.0,
+                    includeMargin: false,
+                  ),
+                if (bag.itemInfo != null)
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                          bag.itemInfo.name,
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .bodyText1
+                              .copyWith(
+                            fontWeight: FontWeight.w500,
+                            fontStyle: fontStyle
+                          )
+                      ),
                     ),
                   ),
-                ),
-              if (bag.itemInfo == null)
-                Spacer(),
-              Text(
-                '$usedSlots/${bag.size}',
-                style: Theme.of(context).textTheme.bodyText1,
-              )
-            ],
+                if (bag.itemInfo == null)
+                  Spacer(),
+                Text(
+                  '$usedSlots/${bag.size}',
+                  style: Theme.of(context).textTheme.bodyText1.copyWith(
+                    fontStyle: fontStyle
+                  ),
+                )
+              ],
+            ),
           ),
+          if (usedSlots > 0)
+            Divider(
+              height: 2,
+              thickness: 1
+            ),
           if (usedSlots > 0)
             Container(
               width: double.infinity,
-              margin: EdgeInsets.only(top: 8.0),
+              margin: EdgeInsets.all(8.0),
               child: Wrap(
                 spacing: 4.0,
                 runSpacing: 4.0,
                 children: inventory
-                  .where((i) => i.id != -1)
-                  .map((i) => CompanionItemBox(
-                    item: i.itemInfo,
-                    skin: i.skinInfo,
-                    hero: '$bagIndex ${inventory.indexOf(i)} ${i.id}',
-                    upgradesInfo: i.upgradesInfo,
-                    infusionsInfo: i.infusionsInfo,
-                    quantity: i.charges != null ? i.charges : i.count,
-                    includeMargin: false,
-                  ))
-                  .toList(),
+                    .where((i) => i.id != -1)
+                    .map((i) =>
+                    CompanionItemBox(
+                      item: i.itemInfo,
+                      skin: i.skinInfo,
+                      hero: '$bagIndex ${inventory.indexOf(i)} ${i.id}',
+                      upgradesInfo: i.upgradesInfo,
+                      infusionsInfo: i.infusionsInfo,
+                      quantity: i.charges != null ? i.charges : i.count,
+                      includeMargin: false,
+                    ))
+                    .toList(),
               ),
             ),
         ],
