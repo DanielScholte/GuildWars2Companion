@@ -46,7 +46,7 @@ class _ScheduleNotificationTimePageState extends State<ScheduleNotificationTimeP
       now.day
     );
 
-    _time = widget.segment.time;
+    _time = widget.segment.times.firstWhere((t) => t.isAfter(now), orElse: () => widget.segment.time);
   }
 
   @override
@@ -142,7 +142,7 @@ class _ScheduleNotificationTimePageState extends State<ScheduleNotificationTimeP
         }
       },
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -191,9 +191,12 @@ class _ScheduleNotificationTimePageState extends State<ScheduleNotificationTimeP
             child: Column(
               crossAxisAlignment: widget.notificationType == NotificationType.SINGLE ? CrossAxisAlignment.start : CrossAxisAlignment.center,
               children: [
-                Text(
-                  'Time:',
-                  style: Theme.of(context).textTheme.headline2
+                Padding(
+                  padding: EdgeInsets.only(bottom: 8.0),
+                  child: Text(
+                    'Time:',
+                    style: Theme.of(context).textTheme.headline2
+                  ),
                 ),
                 Wrap(
                   alignment: WrapAlignment.spaceEvenly,
@@ -219,10 +222,12 @@ class _ScheduleNotificationTimePageState extends State<ScheduleNotificationTimeP
                         },
                         child: Chip(
                           backgroundColor: disabled ? disabledColor : time == _time ? selectedColor : unselectedColor,
+                          padding: EdgeInsets.all(8.0),
                           label: Text(
                             timeFormat.format(time),
                             style: Theme.of(context).textTheme.bodyText1.copyWith(
-                              color: Colors.white
+                              color: Colors.white,
+                              fontSize: 18
                             ),
                           ),
                         ),
