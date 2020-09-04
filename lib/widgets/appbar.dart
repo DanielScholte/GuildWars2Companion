@@ -14,8 +14,8 @@ class CompanionAppBar extends StatelessWidget implements PreferredSizeWidget {
     @required this.title,
     this.icon,
     this.color = Colors.transparent,
-    this.foregroundColor = Colors.black87,
-    this.elevation = 0,
+    this.foregroundColor = Colors.white,
+    this.elevation = 4.0,
     this.bottom,
     this.implyLeading = true,
   });

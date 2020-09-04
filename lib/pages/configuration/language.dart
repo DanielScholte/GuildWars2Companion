@@ -13,8 +13,6 @@ class LanguageConfigurationPage extends StatelessWidget {
       appBar: CompanionAppBar(
         title: 'Api and Wiki Language',
         color: Colors.blue,
-        elevation: 4.0,
-        foregroundColor: Colors.white,
       ),
       body: BlocBuilder<ConfigurationBloc, ConfigurationState>(
         builder: (context, state) {

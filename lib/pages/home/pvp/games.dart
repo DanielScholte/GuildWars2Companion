@@ -19,9 +19,7 @@ class PvpGamesPage extends StatelessWidget {
       child: Scaffold(
         appBar: CompanionAppBar(
           color: Colors.blue,
-          foregroundColor: Colors.white,
           title: 'Game history',
-          elevation: 4.0,
         ),
         body: BlocBuilder<PvpBloc, PvpState>(
           builder: (context, state) {

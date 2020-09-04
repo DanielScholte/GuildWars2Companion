@@ -25,8 +25,6 @@ class InventoryPage extends StatelessWidget {
         appBar: CompanionAppBar(
           title: 'Inventory',
           color: Colors.indigo,
-          foregroundColor: Colors.white,
-          elevation: 4.0,
         ),
         body: BlocConsumer<CharacterBloc, CharacterState>(
           listenWhen: (previous, current) => current is ErrorCharactersState,

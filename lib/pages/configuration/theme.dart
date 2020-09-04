@@ -13,8 +13,6 @@ class ThemeConfigurationPage extends StatelessWidget {
       appBar: CompanionAppBar(
         title: 'Theme',
         color: Colors.blue,
-        elevation: 4.0,
-        foregroundColor: Colors.white,
       ),
       body: BlocBuilder<ConfigurationBloc, ConfigurationState>(
         builder: (context, state) {

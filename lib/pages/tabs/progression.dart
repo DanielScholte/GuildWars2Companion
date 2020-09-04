@@ -21,8 +21,6 @@ class ProgressionPage extends StatelessWidget {
         appBar: CompanionAppBar(
           title: 'Progression',
           color: Colors.orange,
-          foregroundColor: Colors.white,
-          elevation: 4.0,
         ),
         body: BlocBuilder<AchievementBloc, AchievementState>(
           builder: (context, state) {

@@ -18,8 +18,6 @@ class DailyCategoriesPage extends StatelessWidget {
         appBar: CompanionAppBar(
           title: 'Dailies',
           color: Colors.indigo,
-          foregroundColor: Colors.white,
-          elevation: 4.0,
         ),
         body: BlocBuilder<AchievementBloc, AchievementState>(
           builder: (context, state) {

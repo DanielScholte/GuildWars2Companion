@@ -21,8 +21,6 @@ class BankPage extends StatelessWidget {
         appBar: CompanionAppBar(
           title: 'Bank',
           color: Colors.indigo,
-          foregroundColor: Colors.white,
-          elevation: 4.0,
         ),
         body: BlocBuilder<BankBloc, BankState>(
           builder: (context, state) {

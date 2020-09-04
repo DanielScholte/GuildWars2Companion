@@ -51,7 +51,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
           appBar: CompanionAppBar(
             title: 'Trading Post',
             color: Colors.green,
-            foregroundColor: Colors.white,
+            elevation: 0.0,
           ),
           body: Column(
             children: <Widget>[

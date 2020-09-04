@@ -24,7 +24,7 @@ class DailiesPage extends StatelessWidget {
           appBar: CompanionAppBar(
             title: '$category Dailies',
             color: _getColor(),
-            foregroundColor: Colors.white,
+            elevation: 0.0,
           ),
           body: Column(
             children: <Widget>[

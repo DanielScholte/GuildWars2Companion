@@ -26,8 +26,6 @@ class EquipmentPage extends StatelessWidget {
         appBar: CompanionAppBar(
           title: _equipmentTab.name != null && _equipmentTab.name.isNotEmpty ? _equipmentTab.name : 'Nameless equipment build',
           color: singular ? Colors.teal : _character.professionColor,
-          foregroundColor: Colors.white,
-          elevation: 4.0,
         ),
         body: BlocConsumer<CharacterBloc, CharacterState>(
           listenWhen: (previous, current) => current is ErrorCharactersState,
