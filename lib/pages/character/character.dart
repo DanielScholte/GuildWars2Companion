@@ -141,7 +141,7 @@ class CharacterPage extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.0),
       ),
       margin: EdgeInsets.only(top: 16.0),
-      padding: EdgeInsets.only(top: 4.0),
+      padding: EdgeInsets.only(top: 4.0, left: 4.0, right: 4.0),
       child: Column(
         children: <Widget>[
           Text(

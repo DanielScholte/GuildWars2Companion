@@ -27,7 +27,12 @@ class CompanionAppBar extends StatelessWidget implements PreferredSizeWidget {
       iconTheme: IconThemeData(
         color: foregroundColor,
       ),
-      title: Row(
+      title: icon == null ? Text(
+        title,
+        style: TextStyle(
+          color: foregroundColor
+        ),
+      ) : Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           if (icon != null)
@@ -35,10 +40,12 @@ class CompanionAppBar extends StatelessWidget implements PreferredSizeWidget {
               padding: EdgeInsets.only(right: 4.0),
               child: icon,
             ),
-          Text(
-            title,
-            style: TextStyle(
-              color: foregroundColor
+          Expanded(
+            child: Text(
+              title,
+              style: TextStyle(
+                color: foregroundColor
+              ),
             ),
           )
         ],

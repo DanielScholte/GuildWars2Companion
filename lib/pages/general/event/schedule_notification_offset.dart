@@ -27,6 +27,25 @@ class _ScheduleNotificationOffsetPageState extends State<ScheduleNotificationOff
 
   @override
   Widget build(BuildContext context) {
+    List<Duration> durations = [
+      Duration.zero,
+      Duration(minutes: 5),
+      Duration(minutes: 10),
+      Duration(minutes: 15),
+      Duration(minutes: 20),
+      Duration(minutes: 30),
+      Duration(minutes: 45),
+      Duration(minutes: 60),
+    ];
+
+    if (widget.notificationType == NotificationType.SINGLE) {
+      DateTime now = DateTime.now();
+
+      durations = durations
+        .where((d) => widget.spawnDateTime.subtract(d).isAfter(now))
+        .toList();
+    }
+
     return CompanionAccent(
       lightColor: Colors.red,
       child: Scaffold(
@@ -41,16 +60,8 @@ class _ScheduleNotificationOffsetPageState extends State<ScheduleNotificationOff
               left: false,
               right: false,
               child: Column(
-                children: [
-                  Duration.zero,
-                  Duration(minutes: 5),
-                  Duration(minutes: 10),
-                  Duration(minutes: 15),
-                  Duration(minutes: 20),
-                  Duration(minutes: 30),
-                  Duration(minutes: 45),
-                  Duration(minutes: 60),
-                ] .map((d) => RadioListTile(
+                children: durations
+                  .map((d) => RadioListTile(
                     groupValue: _offset,
                     value: d,
                     title: Text(

@@ -213,19 +213,23 @@ class EventPage extends StatelessWidget {
 
   Widget _buildNotificationList(BuildContext context) {
     return CompanionCard(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              'Scheduled notifications',
-              style: Theme.of(context).textTheme.headline2,
+      padding: EdgeInsets.zero,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12.0),
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                'Scheduled notifications',
+                style: Theme.of(context).textTheme.headline2,
+              ),
             ),
-          ),
-          CompanionNotificationList(
-            eventId: segment.id,
-          )
-        ],
+            CompanionNotificationList(
+              eventId: segment.id,
+            )
+          ],
+        ),
       ),
     );
   }

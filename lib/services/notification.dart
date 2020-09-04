@@ -109,7 +109,7 @@ class NotificationService {
   }
 
   Future<bool> removeExpiredNotifications() async {
-    if (_scheduledNotifications.any((n) => n.type == NotificationType.SINGLE && n.spawnDateTime.compareTo(DateTime.now()) <= 0)) {
+    if (_scheduledNotifications.any((n) => n.type == NotificationType.SINGLE && n.dateTime.compareTo(DateTime.now()) <= 0)) {
       await _loadNotifications();
 
       return true;
