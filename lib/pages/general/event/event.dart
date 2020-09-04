@@ -10,6 +10,7 @@ import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_row.dart';
 import 'package:guildwars2_companion/widgets/list_view.dart';
+import 'package:guildwars2_companion/widgets/notification_list.dart';
 import 'package:intl/intl.dart';
 
 class EventPage extends StatelessWidget {
@@ -40,7 +41,8 @@ class EventPage extends StatelessWidget {
                 children: <Widget>[
                   if (this.worldBoss != null)
                     _buildWorldBossStats(context),
-                  _buildTimes(context)
+                  _buildTimes(context),
+                  _buildNotificationList(context),
                 ],
               ),
             ),
@@ -206,6 +208,25 @@ class EventPage extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildNotificationList(BuildContext context) {
+    return CompanionCard(
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(bottom: 8.0),
+            child: Text(
+              'Scheduled notifications',
+              style: Theme.of(context).textTheme.headline2,
+            ),
+          ),
+          CompanionNotificationList(
+            eventId: segment.id,
+          )
+        ],
+      ),
     );
   }
 }
