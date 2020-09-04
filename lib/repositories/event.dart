@@ -58,7 +58,7 @@ class EventRepository {
       List<MetaEventSegment> duplicates = 
         sequence.segments
           .where((s) => 
-            s.name == segment.name
+            s.id == segment.id
             && s != segment
             && s.duration.inMinutes == segment.duration.inMinutes
           ).toList();
@@ -80,7 +80,11 @@ class EventRepository {
 
     sequence.segments.sort((a, b) => a.time.compareTo(b.time));
 
-    sequence.segments.forEach((s) => s.times.removeWhere((t) => t.day != now.day));
+    sequence.segments.forEach((s) {
+      s.times.removeWhere((t) => t.day != now.day);
+      s.time = s.time.toLocal();
+      s.times = s.times.map((s) => s.toLocal()).toList();
+    });
   }
 
   int _getDayValue(DateTime date) {

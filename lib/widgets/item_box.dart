@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/models/items/skin.dart';
-import 'package:guildwars2_companion/pages/general/item.dart';
+import 'package:guildwars2_companion/pages/general/item/item.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 
 import 'cached_image.dart';

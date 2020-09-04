@@ -9,7 +9,7 @@ import 'package:guildwars2_companion/pages/character/build_selection.dart';
 import 'package:guildwars2_companion/pages/character/equipment.dart';
 import 'package:guildwars2_companion/pages/character/equipment_selection.dart';
 import 'package:guildwars2_companion/pages/character/inventory.dart';
-import 'package:guildwars2_companion/pages/general/build.dart';
+import 'package:guildwars2_companion/pages/general/build/build.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
 import 'package:guildwars2_companion/widgets/accent.dart';

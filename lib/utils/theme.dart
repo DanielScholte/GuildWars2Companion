@@ -55,7 +55,11 @@ class ThemeUtil {
           color: Colors.white,
           fontWeight: FontWeight.normal,
         ),
-      )
+      ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        elevation: 0,
+        foregroundColor: Colors.black,
+      ),
     );
   }
 }

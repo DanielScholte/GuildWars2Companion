@@ -137,99 +137,99 @@ class WorldBossService {
       MetaEventSequence(
         segments: [
           MetaEventSegment(
-            name: 'admiral_taidha_covington',
+            id: 'admiral_taidha_covington',
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            name: 'svanir_shaman_chief',
+            id: 'svanir_shaman_chief',
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            name: 'megadestroyer',
+            id: 'megadestroyer',
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            name: 'fire_elemental',
+            id: 'fire_elemental',
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            name: 'the_shatterer',
+            id: 'the_shatterer',
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            name: 'great_jungle_wurm',
+            id: 'great_jungle_wurm',
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            name: 'modniir_ulgoth',
+            id: 'modniir_ulgoth',
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            name: 'shadow_behemoth',
+            id: 'shadow_behemoth',
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            name: 'inquest_golem_mark_ii',
+            id: 'inquest_golem_mark_ii',
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            name: 'svanir_shaman_chief',
+            id: 'svanir_shaman_chief',
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            name: 'claw_of_jormag',
+            id: 'claw_of_jormag',
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            name: 'fire_elemental',
+            id: 'fire_elemental',
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            name: 'admiral_taidha_covington',
+            id: 'admiral_taidha_covington',
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            name: 'great_jungle_wurm',
+            id: 'great_jungle_wurm',
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            name: 'megadestroyer',
+            id: 'megadestroyer',
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            name: 'shadow_behemoth',
+            id: 'shadow_behemoth',
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            name: 'the_shatterer',
+            id: 'the_shatterer',
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            name: 'svanir_shaman_chief',
+            id: 'svanir_shaman_chief',
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            name: 'modniir_ulgoth',
+            id: 'modniir_ulgoth',
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            name: 'fire_elemental',
+            id: 'fire_elemental',
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            name: 'inquest_golem_mark_ii',
+            id: 'inquest_golem_mark_ii',
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            name: 'great_jungle_wurm',
+            id: 'great_jungle_wurm',
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            name: 'claw_of_jormag',
+            id: 'claw_of_jormag',
             duration: Duration(minutes: 15),
           ),
           MetaEventSegment(
-            name: 'shadow_behemoth',
+            id: 'shadow_behemoth',
             duration: Duration(minutes: 15),
           ),
         ]
@@ -237,140 +237,140 @@ class WorldBossService {
       MetaEventSequence(
         segments: [
           MetaEventSegment(
-            name: 'tequatl_the_sunless',
+            id: 'tequatl_the_sunless',
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
-            name: 'triple_trouble_wurm',
+            id: 'triple_trouble_wurm',
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
-            name: 'karka_queen',
+            id: 'karka_queen',
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
-            name: 'tequatl_the_sunless',
+            id: 'tequatl_the_sunless',
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
-            name: 'triple_trouble_wurm',
+            id: 'triple_trouble_wurm',
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
             duration: Duration(minutes: 90),
           ),
           MetaEventSegment(
-            name: 'karka_queen',
+            id: 'karka_queen',
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
-            name: 'tequatl_the_sunless',
+            id: 'tequatl_the_sunless',
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
-            name: 'triple_trouble_wurm',
-            duration: Duration(minutes: 30),
-          ),
-          MetaEventSegment(
-            duration: Duration(minutes: 120),
-          ),
-          MetaEventSegment(
-            name: 'karka_queen',
-            duration: Duration(minutes: 30),
-          ),
-          MetaEventSegment(
-            duration: Duration(minutes: 30),
-          ),
-          MetaEventSegment(
-            name: 'tequatl_the_sunless',
-            duration: Duration(minutes: 30),
-          ),
-          MetaEventSegment(
-            duration: Duration(minutes: 30),
-          ),
-          MetaEventSegment(
-            name: 'triple_trouble_wurm',
+            id: 'triple_trouble_wurm',
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
             duration: Duration(minutes: 120),
           ),
           MetaEventSegment(
-            name: 'karka_queen',
+            id: 'karka_queen',
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
-            name: 'tequatl_the_sunless',
+            id: 'tequatl_the_sunless',
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
-            name: 'triple_trouble_wurm',
+            id: 'triple_trouble_wurm',
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 120),
+          ),
+          MetaEventSegment(
+            id: 'karka_queen',
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
-            name: 'karka_queen',
+            id: 'tequatl_the_sunless',
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
-            name: 'tequatl_the_sunless',
+            id: 'triple_trouble_wurm',
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
-            name: 'triple_trouble_wurm',
+            id: 'karka_queen',
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            id: 'tequatl_the_sunless',
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 30),
+          ),
+          MetaEventSegment(
+            id: 'triple_trouble_wurm',
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
             duration: Duration(minutes: 150),
           ),
           MetaEventSegment(
-            name: 'karka_queen',
+            id: 'karka_queen',
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
-            name: 'tequatl_the_sunless',
+            id: 'tequatl_the_sunless',
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
-            name: 'triple_trouble_wurm',
+            id: 'triple_trouble_wurm',
             duration: Duration(minutes: 30),
           ),
           MetaEventSegment(
