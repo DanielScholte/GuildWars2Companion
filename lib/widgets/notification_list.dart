@@ -27,9 +27,11 @@ class _CompanionNotificationListState extends State<CompanionNotificationList> {
   void initState() {
     super.initState();
 
+    BlocProvider.of<NotificationBloc>(context).add(RemoveExpiredNotificationsEvent());
+
     _timer = Timer.periodic(	
       Duration(seconds: 10),	
-      (Timer timer) => BlocProvider.of<NotificationBloc>(context).add(RemoveExpiredNotificationsEvent()),	
+      (Timer timer) => BlocProvider.of<NotificationBloc>(context).add(RemoveExpiredNotificationsEvent()),
     );
   }
 
