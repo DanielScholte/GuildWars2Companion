@@ -9,7 +9,7 @@ class NotificationsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CompanionAppBar(
-        title: 'Notifications',
+        title: 'Scheduled notifications',
         color: Colors.blue,
       ),
       body: Center(
