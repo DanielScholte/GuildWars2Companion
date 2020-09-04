@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/bank/bank_bloc.dart';
 import 'package:guildwars2_companion/blocs/bank/bank_state.dart';
 import 'package:guildwars2_companion/blocs/bank/bloc.dart';
-import 'package:guildwars2_companion/pages/general/build.dart';
+import 'package:guildwars2_companion/pages/general/build/build.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
@@ -20,8 +20,6 @@ class BankBuildSelectionPage extends StatelessWidget {
         appBar: CompanionAppBar(
           title: 'Build storage',
           color: Colors.purple,
-          foregroundColor: Colors.white,
-          elevation: 4.0,
         ),
         body: BlocBuilder<BankBloc, BankState>(
           builder: (context, state) {

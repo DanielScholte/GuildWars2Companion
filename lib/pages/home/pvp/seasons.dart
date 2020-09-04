@@ -23,9 +23,7 @@ class SeasonsPage extends StatelessWidget {
       child: Scaffold(
         appBar: CompanionAppBar(
           color: Colors.orange,
-          foregroundColor: Colors.white,
           title: 'Ranked seasons',
-          elevation: 4.0,
         ),
         body: BlocBuilder<PvpBloc, PvpState>(
           builder: (context, state) {

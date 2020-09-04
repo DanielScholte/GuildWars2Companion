@@ -8,6 +8,7 @@ import 'package:guildwars2_companion/blocs/configuration/configuration_bloc.dart
 import 'package:guildwars2_companion/blocs/dungeon/dungeon_bloc.dart';
 import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/blocs/event/event_bloc.dart';
+import 'package:guildwars2_companion/blocs/notification/notification_bloc.dart';
 import 'package:guildwars2_companion/blocs/pvp/pvp_bloc.dart';
 import 'package:guildwars2_companion/blocs/raid/raid_bloc.dart';
 import 'package:guildwars2_companion/blocs/trading_post/bloc.dart';
@@ -23,6 +24,7 @@ import 'package:guildwars2_companion/repositories/configuration.dart';
 import 'package:guildwars2_companion/repositories/dungeon.dart';
 import 'package:guildwars2_companion/repositories/event.dart';
 import 'package:guildwars2_companion/repositories/item.dart';
+import 'package:guildwars2_companion/repositories/notification.dart';
 import 'package:guildwars2_companion/repositories/pvp.dart';
 import 'package:guildwars2_companion/repositories/raid.dart';
 import 'package:guildwars2_companion/repositories/trading_post.dart';
@@ -39,6 +41,7 @@ import 'package:guildwars2_companion/services/dungeon.dart';
 import 'package:guildwars2_companion/services/event.dart';
 import 'package:guildwars2_companion/services/item.dart';
 import 'package:guildwars2_companion/services/map.dart';
+import 'package:guildwars2_companion/services/notification.dart';
 import 'package:guildwars2_companion/services/pvp.dart';
 import 'package:guildwars2_companion/services/raid.dart';
 import 'package:guildwars2_companion/services/token.dart';
@@ -59,6 +62,7 @@ class CompanionFactory {
   EventService eventService;
   ItemService itemService;
   MapService mapService;
+  NotificationService notificationService;
   PvpService pvpService;
   RaidService raidService;
   TokenService tokenService;
@@ -74,6 +78,9 @@ class CompanionFactory {
 
     changelogService = ChangelogService();
     await changelogService.loadChangelogData();
+
+    notificationService = NotificationService();
+    await notificationService.initializeNotifications();
 
     final DioUtil dioUtil = DioUtil(
       tokenService: tokenService,
@@ -163,6 +170,11 @@ class CompanionFactory {
             itemService: itemService,
           ),
         ),
+        RepositoryProvider<NotificationRepository>(
+          create: (BuildContext context) => NotificationRepository(
+            notificationService: notificationService,
+          ),
+        ),
         RepositoryProvider<PvpRepository>(
           create: (BuildContext context) => PvpRepository(
             mapService: mapService,
@@ -238,6 +250,11 @@ class CompanionFactory {
         BlocProvider<EventBloc>(
           create: (BuildContext context) => EventBloc(
             eventRepository: RepositoryProvider.of<EventRepository>(context),
+          ),
+        ),
+        BlocProvider<NotificationBloc>(
+          create: (BuildContext context) => NotificationBloc(
+            notificationRepository: RepositoryProvider.of<NotificationRepository>(context),
           ),
         ),
         BlocProvider<PvpBloc>(

@@ -40,7 +40,8 @@ class WorldBossBloc extends Bloc<WorldBossEvent, WorldBossState> {
           w.segment = [
             ...sequences.first.segments,
             ...sequences.last.segments 
-          ].firstWhere((s) => s.name == w.id);
+          ].firstWhere((s) => s.id == w.id);
+          w.segment.name = w.name;
         });
 
         worldBosses.sort((a, b) => a.segment.time.compareTo(b.segment.time));

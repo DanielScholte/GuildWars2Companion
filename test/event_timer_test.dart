@@ -20,10 +20,12 @@ main() {
             segments: [
               MetaEventSegment(
                 duration: Duration(hours: 1),
+                id: 'test_event',
                 name: 'Test Event'
               ),
               MetaEventSegment(
                 duration: Duration(hours: 1),
+                id: 'test_event_2',
                 name: 'Test Event2'
               ),
             ],
@@ -35,10 +37,12 @@ main() {
             segments: [
               MetaEventSegment(
                 duration: Duration(hours: 1),
+                id: 'test_2_event',
                 name: 'Test Event'
               ),
               MetaEventSegment(
                 duration: Duration(hours: 1),
+                id: 'test_2_event_2',
                 name: 'Test Event2'
               ),
             ],
@@ -75,10 +79,12 @@ main() {
             segments: [
               MetaEventSegment(
                 duration: Duration(hours: 1),
+                id: 'test_event',
                 name: 'Test Event'
               ),
               MetaEventSegment(
                 duration: Duration(hours: 1),
+                id: 'test_event_2',
                 name: 'Test Event2'
               ),
             ],
@@ -90,10 +96,12 @@ main() {
             segments: [
               MetaEventSegment(
                 duration: Duration(hours: 1),
+                id: 'test_2_event',
                 name: 'Test Event'
               ),
               MetaEventSegment(
                 duration: Duration(hours: 1),
+                id: 'test_2_event_2',
                 name: 'Test Event2'
               ),
             ],
@@ -138,6 +146,7 @@ main() {
             segments: [
               MetaEventSegment(
                 duration: Duration(hours: 1),
+                id: 'test_event',
                 name: 'Test Event'
               ),
             ],

@@ -12,8 +12,6 @@ class ChangelogPage extends StatelessWidget {
       appBar: CompanionAppBar(
         title: 'Changelog',
         color: Colors.blue,
-        elevation: 4.0,
-        foregroundColor: Colors.white,
       ),
       body: BlocBuilder<ChangelogBloc, ChangelogState>(
         builder: (context, state) {

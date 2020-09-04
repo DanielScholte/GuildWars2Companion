@@ -7,6 +7,7 @@ import 'package:guildwars2_companion/blocs/configuration/configuration_bloc.dart
 import 'package:guildwars2_companion/blocs/world_boss/bloc.dart';
 import 'package:guildwars2_companion/models/other/configuration.dart';
 import 'package:guildwars2_companion/models/other/world_boss.dart';
+import 'package:guildwars2_companion/pages/general/event/event.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
@@ -15,8 +16,6 @@ import 'package:guildwars2_companion/widgets/button.dart';
 import 'package:guildwars2_companion/widgets/list_view.dart';
 import 'package:intl/intl.dart';
 import 'package:timer_builder/timer_builder.dart';
-
-import 'world_boss.dart';
 
 class WorldBossesPage extends StatefulWidget {
   @override
@@ -55,8 +54,6 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
         appBar: CompanionAppBar(
           title: 'World Bosses',
           color: Colors.deepPurple,
-          foregroundColor: Colors.white,
-          elevation: 4.0,
         ),
         body: BlocBuilder<ConfigurationBloc, ConfigurationState>(
           builder: (context, configurationState) {
@@ -103,7 +100,7 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
   }
               
   Widget _buildWorldbossRow(BuildContext context, DateFormat timeFormat, WorldBoss worldBoss) {
-    DateTime time = worldBoss.segment.time.toLocal();
+    DateTime time = worldBoss.segment.time;
 
     return CompanionButton(
       color: worldBoss.color,
@@ -173,7 +170,11 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
         ),
       ),
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => WorldBossPage(worldBoss)
+        settings: RouteSettings(name: '/event'),
+        builder: (context) => EventPage(
+          segment: worldBoss.segment,
+          worldBoss: worldBoss,
+        )
       )),
     );
   }

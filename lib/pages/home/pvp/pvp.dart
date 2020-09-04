@@ -48,8 +48,6 @@ class PvpPage extends StatelessWidget {
       appBar: CompanionAppBar(
         title: '',
         color: Color(0xFF678A9E),
-        foregroundColor: Colors.white,
-        elevation: 4.0,
       ),
       body: child,
     );

@@ -22,8 +22,6 @@ class GenericBankPage extends StatelessWidget {
         appBar: CompanionAppBar(
           title: bankType == BankType.bank ? 'Bank' : 'Shared inventory',
           color: bankType == BankType.bank ? Colors.green : Colors.blue,
-          foregroundColor: Colors.white,
-          elevation: 4.0,
         ),
         body: BlocBuilder<BankBloc, BankState>(
           builder: (context, state) {

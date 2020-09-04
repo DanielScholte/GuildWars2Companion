@@ -22,8 +22,6 @@ class AchievementsPage extends StatelessWidget {
         appBar: CompanionAppBar(
           title: achievementCategory.name,
           color: Colors.blueGrey,
-          foregroundColor: Colors.white,
-          elevation: 4.0,
         ),
         body: BlocBuilder<AchievementBloc, AchievementState>(
           builder: (context, state) {
