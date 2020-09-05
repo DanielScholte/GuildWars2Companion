@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:guildwars2_companion/migrations/notification.dart';
 import 'package:guildwars2_companion/models/notifications/notification.dart';
@@ -31,7 +32,8 @@ class NotificationService {
         'event_notifications',
         'World bosses and Meta events',
         'Notifications for upcoming World bosses and Meta events',
-        largeIcon: DrawableResourceAndroidBitmap("ic_notification_large")
+        largeIcon: DrawableResourceAndroidBitmap("ic_notification_large"),
+        color: Colors.red
       ),
       IOSNotificationDetails(
         presentAlert: true,

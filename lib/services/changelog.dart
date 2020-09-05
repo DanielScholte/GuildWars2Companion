@@ -36,7 +36,7 @@ class ChangelogService {
   List<Changelog> changelog = [
     Changelog(
       version: '1.5.0',
-      build: 24,
+      build: 27,
       newFeatures: true,
       changes: [
         'Added notifications for World bosses and meta events',

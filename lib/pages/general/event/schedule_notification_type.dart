@@ -6,6 +6,7 @@ import 'package:guildwars2_companion/pages/general/event/schedule_notification_t
 import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/tip.dart';
+import 'package:guildwars2_companion/widgets/warning.dart';
 
 class ScheduleNotificationTypePage extends StatefulWidget {
   final MetaEventSegment segment;
@@ -52,6 +53,14 @@ class _ScheduleNotificationTypePageState extends State<ScheduleNotificationTypeP
                 Container(height: 8.0,),
                 CompanionTip(
                   tip: 'You can plan multiple notifications for a single event or world boss',
+                ),
+                CompanionWarning(
+                  warning: "If you're experiencing issues with not receiving the one-time notifications, please disable battery management for this app.",
+                  ios: false,
+                ),
+                CompanionWarning(
+                  warning: "If you're experiencing delayed daily notifications, please use the one-time option.",
+                  ios: false,
                 )
               ],
             )
