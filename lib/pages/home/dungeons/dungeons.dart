@@ -20,8 +20,6 @@ class DungeonsPage extends StatelessWidget {
         appBar: CompanionAppBar(
           title: 'Dungeons',
           color: Colors.deepOrange,
-          foregroundColor: Colors.white,
-          elevation: 4.0,
         ),
         body: BlocBuilder<DungeonBloc, DungeonState>(
           builder: (context, state) {

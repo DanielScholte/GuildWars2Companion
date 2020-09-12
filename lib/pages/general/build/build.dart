@@ -25,8 +25,6 @@ class BuildPage extends StatelessWidget {
         appBar: CompanionAppBar(
           title: _build.name != null && _build.name.isNotEmpty ? _build.name : 'Nameless build',
           color: singular ? Colors.purple : GuildWarsUtil.getProfessionColor(_build.profession),
-          foregroundColor: Colors.white,
-          elevation: 4.0,
         ),
         body: CompanionListView(
           children: <Widget>[

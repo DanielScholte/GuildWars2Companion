@@ -23,8 +23,6 @@ class EquipmentSelectionPage extends StatelessWidget {
         appBar: CompanionAppBar(
           title: 'Equipment',
           color: Colors.teal,
-          foregroundColor: Colors.white,
-          elevation: 4.0,
         ),
         body: BlocConsumer<CharacterBloc, CharacterState>(
           listenWhen: (previous, current) => current is ErrorCharactersState,

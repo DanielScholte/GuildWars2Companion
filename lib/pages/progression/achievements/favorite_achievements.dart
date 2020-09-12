@@ -16,8 +16,6 @@ class FavoriteAchievementsPage extends StatelessWidget {
         appBar: CompanionAppBar(
           title: 'Favorite achievements',
           color: Colors.blue,
-          foregroundColor: Colors.white,
-          elevation: 4.0,
         ),
         body: BlocBuilder<AchievementBloc, AchievementState>(
           builder: (context, state) {

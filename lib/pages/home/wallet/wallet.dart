@@ -19,8 +19,6 @@ class WalletPage extends StatelessWidget {
         appBar: CompanionAppBar(
           title: 'Wallet',
           color: Colors.orange,
-          foregroundColor: Colors.white,
-          elevation: 4.0,
         ),
         body: BlocBuilder<WalletBloc, WalletState>(
           builder: (context, state) {
@@ -43,7 +41,7 @@ class WalletPage extends StatelessWidget {
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
                 child: CompanionListView(
-                  children: state.currencies.map((c) => _buildCurrencyRow(context, c)).toList(),
+                  children: List.generate(state.currencies.length, (index) => _buildCurrencyRow(context, index, state.currencies[index])),
                 ),
               );
             }
@@ -57,9 +55,11 @@ class WalletPage extends StatelessWidget {
     );
   }
 
-  Widget _buildCurrencyRow(BuildContext context, Currency currency) {
+  Widget _buildCurrencyRow(BuildContext context, int index, Currency currency) {
+    Color highlightColor = Theme.of(context).brightness ==  Brightness.light ? Colors.black12 : Colors.white12;
     return Container(
-      margin: EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(8.0),
+      color: index % 2 != 0 ? highlightColor : null,
       child: Row(
         children: <Widget>[
           Expanded(
@@ -71,7 +71,6 @@ class WalletPage extends StatelessWidget {
             ),
           ),
           _buildCurrency(context, currency),
-          
         ],
       ),
     );
@@ -100,7 +99,7 @@ class WalletPage extends StatelessWidget {
           Container(
             width: 20.0,
             height: 20.0,
-            margin: EdgeInsets.only(left: 4.0),
+            margin: EdgeInsets.only(left: 8.0),
             child: CompanionCachedImage(
               imageUrl: currency.icon,
               color: Colors.orange,

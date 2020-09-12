@@ -11,8 +11,6 @@ class TimeConfigurationPage extends StatelessWidget {
       appBar: CompanionAppBar(
         title: 'Time notation',
         color: Colors.blue,
-        elevation: 4.0,
-        foregroundColor: Colors.white,
       ),
       body: BlocBuilder<ConfigurationBloc, ConfigurationState>(
         builder: (context, state) {

@@ -22,8 +22,6 @@ class MetaEventsPage extends StatelessWidget {
         appBar: CompanionAppBar(
           title: 'Meta Events',
           color: Colors.green,
-          foregroundColor: Colors.white,
-          elevation: 4.0,
         ),
         body: BlocBuilder<EventBloc, EventState>(
           builder: (context, state) {

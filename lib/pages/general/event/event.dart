@@ -1,34 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/configuration/configuration_bloc.dart';
+import 'package:guildwars2_companion/models/notifications/notification.dart';
 import 'package:guildwars2_companion/models/other/configuration.dart';
+import 'package:guildwars2_companion/models/other/meta_event.dart';
 import 'package:guildwars2_companion/models/other/world_boss.dart';
 import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
 import 'package:guildwars2_companion/widgets/info_row.dart';
 import 'package:guildwars2_companion/widgets/list_view.dart';
+import 'package:guildwars2_companion/widgets/notification_list.dart';
 import 'package:intl/intl.dart';
 
-class WorldBossPage extends StatelessWidget {
+class EventPage extends StatelessWidget {
 
+  final MetaEventSequence sequence;
+  final MetaEventSegment segment;
   final WorldBoss worldBoss;
 
-  WorldBossPage(this.worldBoss);
+  EventPage({
+    @required this.segment,
+    this.sequence,
+    this.worldBoss,
+  });
 
   @override
   Widget build(BuildContext context) {
     return CompanionAccent(
-      lightColor: worldBoss.color,
+      lightColor: Colors.orange,
       child: Scaffold(
         body: Column(
           children: <Widget>[
-            _buildHeader(context),
+            if (this.sequence != null)
+              _buildEventHeader(context),
+            if (this.worldBoss != null)
+              _buildWorldBossHeader(context),
             Expanded(
               child: CompanionListView(
                 children: <Widget>[
-                  _buildStats(context),
-                  _buildTimes(context)
+                  if (this.worldBoss != null)
+                    _buildWorldBossStats(context),
+                  _buildTimes(context),
+                  _buildNotificationList(context),
                 ],
               ),
             ),
@@ -38,12 +52,13 @@ class WorldBossPage extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
+  Widget _buildWorldBossHeader(BuildContext context) {
     return CompanionHeader(
       color: worldBoss.color,
       wikiName: worldBoss.name,
       wikiRequiresEnglish: true,
       includeBack: true,
+      eventSegment: segment..type = EventType.WORLD_BOSS,
       child: Column(
         children: <Widget>[
           Container(
@@ -87,7 +102,44 @@ class WorldBossPage extends StatelessWidget {
     );
   }
 
-  Widget _buildStats(BuildContext context) {
+  Widget _buildEventHeader(BuildContext context) {
+    return CompanionHeader(
+      color: Colors.orange,
+      wikiName: segment.name,
+      wikiRequiresEnglish: true,
+      includeBack: true,
+      eventSegment: segment..type = EventType.META_EVENT,
+      child: Column(
+        children: <Widget>[
+          Hero(
+            tag: segment.name,
+            child: Image.asset(
+              'assets/button_headers/event_icon.png',
+              height: 48.0,
+              width: 48.0,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(4.0),
+            child: Text(
+              segment.name,
+              style: Theme.of(context).textTheme.headline1,
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Text(
+            sequence.name,
+            style: Theme.of(context).textTheme.bodyText1.copyWith(
+              color: Colors.white
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildWorldBossStats(BuildContext context) {
     return CompanionCard(
       child: Column(
         children: <Widget>[
@@ -116,7 +168,7 @@ class WorldBossPage extends StatelessWidget {
   }
 
   Widget _buildTimes(BuildContext context) {
-    List<DateTime> times = worldBoss.segment.times.map((d) => d.toLocal()).toList();
+    List<DateTime> times = segment.times.toList();
     times.sort((a, b) => a.hour.compareTo(b.hour));
 
     return BlocBuilder<ConfigurationBloc, ConfigurationState>(
@@ -124,6 +176,8 @@ class WorldBossPage extends StatelessWidget {
         final Configuration configuration = (state as LoadedConfiguration).configuration;
         final DateFormat timeFormat = configuration.timeNotation24Hours ? DateFormat.Hm() : DateFormat.jm();
 
+        Color lightColor = worldBoss != null ? worldBoss.color : Colors.orange;
+        
         return CompanionCard(
           child: Column(
             children: <Widget>[
@@ -140,7 +194,7 @@ class WorldBossPage extends StatelessWidget {
                 runSpacing: 4.0,
                 children: times
                   .map((t) => Chip(
-                    backgroundColor: Theme.of(context).brightness == Brightness.light ? worldBoss.color : Colors.white12,
+                    backgroundColor: Theme.of(context).brightness == Brightness.light ? lightColor : Colors.white12,
                     label: Text(
                       timeFormat.format(t),
                       style: Theme.of(context).textTheme.bodyText1.copyWith(
@@ -153,7 +207,30 @@ class WorldBossPage extends StatelessWidget {
             ],
           ),
         );
-      }
+      },
+    );
+  }
+
+  Widget _buildNotificationList(BuildContext context) {
+    return CompanionCard(
+      padding: EdgeInsets.zero,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12.0),
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                'Scheduled notifications',
+                style: Theme.of(context).textTheme.headline2,
+              ),
+            ),
+            CompanionNotificationList(
+              eventId: segment.id,
+            )
+          ],
+        ),
+      ),
     );
   }
 }

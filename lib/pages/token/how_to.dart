@@ -10,8 +10,6 @@ class HowToTokenPage extends StatelessWidget {
       appBar: CompanionAppBar(
         title: 'How do I get an Api Key?',
         color: Colors.red,
-        foregroundColor: Colors.white,
-        elevation: 4.0,
       ),
       body: ListView(
         padding: EdgeInsets.all(8.0),

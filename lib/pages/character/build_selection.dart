@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/models/character/character.dart';
-import 'package:guildwars2_companion/pages/general/build.dart';
+import 'package:guildwars2_companion/pages/general/build/build.dart';
 import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/button.dart';
@@ -23,8 +23,6 @@ class CharacterBuildSelectionPage extends StatelessWidget {
         appBar: CompanionAppBar(
           title: 'Builds',
           color: Colors.purple,
-          foregroundColor: Colors.white,
-          elevation: 4.0,
         ),
         body: BlocConsumer<CharacterBloc, CharacterState>(
           listenWhen: (previous, current) => current is ErrorCharactersState,
