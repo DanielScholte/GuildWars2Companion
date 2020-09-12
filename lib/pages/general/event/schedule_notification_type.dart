@@ -59,7 +59,7 @@ class _ScheduleNotificationTypePageState extends State<ScheduleNotificationTypeP
                   ios: false,
                 ),
                 CompanionWarning(
-                  warning: "If you're experiencing delayed daily notifications, please use the one-time option.",
+                  warning: "If you're experiencing significantly delayed daily notifications, please use the one-time option.",
                   ios: false,
                 )
               ],
