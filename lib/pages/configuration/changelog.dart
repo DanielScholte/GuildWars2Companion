@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/changelog/changelog_bloc.dart';
 import 'package:guildwars2_companion/models/other/changelog.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
+import 'package:guildwars2_companion/widgets/list_view.dart';
 
 class ChangelogPage extends StatelessWidget {
   @override
@@ -17,11 +18,10 @@ class ChangelogPage extends StatelessWidget {
         builder: (context, state) {
           final List<Changelog> changelogs = (state as LoadedChangelog).changelogs;
 
-          return ListView(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
+          return CompanionListView(
             children: changelogs
               .map((c) => Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.0),
+                padding: EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
