@@ -52,7 +52,7 @@ class _ScheduleNotificationTypePageState extends State<ScheduleNotificationTypeP
                   .toList(),
                 Container(height: 8.0,),
                 CompanionTip(
-                  tip: 'You can plan multiple notifications for a single event or world boss',
+                  tip: 'You can plan multiple notifications for a single event or world boss.',
                 ),
                 CompanionWarning(
                   warning: "If you're experiencing issues with not receiving the one-time notifications, please disable battery management for this app.",
