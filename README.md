@@ -79,11 +79,6 @@ To start the project, run the following Flutter command:
 $ flutter run
 ```
 
-## Contributors
-
-- **Daniël Scholte** - Lead developer: [Github](https://github.com/danielscholte), [Email](mailto:danielscholte@outlook.com).
-- **Kyle Ritchi** - First iOS build and bug fixes: [Github](https://github.com/kyleritchi).
-
 ## Contributing
 
 If you want to contribute to GW2 Companion, please begin by reading the [contributing guidelines](https://github.com/DanielScholte/GuildWars2Companion/blob/master/CONTRIBUTING.md).
