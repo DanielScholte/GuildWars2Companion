@@ -54,12 +54,14 @@ class NotificationService {
     notification.dateTime = notification.spawnDateTime.subtract(notification.offset);
     notification.eventName = notification.eventName + (notification.eventType == EventType.META_EVENT ? " event" : "");
 
-    bool isHour = notification.offset.inMinutes >= 60;
+    String description = "";
 
-    String description = 
-      (notification.eventType == EventType.META_EVENT ? "Starting" : "Spawning")
-      + " in " + (isHour ? notification.offset.inHours : notification.offset.inMinutes).toString()
-      + " " + (isHour ? "hours" : "minutes");
+    if (notification.eventType == EventType.META_EVENT) description += "Starting ";
+    else description += "Spawning ";
+
+    if (notification.offset.inMinutes == 0) description += "now";
+    else if (notification.offset.inMinutes >= 60) description += "in ${notification.offset.inHours} hours";
+    else description += "in ${notification.offset.inMinutes} minutes";
 
     switch (notification.type) {
       case NotificationType.SINGLE:
