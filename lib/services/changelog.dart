@@ -35,6 +35,15 @@ class ChangelogService {
 
   List<Changelog> changelog = [
     Changelog(
+      version: '1.5.1',
+      build: 29,
+      newFeatures: false,
+      changes: [
+        'Fixed typo on the schedule notification page',
+        'Fixed notification text issue'
+      ],
+    ),
+    Changelog(
       version: '1.5.0',
       build: 28,
       newFeatures: true,
