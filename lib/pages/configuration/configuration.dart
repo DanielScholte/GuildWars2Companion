@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/pages/configuration/caching.dart';
 import 'package:guildwars2_companion/pages/configuration/faq.dart';
 import 'package:guildwars2_companion/pages/configuration/language.dart';
+import 'package:guildwars2_companion/pages/configuration/notifications.dart';
 import 'package:guildwars2_companion/pages/configuration/theme.dart';
 import 'package:guildwars2_companion/pages/configuration/time.dart';
 import 'package:guildwars2_companion/utils/urls.dart';
@@ -76,6 +77,18 @@ class ConfigurationPage extends StatelessWidget {
                   height: 64.0,
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => ThemeConfigurationPage()
+                  )),
+                ),
+                CompanionButton(
+                  title: 'Scheduled notifications',
+                  color: Colors.blue,
+                  leading: Icon(
+                    FontAwesomeIcons.solidBell,
+                    color: Colors.white,
+                  ),
+                  height: 64.0,
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => NotificationsPage()
                   )),
                 ),
                 CompanionButton(

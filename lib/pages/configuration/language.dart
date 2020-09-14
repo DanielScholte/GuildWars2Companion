@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/configuration/configuration_bloc.dart';
 import 'package:guildwars2_companion/models/other/configuration.dart';
 import 'package:guildwars2_companion/repositories/achievement.dart';
+import 'package:guildwars2_companion/repositories/build.dart';
 import 'package:guildwars2_companion/repositories/item.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 
@@ -13,8 +14,6 @@ class LanguageConfigurationPage extends StatelessWidget {
       appBar: CompanionAppBar(
         title: 'Api and Wiki Language',
         color: Colors.blue,
-        elevation: 4.0,
-        foregroundColor: Colors.white,
       ),
       body: BlocBuilder<ConfigurationBloc, ConfigurationState>(
         builder: (context, state) {
@@ -46,6 +45,7 @@ class LanguageConfigurationPage extends StatelessWidget {
         context: context,
         achievementRepository: RepositoryProvider.of<AchievementRepository>(context),
         itemRepository: RepositoryProvider.of<ItemRepository>(context),
+        buildRepository: RepositoryProvider.of<BuildRepository>(context),
         lang: lang
       ),
     );
@@ -55,6 +55,7 @@ class LanguageConfigurationPage extends StatelessWidget {
     BuildContext context,
     AchievementRepository achievementRepository,
     ItemRepository itemRepository,
+    BuildRepository buildRepository,
     String lang,
   }) async {
     return showDialog(
@@ -91,6 +92,7 @@ This will also clear your cache and require you to restart the app.'''
 
                 await achievementRepository.clearCache();
                 await itemRepository.clearCache();
+                await buildRepository.clearCache();
               },
             )
           ],

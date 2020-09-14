@@ -85,10 +85,12 @@ class _CompanionChangelogState extends State<CompanionChangelog> {
                                         size: 6.0,
                                       ),
                                     ),
-                                    Text(
-                                      c,
-                                      style: Theme.of(context).textTheme.bodyText1.copyWith(
-                                        color: Colors.white
+                                    Expanded(
+                                      child: Text(
+                                        c,
+                                        style: Theme.of(context).textTheme.bodyText1.copyWith(
+                                          color: Colors.white
+                                        ),
                                       ),
                                     )
                                   ],

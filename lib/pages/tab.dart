@@ -86,7 +86,19 @@ class _TabPageState extends State<TabPage> {
           if (state is LoadingAccountState) {
             return Scaffold(
               body: Center(
-                child: CircularProgressIndicator(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CircularProgressIndicator(),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'Loading account information',
+                        style: Theme.of(context).textTheme.headline2,
+                      ),
+                    )
+                  ],
+                ),
               ),
             );
           }

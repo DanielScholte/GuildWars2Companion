@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/configuration/configuration_bloc.dart';
+import 'package:guildwars2_companion/blocs/notification/notification_bloc.dart';
 import 'package:guildwars2_companion/models/other/configuration.dart';
+import 'package:guildwars2_companion/models/other/meta_event.dart';
+import 'package:guildwars2_companion/pages/general/event/schedule_notification_type.dart';
 import 'package:guildwars2_companion/utils/urls.dart';
 
 class CompanionHeader extends StatelessWidget {
@@ -17,6 +20,7 @@ class CompanionHeader extends StatelessWidget {
   final bool enforceColor;
   final bool isFavorite;
   final VoidCallback onFavoriteToggle;
+  final MetaEventSegment eventSegment;
 
   CompanionHeader({
     @required this.child,
@@ -29,6 +33,7 @@ class CompanionHeader extends StatelessWidget {
     this.enforceColor = false,
     this.isFavorite,
     this.onFavoriteToggle,
+    this.eventSegment,
   });
 
   @override
@@ -74,6 +79,8 @@ class CompanionHeader extends StatelessWidget {
                     children: <Widget>[
                       if (isFavorite != null)
                         _buildFavorite(isFavorite),
+                      if (eventSegment != null)
+                        _buildNotification(context),
                       if (wikiName != null)
                         _buildWiki(),
                     ],
@@ -104,6 +111,34 @@ class CompanionHeader extends StatelessWidget {
         ),
         onPressed: () => onFavoriteToggle(),
       ),
+    );
+  }
+
+  Widget _buildNotification(BuildContext context) {
+    return BlocBuilder<NotificationBloc, NotificationState>(
+      builder: (context, state) {
+        if (state is ScheduledNotificationsState) {
+          return Material(
+            color: Colors.transparent,
+            child: IconButton(
+              icon: Icon(
+                state.scheduledNotifications.any((n) => n.eventId == eventSegment.id)
+                ? FontAwesomeIcons.solidBell
+                : FontAwesomeIcons.bell,
+                color: foregroundColor,
+                size: 20.0,
+              ),
+              onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => ScheduleNotificationTypePage(
+                  segment: eventSegment,
+                )
+              )),
+            ),
+          );
+        }
+
+        return Container();
+      }
     );
   }
 

@@ -17,8 +17,6 @@ class MaterialBankPage extends StatelessWidget {
         appBar: CompanionAppBar(
           title: 'Materials',
           color: Colors.deepOrange,
-          foregroundColor: Colors.white,
-          elevation: 4.0,
         ),
         body: BlocBuilder<BankBloc, BankState>(
           builder: (context, state) {

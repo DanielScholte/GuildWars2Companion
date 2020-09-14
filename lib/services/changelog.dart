@@ -35,6 +35,26 @@ class ChangelogService {
 
   List<Changelog> changelog = [
     Changelog(
+      version: '1.5.1',
+      build: 29,
+      newFeatures: false,
+      changes: [
+        'Fixed typo on the schedule notification page',
+        'Fixed notification text issue'
+      ],
+    ),
+    Changelog(
+      version: '1.5.0',
+      build: 28,
+      newFeatures: true,
+      changes: [
+        'Added notifications for World bosses and meta events',
+        'Improved the bank page',
+        'Improved the inventory page (Thanks to Apcro)',
+        'Improved the wallet page (Thanks to Apcro)'
+      ],
+    ),
+    Changelog(
       version: '1.4.3',
       build: 23,
       newFeatures: false,

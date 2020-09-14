@@ -15,7 +15,7 @@ import 'package:guildwars2_companion/widgets/list_view.dart';
 import 'package:intl/intl.dart';
 import 'package:timer_builder/timer_builder.dart';
 
-import 'event.dart';
+import '../../general/event/event.dart';
 
 class MetaEventPage extends StatefulWidget {
 
@@ -59,8 +59,6 @@ class _MetaEventPageState extends State<MetaEventPage> {
         appBar: CompanionAppBar(
           title: widget.metaEventSequence.name,
           color: GuildWarsUtil.regionColor(widget.metaEventSequence.region),
-          foregroundColor: Colors.white,
-          elevation: 4.0,
         ),
         body: BlocBuilder<ConfigurationBloc, ConfigurationState>(
           builder: (context, configurationState) {
@@ -110,7 +108,7 @@ class _MetaEventPageState extends State<MetaEventPage> {
   }
 
   Widget _buildEventButton(BuildContext context, DateFormat timeFormat, MetaEventSegment segment) {
-    DateTime time = segment.time.toLocal();
+    DateTime time = segment.time;
 
     return CompanionButton(
       color: Colors.orange,
@@ -166,6 +164,7 @@ class _MetaEventPageState extends State<MetaEventPage> {
         ),
       ),
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
+        settings: RouteSettings(name: '/event'),
         builder: (context) => EventPage(
           segment: segment,
           sequence: widget.metaEventSequence,

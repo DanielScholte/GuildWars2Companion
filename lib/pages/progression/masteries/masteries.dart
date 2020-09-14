@@ -18,8 +18,6 @@ class MasteriesPage extends StatelessWidget {
       appBar: CompanionAppBar(
         title: 'Masteries',
         color: Colors.red,
-        foregroundColor: Colors.white,
-        elevation: 4.0,
       ),
       body: BlocBuilder<AchievementBloc, AchievementState>(
         builder: (context, state) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/models/build/skill_trait.dart';
-import 'package:guildwars2_companion/pages/general/skill_trait.dart';
+import 'package:guildwars2_companion/pages/general/build/skill_trait.dart';
 
 import 'cached_image.dart';
 

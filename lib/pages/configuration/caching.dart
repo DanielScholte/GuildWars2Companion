@@ -39,8 +39,6 @@ class _CachingConfigurationPageState extends State<CachingConfigurationPage> {
       appBar: CompanionAppBar(
         title: 'Caching',
         color: Colors.blue,
-        elevation: 4.0,
-        foregroundColor: Colors.white,
       ),
       body: ListView(
         padding: EdgeInsets.all(8.0),

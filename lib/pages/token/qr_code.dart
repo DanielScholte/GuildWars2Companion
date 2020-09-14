@@ -39,8 +39,6 @@ class _QrCodePageState extends State<QrCodePage> {
         appBar: CompanionAppBar(
           title: 'Scan your Qr Code',
           color: Colors.red,
-          foregroundColor: Colors.white,
-          elevation: 4.0,
         ),
         body: Stack(
           children: <Widget>[

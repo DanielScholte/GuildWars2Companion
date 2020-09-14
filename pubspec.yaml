@@ -11,7 +11,7 @@ description: The Guild Wars 2 Companion app
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.4.3+23
+version: 1.5.1+29
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -53,6 +53,8 @@ dependencies:
   qr_code_scanner: ^0.0.12
 
   url_launcher: ^5.4.5
+
+  flutter_local_notifications: ^1.4.4+4
 
 dev_dependencies:
   flutter_test:

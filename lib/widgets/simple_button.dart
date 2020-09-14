@@ -14,7 +14,7 @@ class CompanionSimpleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 400,
-      padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.symmetric(vertical: 8.0),
       child: RaisedButton(
         shape: RoundedRectangleBorder(
           borderRadius: new BorderRadius.circular(12.0),

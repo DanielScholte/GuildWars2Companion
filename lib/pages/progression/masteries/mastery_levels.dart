@@ -28,8 +28,6 @@ class MasteryLevelsPage extends StatelessWidget {
         appBar: CompanionAppBar(
           title: mastery.name,
           color: GuildWarsUtil.regionColor(mastery.region),
-          foregroundColor: Colors.white,
-          elevation: 4.0,
         ),
         body: BlocBuilder<AchievementBloc, AchievementState>(
           builder: (context, state) {

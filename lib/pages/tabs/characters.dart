@@ -20,8 +20,6 @@ class CharactersPage extends StatelessWidget {
         appBar: CompanionAppBar(
           title: 'Characters',
           color: Colors.blue,
-          foregroundColor: Colors.white,
-          elevation: 4.0,
         ),
         body: BlocBuilder<CharacterBloc, CharacterState>(
           builder: (context, state) {
