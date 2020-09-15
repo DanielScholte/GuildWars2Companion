@@ -249,27 +249,27 @@ class ItemPage extends StatelessWidget {
               _buildToolDetails(),
             if (item.type == 'Weapon')
               _buildWeaponDetails(),
-            if (item.flags.AccountBound
-                || item.flags.AccountBindOnUse
-                || item.flags.SoulBindOnUse
-                || item.flags.SoulbindOnAcquire
-                || item.flags.Attuned
-                || item.flags.NoSalvage
-                || item.flags.NoMysticForge
-                || item.flags.NoSell
+            if (item.flags.accountBound
+                || item.flags.accountBindOnUse
+                || item.flags.soulBindOnUse
+                || item.flags.soulbindOnAcquire
+                || item.flags.attuned
+                || item.flags.noSalvage
+                || item.flags.noMysticForge
+                || item.flags.noSell
             )
               Divider(
                 height: 2,
                 thickness: 1
               ),
-            if (item.flags.AccountBound
-                || item.flags.AccountBindOnUse
-                || item.flags.SoulBindOnUse
-                || item.flags.SoulbindOnAcquire
-                || item.flags.Attuned
-                || item.flags.NoSalvage
-                || item.flags.NoMysticForge
-                || item.flags.NoSell
+            if (item.flags.accountBound
+                || item.flags.accountBindOnUse
+                || item.flags.soulBindOnUse
+                || item.flags.soulbindOnAcquire
+                || item.flags.attuned
+                || item.flags.noSalvage
+                || item.flags.noMysticForge
+                || item.flags.noSell
             )
               _buildFlagDetails(),
           ],
@@ -283,7 +283,7 @@ class ItemPage extends StatelessWidget {
   Widget _buildFlagDetails() {
     List<CompanionInfoRow> flags = [];
 
-    if (item.flags.AccountBindOnUse && !item.flags.AccountBound) {
+    if (item.flags.accountBindOnUse && !item.flags.accountBound) {
       flags.add(
           CompanionInfoRow(
               header: '',
@@ -292,7 +292,7 @@ class ItemPage extends StatelessWidget {
           )
       );
     }
-    if (item.flags.AccountBound) {
+    if (item.flags.accountBound) {
       flags.add(
           CompanionInfoRow(
               header: '',
@@ -300,7 +300,7 @@ class ItemPage extends StatelessWidget {
           )
       );
     }
-    if (item.flags.SoulbindOnAcquire) {
+    if (item.flags.soulbindOnAcquire) {
       flags.add(
           CompanionInfoRow(
               header: '',
@@ -308,7 +308,7 @@ class ItemPage extends StatelessWidget {
           )
       );
     }
-    if (item.flags.SoulBindOnUse) {
+    if (item.flags.soulBindOnUse) {
       flags.add(
           CompanionInfoRow(
               header: '',
@@ -316,7 +316,7 @@ class ItemPage extends StatelessWidget {
           )
       );
     }
-    if (item.flags.Unique) {
+    if (item.flags.unique) {
       flags.add(
           CompanionInfoRow(
               header: '',
@@ -324,7 +324,7 @@ class ItemPage extends StatelessWidget {
           )
       );
     }
-    if (item.flags.Attuned) {
+    if (item.flags.attuned) {
       flags.add(
           CompanionInfoRow(
               header: '',
@@ -332,7 +332,7 @@ class ItemPage extends StatelessWidget {
           )
       );
     }
-    if (item.flags.NoSell && !item.flags.AccountBound) {
+    if (item.flags.noSell && !item.flags.accountBound) {
       flags.add(
           CompanionInfoRow(
               header: '',
@@ -340,7 +340,7 @@ class ItemPage extends StatelessWidget {
           )
       );
     }
-    if (item.flags.NoSalvage) {
+    if (item.flags.noSalvage) {
       flags.add(
           CompanionInfoRow(
               header: '',
@@ -348,7 +348,7 @@ class ItemPage extends StatelessWidget {
           )
       );
     }
-    if (item.flags.NoMysticForge) {
+    if (item.flags.noMysticForge) {
       flags.add(
           CompanionInfoRow(
               header: '',
