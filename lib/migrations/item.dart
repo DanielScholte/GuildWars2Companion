@@ -23,30 +23,15 @@ class ItemMigrations {
         details_durationMs INTEGER,
         details_charges INTEGER,
         details_minPower INTEGER,
-        details_maxPower INTEGER,
-        flags_AccountBindOnUse INTEGER,
-        flags_AccountBound INTEGER,
-        flags_Attuned INTEGER,
-        flags_BulkConsume INTEGER,
-        flags_DeleteWarning INTEGER,
-        flags_HideSuffix INTEGER,
-        flags_Infused INTEGER,
-        flags_MonsterOnly INTEGER,
-        flags_NoMysticForge INTEGER,
-        flags_NoSalvage INTEGER,
-        flags_NoSell INTEGER,
-        flags_NotUpgradeable INTEGER,
-        flags_NoUnderwater INTEGER,
-        flags_SoulbindOnAcquire INTEGER,
-        flags_SoulBindOnUse INTEGER,
-        flags_Tonic INTEGER,
-        flags_Unique INTEGER
+        details_maxPower INTEGER
       )
     '''
   ];
 
   static final List<String> _migrationScripts = [
-
+    '''
+      ALTER TABLE items ADD flags TEXT 
+    '''
   ];
 
   static final MigrationConfig config = MigrationConfig(

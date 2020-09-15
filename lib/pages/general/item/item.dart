@@ -213,8 +213,10 @@ class ItemPage extends StatelessWidget {
   }
 
   Widget _buildItemDetails(BuildContext context) {
+    List<String> displayFlags = [];
     if ([
       'Armor',
+      'Back',
       'Bag',
       'Consumable',
       'Gathering',
@@ -223,6 +225,13 @@ class ItemPage extends StatelessWidget {
       'UpgradeComponent',
       'Weapon'
     ].contains(item.type))  {
+      if (item.flags != null && item.flags.length > 0) {
+        displayFlags = item.flags;
+        // remove hideSuffix
+        displayFlags.removeWhere((element) => element == "HideSuffix");
+        // sort alphabetically on key to match list order returned from API
+        displayFlags.sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
+      }
       return CompanionCard(
         child: Column(
           children: <Widget>[
@@ -249,117 +258,18 @@ class ItemPage extends StatelessWidget {
               _buildToolDetails(),
             if (item.type == 'Weapon')
               _buildWeaponDetails(),
-            if (item.flags.accountBound
-                || item.flags.accountBindOnUse
-                || item.flags.soulBindOnUse
-                || item.flags.soulbindOnAcquire
-                || item.flags.attuned
-                || item.flags.noSalvage
-                || item.flags.noMysticForge
-                || item.flags.noSell
-            )
-              Divider(
-                height: 2,
-                thickness: 1
-              ),
-            if (item.flags.accountBound
-                || item.flags.accountBindOnUse
-                || item.flags.soulBindOnUse
-                || item.flags.soulbindOnAcquire
-                || item.flags.attuned
-                || item.flags.noSalvage
-                || item.flags.noMysticForge
-                || item.flags.noSell
-            )
-              _buildFlagDetails(),
+            if (displayFlags != null && displayFlags.length > 0)
+              Column(children: [
+                Divider(height: 2, thickness: 1),
+                ...displayFlags.map(
+                    (f) => CompanionInfoRow(header: '', text: typeToName(f))),
+              ])
           ],
         ),
       );
     }
 
     return _buildRarityOnlyDetails(context);
-  }
-
-  Widget _buildFlagDetails() {
-    List<CompanionInfoRow> flags = [];
-
-    if (item.flags.accountBindOnUse && !item.flags.accountBound) {
-      flags.add(
-          CompanionInfoRow(
-              header: '',
-              text: typeToName('AccountBindOnUse'),
-
-          )
-      );
-    }
-    if (item.flags.accountBound) {
-      flags.add(
-          CompanionInfoRow(
-              header: '',
-              text: typeToName('AccountBound')
-          )
-      );
-    }
-    if (item.flags.soulbindOnAcquire) {
-      flags.add(
-          CompanionInfoRow(
-              header: '',
-              text: typeToName('SoulbindOnAcquire')
-          )
-      );
-    }
-    if (item.flags.soulBindOnUse) {
-      flags.add(
-          CompanionInfoRow(
-              header: '',
-              text: typeToName('SoulBindOnUse')
-          )
-      );
-    }
-    if (item.flags.unique) {
-      flags.add(
-          CompanionInfoRow(
-              header: '',
-              text: typeToName('Unique')
-          )
-      );
-    }
-    if (item.flags.attuned) {
-      flags.add(
-          CompanionInfoRow(
-              header: '',
-              text: typeToName('Attuned')
-          )
-      );
-    }
-    if (item.flags.noSell && !item.flags.accountBound) {
-      flags.add(
-          CompanionInfoRow(
-              header: '',
-              text: typeToName('NoSell')
-          )
-      );
-    }
-    if (item.flags.noSalvage) {
-      flags.add(
-          CompanionInfoRow(
-              header: '',
-              text: typeToName('NoSalvage')
-          )
-      );
-    }
-    if (item.flags.noMysticForge) {
-      flags.add(
-          CompanionInfoRow(
-              header: '',
-              text: typeToName('NoMysticForge')
-          )
-      );
-    }
-
-    return Column(
-      children: flags
-    );
   }
 
   Widget _buildArmorDetails() {
@@ -598,9 +508,9 @@ class ItemPage extends StatelessWidget {
         return 'Upgrade Component';
 
       case 'AccountBindOnUse':
-        return 'Account Bind on uset';
+        return 'Account bound on use';
       case 'AccountBound':
-        return 'Account Bound';
+        return 'Account bound';
       case 'Attuned':
         return 'Attuned';
       case 'BulkConsume':
@@ -620,11 +530,11 @@ class ItemPage extends StatelessWidget {
       case 'NoSell':
         return 'Cannot be sold';
       case 'NotUpgradeable':
-        return 'Not Upgradeable';
+        return 'Not upgradeable';
       case 'NoUnderwater':
         return 'Cannot be used underwater';
       case 'SoulbindOnAcquire':
-        return 'Sound bound on acquire';
+        return 'Soul bound on acquire';
       case 'SoulBindOnUse':
         return 'Soul bound on use';
       case 'Tonic':
