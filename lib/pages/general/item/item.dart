@@ -248,13 +248,118 @@ class ItemPage extends StatelessWidget {
             if (item.type == 'Tool')
               _buildToolDetails(),
             if (item.type == 'Weapon')
-              _buildWeaponDetails()
+              _buildWeaponDetails(),
+            if (item.flags.AccountBound
+                || item.flags.AccountBindOnUse
+                || item.flags.SoulBindOnUse
+                || item.flags.SoulbindOnAcquire
+                || item.flags.Attuned
+                || item.flags.NoSalvage
+                || item.flags.NoMysticForge
+                || item.flags.NoSell
+            )
+              Divider(
+                height: 2,
+                thickness: 1
+              ),
+            if (item.flags.AccountBound
+                || item.flags.AccountBindOnUse
+                || item.flags.SoulBindOnUse
+                || item.flags.SoulbindOnAcquire
+                || item.flags.Attuned
+                || item.flags.NoSalvage
+                || item.flags.NoMysticForge
+                || item.flags.NoSell
+            )
+              _buildFlagDetails(),
           ],
         ),
       );
     }
 
     return _buildRarityOnlyDetails(context);
+  }
+
+  Widget _buildFlagDetails() {
+    List<CompanionInfoRow> flags = [];
+
+    if (item.flags.AccountBindOnUse && !item.flags.AccountBound) {
+      flags.add(
+          CompanionInfoRow(
+              header: '',
+              text: typeToName('AccountBindOnUse'),
+
+          )
+      );
+    }
+    if (item.flags.AccountBound) {
+      flags.add(
+          CompanionInfoRow(
+              header: '',
+              text: typeToName('AccountBound')
+          )
+      );
+    }
+    if (item.flags.SoulbindOnAcquire) {
+      flags.add(
+          CompanionInfoRow(
+              header: '',
+              text: typeToName('SoulbindOnAcquire')
+          )
+      );
+    }
+    if (item.flags.SoulBindOnUse) {
+      flags.add(
+          CompanionInfoRow(
+              header: '',
+              text: typeToName('SoulBindOnUse')
+          )
+      );
+    }
+    if (item.flags.Unique) {
+      flags.add(
+          CompanionInfoRow(
+              header: '',
+              text: typeToName('Unique')
+          )
+      );
+    }
+    if (item.flags.Attuned) {
+      flags.add(
+          CompanionInfoRow(
+              header: '',
+              text: typeToName('Attuned')
+          )
+      );
+    }
+    if (item.flags.NoSell && !item.flags.AccountBound) {
+      flags.add(
+          CompanionInfoRow(
+              header: '',
+              text: typeToName('NoSell')
+          )
+      );
+    }
+    if (item.flags.NoSalvage) {
+      flags.add(
+          CompanionInfoRow(
+              header: '',
+              text: typeToName('NoSalvage')
+          )
+      );
+    }
+    if (item.flags.NoMysticForge) {
+      flags.add(
+          CompanionInfoRow(
+              header: '',
+              text: typeToName('NoMysticForge')
+          )
+      );
+    }
+
+    return Column(
+      children: flags
+    );
   }
 
   Widget _buildArmorDetails() {
@@ -491,6 +596,41 @@ class ItemPage extends StatelessWidget {
         return 'Crafting Material';
       case 'UpgradeComponent':
         return 'Upgrade Component';
+
+      case 'AccountBindOnUse':
+        return 'Account Bind on uset';
+      case 'AccountBound':
+        return 'Account Bound';
+      case 'Attuned':
+        return 'Attuned';
+      case 'BulkConsume':
+        return 'Bulk consumable';
+      case 'DeleteWarning':
+        return 'Warning on delete';
+      case 'HideSuffix':
+        return 'Suffix hidden';
+      case 'Infused':
+        return 'Infused';
+      case 'MonsterOnly':
+        return 'Monster only item';
+      case 'NoMysticForge':
+        return 'Cannot be used in the Mystic Forge';
+      case 'NoSalvage':
+        return 'Cannot be salvaged';
+      case 'NoSell':
+        return 'Cannot be sold';
+      case 'NotUpgradeable':
+        return 'Not Upgradeable';
+      case 'NoUnderwater':
+        return 'Cannot be used underwater';
+      case 'SoulbindOnAcquire':
+        return 'Sound bound on acquire';
+      case 'SoulBindOnUse':
+        return 'Soul bound on use';
+      case 'Tonic':
+        return 'Tonic';
+      case 'Unique':
+        return 'Unique';
       default:
         return type;
     }
