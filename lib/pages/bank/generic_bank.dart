@@ -107,6 +107,7 @@ class GenericBankPage extends StatelessWidget {
                         infusionsInfo: i.infusionsInfo,
                         quantity: i.charges != null ? i.charges : i.count,
                         includeMargin: false,
+                        section: 'bank',
                       );
                     })
                     .toList(),
@@ -137,6 +138,7 @@ class GenericBankPage extends StatelessWidget {
               infusionsInfo: i.infusionsInfo,
               quantity: i.charges != null ? i.charges : i.count,
               includeMargin: false,
+              section: 'bank',
             ))
             .toList(),
         ),
