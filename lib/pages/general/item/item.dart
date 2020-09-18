@@ -5,7 +5,6 @@ import 'package:guildwars2_companion/models/items/skin.dart';
 import 'package:guildwars2_companion/models/trading_post/price.dart';
 import 'package:guildwars2_companion/repositories/trading_post.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
-import 'package:guildwars2_companion/utils/urls.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
