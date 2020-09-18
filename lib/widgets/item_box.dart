@@ -20,7 +20,7 @@ class CompanionItemBox extends StatelessWidget {
   final List<Item> upgradesInfo;
   final List<Item> infusionsInfo;
   final String hero;
-  final String section;
+  final ItemSection section;
 
   CompanionItemBox({
     @required this.item,
@@ -34,7 +34,7 @@ class CompanionItemBox extends StatelessWidget {
     this.enablePopup = true,
     this.markCompleted = false,
     this.hero,
-    this.section = 'all',
+    this.section = ItemSection.all,
   });
 
   Widget build(BuildContext context) {

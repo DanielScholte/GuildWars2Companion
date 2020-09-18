@@ -5,6 +5,7 @@ import 'package:guildwars2_companion/models/items/skin.dart';
 import 'package:guildwars2_companion/models/trading_post/price.dart';
 import 'package:guildwars2_companion/repositories/trading_post.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/utils/urls.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/coin.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
@@ -19,7 +20,7 @@ class ItemPage extends StatelessWidget {
   final String hero;
   final List<Item> upgradesInfo;
   final List<Item> infusionsInfo;
-  final String section;
+  final ItemSection section;
 
   ItemPage({
     @required this.item,
@@ -229,63 +230,8 @@ class ItemPage extends StatelessWidget {
       'UpgradeComponent',
       'Weapon'
     ].contains(item.type))  {
-      if (item.flags != null && item.flags.length > 0 && item.type != 'Gathering') {
-        displayFlags = item.flags;
-
-        // remove hideSuffix for all sections
-        displayFlags.removeWhere((element) => element == "HideSuffix");
-
-        switch (section) {
-          case 'equipment':
-
-            // if an item is AccountBindOnUse and is in an equipment slot
-            // then it is also AccountBound (it's been used)
-            // but the AccountBound flag may not be set in the cache
-            if (displayFlags.contains("AccountBindOnUse")) {
-              displayFlags.removeWhere((element) => element == "AccountBindOnUse");
-
-              // attempt to remove even if not already in the array to make sure
-              // we only have one copy
-              displayFlags.removeWhere((element) => element == "AccountBound");
-              displayFlags.add("AccountBound");
-            }
-
-            // if an item is SoulBindOnUse and is in an equipment slot
-            // then it is Soulbound (it's been used)
-            if (displayFlags.contains("SoulBindOnUse")) {
-              displayFlags.removeWhere((element) => element == "SoulBindOnUse");
-              displayFlags.add("Soulbound");  // this is a non-API flag
-            }
-            break;
-
-          case 'bank':
-            displayFlags.removeWhere((element) => element == "DeleteWarning");
-            displayFlags.removeWhere((element) => element == "NoUnderwater");
-
-            // If an item has AccountBound then we don't also need the
-            // AccountBindOnUse flag
-            if (displayFlags.contains("AccountBound")) {
-              displayFlags.removeWhere((element) => element == "AccountBindOnUse");
-            }
-            break;
-
-          case 'inventory':
-            if (displayFlags.contains("AccountBound") && displayFlags.contains("AccountBindOnUse")) {
-              displayFlags.removeWhere((element) => element == "AccountBindOnUse");
-            }
-            break;
-
-          case 'material':
-            displayFlags.removeWhere((element) => element == "NoUnderwater");
-            break;
-
-          case 'tradingpost':
-          default:
-            break;
-        }
-
-        // sort alphabetically on key to match list order returned from API
-        displayFlags.sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
+      if (item.type != 'Gathering') {
+        displayFlags = getFilteredFlags(item.flags);
       }
 
       return CompanionCard(
@@ -314,12 +260,8 @@ class ItemPage extends StatelessWidget {
               _buildToolDetails(),
             if (item.type == 'Weapon')
               _buildWeaponDetails(),
-            if (displayFlags != null && displayFlags.length > 0)
-              Column(children: [
-                Divider(height: 2, thickness: 1),
-                ...displayFlags.map(
-                    (f) => CompanionInfoRow(header: '', text: typeToName(f))),
-              ])
+            if (displayFlags.length > 0)
+              _buildFlagDetails(context, displayFlags),
           ],
         ),
       );
@@ -542,6 +484,27 @@ class ItemPage extends StatelessWidget {
     );
   }
 
+  Widget _buildFlagDetails(BuildContext context, List<String> displayFlags) {
+
+    return Wrap(
+        alignment: WrapAlignment.spaceEvenly,
+        spacing: 16.0,
+        runSpacing: 4.0,
+        children:
+          displayFlags.map((f) => Chip(
+            backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.black12 : Colors.white12,
+            label: Text(
+              typeToName(f),
+              style: Theme.of(context).textTheme.bodyText1.copyWith(
+                  color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
+              ),
+            ),
+          ))
+        .toList(),
+    );
+
+  }
+
   String typeToName(String type) {
     switch (type) {
       case 'HelmAquatic':
@@ -605,4 +568,70 @@ class ItemPage extends StatelessWidget {
     }
   }
 
+  List<String> getFilteredFlags(List<String> originalFlags) {
+    // Return an empty list if the flags are null. Now you only have to check
+    // if there are more than zero flags to determine whether or not to run the
+    // _buildFlags function.
+    if (originalFlags == null) return [];
+
+    Iterable<String> filteredFlags = originalFlags.where((f) {
+      switch (section) {
+        case ItemSection.equipment:
+          return f == 'AccountBindOnUse'
+              || f == 'SoulBindOnUse'
+              || f == 'Unique'
+              || f == 'NoSalvage'
+              || f == 'NoSell'
+              || f == 'NoMysticForge'
+              && f != 'HideSuffix';
+        case ItemSection.bank:
+          return f == 'AccountBindOnUse'
+              || f == 'Unique'
+              || f == 'NoSalvage'
+              || f == 'NoSell'
+              || f == 'NoMysticForge'
+              && f != 'NoUnderwater'
+              && f != 'DeleteWarning'
+              && f != 'HideSuffix';
+        case ItemSection.inventory:
+          return f == 'AccountBound'
+              || f == 'AccountBindOnUse'
+              || f == 'SoulBindOnUse'
+              || f == 'Unique'
+              || f == 'NoSalvage'
+              || f == 'NoSell'
+              || f == 'NoMysticForge'
+              && f != 'HideSuffix';
+        case ItemSection.material:
+          return f != 'NoUnderwater'
+              && f != 'HideSuffix';
+        case ItemSection.tradingpost:
+        default: return f != 'HideSuffix';
+      }
+    });
+
+    List<String> displayFlags = filteredFlags.toList();
+
+    // modify flags based on existence (or not) of another in the filtered list
+    if (section == ItemSection.equipment) {
+      if (displayFlags.contains('AccountBound')) {
+        displayFlags.removeWhere((element) => element == 'AccountBindOnUse');
+      }
+      if (displayFlags.contains('SoulBindOnUse')) {
+        displayFlags.removeWhere((element) => element == 'SoulBindOnUse');
+        displayFlags.add('Soulbound'); // this is a non-API flag for display
+      }
+      if (displayFlags.contains("AccountBindOnUse")) {
+        displayFlags.removeWhere((element) => element == "AccountBindOnUse");
+        displayFlags.removeWhere((element) => element == "AccountBound");
+        displayFlags.add("AccountBound");
+      }
+    }
+    if (displayFlags.contains('AccountBound') && displayFlags.contains('AccountBindOnUse') && section == ItemSection.inventory) {
+      displayFlags.removeWhere((element) => element == 'AccountBindOnUse');
+    }
+
+    displayFlags.sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
+    return displayFlags;
+  }
 }

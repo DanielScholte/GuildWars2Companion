@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/blocs/trading_post/bloc.dart';
 import 'package:guildwars2_companion/models/trading_post/delivery.dart';
 import 'package:guildwars2_companion/models/trading_post/transaction.dart';
+import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/pages/trading_post/trading_post_item.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/accent.dart';
@@ -300,7 +301,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
                   hero: '${i.id} ${items.indexOf(i)}',
                   quantity: i.count,
                   includeMargin: false,
-                  section: 'tradingpost',
+                  section: ItemSection.tradingpost,
                 ))
                 .toList(),
             ),

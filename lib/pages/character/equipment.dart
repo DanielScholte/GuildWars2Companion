@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/models/character/character.dart';
 import 'package:guildwars2_companion/models/character/equipment.dart';
+import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
@@ -199,7 +200,7 @@ class EquipmentPage extends StatelessWidget {
         item: null,
         displayEmpty: true,
         includeMargin: true,
-        section: 'equipment',
+        section: ItemSection.equipment,
       );
     }
 
@@ -211,7 +212,7 @@ class EquipmentPage extends StatelessWidget {
       upgradesInfo: equipment.upgradesInfo,
       infusionsInfo: equipment.infusionsInfo,
       includeMargin: true,
-      section: 'equipment',
+      section: ItemSection.equipment,
     );
   }
 }

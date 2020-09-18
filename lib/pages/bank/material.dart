@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/bank/bloc.dart';
 import 'package:guildwars2_companion/models/bank/material_category.dart';
+import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
@@ -80,7 +81,7 @@ class MaterialBankPage extends StatelessWidget {
                   quantity: i.count,
                   hero: '${i.id} ${category.materials.indexOf(i)}',
                   includeMargin: false,
-                  section: 'material',
+                  section: ItemSection.material,
                 ))
                 .toList(),
             ),

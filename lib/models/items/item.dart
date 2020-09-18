@@ -1,5 +1,15 @@
 import 'package:guildwars2_companion/models/items/item_details.dart';
 
+enum ItemSection {
+  equipment,
+  bank,
+  inventory,
+  material,
+  tradingpost,
+  all
+}
+
+
 class Item {
   String name;
   String description;
@@ -36,7 +46,7 @@ class Item {
     details =
         json['details'] != null ? new ItemDetails.fromJson(json['details']) : ItemDetails();
     if (json['flags'] != null) {
-      this.flags = json['flags'].cast<String>();
+      this.flags = json['flags'].cast<String>().toSet().toList();
     }
   }
 
@@ -62,7 +72,9 @@ class Item {
       minPower : item['details_minPower'],
       maxPower : item['details_maxPower'],
     );
-    flags = item['flags'].split(';');
+    if (item['flags'] != null) {
+      flags = item['flags'].split(';');
+    }
   }
 
   Map<String, dynamic> toJson() {
