@@ -574,7 +574,7 @@ class ItemPage extends StatelessWidget {
     // _buildFlags function.
     if (originalFlags == null) return [];
 
-    Iterable<String> filteredFlags = originalFlags.where((f) {
+    List<String> filteredFlags = originalFlags.where((f) {
       switch (section) {
         case ItemSection.equipment:
           return f == 'AccountBindOnUse'
@@ -608,30 +608,28 @@ class ItemPage extends StatelessWidget {
         case ItemSection.tradingpost:
         default: return f != 'HideSuffix';
       }
-    });
-
-    List<String> displayFlags = filteredFlags.toList();
+    }).toList();
 
     // modify flags based on existence (or not) of another in the filtered list
     if (section == ItemSection.equipment) {
-      if (displayFlags.contains('AccountBound')) {
-        displayFlags.removeWhere((element) => element == 'AccountBindOnUse');
+      if (filteredFlags.contains('AccountBound')) {
+        filteredFlags.removeWhere((element) => element == 'AccountBindOnUse');
       }
-      if (displayFlags.contains('SoulBindOnUse')) {
-        displayFlags.removeWhere((element) => element == 'SoulBindOnUse');
-        displayFlags.add('Soulbound'); // this is a non-API flag for display
+      if (filteredFlags.contains('SoulBindOnUse')) {
+        filteredFlags.removeWhere((element) => element == 'SoulBindOnUse');
+        filteredFlags.add('Soulbound'); // this is a non-API flag for display
       }
-      if (displayFlags.contains("AccountBindOnUse")) {
-        displayFlags.removeWhere((element) => element == "AccountBindOnUse");
-        displayFlags.removeWhere((element) => element == "AccountBound");
-        displayFlags.add("AccountBound");
+      if (filteredFlags.contains("AccountBindOnUse")) {
+        filteredFlags.removeWhere((element) => element == "AccountBindOnUse");
+        filteredFlags.removeWhere((element) => element == "AccountBound");
+        filteredFlags.add("AccountBound");
       }
     }
-    if (displayFlags.contains('AccountBound') && displayFlags.contains('AccountBindOnUse') && section == ItemSection.inventory) {
-      displayFlags.removeWhere((element) => element == 'AccountBindOnUse');
+    if (filteredFlags.contains('AccountBound') && filteredFlags.contains('AccountBindOnUse') && section == ItemSection.inventory) {
+      filteredFlags.removeWhere((element) => element == 'AccountBindOnUse');
     }
 
-    displayFlags.sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
-    return displayFlags;
+    filteredFlags.sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
+    return filteredFlags;
   }
 }
