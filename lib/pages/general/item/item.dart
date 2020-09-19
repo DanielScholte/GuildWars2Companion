@@ -576,31 +576,14 @@ class ItemPage extends StatelessWidget {
     List<String> filteredFlags = originalFlags.where((f) {
       switch (section) {
         case ItemSection.equipment:
-          return f == 'AccountBindOnUse'
-              || f == 'SoulBindOnUse'
-              || f == 'Unique'
-              || f == 'NoSalvage'
-              || f == 'NoSell'
-              || f == 'NoMysticForge'
-              && f != 'HideSuffix';
+          if (f == 'HideSuffix') return false;
+          return true;
         case ItemSection.bank:
-          return f == 'AccountBindOnUse'
-              || f == 'Unique'
-              || f == 'NoSalvage'
-              || f == 'NoSell'
-              || f == 'NoMysticForge'
-              && f != 'NoUnderwater'
-              && f != 'DeleteWarning'
-              && f != 'HideSuffix';
+          if (f == 'NoUnderwater' || f == 'DeleteWarning' || f == 'HideSuffix') return false;
+          return true;
         case ItemSection.inventory:
-          return f == 'AccountBound'
-              || f == 'AccountBindOnUse'
-              || f == 'SoulBindOnUse'
-              || f == 'Unique'
-              || f == 'NoSalvage'
-              || f == 'NoSell'
-              || f == 'NoMysticForge'
-              && f != 'HideSuffix';
+          if (f == 'HideSuffix') return false;
+          return true;
         case ItemSection.material:
           return f != 'NoUnderwater'
               && f != 'HideSuffix';
