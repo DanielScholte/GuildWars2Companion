@@ -301,7 +301,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
                   hero: '${i.id} ${items.indexOf(i)}',
                   quantity: i.count,
                   includeMargin: false,
-                  section: ItemSection.tradingpost,
+                  section: ItemSection.TRADINGPOST,
                 ))
                 .toList(),
             ),

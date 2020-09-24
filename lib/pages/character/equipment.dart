@@ -200,7 +200,7 @@ class EquipmentPage extends StatelessWidget {
         item: null,
         displayEmpty: true,
         includeMargin: true,
-        section: ItemSection.equipment,
+        section: ItemSection.EQUIPMENT,
       );
     }
 
@@ -212,7 +212,7 @@ class EquipmentPage extends StatelessWidget {
       upgradesInfo: equipment.upgradesInfo,
       infusionsInfo: equipment.infusionsInfo,
       includeMargin: true,
-      section: ItemSection.equipment,
+      section: ItemSection.EQUIPMENT,
     );
   }
 }

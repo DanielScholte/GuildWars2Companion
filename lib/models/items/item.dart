@@ -1,12 +1,12 @@
 import 'package:guildwars2_companion/models/items/item_details.dart';
 
 enum ItemSection {
-  equipment,
-  bank,
-  inventory,
-  material,
-  tradingpost,
-  all
+  EQUIPMENT,
+  BANK,
+  INVENTORY,
+  MATERIAL,
+  TRADINGPOST,
+  ALL
 }
 
 

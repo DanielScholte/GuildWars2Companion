@@ -34,7 +34,7 @@ class CompanionItemBox extends StatelessWidget {
     this.enablePopup = true,
     this.markCompleted = false,
     this.hero,
-    this.section = ItemSection.all,
+    this.section = ItemSection.ALL,
   });
 
   Widget build(BuildContext context) {

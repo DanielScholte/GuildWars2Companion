@@ -485,23 +485,26 @@ class ItemPage extends StatelessWidget {
 
   Widget _buildFlagDetails(BuildContext context, List<String> displayFlags) {
 
-    return Wrap(
-        alignment: WrapAlignment.spaceEvenly,
-        spacing: 16.0,
-        runSpacing: 4.0,
-        children:
-          displayFlags.map((f) => Chip(
-            backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.black12 : Colors.white12,
-            label: Text(
-              typeToName(f),
-              style: Theme.of(context).textTheme.bodyText1.copyWith(
-                  color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
+    return Padding(
+      padding: EdgeInsets.all(4.0),
+      child: Wrap(
+          alignment: WrapAlignment.spaceEvenly,
+          spacing: 8.0,
+          runSpacing: 8.0,
+          children:
+            displayFlags.map((f) => Chip(
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              backgroundColor: Theme.of(context).brightness == Brightness.light ? Theme.of(context).accentColor : Colors.white12,
+              label: Text(
+                typeToName(f),
+                style: Theme.of(context).textTheme.bodyText1.copyWith(
+                    color: Colors.white,
+                ),
               ),
-            ),
-          ))
-        .toList(),
+            ))
+          .toList(),
+      ),
     );
-
   }
 
   String typeToName(String type) {
@@ -575,40 +578,40 @@ class ItemPage extends StatelessWidget {
 
     List<String> filteredFlags = originalFlags.where((f) {
       switch (section) {
-        case ItemSection.equipment:
+        case ItemSection.EQUIPMENT:
           if (f == 'HideSuffix') return false;
           return true;
-        case ItemSection.bank:
+        case ItemSection.BANK:
           if (f == 'NoUnderwater' || f == 'DeleteWarning' || f == 'HideSuffix') return false;
           return true;
-        case ItemSection.inventory:
+        case ItemSection.INVENTORY:
           if (f == 'HideSuffix') return false;
           return true;
-        case ItemSection.material:
+        case ItemSection.MATERIAL:
           return f != 'NoUnderwater'
               && f != 'HideSuffix';
-        case ItemSection.tradingpost:
+        case ItemSection.TRADINGPOST:
         default: return f != 'HideSuffix';
       }
     }).toList();
 
     // modify flags based on existence (or not) of another in the filtered list
-    if (section == ItemSection.equipment) {
+    if (section == ItemSection.EQUIPMENT) {
       if (filteredFlags.contains('AccountBound')) {
-        filteredFlags.removeWhere((element) => element == 'AccountBindOnUse');
+        filteredFlags.remove('AccountBindOnUse');
       }
       if (filteredFlags.contains('SoulBindOnUse')) {
-        filteredFlags.removeWhere((element) => element == 'SoulBindOnUse');
+        filteredFlags.remove('SoulBindOnUse');
         filteredFlags.add('Soulbound'); // this is a non-API flag for display
       }
       if (filteredFlags.contains("AccountBindOnUse")) {
-        filteredFlags.removeWhere((element) => element == "AccountBindOnUse");
-        filteredFlags.removeWhere((element) => element == "AccountBound");
+        filteredFlags.remove("AccountBindOnUse");
+        filteredFlags.remove("AccountBound");
         filteredFlags.add("AccountBound");
       }
     }
-    if (filteredFlags.contains('AccountBound') && filteredFlags.contains('AccountBindOnUse') && section == ItemSection.inventory) {
-      filteredFlags.removeWhere((element) => element == 'AccountBindOnUse');
+    if (filteredFlags.contains('AccountBound') && filteredFlags.contains('AccountBindOnUse') && section == ItemSection.INVENTORY) {
+      filteredFlags.remove('AccountBindOnUse');
     }
 
     filteredFlags.sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));

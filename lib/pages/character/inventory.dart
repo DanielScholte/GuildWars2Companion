@@ -104,7 +104,7 @@ class InventoryPage extends StatelessWidget {
                     hero: '$bagIndex ${bag.id}',
                     size: 45.0,
                     includeMargin: false,
-                    section: ItemSection.inventory,
+                    section: ItemSection.INVENTORY,
                   ),
                 if (bag.itemInfo != null)
                   Expanded(
@@ -157,7 +157,7 @@ class InventoryPage extends StatelessWidget {
                       infusionsInfo: i.infusionsInfo,
                       quantity: i.charges != null ? i.charges : i.count,
                       includeMargin: false,
-                      section: ItemSection.inventory,
+                      section: ItemSection.INVENTORY,
                     ))
                     .toList(),
               ),
