@@ -19,6 +19,7 @@ class ItemPage extends StatelessWidget {
   final String hero;
   final List<Item> upgradesInfo;
   final List<Item> infusionsInfo;
+  final ItemSection section;
 
   ItemPage({
     @required this.item,
@@ -26,6 +27,7 @@ class ItemPage extends StatelessWidget {
     this.upgradesInfo,
     this.infusionsInfo,
     this.hero,
+    this.section,
   });
 
   @override
@@ -115,14 +117,16 @@ class ItemPage extends StatelessWidget {
                 enablePopup: false,
                 includeMargin: true,
               ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  item.name,
-                  style: Theme.of(context).textTheme.bodyText1,
-                  textAlign: TextAlign.center,
-                ),
-              )
+              Expanded(child:
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    item.name,
+                    style: Theme.of(context).textTheme.bodyText1,
+                    textAlign: TextAlign.left,
+                  ),
+                )
+              ),
             ],
           )
         ],
@@ -213,8 +217,10 @@ class ItemPage extends StatelessWidget {
   }
 
   Widget _buildItemDetails(BuildContext context) {
+    List<String> displayFlags = [];
     if ([
       'Armor',
+      'Back',
       'Bag',
       'Consumable',
       'Gathering',
@@ -223,6 +229,10 @@ class ItemPage extends StatelessWidget {
       'UpgradeComponent',
       'Weapon'
     ].contains(item.type))  {
+      if (item.type != 'Gathering') {
+        displayFlags = getFilteredFlags(item.flags);
+      }
+
       return CompanionCard(
         child: Column(
           children: <Widget>[
@@ -248,7 +258,9 @@ class ItemPage extends StatelessWidget {
             if (item.type == 'Tool')
               _buildToolDetails(),
             if (item.type == 'Weapon')
-              _buildWeaponDetails()
+              _buildWeaponDetails(),
+            if (displayFlags.length > 0)
+              _buildFlagDetails(context, displayFlags),
           ],
         ),
       );
@@ -471,6 +483,30 @@ class ItemPage extends StatelessWidget {
     );
   }
 
+  Widget _buildFlagDetails(BuildContext context, List<String> displayFlags) {
+
+    return Padding(
+      padding: EdgeInsets.all(4.0),
+      child: Wrap(
+          alignment: WrapAlignment.spaceEvenly,
+          spacing: 8.0,
+          runSpacing: 8.0,
+          children:
+            displayFlags.map((f) => Chip(
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              backgroundColor: Theme.of(context).brightness == Brightness.light ? Theme.of(context).accentColor : Colors.white12,
+              label: Text(
+                typeToName(f),
+                style: Theme.of(context).textTheme.bodyText1.copyWith(
+                    color: Colors.white,
+                ),
+              ),
+            ))
+          .toList(),
+      ),
+    );
+  }
+
   String typeToName(String type) {
     switch (type) {
       case 'HelmAquatic':
@@ -491,8 +527,94 @@ class ItemPage extends StatelessWidget {
         return 'Crafting Material';
       case 'UpgradeComponent':
         return 'Upgrade Component';
+
+      case 'AccountBindOnUse':
+        return 'Account bound on use';
+      case 'AccountBound':
+        return 'Account bound';
+      case 'Attuned':
+        return 'Attuned';
+      case 'BulkConsume':
+        return 'Bulk consumable';
+      case 'DeleteWarning':
+        return 'Warning on delete';
+      case 'HideSuffix':
+        return 'Suffix hidden';
+      case 'Infused':
+        return 'Infused';
+      case 'MonsterOnly':
+        return 'Monster only item';
+      case 'NoMysticForge':
+        return 'Cannot be used in the Mystic Forge';
+      case 'NoSalvage':
+        return 'Cannot be salvaged';
+      case 'NoSell':
+        return 'Cannot be sold';
+      case 'NotUpgradeable':
+        return 'Not upgradeable';
+      case 'NoUnderwater':
+        return 'Cannot be used underwater';
+      case 'SoulbindOnAcquire':
+        return 'Soul bound on acquire';
+      case 'SoulBindOnUse':
+        return 'Soul bound on use';
+      case 'Tonic':
+        return 'Tonic';
+      case 'Unique':
+        return 'Unique';
+      // this is a non-API flag
+      case 'Soulbound':
+        return 'Soulbound';
       default:
         return type;
     }
+  }
+
+  List<String> getFilteredFlags(List<String> originalFlags) {
+    // Return an empty list if the flags are null. Now you only have to check
+    // if there are more than zero flags to determine whether or not to run the
+    // _buildFlags function.
+    if (originalFlags == null) return [];
+
+    List<String> filteredFlags = originalFlags.where((f) {
+      switch (section) {
+        case ItemSection.EQUIPMENT:
+          if (f == 'HideSuffix') return false;
+          return true;
+        case ItemSection.BANK:
+          if (f == 'NoUnderwater' || f == 'DeleteWarning' || f == 'HideSuffix') return false;
+          return true;
+        case ItemSection.INVENTORY:
+          if (f == 'HideSuffix') return false;
+          return true;
+        case ItemSection.MATERIAL:
+          return f != 'NoUnderwater'
+              && f != 'HideSuffix';
+        case ItemSection.TRADINGPOST:
+        default: return f != 'HideSuffix';
+      }
+    }).toList();
+
+    // modify flags based on existence (or not) of another in the filtered list
+    if (section == ItemSection.EQUIPMENT) {
+      if (filteredFlags.contains('AccountBound')) {
+        filteredFlags.remove('AccountBindOnUse');
+      }
+      if (filteredFlags.contains('SoulBindOnUse')) {
+        filteredFlags.remove('SoulBindOnUse');
+        filteredFlags.add('Soulbound'); // this is a non-API flag for display
+      }
+      if (filteredFlags.contains("AccountBindOnUse")) {
+        filteredFlags.remove("AccountBindOnUse");
+        filteredFlags.remove("AccountBound");
+        filteredFlags.add("AccountBound");
+      }
+    }
+    if (filteredFlags.contains('AccountBound') && filteredFlags.contains('AccountBindOnUse') && section == ItemSection.INVENTORY) {
+      filteredFlags.remove('AccountBindOnUse');
+    }
+
+    filteredFlags.sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
+    return filteredFlags;
   }
 }

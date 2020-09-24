@@ -29,7 +29,9 @@ class ItemMigrations {
   ];
 
   static final List<String> _migrationScripts = [
-
+    '''
+      ALTER TABLE items ADD flags TEXT 
+    '''
   ];
 
   static final MigrationConfig config = MigrationConfig(

@@ -4,6 +4,7 @@ import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/models/character/bags.dart';
 import 'package:guildwars2_companion/models/character/character.dart';
 import 'package:guildwars2_companion/models/items/inventory.dart';
+import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
@@ -103,6 +104,7 @@ class InventoryPage extends StatelessWidget {
                     hero: '$bagIndex ${bag.id}',
                     size: 45.0,
                     includeMargin: false,
+                    section: ItemSection.INVENTORY,
                   ),
                 if (bag.itemInfo != null)
                   Expanded(
@@ -155,6 +157,7 @@ class InventoryPage extends StatelessWidget {
                       infusionsInfo: i.infusionsInfo,
                       quantity: i.charges != null ? i.charges : i.count,
                       includeMargin: false,
+                      section: ItemSection.INVENTORY,
                     ))
                     .toList(),
               ),
