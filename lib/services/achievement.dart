@@ -214,7 +214,7 @@ class AchievementService {
     if (response.statusCode == 400
       && response.data != null
       && response.data['text'] == 'endpoint broken') {
-        return [];
+        return null;
       }
 
     throw Exception();
