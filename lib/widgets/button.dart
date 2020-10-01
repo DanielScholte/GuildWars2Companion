@@ -36,18 +36,18 @@ class CompanionButton extends StatefulWidget {
 }
 
 class _CompanionButtonState extends State<CompanionButton> with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation<double> _animationTween;
+  AnimationController _elevationAnimationController;
+  Animation<double> _elevationAnimationTween;
 
   @override
   void initState() {
     super.initState();
 
-    _animationController = AnimationController(
+    _elevationAnimationController = AnimationController(
       duration: Duration(milliseconds: 200),
       vsync: this,
     );
-    _animationTween = Tween(begin: 2.0, end: 8.0).animate(_animationController);
+    _elevationAnimationTween = Tween(begin: 2.0, end: 8.0).animate(_elevationAnimationController);
   }
 
   @override
@@ -55,10 +55,10 @@ class _CompanionButtonState extends State<CompanionButton> with SingleTickerProv
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
       child: AnimatedBuilder(
-        animation: _animationTween,
+        animation: _elevationAnimationTween,
         builder: (context, child) {
           return Material(
-            elevation: Theme.of(context).brightness == Brightness.light ? _animationTween.value : 0,
+            elevation: Theme.of(context).brightness == Brightness.light ? _elevationAnimationTween.value : 0,
             borderRadius: BorderRadius.circular(13.0),
             child: child,
             shadowColor: Colors.black87,
@@ -87,10 +87,9 @@ class _CompanionButtonState extends State<CompanionButton> with SingleTickerProv
         splashColor: Colors.black12,
         highlightColor: Colors.black12,
         onTap: () => widget.onTap(),
-        onTapDown: (_) => _animationController.forward(),
-        onFocusChange: (value) => !value ? _animationController.reverse() : _animationController.animateTo(.5),
-        onHover: (value) => !value ? _animationController.reverse() : _animationController.animateTo(.5),
-        onHighlightChanged: (value) => !value ? _animationController.reverse() : _animationController.forward(),
+        onFocusChange: (value) => !value ? _elevationAnimationController.reverse() : _elevationAnimationController.animateTo(.5),
+        onHover: (value) => !value ? _elevationAnimationController.reverse() : _elevationAnimationController.animateTo(.5),
+        onHighlightChanged: (value) => !value ? _elevationAnimationController.reverse() : _elevationAnimationController.forward(),
         child: Row(
           children: <Widget>[
             _buildLeadingContainer(context),
