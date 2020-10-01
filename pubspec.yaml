@@ -38,7 +38,7 @@ dependencies:
 
   sqflite: ^1.2.1
 
-  sqflite_migration: ^0.1.2
+  sqflite_migration: ^0.2.0
 
   path: ^1.6.4
 
