@@ -217,7 +217,6 @@ class ItemPage extends StatelessWidget {
   }
 
   Widget _buildItemDetails(BuildContext context) {
-    List<String> displayFlags = [];
     if ([
       'Armor',
       'Back',
@@ -229,9 +228,7 @@ class ItemPage extends StatelessWidget {
       'UpgradeComponent',
       'Weapon'
     ].contains(item.type))  {
-      if (item.type != 'Gathering') {
-        displayFlags = getFilteredFlags(item.flags);
-      }
+      List<String> flags = getFilteredFlags(item.flags);
 
       return CompanionCard(
         child: Column(
@@ -259,8 +256,8 @@ class ItemPage extends StatelessWidget {
               _buildToolDetails(),
             if (item.type == 'Weapon')
               _buildWeaponDetails(),
-            if (displayFlags.length > 0)
-              _buildFlagDetails(context, displayFlags),
+            if (item.type != 'Gathering' && flags.length > 0)
+              _buildFlagDetails(context, flags),
           ],
         ),
       );
@@ -527,7 +524,6 @@ class ItemPage extends StatelessWidget {
         return 'Crafting Material';
       case 'UpgradeComponent':
         return 'Upgrade Component';
-
       case 'AccountBindOnUse':
         return 'Account bound on use';
       case 'AccountBound':
