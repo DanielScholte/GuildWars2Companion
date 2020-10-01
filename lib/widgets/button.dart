@@ -58,7 +58,7 @@ class _CompanionButtonState extends State<CompanionButton> with SingleTickerProv
         animation: _animationTween,
         builder: (context, child) {
           return Material(
-            elevation: _animationTween.value,
+            elevation: Theme.of(context).brightness == Brightness.light ? _animationTween.value : 0,
             borderRadius: BorderRadius.circular(13.0),
             child: child,
             shadowColor: Colors.black87,
