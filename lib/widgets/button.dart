@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:guildwars2_companion/widgets/animated_elevation.dart';
 
-class CompanionButton extends StatefulWidget {
+class CompanionButton extends StatelessWidget {
   final bool loading;
   final Widget leading;
   final Widget trailing;
@@ -32,48 +33,21 @@ class CompanionButton extends StatefulWidget {
   });
 
   @override
-  _CompanionButtonState createState() => _CompanionButtonState();
-}
-
-class _CompanionButtonState extends State<CompanionButton> with SingleTickerProviderStateMixin {
-  AnimationController _elevationAnimationController;
-  Animation<double> _elevationAnimationTween;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _elevationAnimationController = AnimationController(
-      duration: Duration(milliseconds: 200),
-      vsync: this,
-    );
-    _elevationAnimationTween = Tween(begin: 2.0, end: 8.0).animate(_elevationAnimationController);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-      child: AnimatedBuilder(
-        animation: _elevationAnimationTween,
-        builder: (context, child) {
-          return Material(
-            elevation: Theme.of(context).brightness == Brightness.light ? _elevationAnimationTween.value : 0,
-            borderRadius: BorderRadius.circular(13.0),
-            child: child,
-            shadowColor: Colors.black87,
-          );
-        },
+      child: CompanionAnimatedElevation(
+        disabled: onTap == null,
         child: Container(
           width: double.infinity,
-          height: widget.height,
+          height: height,
           decoration: BoxDecoration(
-            color: Theme.of(context).brightness == Brightness.light ? widget.color : Color(0xFF323232),
+            color: Theme.of(context).brightness == Brightness.light ? color : Color(0xFF323232),
             borderRadius: BorderRadius.circular(12.0),
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12.0),
-            child: widget.wrapper != null ? widget.wrapper(context, _buildBody(context)) : _buildBody(context),
+            child: wrapper != null ? wrapper(context, _buildBody(context)) : _buildBody(context),
           ),
         ),
       ),
@@ -81,21 +55,18 @@ class _CompanionButtonState extends State<CompanionButton> with SingleTickerProv
   }
 
   Widget _buildBody(BuildContext context) {
-    return widget.onTap != null ? Material(
+    return onTap != null ? Material(
       color: Colors.transparent,
       child: InkWell(
         splashColor: Colors.black12,
         highlightColor: Colors.black12,
-        onTap: () => widget.onTap(),
-        onFocusChange: (value) => !value ? _elevationAnimationController.reverse() : _elevationAnimationController.animateTo(.5),
-        onHover: (value) => !value ? _elevationAnimationController.reverse() : _elevationAnimationController.animateTo(.5),
-        onHighlightChanged: (value) => !value ? _elevationAnimationController.reverse() : _elevationAnimationController.forward(),
+        onTap: () => onTap(),
         child: Row(
           children: <Widget>[
             _buildLeadingContainer(context),
             _buildTitle(context),
-            if (widget.trailing != null)
-              widget.trailing,
+            if (trailing != null)
+              trailing,
             _buildArrow(context)
           ],
         ),
@@ -104,20 +75,20 @@ class _CompanionButtonState extends State<CompanionButton> with SingleTickerProv
       children: <Widget>[
         _buildLeadingContainer(context),
         _buildTitle(context),
-        if (widget.trailing != null)
-          widget.trailing,
+        if (trailing != null)
+          trailing,
       ],
     );
   }
 
   Widget _buildLeadingContainer(BuildContext context) {
     return Container(
-      width: widget.height == null ? 80.0 : widget.height,
-      height: widget.height,
+      width: height == null ? 80.0 : height,
+      height: height,
       color: Colors.black12,
       margin: EdgeInsets.only(right: 12.0),
       alignment: Alignment.center,
-      child: this.widget.loading ?
+      child: this.loading ?
         Theme(
           data: Theme.of(context).copyWith(accentColor: Colors.white),
           child: CircularProgressIndicator(),
@@ -126,28 +97,28 @@ class _CompanionButtonState extends State<CompanionButton> with SingleTickerProv
   }
 
   Widget _buildLeading(BuildContext context) {
-    if (widget.hero != null) {
+    if (hero != null) {
       return Hero(
-        tag: widget.hero,
+        tag: hero,
         child: ClipRRect(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(11.0),
             bottomLeft: Radius.circular(11.0),
           ),
-          child: widget.leading,
+          child: leading,
         ),
       );
     }
 
-    return widget.leading;
+    return leading;
   }
 
   Widget _buildTitle(BuildContext context) {
     List<Widget> titles = [
       Text(
-        this.widget.title,
+        this.title,
         style: TextStyle(
-          color: Theme.of(context).brightness == Brightness.light ? widget.foregroundColor : Colors.white,
+          color: Theme.of(context).brightness == Brightness.light ? foregroundColor : Colors.white,
           fontSize: 18.0,
           fontWeight: FontWeight.w500
         ),
@@ -156,17 +127,17 @@ class _CompanionButtonState extends State<CompanionButton> with SingleTickerProv
       ),
     ];
 
-    if (this.widget.subtitleWidgets != null) {
-      titles.addAll(this.widget.subtitleWidgets);
+    if (this.subtitleWidgets != null) {
+      titles.addAll(this.subtitleWidgets);
     }
 
-    if (this.widget.subtitles != null) {
+    if (this.subtitles != null) {
       titles.addAll(
-        this.widget.subtitles.map(
+        this.subtitles.map(
           (s) => Text(
             s,
             style: TextStyle(
-              color: Theme.of(context).brightness == Brightness.light ? widget.foregroundColor : Colors.white,
+              color: Theme.of(context).brightness == Brightness.light ? foregroundColor : Colors.white,
               fontSize: 16.0,
             ),
           )
@@ -188,7 +159,7 @@ class _CompanionButtonState extends State<CompanionButton> with SingleTickerProv
       padding: EdgeInsets.all(8.0),
       child: Icon(
         FontAwesomeIcons.chevronRight,
-        color: Theme.of(context).brightness == Brightness.light ? widget.foregroundColor : Colors.white,
+        color: Theme.of(context).brightness == Brightness.light ? foregroundColor : Colors.white,
         size: 18.0,
       ),
     );
