@@ -19,19 +19,7 @@ class CompanionAnimatedElevation extends StatefulWidget {
 }
 
 class _CompanionAnimatedElevationState extends State<CompanionAnimatedElevation> with SingleTickerProviderStateMixin {
-  AnimationController _elevationAnimationController;
-  Animation<double> _elevationAnimationTween;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _elevationAnimationController = AnimationController(
-      duration: Duration(milliseconds: 200),
-      vsync: this,
-    );
-    _elevationAnimationTween = Tween(begin: 2.0, end: 8.0).animate(_elevationAnimationController);
-  }
+  double _elevation = 2.0;
 
   @override
   Widget build(BuildContext context) {
@@ -39,22 +27,26 @@ class _CompanionAnimatedElevationState extends State<CompanionAnimatedElevation>
       return widget.child;
     }
 
-    return AnimatedBuilder(
-      animation: _elevationAnimationTween,
-      builder: (context, child) {
-        return Material(
-          elevation: _elevationAnimationTween.value,
-          borderRadius: widget.borderRadius != null ? widget.borderRadius : BorderRadius.circular(13.0),
-          child: child,
-          shadowColor: widget.color,
-        );
-      },
+    return Material(
+      elevation: _elevation,
+      borderRadius: widget.borderRadius != null ? widget.borderRadius : BorderRadius.circular(13.0),
       child: GestureDetector(
-        onTapDown: !widget.disabled ? (_) => _elevationAnimationController.forward() : null,
-        onTapUp: !widget.disabled ? (_) => _elevationAnimationController.reverse() : null,
-        onTapCancel: !widget.disabled ? () => _elevationAnimationController.reverse() : null,
-        child: widget.child
+        child: widget.child,
+        onTapDown: (_) => _setElevation(8.0),
+        onTapUp: (_) => _setElevation(2.0),
+        onTapCancel: () => _setElevation(2.0),
       ),
+      shadowColor: widget.color,
     );
+  }
+
+  void _setElevation(double elevation) {
+    if (widget.disabled || _elevation == elevation) {
+      return;
+    }
+
+    setState(() {
+      _elevation = elevation;
+    });
   }
 }
