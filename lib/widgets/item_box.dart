@@ -5,7 +5,6 @@ import 'package:guildwars2_companion/models/items/skin.dart';
 import 'package:guildwars2_companion/pages/general/item/item.dart';
 import 'package:guildwars2_companion/utils/guild_wars.dart';
 
-import 'animated_elevation.dart';
 import 'cached_image.dart';
 
 class CompanionItemBox extends StatelessWidget {
@@ -56,46 +55,41 @@ class CompanionItemBox extends StatelessWidget {
   Widget _buildItemBox(BuildContext context) {
     return Padding(
       padding: includeMargin ? EdgeInsets.all(4.0) : EdgeInsets.zero,
-      child: CompanionAnimatedElevation(
-        borderRadius: BorderRadius.circular(7.0),
-        color: Colors.black54,
-        disabled: !enablePopup || displayEmpty,
-        child: Container(
-          width: this.size,
-          height: this.size,
-          decoration: BoxDecoration(
-            color: Colors.grey,
-            borderRadius: BorderRadius.circular(6.0),
-            boxShadow: [
-              if (Theme.of(context).brightness == Brightness.light)
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 4.0,
-                ),
-            ],
-            border: Border.all(
-              color: GuildWarsUtil.getRarityColor(displayEmpty ? 'Basic' : item.rarity),
-              width: 2.0
-            ),
+      child: Container(
+        width: this.size,
+        height: this.size,
+        decoration: BoxDecoration(
+          color: Colors.grey,
+          borderRadius: BorderRadius.circular(6.0),
+          boxShadow: [
+            if (Theme.of(context).brightness == Brightness.light)
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 4.0,
+              ),
+          ],
+          border: Border.all(
+            color: GuildWarsUtil.getRarityColor(displayEmpty ? 'Basic' : item.rarity),
+            width: 2.0
           ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(4.0),
-            child: Stack(
-              alignment: Alignment.topRight,
-              children: <Widget>[
-                _buildImage(),
-                if (quantity > 1)
-                  _buildQuantity(),
-                if (quantity == 0)
-                  _buildGreyOverlay(),
-                if (markCompleted)
-                  _buildCompleted(),
-                if (enablePopup && !displayEmpty)
-                  _buildInkwell(context),
-              ],
-            ),
-          )
         ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(4.0),
+          child: Stack(
+            alignment: Alignment.topRight,
+            children: <Widget>[
+              _buildImage(),
+              if (quantity > 1)
+                _buildQuantity(),
+              if (quantity == 0)
+                _buildGreyOverlay(),
+              if (markCompleted)
+                _buildCompleted(),
+              if (enablePopup && !displayEmpty)
+                _buildInkwell(context),
+            ],
+          ),
+        )
       ),
     );
   }
