@@ -211,6 +211,12 @@ class AchievementService {
       return masteries.map((a) => MasteryProgress.fromJson(a)).toList();
     }
 
+    if (response.statusCode == 400
+      && response.data != null
+      && response.data['text'] == 'endpoint broken') {
+        return null;
+      }
+
     throw Exception();
   }
 
