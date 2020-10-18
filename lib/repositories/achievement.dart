@@ -196,10 +196,11 @@ class AchievementRepository {
 
     List<Mastery> masteries = networkResults[0];
 
-    int masteryLevel = 0;
+    int masteryLevel;
 
-    if (includeProgress) {
+    if (includeProgress && networkResults[1] != null) {
       List<MasteryProgress> masteryProgress = networkResults[1];
+      masteryLevel = 0;
 
       masteries.forEach((mastery) {
         MasteryProgress progress = masteryProgress.firstWhere((m) => m.id == mastery.id, orElse: () => null);
