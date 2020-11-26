@@ -23,8 +23,7 @@ class AchievementConfiguration extends DatabaseConfiguration {
   ];
 
   static final List<String> _migrationScripts = [
-    'ALTER TABLE achievements RENAME COLUMN expiration_date TO cache_expiration_date',
-    'ALTER TABLE achievements ADD COLUMN cache_version INTEGER DEFAULT 2'
+    'ALTER TABLE achievements ADD COLUMN cache_version INTEGER DEFAULT 1'
   ];
 
   AchievementConfiguration() : super(

@@ -38,7 +38,7 @@ class CacheService<T> {
 
     await database.delete(
       databaseConfiguration.tableName,
-      where: "cache_expiration_date <= ? OR cache_version < ? ",
+      where: "expiration_date <= ? OR cache_version < ?",
       whereArgs: [
         DateFormat('yyyyMMdd').format(now),
         databaseConfiguration.migrationConfig.migrationScripts.length
@@ -142,7 +142,7 @@ class CacheService<T> {
     data.forEach((object) {
       Map<String, dynamic> map = toMap(object);
       
-      map['cache_expiration_date'] = expirationDate;
+      map['expiration_date'] = expirationDate;
       map['cache_version'] = version;
 
       batch.insert(

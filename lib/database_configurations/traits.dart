@@ -22,8 +22,7 @@ class TraitConfiguration extends DatabaseConfiguration {
   ];
 
   static final List<String> _migrationScripts = [
-    'ALTER TABLE traits RENAME COLUMN expiration_date TO cache_expiration_date',
-    'ALTER TABLE traits ADD COLUMN cache_version INTEGER DEFAULT 2'
+    'ALTER TABLE traits ADD COLUMN cache_version INTEGER DEFAULT 1'
   ];
 
   TraitConfiguration() : super(

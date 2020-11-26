@@ -31,9 +31,8 @@ class ItemConfiguration extends DatabaseConfiguration {
   ];
 
   static final List<String> _migrationScripts = [
-    'ALTER TABLE items RENAME COLUMN expiration_date TO cache_expiration_date',
-    'ALTER TABLE items ADD COLUMN cache_version INTEGER DEFAULT 2',
-    'ALTER TABLE items ADD flags TEXT'
+    'ALTER TABLE items ADD COLUMN cache_version INTEGER DEFAULT 1',
+    'ALTER TABLE items ADD COLUMN flags TEXT'
   ];
 
   ItemConfiguration() : super(
