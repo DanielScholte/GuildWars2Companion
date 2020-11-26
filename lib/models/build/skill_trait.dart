@@ -68,7 +68,7 @@ class SkillTrait {
     }
   }
 
-  Map<String, dynamic> toDb(String expirationDate) {
+  Map<String, dynamic> toDb() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['icon'] = this.icon;
@@ -77,7 +77,6 @@ class SkillTrait {
     data['type'] = this.type;
     data['slot'] = this.slot;
     data['chatLink'] = this.chatLink;
-    data['expiration_date'] = expirationDate;
 
     if (this.facts != null && this.facts.isNotEmpty) {
       data['facts'] = json.encode(this.facts.map((b) => b.toJson()).toList());

@@ -33,14 +33,13 @@ class Skin {
     return data;
   }
 
-  Map<String, dynamic> toDb(String expirationDate) {
+  Map<String, dynamic> toDb() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['name'] = this.name;
     data['type'] = this.type;
     data['rarity'] = this.rarity;
     data['id'] = this.id;
     data['icon'] = this.icon;
-    data['expiration_date'] = expirationDate;
     return data;
   }
 }

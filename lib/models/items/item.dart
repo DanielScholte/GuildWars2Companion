@@ -96,7 +96,7 @@ class Item {
     return data;
   }
 
-  Map<String, dynamic> toDb(String expirationDate) {
+  Map<String, dynamic> toDb() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['name'] = this.name;
     data['description'] = this.description;
@@ -106,7 +106,7 @@ class Item {
     data['vendorValue'] = this.vendorValue;
     data['id'] = this.id;
     data['icon'] = this.icon;
-    data['expiration_date'] = expirationDate;
+
     if (this.details != null) {
       data['details_type'] = details.type;
       data['details_weightClass'] = details.weightClass;

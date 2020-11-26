@@ -21,6 +21,11 @@ class _CachingConfigurationPageState extends State<CachingConfigurationPage> {
   BuildRepository _buildRepository;
 
   Future<int> _cachedAchievementsFuture;
+  Future<int> _cachedItemsFuture;
+  Future<int> _cachedSkinsFuture;
+  Future<int> _cachedMinisFuture;
+  Future<int> _cachedSkillsFuture;
+  Future<int> _cachedTraitsFuture;
 
   @override
   void initState() {
@@ -31,6 +36,11 @@ class _CachingConfigurationPageState extends State<CachingConfigurationPage> {
     _buildRepository = RepositoryProvider.of<BuildRepository>(context);
 
     _cachedAchievementsFuture = _achievementRepository.getCachedAchievementsCount();
+    _cachedItemsFuture = _itemRepository.getCachedItemsCount();
+    _cachedSkinsFuture = _itemRepository.getCachedSkinsCount();
+    _cachedMinisFuture = _itemRepository.getCachedMinisCount();
+    _cachedSkillsFuture = _buildRepository.getCachedSkillsCount();
+    _cachedTraitsFuture = _buildRepository.getCachedTraitsCount();
   }
 
   @override
@@ -43,26 +53,29 @@ class _CachingConfigurationPageState extends State<CachingConfigurationPage> {
       body: ListView(
         padding: EdgeInsets.all(8.0),
         children: <Widget>[
-          _cachedAchievements(context, _achievementRepository),
-          CompanionInfoRow(
-            header: 'Cached items',
-            text: GuildWarsUtil.intToString(_itemRepository.getCachedItemsCount()),
+          _cachedCountDisplay(
+            _cachedAchievementsFuture,
+            'achievements'
           ),
-          CompanionInfoRow(
-            header: 'Cached skins',
-            text: GuildWarsUtil.intToString(_itemRepository.getCachedSkinsCount()),
+          _cachedCountDisplay(
+            _cachedItemsFuture,
+            'items'
           ),
-          CompanionInfoRow(
-            header: 'Cached minis',
-            text: GuildWarsUtil.intToString(_itemRepository.getCachedMinisCount()),
+          _cachedCountDisplay(
+            _cachedSkinsFuture,
+            'skins'
           ),
-          CompanionInfoRow(
-            header: 'Cached skills',
-            text: GuildWarsUtil.intToString(_buildRepository.getCachedSkillsCount()),
+          _cachedCountDisplay(
+            _cachedMinisFuture,
+            'minis'
           ),
-          CompanionInfoRow(
-            header: 'Cached traits',
-            text: GuildWarsUtil.intToString(_buildRepository.getCachedTraitsCount()),
+          _cachedCountDisplay(
+            _cachedSkillsFuture,
+            'skills'
+          ),
+          _cachedCountDisplay(
+            _cachedTraitsFuture,
+            'traits'
           ),
           CompanionSimpleButton(
             text: allowClearCache ? 'Clear cache' : 'Clearing cache...',
@@ -87,26 +100,26 @@ Experiencing issues with cached data, such as outdated information? Try clearing
     );
   }
 
-  Widget _cachedAchievements(BuildContext context, AchievementRepository achievementRepository) {
+  Widget _cachedCountDisplay(Future<int> future, String header) {
     return FutureBuilder<int>(
-      future: _cachedAchievementsFuture,
+      future: future,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return CompanionInfoRow(
-            header: 'Cached achievements',
+            header: 'Cached $header',
             text: 'Error',
           );
         }
 
         if (snapshot.hasData) {
           return CompanionInfoRow(
-            header: 'Cached achievements',
+            header: 'Cached $header',
             text: GuildWarsUtil.intToString(snapshot.data),
           );
         }
 
         return CompanionInfoRow(
-          header: 'Cached achievements',
+          header: 'Cached $header',
           text: 'Loading...',
         );
       },

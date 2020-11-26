@@ -33,14 +33,13 @@ class Mini {
     return data;
   }
   
-  Map<String, dynamic> toDb(String expirationDate) {
+  Map<String, dynamic> toDb() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['name'] = this.name;
     data['icon'] = this.icon;
     data['display_order'] = this.order;
     data['itemId'] = this.itemId;
-    data['expiration_date'] = expirationDate;
     return data;
   }
 }

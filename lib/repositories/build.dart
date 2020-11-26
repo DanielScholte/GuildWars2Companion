@@ -112,15 +112,9 @@ class BuildRepository {
     });
   }
 
-  int getCachedSkillsCount() {
-    return buildService.getCachedSkillsCount();
-  }
+  Future<int> getCachedSkillsCount() => buildService.getCachedSkillsCount();
 
-  int getCachedTraitsCount() {
-    return buildService.getCachedTraitsCount();
-  }
+  Future<int> getCachedTraitsCount() => buildService.getCachedTraitsCount();
 
-  Future<void> clearCache() {
-    return buildService.clearCache();
-  }
+  Future<void> clearCache() => buildService.clearCache();
 }
