@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:guildwars2_companion/widgets/animated_elevation.dart';
 
 class CompanionButton extends StatelessWidget {
   final bool loading;
@@ -33,24 +34,22 @@ class CompanionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: height,
-      decoration: BoxDecoration(
-        color: Theme.of(context).brightness == Brightness.light ? color : Color(0xFF323232),
-        borderRadius: BorderRadius.circular(12.0),
-        boxShadow: [
-          if (Theme.of(context).brightness == Brightness.light)
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 8.0,
-            ),
-        ],
-      ),
-      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(12.0),
-        child: wrapper != null ? wrapper(context, _buildBody(context)) : _buildBody(context),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+      child: CompanionAnimatedElevation(
+        disabled: onTap == null,
+        child: Container(
+          width: double.infinity,
+          height: height,
+          decoration: BoxDecoration(
+            color: Theme.of(context).brightness == Brightness.light ? color : Color(0xFF323232),
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12.0),
+            child: wrapper != null ? wrapper(context, _buildBody(context)) : _buildBody(context),
+          ),
+        ),
       ),
     );
   }
