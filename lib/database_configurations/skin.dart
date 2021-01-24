@@ -1,6 +1,8 @@
 import 'package:sqflite_migration/sqflite_migration.dart';
 
-class SkinMigrations {
+import 'base.dart';
+
+class SkinConfiguration extends DatabaseConfiguration {
   static final List<String> _initializationScripts = [
     '''
       CREATE TABLE skins(
@@ -15,11 +17,15 @@ class SkinMigrations {
   ];
 
   static final List<String> _migrationScripts = [
-
+    'ALTER TABLE skins ADD COLUMN cache_version INTEGER DEFAULT 1'
   ];
 
-  static final MigrationConfig config = MigrationConfig(
-    initializationScript: _initializationScripts,
-    migrationScripts: _migrationScripts,
+  SkinConfiguration() : super(
+    name: 'skins.db',
+    tableName: 'skins',
+    migrationConfig: MigrationConfig(
+      initializationScript: _initializationScripts,
+      migrationScripts: _migrationScripts
+    )
   );
 }

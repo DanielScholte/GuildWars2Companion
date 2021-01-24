@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:guildwars2_companion/migrations/notification.dart';
+import 'package:guildwars2_companion/database_configurations/notification.dart';
 import 'package:guildwars2_companion/models/notifications/notification.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -125,7 +125,7 @@ class NotificationService {
   Future<Database> _getDatabase() async {
     return await openDatabaseWithMigration(
       join(await getDatabasesPath(), 'notifications.db'),
-      NotificationMigrations.config
+      NotificationConfiguration.config
     );
   }
 

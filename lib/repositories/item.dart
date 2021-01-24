@@ -12,15 +12,9 @@ class ItemRepository {
     return itemService.clearCache();
   }
 
-  int getCachedItemsCount() {
-    return itemService.getCachedItemsCount();
-  }
+  Future<int> getCachedItemsCount() => itemService.getCachedItemsCount();
 
-  int getCachedSkinsCount() {
-    return itemService.getCachedSkinsCount();
-  }
+  Future<int> getCachedSkinsCount() => itemService.getCachedSkinsCount();
 
-  int getCachedMinisCount() {
-    return itemService.getCachedMinisCount();
-  }
+  Future<int> getCachedMinisCount() => itemService.getCachedMinisCount();
 }

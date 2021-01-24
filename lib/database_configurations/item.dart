@@ -1,6 +1,8 @@
 import 'package:sqflite_migration/sqflite_migration.dart';
 
-class ItemMigrations {
+import 'base.dart';
+
+class ItemConfiguration extends DatabaseConfiguration {
   static final List<String> _initializationScripts = [
     '''
       CREATE TABLE items(
@@ -29,13 +31,16 @@ class ItemMigrations {
   ];
 
   static final List<String> _migrationScripts = [
-    '''
-      ALTER TABLE items ADD flags TEXT 
-    '''
+    'ALTER TABLE items ADD COLUMN cache_version INTEGER DEFAULT 1',
+    'ALTER TABLE items ADD COLUMN flags TEXT'
   ];
 
-  static final MigrationConfig config = MigrationConfig(
-    initializationScript: _initializationScripts,
-    migrationScripts: _migrationScripts,
+  ItemConfiguration() : super(
+    name: 'items.db',
+    tableName: 'items',
+    migrationConfig: MigrationConfig(
+      initializationScript: _initializationScripts,
+      migrationScripts: _migrationScripts
+    )
   );
 }

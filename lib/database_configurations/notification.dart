@@ -1,20 +1,16 @@
 import 'package:sqflite_migration/sqflite_migration.dart';
 
-class SkillMigrations {
+class NotificationConfiguration {
   static final List<String> _initializationScripts = [
     '''
-      CREATE TABLE skills(
+      CREATE TABLE notifications(
         id INTEGER PRIMARY KEY,
-        name TEXT,
-        description TEXT,
-        icon TEXT,
-        type TEXT,
-        slot TEXT,
-        chatLink TEXT,
-        tier INTEGER,
-        facts TEXT,
-        traitedFacts TEXT,
-        expiration_date DATE
+        type INTEGER,
+        event_id TEXT,
+        event_name TEXT,
+        date_time INTEGER,
+        spawn_date_time INTEGER,
+        offset INTEGER
       )
     '''
   ];

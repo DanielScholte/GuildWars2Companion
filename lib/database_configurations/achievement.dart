@@ -1,6 +1,8 @@
 import 'package:sqflite_migration/sqflite_migration.dart';
 
-class AchievementMigrations {
+import 'base.dart';
+
+class AchievementConfiguration extends DatabaseConfiguration {
   static final List<String> _initializationScripts = [
     '''
       CREATE TABLE achievements(
@@ -21,11 +23,15 @@ class AchievementMigrations {
   ];
 
   static final List<String> _migrationScripts = [
-
+    'ALTER TABLE achievements ADD COLUMN cache_version INTEGER DEFAULT 1'
   ];
 
-  static final MigrationConfig config = MigrationConfig(
-    initializationScript: _initializationScripts,
-    migrationScripts: _migrationScripts,
+  AchievementConfiguration() : super(
+    name: 'achievements.db',
+    tableName: 'achievements',
+    migrationConfig: MigrationConfig(
+      initializationScript: _initializationScripts,
+      migrationScripts: _migrationScripts
+    )
   );
 }
