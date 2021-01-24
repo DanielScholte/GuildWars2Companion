@@ -39,7 +39,7 @@ class ChangelogService {
       build: 31,
       newFeatures: true,
       changes: [
-        'Added flags to the item page (Thanks to Apcro)'
+        'Added flags to the item page (Thanks to Apcro)',
         'Reworked caching',
       ],
     ),
