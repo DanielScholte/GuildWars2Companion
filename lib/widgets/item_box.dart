@@ -53,44 +53,42 @@ class CompanionItemBox extends StatelessWidget {
   }
 
   Widget _buildItemBox(BuildContext context) {
-    return Padding(
-      padding: includeMargin ? EdgeInsets.all(4.0) : EdgeInsets.zero,
-      child: Container(
-        width: this.size,
-        height: this.size,
-        decoration: BoxDecoration(
-          color: Colors.grey,
-          borderRadius: BorderRadius.circular(6.0),
-          boxShadow: [
-            if (Theme.of(context).brightness == Brightness.light)
-              BoxShadow(
-                color: Colors.black26,
-                blurRadius: 4.0,
-              ),
-          ],
-          border: Border.all(
-            color: GuildWarsUtil.getRarityColor(displayEmpty ? 'Basic' : item.rarity),
-            width: 2.0
-          ),
+    return Container(
+      width: this.size,
+      height: this.size,
+      margin: includeMargin ? EdgeInsets.all(4.0) : EdgeInsets.zero,
+      decoration: BoxDecoration(
+        color: Colors.grey,
+        borderRadius: BorderRadius.circular(6.0),
+        boxShadow: [
+          if (Theme.of(context).brightness == Brightness.light)
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 4.0,
+            ),
+        ],
+        border: Border.all(
+          color: GuildWarsUtil.getRarityColor(displayEmpty ? 'Basic' : item.rarity),
+          width: 2.0
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(4.0),
-          child: Stack(
-            alignment: Alignment.topRight,
-            children: <Widget>[
-              _buildImage(),
-              if (quantity > 1)
-                _buildQuantity(),
-              if (quantity == 0)
-                _buildGreyOverlay(),
-              if (markCompleted)
-                _buildCompleted(),
-              if (enablePopup && !displayEmpty)
-                _buildInkwell(context),
-            ],
-          ),
-        )
       ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(4.0),
+        child: Stack(
+          alignment: Alignment.topRight,
+          children: <Widget>[
+            _buildImage(),
+            if (quantity > 1)
+              _buildQuantity(),
+            if (quantity == 0)
+              _buildGreyOverlay(),
+            if (markCompleted)
+              _buildCompleted(),
+            if (enablePopup && !displayEmpty)
+              _buildInkwell(context),
+          ],
+        ),
+      )
     );
   }
 
