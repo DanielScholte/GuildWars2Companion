@@ -96,10 +96,14 @@ class MasteriesPage extends StatelessWidget {
             ],
           )
         ],
-      ) : Icon(
-        GuildWarsIcons.mastery,
-        size: 32.0,
-        color: Colors.white,
+      ) : (Theme.of(context).brightness == Brightness.light ? Icon(
+          GuildWarsIcons.mastery,
+          size: 32.0,
+          color: Colors.white,
+        ) : Image.asset(
+          GuildWarsUtil.masteryIcon(mastery.region),
+          height: 32.0,
+        )
       ),
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => MasteryLevelsPage(mastery),
