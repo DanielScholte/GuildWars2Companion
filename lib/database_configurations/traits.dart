@@ -1,6 +1,8 @@
 import 'package:sqflite_migration/sqflite_migration.dart';
 
-class TraitMigrations {
+import 'base.dart';
+
+class TraitConfiguration extends DatabaseConfiguration {
   static final List<String> _initializationScripts = [
     '''
       CREATE TABLE traits(
@@ -20,11 +22,15 @@ class TraitMigrations {
   ];
 
   static final List<String> _migrationScripts = [
-
+    'ALTER TABLE traits ADD COLUMN cache_version INTEGER DEFAULT 1'
   ];
 
-  static final MigrationConfig config = MigrationConfig(
-    initializationScript: _initializationScripts,
-    migrationScripts: _migrationScripts,
+  TraitConfiguration() : super(
+    name: 'traits.db',
+    tableName: 'traits',
+    migrationConfig: MigrationConfig(
+      initializationScript: _initializationScripts,
+      migrationScripts: _migrationScripts
+    )
   );
 }

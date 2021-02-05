@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/blocs/bank/bloc.dart';
 import 'package:guildwars2_companion/models/items/inventory.dart';
+import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/widgets/accent.dart';
 import 'package:guildwars2_companion/widgets/appbar.dart';
 import 'package:guildwars2_companion/widgets/error.dart';
@@ -107,6 +108,7 @@ class GenericBankPage extends StatelessWidget {
                         infusionsInfo: i.infusionsInfo,
                         quantity: i.charges != null ? i.charges : i.count,
                         includeMargin: false,
+                        section: ItemSection.BANK,
                       );
                     })
                     .toList(),
@@ -137,6 +139,7 @@ class GenericBankPage extends StatelessWidget {
               infusionsInfo: i.infusionsInfo,
               quantity: i.charges != null ? i.charges : i.count,
               includeMargin: false,
+              section: ItemSection.BANK,
             ))
             .toList(),
         ),

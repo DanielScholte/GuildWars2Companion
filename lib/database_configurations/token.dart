@@ -1,15 +1,13 @@
 import 'package:sqflite_migration/sqflite_migration.dart';
 
-class MiniMigrations {
+class TokenConfiguration {
   static final List<String> _initializationScripts = [
     '''
-      CREATE TABLE minis(
+      CREATE TABLE tokens(
         id INTEGER PRIMARY KEY,
         name TEXT,
-        icon TEXT,
-        display_order INTEGER,
-        itemId INTEGER,
-        expiration_date DATE
+        token TEXT,
+        date TEXT
       )
     '''
   ];

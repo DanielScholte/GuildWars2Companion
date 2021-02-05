@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
-import 'package:guildwars2_companion/migrations/token.dart';
+import 'package:guildwars2_companion/database_configurations/token.dart';
 import 'package:guildwars2_companion/models/account/token_entry.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -21,7 +21,7 @@ class AccountService {
   Future<Database> _getDatabase() async {
     return await openDatabaseWithMigration(
       join(await getDatabasesPath(), 'tokens.db'),
-      TokenMigrations.config
+      TokenConfiguration.config
     );
   }
 

@@ -35,6 +35,15 @@ class ChangelogService {
 
   List<Changelog> changelog = [
     Changelog(
+      version: '1.5.3',
+      build: 31,
+      newFeatures: true,
+      changes: [
+        'Added flags to the item page (Thanks to Apcro)',
+        'Reworked caching',
+      ],
+    ),
+    Changelog(
       version: '1.5.2',
       build: 30,
       newFeatures: false,

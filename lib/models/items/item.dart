@@ -1,5 +1,15 @@
 import 'package:guildwars2_companion/models/items/item_details.dart';
 
+enum ItemSection {
+  EQUIPMENT,
+  BANK,
+  INVENTORY,
+  MATERIAL,
+  TRADINGPOST,
+  ALL
+}
+
+
 class Item {
   String name;
   String description;
@@ -10,6 +20,7 @@ class Item {
   int id;
   String icon;
   ItemDetails details;
+  List<String> flags;
 
   Item(
     {this.name,
@@ -20,7 +31,8 @@ class Item {
       this.vendorValue,
       this.id,
       this.icon,
-      this.details});
+      this.details,
+      this.flags});
 
   Item.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -33,6 +45,9 @@ class Item {
     icon = json['icon'];
     details =
         json['details'] != null ? new ItemDetails.fromJson(json['details']) : ItemDetails();
+    if (json['flags'] != null) {
+      this.flags = json['flags'].cast<String>().toSet().toList();
+    }
   }
 
   Item.fromDb(Map<String, dynamic> item) {
@@ -57,6 +72,9 @@ class Item {
       minPower : item['details_minPower'],
       maxPower : item['details_maxPower'],
     );
+    if (item['flags'] != null) {
+      flags = item['flags'].split(';');
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -72,10 +90,13 @@ class Item {
     if (this.details != null) {
       data['details'] = this.details.toJson();
     }
+    if (this.flags != null) {
+      data['flags'] = this.flags.join(';');
+    }
     return data;
   }
 
-  Map<String, dynamic> toDb(String expirationDate) {
+  Map<String, dynamic> toDb() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['name'] = this.name;
     data['description'] = this.description;
@@ -85,7 +106,7 @@ class Item {
     data['vendorValue'] = this.vendorValue;
     data['id'] = this.id;
     data['icon'] = this.icon;
-    data['expiration_date'] = expirationDate;
+
     if (this.details != null) {
       data['details_type'] = details.type;
       data['details_weightClass'] = details.weightClass;
@@ -110,6 +131,9 @@ class Item {
       data['details_charges'] = null;
       data['details_minPower'] = null;
       data['details_maxPower'] = null;
+    }
+    if (this.flags != null) {
+      data['flags'] = flags.join(';');
     }
     return data;
   }

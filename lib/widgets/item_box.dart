@@ -20,6 +20,7 @@ class CompanionItemBox extends StatelessWidget {
   final List<Item> upgradesInfo;
   final List<Item> infusionsInfo;
   final String hero;
+  final ItemSection section;
 
   CompanionItemBox({
     @required this.item,
@@ -33,6 +34,7 @@ class CompanionItemBox extends StatelessWidget {
     this.enablePopup = true,
     this.markCompleted = false,
     this.hero,
+    this.section = ItemSection.ALL,
   });
 
   Widget build(BuildContext context) {
@@ -54,7 +56,7 @@ class CompanionItemBox extends StatelessWidget {
     return Container(
       width: this.size,
       height: this.size,
-      margin: includeMargin ? EdgeInsets.all(4.0) : null,
+      margin: includeMargin ? EdgeInsets.all(4.0) : EdgeInsets.zero,
       decoration: BoxDecoration(
         color: Colors.grey,
         borderRadius: BorderRadius.circular(6.0),
@@ -196,6 +198,7 @@ class CompanionItemBox extends StatelessWidget {
               hero: hero,
               upgradesInfo: upgradesInfo,
               infusionsInfo: infusionsInfo,
+              section: section,
             )
           ))
         ),

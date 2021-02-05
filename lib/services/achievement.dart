@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
+import 'package:guildwars2_companion/database_configurations/achievement.dart';
+import 'package:guildwars2_companion/services/cache.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../migrations/achievement.dart';
 import '../models/achievement/achievement.dart';
 import '../models/achievement/achievement_category.dart';
 import '../models/achievement/achievement_group.dart';
@@ -10,144 +11,32 @@ import '../models/achievement/daily.dart';
 import '../models/mastery/mastery.dart';
 import '../models/mastery/mastery_progress.dart';
 import '../utils/urls.dart';
-import 'package:intl/intl.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:sqflite_migration/sqflite_migration.dart';
 
 class AchievementService {
-  List<Achievement> _cachedAchievements = [];
-
-  Dio dio;
+  final Dio dio;
+  CacheService<Achievement> _cacheService;
 
   AchievementService({
     @required this.dio
-  });
-
-  Future<Database> _getDatabase() async {
-    return await openDatabaseWithMigration(
-      join(await getDatabasesPath(), 'achievements.db'),
-      AchievementMigrations.config
+  }) {
+    this._cacheService = CacheService<Achievement>(
+      databaseConfiguration: AchievementConfiguration(),
+      fromJson: (json) => Achievement.fromJson(json),
+      fromMap: (map) => Achievement.fromDb(map),
+      toMap: (achievement) => achievement.toDb(),
+      findById: (achievements, id) => achievements.firstWhere((a) => a.id == id, orElse: () => null),
+      url: Urls.achievementsUrl,
+      dio: dio,
     );
   }
 
-  Future<void> loadCachedData() async {
-    if (_cachedAchievements.isNotEmpty) {
-      return;
-    }
+  Future<void> loadCachedData() => _cacheService.load();
 
-    Database database = await _getDatabase();
+  Future<void> clearCache() => _cacheService.clear();
 
-    DateTime now = DateTime.now().toUtc();
+  Future<int> getCachedAchievementsCount() => _cacheService.count();
 
-    await database.delete(
-      'achievements',
-      where: "expiration_date <= ?",
-      whereArgs: [DateFormat('yyyyMMdd').format(now)],
-    );
-
-    final List<Map<String, dynamic>> achievements = await database.query('achievements');
-    _cachedAchievements = List.generate(achievements.length, (i) => Achievement.fromDb(achievements[i]));
-
-    database.close();
-
-    return;
-  }
-
-  Future<void> clearCache() async {
-    Database database = await _getDatabase();
-
-    await database.delete(
-      'achievements',
-    );
-
-    _cachedAchievements.clear();
-
-    database.close();
-    
-    return;
-  }
-
-  Future<int> getCachedAchievementsCount() async {
-    if (_cachedAchievements.isEmpty) {
-      Database database = await _getDatabase();
-
-      var count = await database.rawQuery('SELECT COUNT (*) from achievements');
-
-      database.close();
-
-      return Sqflite.firstIntValue(count);
-    }
-
-    return _cachedAchievements.length;
-  }
-
-  Future<List<Achievement>> getAchievements(List<int> achievementIds) async {
-    List<Achievement> achievements = [];
-    List<int> newAchievementIds = [];
-
-    achievementIds.forEach((achievementId) {
-      Achievement item = _cachedAchievements.firstWhere((i) => i.id == achievementId, orElse: () => null);
-
-      if (item != null) {
-        achievements.add(item);
-      } else {
-        newAchievementIds.add(achievementId);
-      }
-    });
-
-    if (newAchievementIds.isNotEmpty) {
-      achievements.addAll(await _getNewAchievements(newAchievementIds));
-    }
-
-    return achievements;
-  }
-
-  Future<List<Achievement>> _getNewAchievements(List<int> achievementIds) async {
-    List<String> achievementIdsList = Urls.divideIdLists(achievementIds);
-    List<Achievement> achievements = [];
-    for (var achievementIdsString in achievementIdsList) {
-      final response = await dio.get(Urls.achievementsUrl + achievementIdsString);
-
-      if (response.statusCode == 200 || response.statusCode == 206) {
-        List responseAchievements = response.data;
-        achievements.addAll(responseAchievements.map((a) => Achievement.fromJson(a)).toList());
-        continue;
-      }
-
-      if (response.statusCode != 404) {
-        throw Exception();
-      }
-    }
-
-    await _cacheAchievements(achievements);
-
-    return achievements;
-  }
-
-  Future<void> _cacheAchievements(List<Achievement> achievements) async {
-    Database database = await _getDatabase();
-
-    List<Achievement> nonCachedItems = achievements.where((i) => !_cachedAchievements.any((ca) => ca.id == i.id)).toList();
-    _cachedAchievements.addAll(nonCachedItems);
-
-    String expirationDate = DateFormat('yyyyMMdd')
-      .format(
-        DateTime
-        .now()
-        .add(Duration(days: 31))
-        .toUtc()
-      );
-
-    Batch batch = database.batch();
-    nonCachedItems.forEach((achievement) =>
-      batch.insert('achievements', achievement.toDb(expirationDate), conflictAlgorithm: ConflictAlgorithm.ignore));
-    await batch.commit(noResult: true);
-
-    database.close();
-
-    return;
-  }
+  Future<List<Achievement>> getAchievements(List<int> achievementIds) => _cacheService.getData(achievementIds);
 
   Future<List<AchievementProgress>> getAchievementProgress() async {
     final response = await dio.get(Urls.achievementProgressUrl);

@@ -132,7 +132,7 @@ class Achievement {
     return data;
   }
 
-  Map<String, dynamic> toDb(String expirationDate) {
+  Map<String, dynamic> toDb() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['icon'] = this.icon;
@@ -141,7 +141,6 @@ class Achievement {
     data['requirement'] = this.requirement;
     data['lockedText'] = this.lockedText;
     data['pointCap'] = this.pointCap;
-    data['expiration_date'] = expirationDate;
 
     if (this.prerequisites != null && this.prerequisites.isNotEmpty) {
       data['prerequisites'] = this.prerequisites.join(';');
