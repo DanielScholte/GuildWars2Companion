@@ -4,7 +4,6 @@ import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/widgets/cached_image.dart';
 import 'package:guildwars2_companion/widgets/card.dart';
 import 'package:guildwars2_companion/widgets/header.dart';
-import 'package:guildwars2_companion/widgets/info_column.dart';
 import 'package:guildwars2_companion/widgets/info_row.dart';
 import 'package:guildwars2_companion/widgets/list_view.dart';
 import 'package:guildwars2_companion/widgets/skill_trait_box.dart';
@@ -163,7 +162,7 @@ class SkillTraitPage extends StatelessWidget {
         );
       case 'Buff':
       case 'PrefixedBuff':
-        return CompanionInfoColumn(
+        return CompanionInfoRow(
           leadingWidget: _getLeadingIcon(fact),
           header: '${fact.status ?? ''}'
             + (fact.applyCount != null && fact.applyCount > 1 ? ' x${fact.applyCount}' : '')
