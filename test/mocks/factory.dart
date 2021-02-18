@@ -1,6 +1,6 @@
 import 'package:guildwars2_companion/factory.dart';
-import 'package:guildwars2_companion/services/changelog.dart';
-import 'package:guildwars2_companion/services/configuration.dart';
+import 'package:guildwars2_companion/features/changelog/services/changelog.dart';
+import 'package:guildwars2_companion/features/configuration/services/configuration.dart';
 import 'services.dart';
 
 class MockCompanionFactory extends CompanionFactory {

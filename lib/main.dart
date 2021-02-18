@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:guildwars2_companion/blocs/configuration/configuration_bloc.dart';
+import 'package:guildwars2_companion/core/themes/dark.dart';
+import 'package:guildwars2_companion/core/themes/light.dart';
 import 'package:guildwars2_companion/factory.dart';
-import 'package:guildwars2_companion/pages/tab.dart';
-import 'package:guildwars2_companion/pages/token/token.dart';
-import 'package:guildwars2_companion/utils/theme.dart';
-import 'models/other/configuration.dart';
+import 'package:guildwars2_companion/features/configuration/bloc/configuration_bloc.dart';
+import 'package:guildwars2_companion/features/home/pages/tab.dart';
+import 'package:guildwars2_companion/features/account/pages/token.dart';
+import 'features/configuration/models/configuration.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,8 +44,8 @@ class GuildWars2Companion extends StatelessWidget {
 
             return MaterialApp(
               title: 'Guild Wars 2 Companion',
-              theme: ThemeUtil.getLightTheme(),
-              darkTheme: ThemeUtil.getDarkTheme(),
+              theme: lightTheme,
+              darkTheme: darkTheme,
               themeMode: configuration.themeMode,
               home: isAuthenticated ? TabPage() : TokenPage(),
             );

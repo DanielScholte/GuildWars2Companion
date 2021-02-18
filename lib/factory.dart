@@ -4,9 +4,9 @@ import 'package:guildwars2_companion/blocs/account/bloc.dart';
 import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
 import 'package:guildwars2_companion/blocs/bank/bloc.dart';
 import 'package:guildwars2_companion/blocs/changelog/changelog_bloc.dart';
+import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/blocs/configuration/configuration_bloc.dart';
 import 'package:guildwars2_companion/blocs/dungeon/dungeon_bloc.dart';
-import 'package:guildwars2_companion/blocs/character/bloc.dart';
 import 'package:guildwars2_companion/blocs/event/event_bloc.dart';
 import 'package:guildwars2_companion/blocs/notification/notification_bloc.dart';
 import 'package:guildwars2_companion/blocs/pvp/pvp_bloc.dart';
@@ -14,41 +14,40 @@ import 'package:guildwars2_companion/blocs/raid/raid_bloc.dart';
 import 'package:guildwars2_companion/blocs/trading_post/bloc.dart';
 import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
 import 'package:guildwars2_companion/blocs/world_boss/bloc.dart';
-import 'package:guildwars2_companion/repositories/account.dart';
-import 'package:guildwars2_companion/repositories/achievement.dart';
-import 'package:guildwars2_companion/repositories/bank.dart';
-import 'package:guildwars2_companion/repositories/build.dart';
-import 'package:guildwars2_companion/repositories/changelog.dart';
-import 'package:guildwars2_companion/repositories/character.dart';
-import 'package:guildwars2_companion/repositories/configuration.dart';
-import 'package:guildwars2_companion/repositories/dungeon.dart';
-import 'package:guildwars2_companion/repositories/event.dart';
-import 'package:guildwars2_companion/repositories/item.dart';
-import 'package:guildwars2_companion/repositories/notification.dart';
-import 'package:guildwars2_companion/repositories/pvp.dart';
-import 'package:guildwars2_companion/repositories/raid.dart';
-import 'package:guildwars2_companion/repositories/trading_post.dart';
-import 'package:guildwars2_companion/repositories/wallet.dart';
-import 'package:guildwars2_companion/repositories/world_boss.dart';
-import 'package:guildwars2_companion/services/account.dart';
-import 'package:guildwars2_companion/services/achievement.dart';
-import 'package:guildwars2_companion/services/bank.dart';
-import 'package:guildwars2_companion/services/build.dart';
-import 'package:guildwars2_companion/services/changelog.dart';
-import 'package:guildwars2_companion/services/character.dart';
-import 'package:guildwars2_companion/services/configuration.dart';
-import 'package:guildwars2_companion/services/dungeon.dart';
-import 'package:guildwars2_companion/services/event.dart';
-import 'package:guildwars2_companion/services/item.dart';
-import 'package:guildwars2_companion/services/map.dart';
-import 'package:guildwars2_companion/services/notification.dart';
-import 'package:guildwars2_companion/services/pvp.dart';
-import 'package:guildwars2_companion/services/raid.dart';
-import 'package:guildwars2_companion/services/token.dart';
-import 'package:guildwars2_companion/services/trading_post.dart';
-import 'package:guildwars2_companion/services/wallet.dart';
-import 'package:guildwars2_companion/services/world_boss.dart';
-import 'package:guildwars2_companion/utils/dio.dart';
+import 'package:guildwars2_companion/features/account/repositories/account.dart';
+import 'package:guildwars2_companion/features/account/services/account.dart';
+import 'package:guildwars2_companion/features/account/services/token.dart';
+import 'package:guildwars2_companion/features/achievement/repositories/achievement.dart';
+import 'package:guildwars2_companion/features/achievement/services/achievement.dart';
+import 'package:guildwars2_companion/features/bank/repositories/bank.dart';
+import 'package:guildwars2_companion/features/bank/services/bank.dart';
+import 'package:guildwars2_companion/features/build/repositories/build.dart';
+import 'package:guildwars2_companion/features/build/services/build.dart';
+import 'package:guildwars2_companion/features/changelog/repositories/changelog.dart';
+import 'package:guildwars2_companion/features/changelog/services/changelog.dart';
+import 'package:guildwars2_companion/features/character/repositories/character.dart';
+import 'package:guildwars2_companion/features/character/services/character.dart';
+import 'package:guildwars2_companion/features/configuration/repositories/configuration.dart';
+import 'package:guildwars2_companion/features/configuration/services/configuration.dart';
+import 'package:guildwars2_companion/features/dungeon/repositories/dungeon.dart';
+import 'package:guildwars2_companion/features/dungeon/services/dungeon.dart';
+import 'package:guildwars2_companion/features/event/repositories/notification.dart';
+import 'package:guildwars2_companion/features/event/services/notification.dart';
+import 'package:guildwars2_companion/features/item/repositories/item.dart';
+import 'package:guildwars2_companion/features/item/services/item.dart';
+import 'package:guildwars2_companion/features/meta_event/repositories/event.dart';
+import 'package:guildwars2_companion/features/meta_event/services/event.dart';
+import 'package:guildwars2_companion/features/pvp/repositories/pvp.dart';
+import 'package:guildwars2_companion/features/pvp/services/map.dart';
+import 'package:guildwars2_companion/features/pvp/services/pvp.dart';
+import 'package:guildwars2_companion/features/raid/repositories/raid.dart';
+import 'package:guildwars2_companion/features/raid/services/raid.dart';
+import 'package:guildwars2_companion/features/trading_post/repositories/trading_post.dart';
+import 'package:guildwars2_companion/features/trading_post/services/trading_post.dart';
+import 'package:guildwars2_companion/features/wallet/repositories/wallet.dart';
+import 'package:guildwars2_companion/features/wallet/services/wallet.dart';
+import 'package:guildwars2_companion/features/world_boss/repositories/world_boss.dart';
+import 'package:guildwars2_companion/features/world_boss/services/world_boss.dart';
 
 class CompanionFactory {
   AccountService accountService;
@@ -160,8 +159,8 @@ class CompanionFactory {
             dungeonService: dungeonService,
           ),
         ),
-        RepositoryProvider<EventRepository>(
-          create: (BuildContext context) => EventRepository(
+        RepositoryProvider<MetaEventRepository>(
+          create: (BuildContext context) => MetaEventRepository(
             eventService: eventService,
           ),
         ),
@@ -249,7 +248,7 @@ class CompanionFactory {
         ),
         BlocProvider<EventBloc>(
           create: (BuildContext context) => EventBloc(
-            eventRepository: RepositoryProvider.of<EventRepository>(context),
+            eventRepository: RepositoryProvider.of<MetaEventRepository>(context),
           ),
         ),
         BlocProvider<NotificationBloc>(
@@ -279,7 +278,7 @@ class CompanionFactory {
         ),
         BlocProvider<WorldBossBloc>(
           create: (BuildContext context) => WorldBossBloc(
-            eventRepository: RepositoryProvider.of<EventRepository>(context),
+            eventRepository: RepositoryProvider.of<MetaEventRepository>(context),
             worldBossRepository: RepositoryProvider.of<WorldBossRepository>(context),
           ),
         ),

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:guildwars2_companion/factory.dart';
+import 'package:guildwars2_companion/features/account/models/account.dart';
+import 'package:guildwars2_companion/features/account/models/token_info.dart';
+import 'package:guildwars2_companion/features/character/character/character.dart';
+import 'package:guildwars2_companion/features/character/models/profession.dart';
 import 'package:guildwars2_companion/main.dart';
-import 'package:guildwars2_companion/models/account/account.dart';
-import 'package:guildwars2_companion/models/account/token_info.dart';
-import 'package:guildwars2_companion/models/character/character.dart';
-import 'package:guildwars2_companion/models/character/profession.dart';
-import 'package:guildwars2_companion/widgets/button.dart';
-import 'package:guildwars2_companion/widgets/info_box.dart';
+import 'package:guildwars2_companion/core/widgets/button.dart';
+import 'package:guildwars2_companion/core/widgets/info_box.dart';
 import 'package:mockito/mockito.dart';
 import 'mocks/factory.dart';
 
