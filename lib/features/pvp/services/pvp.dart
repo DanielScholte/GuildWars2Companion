@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
+import 'package:guildwars2_companion/core/utils/urls.dart';
 import 'package:guildwars2_companion/features/pvp/models/game.dart';
 import 'package:guildwars2_companion/features/pvp/models/rank.dart';
 import 'package:guildwars2_companion/features/pvp/models/season.dart';
 import 'package:guildwars2_companion/features/pvp/models/standing.dart';
 import 'package:guildwars2_companion/features/pvp/models/stats.dart';
-import 'package:guildwars2_companion/utils/urls.dart';
 
 class PvpService {
 

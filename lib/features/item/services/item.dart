@@ -1,14 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
+import 'package:guildwars2_companion/core/services/cache.dart';
+import 'package:guildwars2_companion/core/utils/urls.dart';
 import 'package:guildwars2_companion/features/item/database_configurations/item.dart';
 import 'package:guildwars2_companion/features/item/database_configurations/mini.dart';
 import 'package:guildwars2_companion/features/item/database_configurations/skin.dart';
-import '../../../models/items/item.dart';
-import '../../../models/items/skin.dart';
-import '../models/mini.dart';
-import '../../../utils/urls.dart';
-
-import '../../../core/services/cache.dart';
+import 'package:guildwars2_companion/features/item/models/item.dart';
+import 'package:guildwars2_companion/features/item/models/mini.dart';
+import 'package:guildwars2_companion/features/item/models/skin.dart';
 
 class ItemService {
   final Dio dio;

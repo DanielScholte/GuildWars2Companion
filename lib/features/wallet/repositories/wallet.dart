@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:guildwars2_companion/models/wallet/currency.dart';
-import 'package:guildwars2_companion/models/wallet/wallet.dart';
+import 'package:guildwars2_companion/features/wallet/models/currency.dart';
+import 'package:guildwars2_companion/features/wallet/models/wallet.dart';
 import 'package:guildwars2_companion/features/wallet/services/wallet.dart';
 
 class WalletRepository {

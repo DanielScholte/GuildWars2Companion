@@ -1,4 +1,4 @@
-import 'package:guildwars2_companion/models/character/character.dart';
+import 'package:guildwars2_companion/features/character/models/character.dart';
 import 'package:meta/meta.dart';
 
 @immutable

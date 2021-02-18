@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import '../models/dungeon.dart';
-import '../../../utils/urls.dart';
+import 'package:guildwars2_companion/core/utils/urls.dart';
+import 'package:guildwars2_companion/features/dungeon/models/dungeon.dart';
 
 class DungeonService {
 

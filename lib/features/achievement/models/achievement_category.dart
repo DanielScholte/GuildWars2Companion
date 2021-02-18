@@ -1,4 +1,4 @@
-import 'package:guildwars2_companion/models/achievement/achievement.dart';
+import 'package:guildwars2_companion/features/achievement/models/achievement.dart';
 
 class AchievementCategory {
   int id;

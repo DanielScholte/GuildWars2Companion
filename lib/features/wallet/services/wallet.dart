@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
-import '../../../models/wallet/currency.dart';
-import '../../../models/wallet/wallet.dart';
-import '../../../utils/urls.dart';
+import 'package:guildwars2_companion/core/utils/urls.dart';
+import 'package:guildwars2_companion/features/wallet/models/currency.dart';
+import 'package:guildwars2_companion/features/wallet/models/wallet.dart';
 
 class WalletService {
 

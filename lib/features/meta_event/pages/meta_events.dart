@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:guildwars2_companion/blocs/event/event_bloc.dart';
+import 'package:guildwars2_companion/core/utils/guild_wars.dart';
+import 'package:guildwars2_companion/features/meta_event/bloc/event_bloc.dart';
 import 'package:guildwars2_companion/features/meta_event/models/meta_event.dart';
-import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/core/widgets/button.dart';
@@ -23,24 +23,24 @@ class MetaEventsPage extends StatelessWidget {
           title: 'Meta Events',
           color: Colors.green,
         ),
-        body: BlocBuilder<EventBloc, EventState>(
+        body: BlocBuilder<MetaEventBloc, MetaEventState>(
           builder: (context, state) {
-            if (state is ErrorEventsState) {
+            if (state is ErrorMetaEventsState) {
               return Center(
                 child: CompanionError(
                   title: 'the meta events',
                   onTryAgain: () =>
-                    BlocProvider.of<EventBloc>(context).add(LoadEventsEvent()),
+                    BlocProvider.of<MetaEventBloc>(context).add(LoadMetaEventsEvent()),
                 ),
               );
             }
 
-            if (state is LoadedEventsState) {
+            if (state is LoadedMetaEventsState) {
               return RefreshIndicator(
                 backgroundColor: Theme.of(context).accentColor,
                 color: Theme.of(context).cardColor,
                 onRefresh: () async {
-                  BlocProvider.of<EventBloc>(context).add(LoadEventsEvent());
+                  BlocProvider.of<MetaEventBloc>(context).add(LoadMetaEventsEvent());
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
                 child: CompanionListView(
@@ -86,7 +86,7 @@ class MetaEventsPage extends StatelessWidget {
                 color: Colors.white,
                 foregroundColor: Colors.black,
                 onTap: () {
-                  BlocProvider.of<EventBloc>(context).add(LoadEventsEvent(id: s.id));
+                  BlocProvider.of<MetaEventBloc>(context).add(LoadMetaEventsEvent(id: s.id));
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => MetaEventPage(s)
                   ));

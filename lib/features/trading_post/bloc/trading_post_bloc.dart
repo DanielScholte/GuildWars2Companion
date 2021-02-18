@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
-import 'package:guildwars2_companion/models/trading_post/trading_post_data.dart';
-import 'package:guildwars2_companion/models/trading_post/transaction.dart';
+import 'package:guildwars2_companion/features/trading_post/models/trading_post_data.dart';
+import 'package:guildwars2_companion/features/trading_post/models/transaction.dart';
 import 'package:guildwars2_companion/features/trading_post/repositories/trading_post.dart';
 import './bloc.dart';
 

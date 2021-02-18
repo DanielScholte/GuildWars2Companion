@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:guildwars2_companion/blocs/configuration/configuration_bloc.dart';
-import 'package:guildwars2_companion/blocs/notification/notification_bloc.dart';
-import 'package:guildwars2_companion/models/notifications/notification.dart';
+import 'package:guildwars2_companion/features/configuration/bloc/configuration_bloc.dart';
 import 'package:guildwars2_companion/features/configuration/models/configuration.dart';
+import 'package:guildwars2_companion/features/event/bloc/notification_bloc.dart';
+import 'package:guildwars2_companion/features/event/models/notification.dart';
 import 'package:intl/intl.dart';
 
 class CompanionNotificationList extends StatefulWidget {

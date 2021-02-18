@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:guildwars2_companion/blocs/account/bloc.dart';
-import 'package:guildwars2_companion/blocs/achievement/achievement_bloc.dart';
-import 'package:guildwars2_companion/blocs/achievement/achievement_state.dart';
-import 'package:guildwars2_companion/blocs/dungeon/bloc.dart';
-import 'package:guildwars2_companion/blocs/event/event_bloc.dart';
-import 'package:guildwars2_companion/blocs/pvp/pvp_bloc.dart';
-import 'package:guildwars2_companion/blocs/raid/raid_bloc.dart';
-import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
-import 'package:guildwars2_companion/blocs/world_boss/bloc.dart';
-import 'package:guildwars2_companion/pages/configuration/configuration.dart';
-import 'package:guildwars2_companion/pages/home/dungeons/dungeons.dart';
-import 'package:guildwars2_companion/pages/home/events/meta_events.dart';
-import 'package:guildwars2_companion/pages/home/pvp/pvp.dart';
-import 'package:guildwars2_companion/pages/home/raids/raids.dart';
+import 'package:guildwars2_companion/core/utils/guild_wars.dart';
+import 'package:guildwars2_companion/features/account/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/achievement/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/configuration/pages/configuration.dart';
+import 'package:guildwars2_companion/features/dungeon/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/dungeon/pages/dungeons.dart';
+import 'package:guildwars2_companion/features/meta_event/bloc/event_bloc.dart';
+import 'package:guildwars2_companion/features/meta_event/pages/meta_events.dart';
+import 'package:guildwars2_companion/features/pvp/bloc/pvp_bloc.dart';
+import 'package:guildwars2_companion/features/pvp/pages/pvp.dart';
+import 'package:guildwars2_companion/features/raid/bloc/raid_bloc.dart';
+import 'package:guildwars2_companion/features/raid/pages/raids.dart';
+import 'package:guildwars2_companion/features/wallet/bloc/bloc.dart';
 import 'package:guildwars2_companion/features/wallet/pages/wallet.dart';
+import 'package:guildwars2_companion/features/world_boss/bloc/bloc.dart';
 import 'package:guildwars2_companion/features/world_boss/pages/world_bosses.dart';
-import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/core/widgets/cached_image.dart';
 import 'package:guildwars2_companion/core/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/button.dart';
@@ -352,7 +351,7 @@ class HomePage extends StatelessWidget {
       color: Colors.green,
       title: 'Meta Events',
       onTap: () {
-        BlocProvider.of<EventBloc>(context).add(LoadEventsEvent());
+        BlocProvider.of<MetaEventBloc>(context).add(LoadMetaEventsEvent());
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => MetaEventsPage()
         ));

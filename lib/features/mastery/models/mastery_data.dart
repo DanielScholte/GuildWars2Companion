@@ -1,4 +1,4 @@
-import 'package:guildwars2_companion/models/mastery/mastery.dart';
+import 'package:guildwars2_companion/features/mastery/models/mastery.dart';
 
 class MasteryData {
   final List<Mastery> masteries;

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:guildwars2_companion/models/mastery/mastery.dart';
-import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/cached_image.dart';
 import 'package:guildwars2_companion/core/widgets/card.dart';
 import 'package:guildwars2_companion/core/widgets/header.dart';
 import 'package:guildwars2_companion/core/widgets/info_row.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
+import 'package:guildwars2_companion/features/mastery/models/mastery.dart';
 
 class MasteryLevelPage extends StatelessWidget {
 

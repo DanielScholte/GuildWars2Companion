@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:guildwars2_companion/features/achievement/repositories/achievement.dart';
-import 'package:guildwars2_companion/features/build/repositories/build.dart';
-import 'package:guildwars2_companion/features/item/repositories/item.dart';
-import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/core/widgets/info_row.dart';
 import 'package:guildwars2_companion/core/widgets/simple_button.dart';
+import 'package:guildwars2_companion/features/achievement/repositories/achievement.dart';
+import 'package:guildwars2_companion/features/build/repositories/build.dart';
+import 'package:guildwars2_companion/features/item/repositories/item.dart';
 
 class CachingConfigurationPage extends StatefulWidget {
   @override

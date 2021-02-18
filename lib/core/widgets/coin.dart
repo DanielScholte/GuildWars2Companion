@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:guildwars2_companion/models/wallet/currency.dart';
-import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/core/utils/guild_wars.dart';
+import 'package:guildwars2_companion/features/wallet/models/currency.dart';
 
 class CompanionCoin extends StatelessWidget {
 

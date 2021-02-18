@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
-import 'package:guildwars2_companion/models/account/account.dart';
-import 'package:guildwars2_companion/models/account/token_entry.dart';
-import 'package:guildwars2_companion/models/account/token_info.dart';
+import 'package:guildwars2_companion/features/account/models/account.dart';
+import 'package:guildwars2_companion/features/account/models/token_entry.dart';
+import 'package:guildwars2_companion/features/account/models/token_info.dart';
 import 'package:guildwars2_companion/features/account/repositories/account.dart';
 import './bloc.dart';
 

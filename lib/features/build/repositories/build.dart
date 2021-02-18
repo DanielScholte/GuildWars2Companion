@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:guildwars2_companion/models/build/build.dart';
-import 'package:guildwars2_companion/models/build/skill_trait.dart';
-import 'package:guildwars2_companion/models/build/specialization.dart';
+import 'package:guildwars2_companion/features/build/models/build.dart';
+import 'package:guildwars2_companion/features/build/models/skill_trait.dart';
+import 'package:guildwars2_companion/features/build/models/specialization.dart';
 import 'package:guildwars2_companion/features/build/services/build.dart';
 
 class BuildRepository {

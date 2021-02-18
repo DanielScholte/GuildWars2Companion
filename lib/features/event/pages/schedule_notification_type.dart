@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:guildwars2_companion/models/notifications/notification.dart';
-import 'package:guildwars2_companion/features/meta_event/models/meta_event.dart';
-import 'package:guildwars2_companion/pages/general/event/schedule_notification_time.dart';
+import 'package:guildwars2_companion/core/models/event_segment.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/core/widgets/tip.dart';
 import 'package:guildwars2_companion/core/widgets/warning.dart';
+import 'package:guildwars2_companion/features/event/models/notification.dart';
+import 'package:guildwars2_companion/features/event/pages/schedule_notification_time.dart';
 
 class ScheduleNotificationTypePage extends StatefulWidget {
   final MetaEventSegment segment;

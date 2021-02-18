@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
-import 'package:guildwars2_companion/models/character/character.dart';
 import 'package:guildwars2_companion/features/build/repositories/build.dart';
+import 'package:guildwars2_companion/features/character/models/character.dart';
 import 'package:guildwars2_companion/features/character/repositories/character.dart';
 import './bloc.dart';
 

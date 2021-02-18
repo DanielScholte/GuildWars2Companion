@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:guildwars2_companion/blocs/pvp/pvp_bloc.dart';
+import 'package:guildwars2_companion/features/pvp/bloc/pvp_bloc.dart';
 import 'package:guildwars2_companion/features/pvp/models/season.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';

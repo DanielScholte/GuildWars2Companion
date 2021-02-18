@@ -1,11 +1,10 @@
 import 'dart:ui';
 
-import 'package:guildwars2_companion/models/build/build.dart';
-import 'package:guildwars2_companion/models/character/profession.dart';
-
-import 'bags.dart';
-import 'crafting.dart';
-import 'equipment.dart';
+import 'package:guildwars2_companion/features/build/models/build.dart';
+import 'package:guildwars2_companion/features/character/models/bags.dart';
+import 'package:guildwars2_companion/features/character/models/crafting.dart';
+import 'package:guildwars2_companion/features/character/models/equipment.dart';
+import 'package:guildwars2_companion/features/character/models/profession.dart';
 
 class Character {
 	String name;

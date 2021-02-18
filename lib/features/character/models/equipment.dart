@@ -1,5 +1,5 @@
-import 'package:guildwars2_companion/models/items/item.dart';
-import 'package:guildwars2_companion/models/items/skin.dart';
+import 'package:guildwars2_companion/features/item/models/item.dart';
+import 'package:guildwars2_companion/features/item/models/skin.dart';
 
 class Equipment {
 	int id;

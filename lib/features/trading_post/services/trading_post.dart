@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
-import '../../../models/trading_post/delivery.dart';
-import '../../../models/trading_post/listing.dart';
-import '../../../models/trading_post/price.dart';
-import '../../../models/trading_post/transaction.dart';
-import '../../../utils/urls.dart';
+import 'package:guildwars2_companion/core/utils/urls.dart';
+import 'package:guildwars2_companion/features/trading_post/models/delivery.dart';
+import 'package:guildwars2_companion/features/trading_post/models/listing.dart';
+import 'package:guildwars2_companion/features/trading_post/models/price.dart';
+import 'package:guildwars2_companion/features/trading_post/models/transaction.dart';
 
 class TradingPostService {
 

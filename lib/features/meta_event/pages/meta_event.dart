@@ -2,20 +2,20 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:guildwars2_companion/blocs/configuration/configuration_bloc.dart';
-import 'package:guildwars2_companion/blocs/event/event_bloc.dart';
-import 'package:guildwars2_companion/features/configuration/models/configuration.dart';
-import 'package:guildwars2_companion/features/meta_event/models/meta_event.dart';
-import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/core/models/event_segment.dart';
+import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/core/widgets/button.dart';
 import 'package:guildwars2_companion/core/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
+import 'package:guildwars2_companion/features/configuration/bloc/configuration_bloc.dart';
+import 'package:guildwars2_companion/features/configuration/models/configuration.dart';
+import 'package:guildwars2_companion/features/event/pages/event.dart';
+import 'package:guildwars2_companion/features/meta_event/bloc/event_bloc.dart';
+import 'package:guildwars2_companion/features/meta_event/models/meta_event.dart';
 import 'package:intl/intl.dart';
 import 'package:timer_builder/timer_builder.dart';
-
-import '../../general/event/event.dart';
 
 class MetaEventPage extends StatefulWidget {
 
@@ -65,26 +65,26 @@ class _MetaEventPageState extends State<MetaEventPage> {
             final Configuration configuration = (configurationState as LoadedConfiguration).configuration;
             final DateFormat timeFormat = configuration.timeNotation24Hours ? DateFormat.Hm() : DateFormat.jm();
 
-            return BlocBuilder<EventBloc, EventState>(
+            return BlocBuilder<MetaEventBloc, MetaEventState>(
               builder: (context, state) {
-                if (state is ErrorEventsState) {
+                if (state is ErrorMetaEventsState) {
                   return Center(
                     child: CompanionError(
                       title: 'the meta event',
                       onTryAgain: () =>
-                        BlocProvider.of<EventBloc>(context).add(LoadEventsEvent()),
+                        BlocProvider.of<MetaEventBloc>(context).add(LoadMetaEventsEvent()),
                     ),
                   );
                 }
 
-                if (state is LoadedEventsState) {
+                if (state is LoadedMetaEventsState) {
                   MetaEventSequence _sequence = state.events.firstWhere((e) => e.id == widget.metaEventSequence.id);
 
                   return RefreshIndicator(
                     backgroundColor: Theme.of(context).accentColor,
                     color: Theme.of(context).cardColor,
                     onRefresh: () async {
-                      BlocProvider.of<EventBloc>(context).add(LoadEventsEvent(id: widget.metaEventSequence.id));
+                      BlocProvider.of<MetaEventBloc>(context).add(LoadMetaEventsEvent(id: widget.metaEventSequence.id));
                       await Future.delayed(Duration(milliseconds: 200), () {});
                     },
                     child: CompanionListView(
@@ -134,7 +134,7 @@ class _MetaEventPageState extends State<MetaEventPage> {
 
                 if (time.add(segment.duration).isBefore(now)) {
                   _refreshTimeout = 30;
-                  BlocProvider.of<EventBloc>(context).add(LoadEventsEvent(id: widget.metaEventSequence.id));
+                  BlocProvider.of<MetaEventBloc>(context).add(LoadMetaEventsEvent(id: widget.metaEventSequence.id));
                 }
 
                 if (isActive) {

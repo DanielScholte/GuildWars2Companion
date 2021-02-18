@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:guildwars2_companion/models/notifications/notification.dart';
+import 'package:guildwars2_companion/features/event/models/notification.dart';
 import 'package:guildwars2_companion/features/event/repositories/notification.dart';
 import 'package:meta/meta.dart';
 

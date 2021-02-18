@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:guildwars2_companion/blocs/configuration/configuration_bloc.dart';
-import 'package:guildwars2_companion/models/notifications/notification.dart';
+import 'package:guildwars2_companion/core/models/event_segment.dart';
+import 'package:guildwars2_companion/features/configuration/bloc/configuration_bloc.dart';
 import 'package:guildwars2_companion/features/configuration/models/configuration.dart';
+import 'package:guildwars2_companion/features/event/models/notification.dart';
 import 'package:guildwars2_companion/features/meta_event/models/meta_event.dart';
 import 'package:guildwars2_companion/features/world_boss/models/world_boss.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';

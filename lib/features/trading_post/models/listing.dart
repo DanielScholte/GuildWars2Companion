@@ -1,4 +1,4 @@
-import 'package:guildwars2_companion/models/trading_post/listing_offer.dart';
+import 'package:guildwars2_companion/features/trading_post/models/listing_offer.dart';
 
 class TradingPostListing {
   int id;

@@ -1,4 +1,4 @@
-import 'package:guildwars2_companion/models/achievement/achievement_category.dart';
+import 'package:guildwars2_companion/features/achievement/models/achievement_category.dart';
 
 class AchievementGroup {
   String id;

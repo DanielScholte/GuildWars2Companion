@@ -1,16 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
+import 'package:guildwars2_companion/core/utils/urls.dart';
 import 'package:guildwars2_companion/features/achievement/database_configurations/achievement.dart';
 import 'package:guildwars2_companion/core/services/cache.dart';
+import 'package:guildwars2_companion/features/achievement/models/achievement.dart';
+import 'package:guildwars2_companion/features/achievement/models/achievement_category.dart';
+import 'package:guildwars2_companion/features/achievement/models/achievement_group.dart';
+import 'package:guildwars2_companion/features/achievement/models/achievement_progress.dart';
+import 'package:guildwars2_companion/features/achievement/models/daily.dart';
+import 'package:guildwars2_companion/features/mastery/models/mastery.dart';
+import 'package:guildwars2_companion/features/mastery/models/mastery_progress.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../models/achievement/achievement.dart';
-import '../../../models/achievement/achievement_category.dart';
-import '../../../models/achievement/achievement_group.dart';
-import '../../../models/achievement/achievement_progress.dart';
-import '../../../models/achievement/daily.dart';
-import '../../../models/mastery/mastery.dart';
-import '../../../models/mastery/mastery_progress.dart';
-import '../../../utils/urls.dart';
 
 class AchievementService {
   final Dio dio;

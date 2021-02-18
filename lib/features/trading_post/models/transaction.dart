@@ -1,4 +1,4 @@
-import 'package:guildwars2_companion/models/items/item.dart';
+import 'package:guildwars2_companion/features/item/models/item.dart';
 
 import 'listing.dart';
 

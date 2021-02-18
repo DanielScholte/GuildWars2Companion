@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:guildwars2_companion/models/items/item.dart';
-import 'package:guildwars2_companion/models/items/skin.dart';
-import 'package:guildwars2_companion/models/trading_post/price.dart';
+import 'package:guildwars2_companion/core/utils/guild_wars.dart';
+import 'package:guildwars2_companion/features/item/models/item.dart';
+import 'package:guildwars2_companion/features/item/models/skin.dart';
+import 'package:guildwars2_companion/features/item/widgets/item_box.dart';
+import 'package:guildwars2_companion/features/trading_post/models/price.dart';
 import 'package:guildwars2_companion/features/trading_post/repositories/trading_post.dart';
-import 'package:guildwars2_companion/utils/guild_wars.dart';
 import 'package:guildwars2_companion/core/widgets/card.dart';
 import 'package:guildwars2_companion/core/widgets/coin.dart';
 import 'package:guildwars2_companion/core/widgets/header.dart';
 import 'package:guildwars2_companion/core/widgets/info_row.dart';
-import 'package:guildwars2_companion/core/widgets/item_box.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
 
 class ItemPage extends StatelessWidget {

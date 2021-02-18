@@ -1,5 +1,5 @@
-import 'package:guildwars2_companion/models/items/inventory.dart';
-import 'package:guildwars2_companion/models/items/item.dart';
+import 'package:guildwars2_companion/features/item/models/inventory.dart';
+import 'package:guildwars2_companion/features/item/models/item.dart';
 
 class Bags {
 	int id;

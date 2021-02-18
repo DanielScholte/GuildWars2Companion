@@ -1,20 +1,20 @@
 import 'package:flutter/widgets.dart';
-import 'package:guildwars2_companion/models/achievement/achievement.dart';
-import 'package:guildwars2_companion/models/achievement/achievement_category.dart';
-import 'package:guildwars2_companion/models/achievement/achievement_data.dart';
-import 'package:guildwars2_companion/models/achievement/achievement_group.dart';
-import 'package:guildwars2_companion/models/achievement/achievement_progress.dart';
-import 'package:guildwars2_companion/models/achievement/daily.dart';
-import 'package:guildwars2_companion/models/character/title.dart';
-import 'package:guildwars2_companion/models/items/item.dart';
-import 'package:guildwars2_companion/models/items/skin.dart';
-import 'package:guildwars2_companion/models/mastery/mastery.dart';
-import 'package:guildwars2_companion/models/mastery/mastery_data.dart';
-import 'package:guildwars2_companion/models/mastery/mastery_progress.dart';
+import 'package:guildwars2_companion/features/achievement/models/achievement.dart';
+import 'package:guildwars2_companion/features/achievement/models/achievement_category.dart';
+import 'package:guildwars2_companion/features/achievement/models/achievement_data.dart';
+import 'package:guildwars2_companion/features/achievement/models/achievement_group.dart';
+import 'package:guildwars2_companion/features/achievement/models/achievement_progress.dart';
+import 'package:guildwars2_companion/features/achievement/models/daily.dart';
+import 'package:guildwars2_companion/features/character/models/title.dart';
+import 'package:guildwars2_companion/features/item/models/item.dart';
 import 'package:guildwars2_companion/features/item/models/mini.dart';
 import 'package:guildwars2_companion/features/achievement/services/achievement.dart';
 import 'package:guildwars2_companion/features/character/services/character.dart';
+import 'package:guildwars2_companion/features/item/models/skin.dart';
 import 'package:guildwars2_companion/features/item/services/item.dart';
+import 'package:guildwars2_companion/features/mastery/models/mastery.dart';
+import 'package:guildwars2_companion/features/mastery/models/mastery_data.dart';
+import 'package:guildwars2_companion/features/mastery/models/mastery_progress.dart';
 
 class AchievementRepository {
   final AchievementService achievementService;

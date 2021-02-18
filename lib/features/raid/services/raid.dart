@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:guildwars2_companion/core/utils/urls.dart';
 import 'package:guildwars2_companion/features/raid/models/raid.dart';
-import 'package:guildwars2_companion/utils/urls.dart';
 
 class RaidService {
   Dio dio;

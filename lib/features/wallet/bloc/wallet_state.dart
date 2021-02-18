@@ -1,4 +1,4 @@
-import 'package:guildwars2_companion/models/wallet/currency.dart';
+import 'package:guildwars2_companion/features/wallet/models/currency.dart';
 import 'package:meta/meta.dart';
 
 @immutable

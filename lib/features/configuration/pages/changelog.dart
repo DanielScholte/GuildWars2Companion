@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:guildwars2_companion/blocs/changelog/changelog_bloc.dart';
-import 'package:guildwars2_companion/features/changelog/models/changelog.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
+import 'package:guildwars2_companion/features/changelog/bloc/changelog_bloc.dart';
+import 'package:guildwars2_companion/features/changelog/models/changelog.dart';
 
 class ChangelogPage extends StatelessWidget {
   @override

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:guildwars2_companion/features/event/database_configurations/notification.dart';
-import 'package:guildwars2_companion/models/notifications/notification.dart';
+import 'package:guildwars2_companion/features/event/models/notification.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_migration/sqflite_migration.dart';

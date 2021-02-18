@@ -1,4 +1,4 @@
-import 'package:guildwars2_companion/models/items/item_details.dart';
+import 'package:guildwars2_companion/features/item/models/item_details.dart';
 
 enum ItemSection {
   EQUIPMENT,

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:guildwars2_companion/models/items/item.dart';
-import 'package:guildwars2_companion/models/items/skin.dart';
-import 'package:guildwars2_companion/pages/general/item/item.dart';
-import 'package:guildwars2_companion/utils/guild_wars.dart';
-
-import 'cached_image.dart';
+import 'package:guildwars2_companion/core/utils/guild_wars.dart';
+import 'package:guildwars2_companion/core/widgets/cached_image.dart';
+import 'package:guildwars2_companion/features/item/models/item.dart';
+import 'package:guildwars2_companion/features/item/models/skin.dart';
+import 'package:guildwars2_companion/features/item/pages/item.dart';
 
 class CompanionItemBox extends StatelessWidget {
 

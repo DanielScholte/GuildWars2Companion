@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
+import 'package:guildwars2_companion/core/utils/urls.dart';
 import 'package:guildwars2_companion/features/account/database_configurations/token.dart';
-import 'package:guildwars2_companion/models/account/token_entry.dart';
+import 'package:guildwars2_companion/features/account/models/account.dart';
+import 'package:guildwars2_companion/features/account/models/token_entry.dart';
+import 'package:guildwars2_companion/features/account/models/token_info.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_migration/sqflite_migration.dart';
-import '../../../models/account/account.dart';
-import '../../../models/account/token_info.dart';
-import '../../../utils/urls.dart';
 
 class AccountService {
   List<TokenEntry> _tokenEntries;

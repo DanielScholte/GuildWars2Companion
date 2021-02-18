@@ -1,5 +1,5 @@
-import 'package:guildwars2_companion/models/build/skill_trait.dart';
-import 'package:guildwars2_companion/models/build/specialization.dart';
+import 'package:guildwars2_companion/features/build/models/skill_trait.dart';
+import 'package:guildwars2_companion/features/build/models/specialization.dart';
 
 class Build {
   String name;

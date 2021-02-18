@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:guildwars2_companion/blocs/bank/bank_bloc.dart';
-import 'package:guildwars2_companion/blocs/bank/bank_state.dart';
-import 'package:guildwars2_companion/blocs/bank/bloc.dart';
-import 'package:guildwars2_companion/pages/general/build/build.dart';
-import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/core/widgets/button.dart';
 import 'package:guildwars2_companion/core/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
+import 'package:guildwars2_companion/features/bank/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/build/pages/build.dart';
 
 class BankBuildSelectionPage extends StatelessWidget {
   @override

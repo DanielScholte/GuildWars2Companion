@@ -1,6 +1,6 @@
-import 'package:guildwars2_companion/models/achievement/achievement.dart';
-import 'package:guildwars2_companion/models/achievement/achievement_group.dart';
-import 'package:guildwars2_companion/models/achievement/daily.dart';
+import 'package:guildwars2_companion/features/achievement/models/achievement.dart';
+import 'package:guildwars2_companion/features/achievement/models/achievement_group.dart';
+import 'package:guildwars2_companion/features/achievement/models/daily.dart';
 
 class AchievementData {
   final List<AchievementGroup> achievementGroups;

@@ -1,4 +1,4 @@
-import 'package:guildwars2_companion/models/bank/material.dart';
+import 'package:guildwars2_companion/features/bank/models/material.dart';
 
 class MaterialCategory {
   int id;

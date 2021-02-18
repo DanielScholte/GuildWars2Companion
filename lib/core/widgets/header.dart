@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:guildwars2_companion/blocs/configuration/configuration_bloc.dart';
-import 'package:guildwars2_companion/blocs/notification/notification_bloc.dart';
+import 'package:guildwars2_companion/core/models/event_segment.dart';
+import 'package:guildwars2_companion/core/utils/urls.dart';
+import 'package:guildwars2_companion/features/configuration/bloc/configuration_bloc.dart';
 import 'package:guildwars2_companion/features/configuration/models/configuration.dart';
-import 'package:guildwars2_companion/features/meta_event/models/meta_event.dart';
-import 'package:guildwars2_companion/pages/general/event/schedule_notification_type.dart';
-import 'package:guildwars2_companion/utils/urls.dart';
+import 'package:guildwars2_companion/features/event/bloc/notification_bloc.dart';
+import 'package:guildwars2_companion/features/event/pages/schedule_notification_type.dart';
 
 class CompanionHeader extends StatelessWidget {
 

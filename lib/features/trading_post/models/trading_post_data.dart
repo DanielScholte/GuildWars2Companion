@@ -1,5 +1,5 @@
-import 'package:guildwars2_companion/models/trading_post/delivery.dart';
-import 'package:guildwars2_companion/models/trading_post/transaction.dart';
+import 'package:guildwars2_companion/features/trading_post/models/delivery.dart';
+import 'package:guildwars2_companion/features/trading_post/models/transaction.dart';
 
 class TradingPostData {
   final List<TradingPostTransaction> buying;

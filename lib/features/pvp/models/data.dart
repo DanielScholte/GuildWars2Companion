@@ -1,6 +1,6 @@
-import 'package:guildwars2_companion/models/pvp/game.dart';
-import 'package:guildwars2_companion/models/pvp/standing.dart';
-import 'package:guildwars2_companion/models/pvp/stats.dart';
+import 'package:guildwars2_companion/features/pvp/models/game.dart';
+import 'package:guildwars2_companion/features/pvp/models/standing.dart';
+import 'package:guildwars2_companion/features/pvp/models/stats.dart';
 
 class PvpData {
   final PvpStats pvpStats;

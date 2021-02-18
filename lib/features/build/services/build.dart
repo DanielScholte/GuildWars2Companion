@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
+import 'package:guildwars2_companion/core/utils/urls.dart';
 import 'package:guildwars2_companion/features/build/database_configurations/skill.dart';
 import 'package:guildwars2_companion/features/build/database_configurations/traits.dart';
-import 'package:guildwars2_companion/models/build/build.dart';
-import 'package:guildwars2_companion/models/build/skill_trait.dart';
-import 'package:guildwars2_companion/models/build/specialization.dart';
 import 'package:guildwars2_companion/core/services/cache.dart';
-import 'package:guildwars2_companion/utils/urls.dart';
+import 'package:guildwars2_companion/features/build/models/build.dart';
+import 'package:guildwars2_companion/features/build/models/skill_trait.dart';
+import 'package:guildwars2_companion/features/build/models/specialization.dart';
 
 class BuildService {
   final Dio dio;

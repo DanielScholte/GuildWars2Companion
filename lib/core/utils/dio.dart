@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:guildwars2_companion/core/utils/urls.dart';
 import 'package:guildwars2_companion/features/configuration/services/configuration.dart';
 import 'package:guildwars2_companion/features/account/services/token.dart';
-import 'package:guildwars2_companion/utils/urls.dart';
 
 class DioUtil {
 

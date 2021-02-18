@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:guildwars2_companion/models/notifications/notification.dart';
+import 'package:guildwars2_companion/features/event/models/notification.dart';
 import 'package:guildwars2_companion/features/event/services/notification.dart';
 
 class NotificationRepository {

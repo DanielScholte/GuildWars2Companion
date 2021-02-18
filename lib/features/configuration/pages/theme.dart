@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:guildwars2_companion/blocs/configuration/configuration_bloc.dart';
+import 'package:guildwars2_companion/features/configuration/bloc/configuration_bloc.dart';
 import 'package:guildwars2_companion/features/configuration/models/configuration.dart';
-import 'package:guildwars2_companion/utils/theme.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 
 class ThemeConfigurationPage extends StatelessWidget {
@@ -41,7 +40,7 @@ class ThemeConfigurationPage extends StatelessWidget {
       onChanged: (ThemeMode themeMode) {
         if (themeMode == ThemeMode.light || themeMode == ThemeMode.dark) {
           SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-            systemNavigationBarColor: themeMode == ThemeMode.dark ? ThemeUtil.getDarkTheme().scaffoldBackgroundColor : ThemeUtil.getLightTheme().scaffoldBackgroundColor,
+            systemNavigationBarColor: themeMode == ThemeMode.dark ? Theme.of(context).scaffoldBackgroundColor : Theme.of(context).scaffoldBackgroundColor,
             systemNavigationBarIconBrightness: themeMode == ThemeMode.dark ? Brightness.light : Brightness.dark
           ));
         }

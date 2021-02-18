@@ -1,4 +1,4 @@
-import 'package:guildwars2_companion/models/build/skill_trait.dart';
+import 'package:guildwars2_companion/features/build/models/skill_trait.dart';
 
 class Specialization {
   int id;

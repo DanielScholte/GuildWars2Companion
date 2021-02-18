@@ -1,8 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
-
-import '../../meta_event/models/meta_event.dart';
+import 'package:guildwars2_companion/core/models/event_segment.dart';
 
 class WorldBoss {
   String name;

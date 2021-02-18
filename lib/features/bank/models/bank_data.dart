@@ -1,5 +1,5 @@
-import 'package:guildwars2_companion/models/bank/material_category.dart';
-import 'package:guildwars2_companion/models/items/inventory.dart';
+import 'package:guildwars2_companion/features/bank/models/material_category.dart';
+import 'package:guildwars2_companion/features/item/models/inventory.dart';
 
 class BankData {
   final List<InventoryItem> bank;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:guildwars2_companion/utils/urls.dart';
+import 'package:guildwars2_companion/core/utils/urls.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/core/widgets/simple_button.dart';
 

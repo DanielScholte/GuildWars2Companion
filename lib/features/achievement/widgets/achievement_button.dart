@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:guildwars2_companion/blocs/achievement/achievement_state.dart';
-import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
-import 'package:guildwars2_companion/models/achievement/achievement.dart';
-import 'package:guildwars2_companion/pages/progression/achievements/achievement.dart';
-import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/core/utils/guild_wars.dart';
+import 'package:guildwars2_companion/core/widgets/button.dart';
+import 'package:guildwars2_companion/core/widgets/cached_image.dart';
 import 'package:guildwars2_companion/core/widgets/coin.dart';
-
-import '../../../core/widgets/button.dart';
-import '../../../core/widgets/cached_image.dart';
+import 'package:guildwars2_companion/features/achievement/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/achievement/models/achievement.dart';
+import 'package:guildwars2_companion/features/achievement/pages/achievement.dart';
 
 class CompanionAchievementButton extends StatelessWidget {
   final LoadedAchievementsState state;

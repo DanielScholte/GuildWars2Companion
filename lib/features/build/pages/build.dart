@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:guildwars2_companion/models/build/build.dart';
-import 'package:guildwars2_companion/models/build/skill_trait.dart';
-import 'package:guildwars2_companion/models/build/specialization.dart';
-import 'package:guildwars2_companion/utils/guild_wars.dart';
+import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/core/widgets/cached_image.dart';
 import 'package:guildwars2_companion/core/widgets/card.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
-import 'package:guildwars2_companion/widgets/skill_trait_box.dart';
+import 'package:guildwars2_companion/features/build/models/build.dart';
+import 'package:guildwars2_companion/features/build/models/skill_trait.dart';
+import 'package:guildwars2_companion/features/build/models/specialization.dart';
+import 'package:guildwars2_companion/features/build/widgets/skill_trait_box.dart';
 
 class BuildPage extends StatelessWidget {
   final Build _build;

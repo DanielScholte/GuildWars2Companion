@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:guildwars2_companion/blocs/character/bloc.dart';
-import 'package:guildwars2_companion/models/character/bags.dart';
-import 'package:guildwars2_companion/models/character/character.dart';
-import 'package:guildwars2_companion/models/items/inventory.dart';
-import 'package:guildwars2_companion/models/items/item.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/core/widgets/card.dart';
 import 'package:guildwars2_companion/core/widgets/error.dart';
-import 'package:guildwars2_companion/core/widgets/item_box.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
+import 'package:guildwars2_companion/features/character/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/character/models/bags.dart';
+import 'package:guildwars2_companion/features/character/models/character.dart';
+import 'package:guildwars2_companion/features/item/models/inventory.dart';
+import 'package:guildwars2_companion/features/item/models/item.dart';
+import 'package:guildwars2_companion/features/item/widgets/item_box.dart';
 
 class InventoryPage extends StatelessWidget {
 

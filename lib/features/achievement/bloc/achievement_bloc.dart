@@ -1,10 +1,12 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
-import 'package:guildwars2_companion/models/achievement/achievement.dart';
-import 'package:guildwars2_companion/models/achievement/achievement_data.dart';
-import 'package:guildwars2_companion/models/mastery/mastery_data.dart';
+import 'package:guildwars2_companion/features/achievement/models/achievement.dart';
+import 'package:guildwars2_companion/features/achievement/models/achievement_data.dart';
 import 'package:guildwars2_companion/features/achievement/repositories/achievement.dart';
+import 'package:guildwars2_companion/features/mastery/models/mastery_data.dart';
+
 import './bloc.dart';
 
 class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {

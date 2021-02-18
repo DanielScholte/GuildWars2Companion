@@ -1,3 +1,4 @@
+import 'package:guildwars2_companion/core/models/event_segment.dart';
 import 'package:guildwars2_companion/features/meta_event/models/meta_event.dart';
 
 class EventService {

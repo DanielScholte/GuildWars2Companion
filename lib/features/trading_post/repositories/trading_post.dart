@@ -1,11 +1,11 @@
 import 'package:flutter/widgets.dart';
-import 'package:guildwars2_companion/models/items/item.dart';
-import 'package:guildwars2_companion/models/trading_post/delivery.dart';
-import 'package:guildwars2_companion/models/trading_post/listing.dart';
-import 'package:guildwars2_companion/models/trading_post/price.dart';
-import 'package:guildwars2_companion/models/trading_post/trading_post_data.dart';
-import 'package:guildwars2_companion/models/trading_post/transaction.dart';
+import 'package:guildwars2_companion/features/item/models/item.dart';
 import 'package:guildwars2_companion/features/item/services/item.dart';
+import 'package:guildwars2_companion/features/trading_post/models/delivery.dart';
+import 'package:guildwars2_companion/features/trading_post/models/listing.dart';
+import 'package:guildwars2_companion/features/trading_post/models/price.dart';
+import 'package:guildwars2_companion/features/trading_post/models/trading_post_data.dart';
+import 'package:guildwars2_companion/features/trading_post/models/transaction.dart';
 import 'package:guildwars2_companion/features/trading_post/services/trading_post.dart';
 
 class TradingPostRepository {

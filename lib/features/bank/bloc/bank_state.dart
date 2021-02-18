@@ -1,6 +1,6 @@
-import 'package:guildwars2_companion/models/bank/material_category.dart';
-import 'package:guildwars2_companion/models/build/build.dart';
-import 'package:guildwars2_companion/models/items/inventory.dart';
+import 'package:guildwars2_companion/features/bank/models/material_category.dart';
+import 'package:guildwars2_companion/features/build/models/build.dart';
+import 'package:guildwars2_companion/features/item/models/inventory.dart';
 import 'package:meta/meta.dart';
 
 @immutable

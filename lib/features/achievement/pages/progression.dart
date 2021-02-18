@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
-import 'package:guildwars2_companion/pages/progression/achievements/achievement_categories.dart';
-import 'package:guildwars2_companion/pages/progression/achievements/favorite_achievements.dart';
-import 'package:guildwars2_companion/pages/progression/dailies/daily_categories.dart';
-import 'package:guildwars2_companion/pages/progression/masteries/masteries.dart';
-import 'package:guildwars2_companion/utils/guild_wars_icons.dart';
+import 'package:guildwars2_companion/core/utils/guild_wars_icons.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/core/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/button.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
+import 'package:guildwars2_companion/features/achievement/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/achievement/pages/achievement_categories.dart';
+import 'package:guildwars2_companion/features/achievement/pages/daily_categories.dart';
+import 'package:guildwars2_companion/features/achievement/pages/favorite_achievements.dart';
+import 'package:guildwars2_companion/features/mastery/pages/masteries.dart';
 
 class ProgressionPage extends StatelessWidget {
   @override

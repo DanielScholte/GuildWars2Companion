@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:guildwars2_companion/blocs/notification/notification_bloc.dart';
-import 'package:guildwars2_companion/models/notifications/notification.dart';
-import 'package:guildwars2_companion/features/meta_event/models/meta_event.dart';
+import 'package:guildwars2_companion/core/models/event_segment.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
+import 'package:guildwars2_companion/features/event/bloc/notification_bloc.dart';
+import 'package:guildwars2_companion/features/event/models/notification.dart';
 
 class ScheduleNotificationOffsetPage extends StatefulWidget {
   final MetaEventSegment segment;

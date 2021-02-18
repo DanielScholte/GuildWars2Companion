@@ -1,10 +1,9 @@
 import 'dart:convert';
-
-import 'package:guildwars2_companion/models/achievement/achievement_progress.dart';
-import 'package:guildwars2_companion/models/character/title.dart';
-import 'package:guildwars2_companion/models/items/item.dart';
-import 'package:guildwars2_companion/models/items/skin.dart';
+import 'package:guildwars2_companion/features/achievement/models/achievement_progress.dart';
+import 'package:guildwars2_companion/features/character/models/title.dart';
+import 'package:guildwars2_companion/features/item/models/item.dart';
 import 'package:guildwars2_companion/features/item/models/mini.dart';
+import 'package:guildwars2_companion/features/item/models/skin.dart';
 
 class Achievement {
   int id;

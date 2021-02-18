@@ -1,14 +1,14 @@
 import 'package:flutter/widgets.dart';
-import 'package:guildwars2_companion/models/character/character.dart';
-import 'package:guildwars2_companion/models/character/equipment.dart';
-import 'package:guildwars2_companion/models/character/profession.dart';
-import 'package:guildwars2_companion/models/character/title.dart';
-import 'package:guildwars2_companion/models/items/inventory.dart';
-import 'package:guildwars2_companion/models/items/item.dart';
-import 'package:guildwars2_companion/models/items/skin.dart';
+import 'package:guildwars2_companion/core/utils/guild_wars.dart';
+import 'package:guildwars2_companion/features/character/models/character.dart';
+import 'package:guildwars2_companion/features/character/models/equipment.dart';
+import 'package:guildwars2_companion/features/character/models/profession.dart';
+import 'package:guildwars2_companion/features/character/models/title.dart';
 import 'package:guildwars2_companion/features/character/services/character.dart';
+import 'package:guildwars2_companion/features/item/models/inventory.dart';
+import 'package:guildwars2_companion/features/item/models/item.dart';
+import 'package:guildwars2_companion/features/item/models/skin.dart';
 import 'package:guildwars2_companion/features/item/services/item.dart';
-import 'package:guildwars2_companion/utils/guild_wars.dart';
 
 class CharacterRepository {
 

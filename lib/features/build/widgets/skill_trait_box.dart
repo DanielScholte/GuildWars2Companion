@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:guildwars2_companion/models/build/skill_trait.dart';
-import 'package:guildwars2_companion/pages/general/build/skill_trait.dart';
-
-import '../core/widgets/cached_image.dart';
+import 'package:guildwars2_companion/core/widgets/cached_image.dart';
+import 'package:guildwars2_companion/features/build/models/skill_trait.dart';
+import 'package:guildwars2_companion/features/build/pages/skill_trait.dart';
 
 class CompanionSkillTraitBox extends StatelessWidget {
   final SkillTrait skillTrait;

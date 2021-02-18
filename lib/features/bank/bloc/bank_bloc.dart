@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
-import 'package:guildwars2_companion/models/bank/bank_data.dart';
-import 'package:guildwars2_companion/models/build/build.dart';
+import 'package:guildwars2_companion/features/bank/models/bank_data.dart';
 import 'package:guildwars2_companion/features/bank/repositories/bank.dart';
+import 'package:guildwars2_companion/features/build/models/build.dart';
 import 'package:guildwars2_companion/features/build/repositories/build.dart';
 import './bloc.dart';
 

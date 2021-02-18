@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:guildwars2_companion/core/models/event_segment.dart';
+import 'package:guildwars2_companion/core/utils/urls.dart';
 import 'package:guildwars2_companion/features/meta_event/models/meta_event.dart';
+
 import '../models/world_boss.dart';
-import '../../../utils/urls.dart';
 
 class WorldBossService {
 
