@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:guildwars2_companion/features/achievement/models/achievement.dart';
 import 'package:guildwars2_companion/features/achievement/models/achievement_category.dart';
 import 'package:guildwars2_companion/features/achievement/models/achievement_data.dart';
@@ -15,6 +14,7 @@ import 'package:guildwars2_companion/features/item/services/item.dart';
 import 'package:guildwars2_companion/features/mastery/models/mastery.dart';
 import 'package:guildwars2_companion/features/mastery/models/mastery_data.dart';
 import 'package:guildwars2_companion/features/mastery/models/mastery_progress.dart';
+import 'package:meta/meta.dart';
 
 class AchievementRepository {
   final AchievementService achievementService;

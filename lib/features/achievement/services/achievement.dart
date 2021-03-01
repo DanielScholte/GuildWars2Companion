@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/widgets.dart';
 import 'package:guildwars2_companion/core/utils/urls.dart';
 import 'package:guildwars2_companion/features/achievement/database_configurations/achievement.dart';
 import 'package:guildwars2_companion/core/services/cache.dart';
@@ -10,6 +9,7 @@ import 'package:guildwars2_companion/features/achievement/models/achievement_pro
 import 'package:guildwars2_companion/features/achievement/models/daily.dart';
 import 'package:guildwars2_companion/features/mastery/models/mastery.dart';
 import 'package:guildwars2_companion/features/mastery/models/mastery_progress.dart';
+import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AchievementService {

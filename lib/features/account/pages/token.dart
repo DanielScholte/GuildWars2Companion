@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:guildwars2_companion/features/account/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/account/bloc/account_bloc.dart';
 import 'package:guildwars2_companion/features/account/widgets/token_button.dart';
 import 'package:guildwars2_companion/features/configuration/pages/configuration.dart';
 import 'package:guildwars2_companion/features/home/pages/tab.dart';

@@ -4,7 +4,7 @@ import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/core/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
-import 'package:guildwars2_companion/features/achievement/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/achievement/bloc/achievement_bloc.dart';
 import 'package:guildwars2_companion/features/achievement/widgets/achievement_button.dart';
 
 class FavoriteAchievementsPage extends StatelessWidget {
@@ -43,9 +43,9 @@ class FavoriteAchievementsPage extends StatelessWidget {
                 },
                 child: CompanionListView(
                   children: state.favoriteAchievements
-                    .map((a) => CompanionAchievementButton(
-                      state: state,
+                    .map((a) => AchievementButton(
                       achievement: a,
+                      includeProgression: state.includesProgress,
                     ))
                     .toList(),
                 ),

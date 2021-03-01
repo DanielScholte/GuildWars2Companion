@@ -4,12 +4,11 @@ import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/core/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
-import 'package:guildwars2_companion/features/achievement/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/achievement/bloc/achievement_bloc.dart';
 import 'package:guildwars2_companion/features/achievement/models/daily.dart';
 import 'package:guildwars2_companion/features/achievement/widgets/achievement_button.dart';
 
 class DailiesPage extends StatelessWidget {
-
   final String category;
 
   DailiesPage(this.category);
@@ -71,8 +70,18 @@ class DailiesPage extends StatelessWidget {
                     if (state is LoadedAchievementsState) {
                       return TabBarView(
                         children: <Widget>[
-                          _buildDailyTab(context, state, _getDailies(state.dailies), 'today'),
-                          _buildDailyTab(context, state, _getDailies(state.dailiesTomorrow), 'tomorrow'),
+                          _DailyTab(
+                            category: category,
+                            dailies: _getDailies(state.dailies),
+                            prefix: 'today',
+                            includeProgression: state.includesProgress
+                          ),
+                          _DailyTab(
+                            category: category,
+                            dailies: _getDailies(state.dailiesTomorrow),
+                            prefix: 'tomorrow',
+                            includeProgression: state.includesProgress
+                          ),
                         ],
                       );
                     }
@@ -87,30 +96,6 @@ class DailiesPage extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildDailyTab(BuildContext context, LoadedAchievementsState state, List<Daily> dailies, String prefix) {
-    return RefreshIndicator(
-      backgroundColor: Theme.of(context).accentColor,
-      color: Theme.of(context).cardColor,
-      onRefresh: () async {
-        BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
-          includeProgress: state.includesProgress
-        ));
-        await Future.delayed(Duration(milliseconds: 200), () {});
-      },
-      child: CompanionListView(
-        children: dailies
-          .map((d) => CompanionAchievementButton(
-            achievement: d.achievementInfo,
-            hero: '$prefix ${d.id} ${dailies.indexOf(d)}',
-            state: state,
-            levels: d.level.min == 80 ? 'Level 80' : 'Level ${d.level.min} - ${d.level.max}',
-            categoryIcon: _getIcon(),
-          ))
-          .toList(),
-      )
     );
   }
 
@@ -142,6 +127,45 @@ class DailiesPage extends StatelessWidget {
       default:
         return [];
     }
+  }
+}
+
+class _DailyTab extends StatelessWidget {
+  final String category;
+  final List<Daily> dailies;
+  final String prefix;
+  final bool includeProgression;
+
+  _DailyTab({
+    @required this.category,
+    @required this.dailies,
+    @required this.prefix,
+    @required this.includeProgression
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return RefreshIndicator(
+      backgroundColor: Theme.of(context).accentColor,
+      color: Theme.of(context).cardColor,
+      onRefresh: () async {
+        BlocProvider.of<AchievementBloc>(context).add(LoadAchievementsEvent(
+          includeProgress: includeProgression
+        ));
+        await Future.delayed(Duration(milliseconds: 200), () {});
+      },
+      child: CompanionListView(
+        children: dailies
+          .map((d) => AchievementButton(
+            achievement: d.achievementInfo,
+            hero: '$prefix ${d.id} ${dailies.indexOf(d)}',
+            includeProgression: includeProgression,
+            levels: d.level.min == 80 ? 'Level 80' : 'Level ${d.level.min} - ${d.level.max}',
+            categoryIcon: _getIcon(),
+          ))
+          .toList(),
+      )
+    );
   }
 
   String _getIcon() {

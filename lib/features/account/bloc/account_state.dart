@@ -1,7 +1,4 @@
-import 'package:guildwars2_companion/features/account/models/account.dart';
-import 'package:guildwars2_companion/features/account/models/token_entry.dart';
-import 'package:guildwars2_companion/features/account/models/token_info.dart';
-import 'package:meta/meta.dart';
+part of 'account_bloc.dart';
 
 @immutable
 abstract class AccountState {}

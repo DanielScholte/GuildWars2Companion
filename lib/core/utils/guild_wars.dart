@@ -22,6 +22,20 @@ class GuildWarsUtil {
     }
   }
 
+  static String masteryName(String mastery) {
+    switch (mastery) {
+      case 'Maguuma':
+        return 'Heart of Thorns';
+      case 'Desert':
+        return 'Path of Fire';
+      case 'Tundra':
+      case 'Unknown':
+        return 'Icebrood Saga';
+      default:
+        return mastery;
+    }
+  }
+
   static String regionIcon(String region) {
     switch (region) {
       case 'Desert':

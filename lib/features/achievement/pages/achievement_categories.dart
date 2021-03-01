@@ -3,17 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
-import 'package:guildwars2_companion/core/widgets/cached_image.dart';
 import 'package:guildwars2_companion/core/widgets/card.dart';
 import 'package:guildwars2_companion/core/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/expandable_header.dart';
-import 'package:guildwars2_companion/core/widgets/button.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
-import 'package:guildwars2_companion/features/achievement/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/achievement/bloc/achievement_bloc.dart';
 import 'package:guildwars2_companion/features/achievement/models/achievement_category.dart';
 import 'package:guildwars2_companion/features/achievement/models/achievement_group.dart';
-
-import 'achievements.dart';
+import 'package:guildwars2_companion/features/achievement/widgets/achievement_category_button.dart';
 
 class AchievementCategoriesPage extends StatelessWidget {
   @override
@@ -51,7 +48,7 @@ class AchievementCategoriesPage extends StatelessWidget {
                 },
                 child: CompanionListView(
                   children: state.achievementGroups
-                    .map((g) => _buildGroup(context, g))
+                    .map((g) => _AchievementGroupCard(group: g))
                     .toList(),
                 ),
               );
@@ -65,11 +62,19 @@ class AchievementCategoriesPage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildGroup(BuildContext context, AchievementGroup group) {
+class _AchievementGroupCard extends StatelessWidget {
+  final AchievementGroup group;
+
+  _AchievementGroupCard({@required this.group});
+
+  @override
+  Widget build(BuildContext context) {
     List<AchievementCategory> categories = group.categoriesInfo
       .where((c) => c.achievementsInfo.isNotEmpty)
       .toList();
+
     return CompanionCard(
       padding: EdgeInsets.zero,
       backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.blueGrey : Colors.white30,
@@ -92,84 +97,11 @@ class AchievementCategoriesPage extends StatelessWidget {
           padding: EdgeInsets.only(bottom: 4.0),
           child: Column(
             children: categories
-              .map((c) => _buildCategoryButton(c, context))
+              .map((c) => AchievementCategoryButton(category: c))
               .toList()
           ),
         ),
       ),
-    );
-  }
-
-  CompanionButton _buildCategoryButton(AchievementCategory category, BuildContext context) {
-    return CompanionButton(
-      title: category.name,
-      height: 64.0,
-      color: Colors.white,
-      foregroundColor: Colors.black,
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => AchievementsPage(category)
-      )),
-      leading: _buildCategoryButtonLeading(category, context),
-      trailing: Row(
-        children: category.regions
-          .map((r) => Image.asset(
-            GuildWarsUtil.masteryIcon(r),
-            height: 28.0,
-            width: 28.0,
-          ))
-          .toList(),
-      ),
-    );
-  }
-
-  Widget _buildCategoryButtonLeading(AchievementCategory category, BuildContext context) {
-    if (category.completedAchievements != null) {
-      double ratio = category.completedAchievements / category.achievementsInfo.length;
-
-      return Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              CompanionCachedImage(
-                height: 40.0,
-                imageUrl: category.icon,
-                color: Colors.black,
-                iconSize: 28,
-                fit: BoxFit.fill,
-              ),
-              Column(
-                children: <Widget>[
-                  Text(
-                    '${(ratio * 100).round()}%',
-                    style: TextStyle(
-                      color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
-                    ),
-                  ),
-                  Theme(
-                    data: Theme.of(context).copyWith(
-                      accentColor: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white
-                    ),
-                    child: LinearProgressIndicator(
-                      value: ratio,
-                      backgroundColor: Colors.transparent,
-                    ),
-                  )
-                ],
-              )
-            ],
-          )
-        ],
-      );
-    }
-
-    return CompanionCachedImage(
-      height: 48.0,
-      imageUrl: category.icon,
-      color: Colors.black,
-      iconSize: 28,
-      fit: BoxFit.fill,
     );
   }
 }

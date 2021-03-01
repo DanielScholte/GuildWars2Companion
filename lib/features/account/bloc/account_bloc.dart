@@ -5,8 +5,9 @@ import 'package:guildwars2_companion/features/account/models/account.dart';
 import 'package:guildwars2_companion/features/account/models/token_entry.dart';
 import 'package:guildwars2_companion/features/account/models/token_info.dart';
 import 'package:guildwars2_companion/features/account/repositories/account.dart';
-import './bloc.dart';
 
+part 'account_event.dart';
+part 'account_state.dart';
 
 class AccountBloc extends Bloc<AccountEvent, AccountState> {
 

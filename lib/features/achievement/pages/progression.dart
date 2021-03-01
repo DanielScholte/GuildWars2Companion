@@ -6,7 +6,7 @@ import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/core/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/button.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
-import 'package:guildwars2_companion/features/achievement/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/achievement/bloc/achievement_bloc.dart';
 import 'package:guildwars2_companion/features/achievement/pages/achievement_categories.dart';
 import 'package:guildwars2_companion/features/achievement/pages/daily_categories.dart';
 import 'package:guildwars2_companion/features/achievement/pages/favorite_achievements.dart';
@@ -46,7 +46,7 @@ class ProgressionPage extends StatelessWidget {
                   ));
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
-                child: _buildButtonList(context),
+                child: _ProgressionButtonList()
               );
             }
 
@@ -58,8 +58,11 @@ class ProgressionPage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildButtonList(BuildContext context) {
+class _ProgressionButtonList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return CompanionListView(
       children: <Widget>[
         CompanionButton(

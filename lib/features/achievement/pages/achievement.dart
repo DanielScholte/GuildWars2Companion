@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/cached_image.dart';
-import 'package:guildwars2_companion/core/widgets/card.dart';
-import 'package:guildwars2_companion/core/widgets/coin.dart';
 import 'package:guildwars2_companion/core/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/header.dart';
+import 'package:guildwars2_companion/core/widgets/info_card.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
-import 'package:guildwars2_companion/features/achievement/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/achievement/bloc/achievement_bloc.dart';
 import 'package:guildwars2_companion/features/achievement/models/achievement.dart';
-import 'package:guildwars2_companion/features/achievement/widgets/achievement_button.dart';
-import 'package:guildwars2_companion/features/item/widgets/item_box.dart';
+import 'package:guildwars2_companion/features/achievement/widgets/bits_card.dart';
+import 'package:guildwars2_companion/features/achievement/widgets/prerequisites_card.dart';
+import 'package:guildwars2_companion/features/achievement/widgets/rewards_card.dart';
 
 class AchievementPage extends StatelessWidget {
 
@@ -34,8 +33,10 @@ class AchievementPage extends StatelessWidget {
         body: BlocBuilder<AchievementBloc, AchievementState>(
           builder: (context, state) {
             if (state is ErrorAchievementsState) {
-              return _buildLayout(
-                context: context,
+              return _AchievementPageLayout(
+                achievement: achievement,
+                categoryIcon: categoryIcon,
+                hero: hero,
                 child: Center(
                   child: CompanionError(
                     title: 'the achievement',
@@ -49,8 +50,10 @@ class AchievementPage extends StatelessWidget {
             }
 
             if (state is LoadedAchievementsState && state.hasError) {
-              return _buildLayout(
-                context: context,
+              return _AchievementPageLayout(
+                achievement: achievement,
+                categoryIcon: categoryIcon,
+                hero: hero,
                 child: Center(
                   child: CompanionError(
                     title: 'the achievement',
@@ -67,8 +70,10 @@ class AchievementPage extends StatelessWidget {
               Achievement _achievement = state.achievements.firstWhere((a) => a.id == achievement.id);
 
               if (_achievement == null) {
-                return _buildLayout(
-                  context: context,
+                return _AchievementPageLayout(
+                  achievement: achievement,
+                  categoryIcon: categoryIcon,
+                  hero: hero,
                   child: Center(
                     child: CompanionError(
                       title: 'the achievement',
@@ -83,10 +88,11 @@ class AchievementPage extends StatelessWidget {
 
               if (_achievement != null && _achievement.loaded) {
                 if (state.includesProgress) {
-                  return _buildLayout(
-                    context: context,
-                    favorite: _achievement.favorite,
-                    state: state,
+                  return _AchievementPageLayout(
+                    achievement: _achievement,
+                    categoryIcon: categoryIcon,
+                    hero: hero,
+                    displayFavorite: true,
                     child: RefreshIndicator(
                       backgroundColor: Theme.of(context).accentColor,
                       color: Theme.of(context).cardColor,
@@ -96,22 +102,31 @@ class AchievementPage extends StatelessWidget {
                         ));
                         await Future.delayed(Duration(milliseconds: 200), () {});
                       },
-                      child: _buildContent(context, _achievement, state),
+                      child: _AchievementPageContent(
+                        achievement: _achievement,
+                        includeProgression: state.includesProgress,
+                      ),
                     ),
                   );
                 }
 
-                return _buildLayout(
-                  context: context,
-                  favorite: _achievement.favorite,
-                  state: state,
-                  child: _buildContent(context, _achievement, state),
+                return _AchievementPageLayout(
+                  achievement: _achievement,
+                  categoryIcon: categoryIcon,
+                  hero: hero,
+                  displayFavorite: true,
+                  child: _AchievementPageContent(
+                    achievement: _achievement,
+                    includeProgression: state.includesProgress,
+                  ),
                 );
               }
             }
 
-            return _buildLayout(
-              context: context,
+            return _AchievementPageLayout(
+              achievement: achievement,
+              categoryIcon: categoryIcon,
+              hero: hero,
               child: Center(
                 child: CircularProgressIndicator(),
               ),
@@ -121,16 +136,33 @@ class AchievementPage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildLayout({ BuildContext context, bool favorite, Widget child, LoadedAchievementsState state }) {
+class _AchievementPageLayout extends StatelessWidget {
+  final Achievement achievement;
+  final String categoryIcon;
+  final String hero;
+  final Widget child;
+  final bool displayFavorite;
+
+  _AchievementPageLayout({
+    @required this.achievement,
+    @required this.categoryIcon,
+    @required this.hero,
+    @required this.child,
+    this.displayFavorite = false
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         CompanionHeader(
-          isFavorite: favorite,
+          isFavorite: displayFavorite ? achievement.favorite : null,
           onFavoriteToggle: () {
             BlocProvider.of<AchievementBloc>(context).add(ChangeFavoriteAchievementEvent(
-              addAchievementId: !favorite ? achievement.id : null,
-              removeAchievementId: favorite ? achievement.id : null,
+              addAchievementId: !achievement.favorite ? achievement.id : null,
+              removeAchievementId: achievement.favorite ? achievement.id : null,
             ));
           },
           includeBack: true,
@@ -155,7 +187,22 @@ class AchievementPage extends StatelessWidget {
                   ),
                 ),
               if (achievement.progress != null)
-                _buildProgress(context),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      '${achievement.progress.points} / ${achievement.maxPoints}',
+                      style: Theme.of(context).textTheme.bodyText1.copyWith(
+                        color: Colors.white
+                      ),
+                    ),
+                    Container(width: 4.0,),
+                    Image.asset(
+                      'assets/progression/ap.png',
+                      height: 16.0,
+                    )
+                  ],
+                ),
               if (achievement.progress != null && achievement.progress.current != null && achievement.progress.max != null)
                 Builder(
                   builder: (context) {
@@ -221,382 +268,34 @@ class AchievementPage extends StatelessWidget {
       ],
     );
   }
+}
 
-  Widget _buildContent(BuildContext context, Achievement _achievement, LoadedAchievementsState state) {
+class _AchievementPageContent extends StatelessWidget {
+  final Achievement achievement;
+  final bool includeProgression;
+
+  _AchievementPageContent({
+    @required this.achievement,
+    @required this.includeProgression
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return CompanionListView(
       children: <Widget>[
-        if (_achievement.description != null && _achievement.description.isNotEmpty)
-          _buildDescription(context, 'Description', GuildWarsUtil.removeOnlyHtml(_achievement.description)),
-        if (_achievement.lockedText != null && _achievement.lockedText.isNotEmpty)
-          _buildDescription(context, 'Locked description', GuildWarsUtil.removeOnlyHtml(_achievement.lockedText)),
-        if (_achievement.requirement != null && _achievement.requirement.isNotEmpty)
-          _buildDescription(context, 'Requirement', GuildWarsUtil.removeOnlyHtml(_achievement.requirement)),
-        if (_achievement.rewards != null && _achievement.rewards.isNotEmpty)
-          _buildRewards(context, _achievement),
-        if (_achievement.prerequisitesInfo != null && _achievement.prerequisitesInfo.isNotEmpty)
-          _buildPrerequisites(context, _achievement, state),
-        if (_achievement.bits != null && _achievement.bits.isNotEmpty)
-          _buildBits(context, _achievement, state)
+        if (achievement.description != null && achievement.description.isNotEmpty)
+          CompanionInfoCard(title: 'Description', text: GuildWarsUtil.removeOnlyHtml(achievement.description)),
+        if (achievement.lockedText != null && achievement.lockedText.isNotEmpty)
+          CompanionInfoCard(title: 'Locked description', text: GuildWarsUtil.removeOnlyHtml(achievement.lockedText)),
+        if (achievement.requirement != null && achievement.requirement.isNotEmpty)
+          CompanionInfoCard(title: 'Requirement', text: GuildWarsUtil.removeOnlyHtml(achievement.requirement)),
+        if (achievement.rewards != null && achievement.rewards.isNotEmpty)
+          AchievementRewardsCard(achievement: achievement),
+        if (achievement.prerequisitesInfo != null && achievement.prerequisitesInfo.isNotEmpty)
+          AchievementPrerequisitesCard(achievement: achievement, includeProgression: includeProgression),
+        if (achievement.bits != null && achievement.bits.isNotEmpty)
+          AchievementBitsCard(achievement: achievement, includeProgression: includeProgression)
       ],
-    );
-  }
-
-  Widget _buildProgress(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          '${achievement.progress.points} / ${achievement.maxPoints}',
-          style: Theme.of(context).textTheme.bodyText1.copyWith(
-            color: Colors.white
-          ),
-        ),
-        Container(width: 4.0,),
-        Image.asset(
-          'assets/progression/ap.png',
-          height: 16.0,
-        )
-      ],
-    );
-  }
-
-  Widget _buildPrerequisites(BuildContext context, Achievement _achievement, LoadedAchievementsState state) {
-    return CompanionCard(
-      padding: EdgeInsets.zero,
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-            child: Text(
-              'Prerequisites',
-              style: Theme.of(context).textTheme.headline2,
-            ),
-          ),
-          Column(
-            children: _achievement.prerequisitesInfo
-              .map((p) => CompanionAchievementButton(
-                state: state,
-                achievement: p,
-                hero: 'pre ${p.id} ${_achievement.prerequisitesInfo.indexOf(p)}',
-              ))
-              .toList(),
-          ),
-          Container(height: 4.0,)
-        ],
-      ),
-    );
-  }
-
-  Widget _buildRewards(BuildContext context, Achievement _achievement) {
-    return CompanionCard(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              'Rewards',
-              style: Theme.of(context).textTheme.headline2,
-            ),
-          ),
-          Column(
-            children: _achievement.rewards
-              .map((r) {
-                switch (r.type) {
-                  case 'Coins':
-                    return Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CompanionCoin(r.count),
-                        ),
-                      ],
-                    );
-                    break;
-                  case 'Item':
-                    return Row(
-                      children: <Widget>[
-                        CompanionItemBox(
-                          item: r.item,
-                          hero: '${r.id} ${_achievement.rewards.indexOf(r)}',
-                          quantity: r.count,
-                          size: 40.0,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(4.0),
-                          child: Text(
-                            r.item.name,
-                            style: Theme.of(context).textTheme.bodyText1,
-                            textAlign: TextAlign.center,
-                          ),
-                        )
-                      ],
-                    );
-                    break;
-                  case 'Mastery':
-                    return Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Image.asset(
-                            GuildWarsUtil.masteryIcon(r.region),
-                            height: 32.0,
-                            width: 32.0,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(4.0),
-                          child: Text(
-                            _masteryToName(r.region) + ' Mastery point',
-                            style: Theme.of(context).textTheme.bodyText1,
-                            textAlign: TextAlign.center,
-                          ),
-                        )
-                      ],
-                    );
-                  case 'Title':
-                    return Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Image.asset(
-                            'assets/progression/title.png',
-                            height: 32.0,
-                            width: 32.0,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(4.0),
-                          child: Text(
-                            r.title.name,
-                            style: Theme.of(context).textTheme.bodyText1,
-                            textAlign: TextAlign.center,
-                          ),
-                        )
-                      ],
-                    );
-                }
-
-                return Container();
-              })
-              .toList(),
-          )
-        ],
-      ),
-    );
-  }
-
-  String _masteryToName(String mastery) {
-    switch (mastery) {
-      case 'Maguuma':
-        return 'Heart of Thorns';
-      case 'Desert':
-        return 'Path of Fire';
-      case 'Unknown':
-        return 'Icebrood Saga';
-      default:
-        return mastery;
-    }
-  }
-
-  Widget _buildBits(BuildContext context, Achievement _achievement, LoadedAchievementsState state) {
-    if (_achievement.bits.any((b) => b.type == 'Text')) {
-      return CompanionCard(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                'Objectives',
-                style: Theme.of(context).textTheme.headline2,
-              ),
-            ),
-            Column(
-              children: _achievement.bits
-                .map((i) => Row(
-                  children: <Widget>[
-                    if (state.includesProgress &&
-                      _achievement.progress != null &&
-                      ((_achievement.progress.bits != null &&
-                      _achievement.progress.bits.contains(_achievement.bits.indexOf(i)))
-                      || _achievement.progress.done))
-                      Icon(
-                        FontAwesomeIcons.check,
-                        size: 20.0,
-                      )
-                    else
-                      Container(
-                        width: 20.0,
-                        child: Icon(
-                          FontAwesomeIcons.solidCircle,
-                          size: 6.0,
-                        ),
-                      ),
-                  Expanded(
-                    child: Padding(
-                        padding: EdgeInsets.all(4.0),
-                        child: Text(
-                          i.text,
-                          style: Theme.of(context).textTheme.bodyText1,
-                          textAlign: TextAlign.left,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    )
-                  ],
-                ))
-                .toList(),
-              ),
-          ],
-        ),
-      );
-    }
-
-    return CompanionCard(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              'Collection',
-              style: Theme.of(context).textTheme.headline2,
-            ),
-          ),
-          Column(
-            children: _achievement.bits
-              .map((i) {
-                switch (i.type) {
-                  case 'Item':
-                    return _buildItemBit(context, _achievement, i, state.includesProgress, _achievement.bits.indexOf(i));
-                    break;
-                  case 'Skin':
-                    return _buildSkinMiniBit(context, _achievement, i, state.includesProgress);
-                    break;
-                  case 'Minipet':
-                    return _buildSkinMiniBit(context, _achievement, i, state.includesProgress);
-                    break;
-                }
-
-                return Container();
-              })
-              .toList(),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildItemBit(BuildContext context, Achievement _achievement, AchievementBits bit, bool includeProgress, int bitIndex) {
-    if (bit.item == null) {
-      return Row(
-        children: <Widget>[
-          Text(
-            'Unknown item',
-            style: Theme.of(context).textTheme.bodyText1,
-          ),
-        ],
-      );
-    }
-
-    return Padding(
-      padding: const EdgeInsets.all(2.0),
-      child: Row(
-        children: <Widget>[
-          CompanionItemBox(
-            item: bit.item,
-            size: 40.0,
-            hero: '${bit.id} $bitIndex',
-            markCompleted: includeProgress &&
-              _achievement.progress != null &&
-              ((_achievement.progress.bits != null &&
-              _achievement.progress.bits.contains(_achievement.bits.indexOf(bit))
-              || _achievement.progress.done)),
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(4.0),
-              child: Text(
-                bit.item.name,
-                style: Theme.of(context).textTheme.bodyText1,
-                textAlign: TextAlign.left,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSkinMiniBit(BuildContext context, Achievement _achievement, AchievementBits bit, bool includeProgress) {
-    return Padding(
-      padding: const EdgeInsets.all(2.0),
-      child: Row(
-        children: <Widget>[
-          Container(
-            width: 40.0,
-            height: 40.0,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(6.0),
-              child: Stack(
-                children: <Widget>[
-                  CompanionCachedImage(
-                    imageUrl: bit.type == 'Skin' ? bit.skin.icon : bit.mini.icon,
-                    color: Colors.black,
-                    iconSize: 20,
-                    fit: BoxFit.fill,
-                  ),
-                  if (includeProgress &&
-                    _achievement.progress != null &&
-                    ((_achievement.progress.bits != null &&
-                    _achievement.progress.bits.contains(_achievement.bits.indexOf(bit)))
-                    || _achievement.progress.done))
-                    Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      color: Colors.white60,
-                      alignment: Alignment.center,
-                      child: Icon(
-                        FontAwesomeIcons.check,
-                        size: 20.0,
-                      ),
-                    )
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(4.0),
-              child: Text(
-                bit.type == 'Skin' ? bit.skin.name : bit.mini.name,
-                style: Theme.of(context).textTheme.bodyText1,
-                textAlign: TextAlign.left,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDescription(BuildContext context, String title, String text) {
-    return CompanionCard(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              title,
-              style: Theme.of(context).textTheme.headline2,
-            ),
-          ),
-          Text(
-            text,
-            style: Theme.of(context).textTheme.bodyText1,
-          ),
-        ],
-      ),
     );
   }
 }

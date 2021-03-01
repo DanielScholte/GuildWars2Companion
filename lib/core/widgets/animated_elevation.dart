@@ -19,7 +19,7 @@ class CompanionAnimatedElevation extends StatefulWidget {
 }
 
 class _CompanionAnimatedElevationState extends State<CompanionAnimatedElevation> with SingleTickerProviderStateMixin {
-  static double _defaultElevation = 3.0;
+  static double _defaultElevation = 2.0;
   static double _tappedElevation = 8.0;
   double _elevation = _defaultElevation;
 

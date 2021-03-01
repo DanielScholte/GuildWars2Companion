@@ -1,8 +1,6 @@
-import 'package:guildwars2_companion/features/achievement/models/achievement.dart';
-import 'package:guildwars2_companion/features/achievement/models/achievement_group.dart';
-import 'package:guildwars2_companion/features/achievement/models/daily.dart';
-import 'package:guildwars2_companion/features/mastery/models/mastery.dart';
-import 'package:meta/meta.dart';
+part of 'achievement_bloc.dart';
+
+
 
 @immutable
 abstract class AchievementState {}

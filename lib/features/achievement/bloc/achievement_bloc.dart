@@ -6,8 +6,12 @@ import 'package:guildwars2_companion/features/achievement/models/achievement.dar
 import 'package:guildwars2_companion/features/achievement/models/achievement_data.dart';
 import 'package:guildwars2_companion/features/achievement/repositories/achievement.dart';
 import 'package:guildwars2_companion/features/mastery/models/mastery_data.dart';
+import 'package:guildwars2_companion/features/achievement/models/achievement_group.dart';
+import 'package:guildwars2_companion/features/achievement/models/daily.dart';
+import 'package:guildwars2_companion/features/mastery/models/mastery.dart';
 
-import './bloc.dart';
+part 'achievement_event.dart';
+part 'achievement_state.dart';
 
 class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
 

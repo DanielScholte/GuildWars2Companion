@@ -10,7 +10,7 @@ import 'package:guildwars2_companion/core/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/header.dart';
 import 'package:guildwars2_companion/core/widgets/info_box.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
-import 'package:guildwars2_companion/features/account/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/account/bloc/account_bloc.dart';
 import 'package:guildwars2_companion/features/build/pages/build.dart';
 import 'package:guildwars2_companion/features/character/bloc/bloc.dart';
 import 'package:guildwars2_companion/features/character/models/character.dart';

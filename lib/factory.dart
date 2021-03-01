@@ -1,11 +1,11 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/core/utils/dio.dart';
-import 'package:guildwars2_companion/features/account/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/account/bloc/account_bloc.dart';
 import 'package:guildwars2_companion/features/account/repositories/account.dart';
 import 'package:guildwars2_companion/features/account/services/account.dart';
 import 'package:guildwars2_companion/features/account/services/token.dart';
-import 'package:guildwars2_companion/features/achievement/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/achievement/bloc/achievement_bloc.dart';
 import 'package:guildwars2_companion/features/achievement/repositories/achievement.dart';
 import 'package:guildwars2_companion/features/achievement/services/achievement.dart';
 import 'package:guildwars2_companion/features/bank/bloc/bloc.dart';

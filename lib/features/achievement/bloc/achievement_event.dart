@@ -1,4 +1,4 @@
-import 'package:meta/meta.dart';
+part of 'achievement_bloc.dart';
 
 @immutable
 abstract class AchievementEvent {}

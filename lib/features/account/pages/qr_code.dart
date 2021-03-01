@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
-import 'package:guildwars2_companion/features/account/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/account/bloc/account_bloc.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QrCodePage extends StatefulWidget {

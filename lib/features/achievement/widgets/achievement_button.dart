@@ -5,20 +5,20 @@ import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/core/widgets/button.dart';
 import 'package:guildwars2_companion/core/widgets/cached_image.dart';
 import 'package:guildwars2_companion/core/widgets/coin.dart';
-import 'package:guildwars2_companion/features/achievement/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/achievement/bloc/achievement_bloc.dart';
 import 'package:guildwars2_companion/features/achievement/models/achievement.dart';
 import 'package:guildwars2_companion/features/achievement/pages/achievement.dart';
 
-class CompanionAchievementButton extends StatelessWidget {
-  final LoadedAchievementsState state;
+class AchievementButton extends StatelessWidget {
+  final bool includeProgression;
   final Achievement achievement;
   final String categoryIcon;
   final String levels;
   final String hero;
 
-  CompanionAchievementButton({
-    @required this.state,
+  AchievementButton({
     @required this.achievement,
+    this.includeProgression = true,
     this.categoryIcon,
     this.levels,
     this.hero,
@@ -149,7 +149,7 @@ class CompanionAchievementButton extends StatelessWidget {
   }
 
   Widget _buildLeading(BuildContext context) {
-    if (!state.includesProgress) {
+    if (!includeProgression) {
       return _buildIcon();
     }
 

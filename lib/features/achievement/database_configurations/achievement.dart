@@ -1,6 +1,5 @@
+import 'package:guildwars2_companion/core/database_configurations/base.dart';
 import 'package:sqflite_migration/sqflite_migration.dart';
-
-import '../../../core/database_configurations/base.dart';
 
 class AchievementConfiguration extends DatabaseConfiguration {
   static final List<String> _initializationScripts = [

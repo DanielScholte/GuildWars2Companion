@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:guildwars2_companion/features/account/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/account/bloc/account_bloc.dart';
 import 'package:guildwars2_companion/features/account/models/token_entry.dart';
 import 'package:guildwars2_companion/features/account/widgets/dismissible_button.dart';
 import 'package:intl/intl.dart';
