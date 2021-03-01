@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:guildwars2_companion/core/utils/urls.dart';
 import 'package:guildwars2_companion/features/configuration/services/configuration.dart';
 import 'package:guildwars2_companion/features/account/services/token.dart';
+import 'package:meta/meta.dart';
 
 class DioUtil {
 
@@ -9,8 +10,8 @@ class DioUtil {
   final ConfigurationService configurationService;
 
   DioUtil({
-    this.tokenService,
-    this.configurationService
+    @required this.tokenService,
+    @required this.configurationService
   });
 
   Dio getDioInstance({

@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/widgets.dart';
 import 'package:guildwars2_companion/core/database_configurations/base.dart';
 import 'package:guildwars2_companion/core/utils/urls.dart';
 import 'package:intl/intl.dart';
+import 'package:meta/meta.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_migration/sqflite_migration.dart';
 
