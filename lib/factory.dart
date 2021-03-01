@@ -111,7 +111,7 @@ class CompanionFactory {
     worldBossService = WorldBossService(dio: dioUtil.getDioInstance());
   }
 
-  Widget initializeRepositories({ Widget child }) {
+  Widget initializeRepositories({ @required Widget child }) {
     return MultiRepositoryProvider(
       child: child,
       providers: [
@@ -206,7 +206,7 @@ class CompanionFactory {
     );
   }
 
-  Widget initializeBlocs({ Widget child }) {
+  Widget initializeBlocs({ @required Widget child }) {
     return MultiBlocProvider(
       child: child,
       providers: [
