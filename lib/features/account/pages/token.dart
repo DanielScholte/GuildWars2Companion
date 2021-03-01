@@ -4,19 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/features/account/bloc/bloc.dart';
-import 'package:guildwars2_companion/features/account/models/token_entry.dart';
+import 'package:guildwars2_companion/features/account/widgets/token_button.dart';
 import 'package:guildwars2_companion/features/configuration/pages/configuration.dart';
 import 'package:guildwars2_companion/features/home/pages/tab.dart';
 import 'package:guildwars2_companion/features/account/pages/how_to.dart';
 import 'package:guildwars2_companion/features/account/pages/qr_code.dart';
-import 'package:guildwars2_companion/features/account/widgets/dismissible_button.dart';
 import 'package:guildwars2_companion/core/widgets/header.dart';
-import 'package:intl/intl.dart';
 
 class TokenPage extends StatelessWidget {
-
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -25,13 +20,12 @@ class TokenPage extends StatelessWidget {
     ));
 
     return Scaffold(
-      key: _scaffoldKey,
       body: BlocConsumer<AccountBloc, AccountState>(
         listenWhen: (previous, current) => current is AuthenticatedState || current is UnauthenticatedState,
         listener: (BuildContext context, state) {
           if (state is UnauthenticatedState) {
             if (state.message != null) {
-              _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(state.message)));
+              Scaffold.of(context).showSnackBar(SnackBar(content: Text(state.message)));
             }
 
             return;
@@ -44,16 +38,16 @@ class TokenPage extends StatelessWidget {
           if (state is UnauthenticatedState) {
             return Stack(
               children: <Widget>[
-                _getFooter(context),
+                _TokenFooter(),
                 Column(
                   children: <Widget>[
-                    _getHeader(context),
+                    _TokenHeader(),
                     if (state.tokens.isNotEmpty)
                       Expanded(
                         child: ListView(
                           padding: Theme.of(context).brightness == Brightness.light ? EdgeInsets.zero : EdgeInsets.only(top: 6.0),
                           children: state.tokens
-                            .map((t) => _tokenCard(context, t))
+                            .map((t) => AccountTokenButton(token: t))
                             .toList(),
                         ),
                       ),
@@ -96,11 +90,11 @@ class TokenPage extends StatelessWidget {
 
           return Stack(
             children: <Widget>[
-              _getFooter(context),
+              _TokenFooter(),
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  _getHeader(context),
+                  _TokenHeader(),
                   CircularProgressIndicator(),
                   Container()
                 ],
@@ -131,7 +125,7 @@ class TokenPage extends StatelessWidget {
                     size: 18.0,
                   ),
                   backgroundColor: backgroundColor,
-                  labelWidget: _speedDailLabel(context, 'Enter Api Key by Qr Code'),
+                  labelWidget: _SpeedDailLabel(label: 'Enter Api Key by Qr Code'),
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => QrCodePage()
                   )),
@@ -143,7 +137,7 @@ class TokenPage extends StatelessWidget {
                     size: 18.0,
                   ),
                   backgroundColor: backgroundColor,
-                  labelWidget: _speedDailLabel(context, 'Enter Api Key by text'),
+                  labelWidget: _SpeedDailLabel(label: 'Enter Api Key by text'),
                   onTap: () => _addTokenByText(context),
                 ),
                 SpeedDialChild(
@@ -153,7 +147,7 @@ class TokenPage extends StatelessWidget {
                     size: 18.0,
                   ),
                   backgroundColor: backgroundColorAccent,
-                  labelWidget: _speedDailLabel(context, 'How do I get an Api Key?'),
+                  labelWidget: _SpeedDailLabel(label: 'How do I get an Api Key?'),
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => HowToTokenPage()
                   )),
@@ -165,7 +159,7 @@ class TokenPage extends StatelessWidget {
                     size: 18.0,
                   ),
                   backgroundColor: backgroundColorAccent,
-                  labelWidget: _speedDailLabel(context, 'Settings'),
+                  labelWidget: _SpeedDailLabel(label: 'Settings'),
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => ConfigurationPage()
                   )),
@@ -180,50 +174,55 @@ class TokenPage extends StatelessWidget {
     );
   }
 
-  Widget _speedDailLabel(BuildContext context, String label) {
-    return Container(
-      padding: EdgeInsets.all(6.0),
-      margin: EdgeInsets.only(right: 16.0),
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        boxShadow: [
-          if (Theme.of(context).brightness == Brightness.light)
-            BoxShadow(
-              color: Colors.black54,
-              blurRadius: 4.0,
+  Future<void> _addTokenByText(BuildContext context) async {
+    TextEditingController tokenFieldController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Add your Guild Wars 2 Api Key'),
+          content: TextField(
+            controller: tokenFieldController,
+            decoration: InputDecoration(
+              hintText: 'Api Key',
             ),
-        ],
-        borderRadius: BorderRadius.circular(6.0)
-      ),
-      child: Text(
-        label,
-        style: Theme.of(context).textTheme.bodyText1.copyWith(
-          fontWeight: FontWeight.w500
-        ),
-      ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(
+                'Cancel',
+                style: TextStyle(
+                  fontSize: 18.0
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text(
+                'Add',
+                style: TextStyle(
+                  fontSize: 18.0
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                
+                BlocProvider.of<AccountBloc>(context).add(AddTokenEvent(tokenFieldController.text));
+              },
+            ),
+          ],
+        );
+      },
     );
   }
+}
 
-  Widget _tokenCard(BuildContext context, TokenEntry token) {
-    DateTime added = DateTime.tryParse(token.date);
-
-    return DismissibleButton(
-      key: ValueKey(token.id),
-      onDismissed: () => BlocProvider.of<AccountBloc>(context).add(RemoveTokenEvent(token.id)),
-      color: Colors.blue,
-      leading: Icon(
-        FontAwesomeIcons.key,
-        color: Colors.white,
-      ),
-      title: token.name,
-      subtitles: added != null ? [
-        'Added: ${DateFormat('yyyy-MM-dd').format(added)}'
-      ] : null,
-      onTap: () => BlocProvider.of<AccountBloc>(context).add(AuthenticateEvent(token.token)),
-    );
-  }
-
-  Widget _getHeader(BuildContext context) {
+class _TokenHeader extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     if (Theme.of(context).brightness == Brightness.dark) {
       return CompanionHeader(
         child: Row(
@@ -281,8 +280,11 @@ class TokenPage extends StatelessWidget {
       ],
     );
   }
+}
 
-  Widget _getFooter(BuildContext context) {
+class _TokenFooter extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     if (Theme.of(context).brightness == Brightness.dark) {
       return Container();
     }
@@ -297,49 +299,35 @@ class TokenPage extends StatelessWidget {
       alignment: Alignment.bottomLeft,
     );
   }
+}
 
-  Future<void> _addTokenByText(BuildContext context) async {
-    TextEditingController tokenFieldController = TextEditingController();
+class _SpeedDailLabel extends StatelessWidget {
+  final String label;
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Add your Guild Wars 2 Api Key'),
-          content: TextField(
-            controller: tokenFieldController,
-            decoration: InputDecoration(
-              hintText: 'Api Key',
+  const _SpeedDailLabel({@required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(6.0),
+      margin: EdgeInsets.only(right: 16.0),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        boxShadow: [
+          if (Theme.of(context).brightness == Brightness.light)
+            BoxShadow(
+              color: Colors.black54,
+              blurRadius: 4.0,
             ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(
-                'Cancel',
-                style: TextStyle(
-                  fontSize: 18.0
-                ),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            FlatButton(
-              child: Text(
-                'Add',
-                style: TextStyle(
-                  fontSize: 18.0
-                ),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-                
-                BlocProvider.of<AccountBloc>(context).add(AddTokenEvent(tokenFieldController.text));
-              },
-            ),
-          ],
-        );
-      },
+        ],
+        borderRadius: BorderRadius.circular(6.0)
+      ),
+      child: Text(
+        label,
+        style: Theme.of(context).textTheme.bodyText1.copyWith(
+          fontWeight: FontWeight.w500
+        ),
+      ),
     );
   }
 }

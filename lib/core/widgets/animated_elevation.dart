@@ -19,7 +19,9 @@ class CompanionAnimatedElevation extends StatefulWidget {
 }
 
 class _CompanionAnimatedElevationState extends State<CompanionAnimatedElevation> with SingleTickerProviderStateMixin {
-  double _elevation = 2.0;
+  static double _defaultElevation = 3.0;
+  static double _tappedElevation = 8.0;
+  double _elevation = _defaultElevation;
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +34,9 @@ class _CompanionAnimatedElevationState extends State<CompanionAnimatedElevation>
       borderRadius: widget.borderRadius != null ? widget.borderRadius : BorderRadius.circular(13.0),
       child: GestureDetector(
         child: widget.child,
-        onTapDown: (_) => _setElevation(8.0),
-        onTapUp: (_) => _setElevation(2.0),
-        onTapCancel: () => _setElevation(2.0),
+        onTapDown: (_) => _setElevation(_tappedElevation),
+        onTapUp: (_) => _setElevation(_defaultElevation),
+        onTapCancel: () => _setElevation(_defaultElevation),
       ),
       shadowColor: widget.color,
     );
