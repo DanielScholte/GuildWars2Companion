@@ -1,7 +1,4 @@
-import 'package:guildwars2_companion/features/bank/models/material_category.dart';
-import 'package:guildwars2_companion/features/build/models/build.dart';
-import 'package:guildwars2_companion/features/item/models/inventory.dart';
-import 'package:meta/meta.dart';
+part of 'bank_bloc.dart';
 
 @immutable
 abstract class BankState {}

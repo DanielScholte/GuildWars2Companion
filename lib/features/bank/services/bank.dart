@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/widgets.dart';
 import 'package:guildwars2_companion/core/utils/urls.dart';
 import 'package:guildwars2_companion/features/bank/models/material.dart';
 import 'package:guildwars2_companion/features/bank/models/material_category.dart';
 import 'package:guildwars2_companion/features/item/models/inventory.dart';
+import 'package:meta/meta.dart';
 
 class BankService {
   Dio dio;

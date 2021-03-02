@@ -6,7 +6,7 @@ import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/core/widgets/button.dart';
 import 'package:guildwars2_companion/core/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
-import 'package:guildwars2_companion/features/bank/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/bank/bloc/bank_bloc.dart';
 import 'package:guildwars2_companion/features/build/pages/build.dart';
 
 class BankBuildSelectionPage extends StatelessWidget {

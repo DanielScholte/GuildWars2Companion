@@ -2,10 +2,14 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:guildwars2_companion/features/bank/models/bank_data.dart';
+import 'package:guildwars2_companion/features/bank/models/material_category.dart';
 import 'package:guildwars2_companion/features/bank/repositories/bank.dart';
 import 'package:guildwars2_companion/features/build/models/build.dart';
 import 'package:guildwars2_companion/features/build/repositories/build.dart';
-import './bloc.dart';
+import 'package:guildwars2_companion/features/item/models/inventory.dart';
+
+part 'bank_event.dart';
+part 'bank_state.dart';
 
 class BankBloc extends Bloc<BankEvent, BankState> {
   final BankRepository bankRepository;

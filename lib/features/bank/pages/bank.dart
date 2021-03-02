@@ -7,7 +7,7 @@ import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/core/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/button.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
-import 'package:guildwars2_companion/features/bank/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/bank/bloc/bank_bloc.dart';
 import 'package:guildwars2_companion/features/bank/pages/build_selection.dart';
 import 'package:guildwars2_companion/features/bank/pages/generic_bank.dart';
 import 'package:guildwars2_companion/features/bank/pages/material.dart';
@@ -49,7 +49,7 @@ class BankPage extends StatelessWidget {
                         color: Colors.green,
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => GenericBankPage(BankType.bank),
+                            builder: (context) => GenericBankPage(BankType.BANK),
                           ));
                         },
                         title: 'Bank',
@@ -79,7 +79,7 @@ class BankPage extends StatelessWidget {
                         color: Colors.blue,
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => GenericBankPage(BankType.inventory),
+                            builder: (context) => GenericBankPage(BankType.INVENTORY),
                           ));
                         },
                         title: 'Shared inventory',

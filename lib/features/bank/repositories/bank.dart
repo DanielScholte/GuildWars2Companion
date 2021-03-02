@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:guildwars2_companion/features/bank/models/bank_data.dart';
 import 'package:guildwars2_companion/features/bank/models/material.dart';
 import 'package:guildwars2_companion/features/bank/models/material_category.dart';
@@ -7,6 +6,7 @@ import 'package:guildwars2_companion/features/item/models/inventory.dart';
 import 'package:guildwars2_companion/features/item/models/item.dart';
 import 'package:guildwars2_companion/features/item/models/skin.dart';
 import 'package:guildwars2_companion/features/item/services/item.dart';
+import 'package:meta/meta.dart';
 
 class BankRepository {
 

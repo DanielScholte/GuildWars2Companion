@@ -4,7 +4,7 @@ import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/core/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
-import 'package:guildwars2_companion/features/bank/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/bank/bloc/bank_bloc.dart';
 import 'package:guildwars2_companion/features/bank/models/material_category.dart';
 import 'package:guildwars2_companion/features/item/models/item.dart';
 import 'package:guildwars2_companion/features/item/widgets/item_box.dart';
@@ -41,7 +41,7 @@ class MaterialBankPage extends StatelessWidget {
                 },
                 child: CompanionListView(
                   children: state.materialCategories
-                    .map((c) => _buildMaterialCategory(context, c))
+                    .map((c) => _MaterialCategoryCard(category: c))
                     .toList(),
                 ),
               );
@@ -55,8 +55,15 @@ class MaterialBankPage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildMaterialCategory(BuildContext context, MaterialCategory category) {
+class _MaterialCategoryCard extends StatelessWidget {
+  final MaterialCategory category;
+
+  _MaterialCategoryCard({@required this.category});
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
       child: Column(
