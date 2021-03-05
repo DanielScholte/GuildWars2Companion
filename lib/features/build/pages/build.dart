@@ -9,7 +9,9 @@ import 'package:guildwars2_companion/core/widgets/list_view.dart';
 import 'package:guildwars2_companion/features/build/models/build.dart';
 import 'package:guildwars2_companion/features/build/models/skill_trait.dart';
 import 'package:guildwars2_companion/features/build/models/specialization.dart';
+import 'package:guildwars2_companion/features/build/widgets/skill_card.dart';
 import 'package:guildwars2_companion/features/build/widgets/skill_trait_box.dart';
+import 'package:guildwars2_companion/features/build/widgets/specialization_card.dart';
 
 class BuildPage extends StatelessWidget {
   final Build _build;
@@ -28,57 +30,11 @@ class BuildPage extends StatelessWidget {
         ),
         body: CompanionListView(
           children: <Widget>[
-            _buildSkillCard(context),
-            SafeArea(child: _buildSpecializationsCard(context), top: false, right: false, left: false,)
+            BuildSkillCard(characterBuild: _build),
+            BuildSpecializationCard(characterBuild: _build)
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildSkillCard(BuildContext context) {
-    return CompanionCard(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              'Skills',
-              style: Theme.of(context).textTheme.headline2,
-            ),
-          ),
-          if (_build.skills != null)
-            _buildSkillRow(context, _build.skills, 'ground'),
-          if (_build.aquaticSkills != null)
-            _buildSkillRow(context, _build.aquaticSkills, 'water'),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSkillRow(BuildContext context, BuildSkillset skills, String type) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Icon(
-          type == 'ground' ? FontAwesomeIcons.mountain : FontAwesomeIcons.water,
-          color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
-        ),
-        Container(width: 8.0,),
-        CompanionSkillTraitBox(
-          hero: '${type}_heal',
-          skillTrait: skills.healDetails,
-        ),
-        ...Iterable.generate(skills.utilities.length, (index) => CompanionSkillTraitBox(
-          hero: '${type}_util_$index',
-          skillTrait: skills.utilities[index] != null ? skills.utilityDetails.firstWhere((u) => u.id == skills.utilities[index], orElse: () => null) : null,
-          horizontalMargin: 2.0,
-        )).toList(),
-        CompanionSkillTraitBox(
-          hero: '${type}_elite',
-          skillTrait: skills.eliteDetails,
-        ),
-      ],
     );
   }
 
@@ -140,7 +96,7 @@ class BuildPage extends StatelessWidget {
                     width: 48,
                     height: 48,
                   ),
-                CompanionSkillTraitBox(
+                BuildSkillTraitBox(
                   hero: 'spec_${index}_minor_0',
                   skillTrait: details != null ? details.minorTraitDetails[0] : null,
                   size: 32.0,
@@ -148,7 +104,7 @@ class BuildPage extends StatelessWidget {
                   skillTraitType: 'Minor trait',
                 ),
                 _buildTraitColumn(index, 0, details, specialization.traits[0]),
-                CompanionSkillTraitBox(
+                BuildSkillTraitBox(
                   hero: 'spec_${index}_minor_1',
                   skillTrait: details != null ? details.minorTraitDetails[1] : null,
                   size: 32.0,
@@ -156,7 +112,7 @@ class BuildPage extends StatelessWidget {
                   skillTraitType: 'Minor trait',
                 ),
                 _buildTraitColumn(index, 3, details, specialization.traits[1]),
-                CompanionSkillTraitBox(
+                BuildSkillTraitBox(
                   hero: 'spec_${index}_minor_2',
                   skillTrait: details != null ? details.minorTraitDetails[2] : null,
                   size: 32.0,
@@ -173,28 +129,6 @@ class BuildPage extends StatelessWidget {
   }
 
   Widget _buildTraitColumn(int specIndex, int offset, Specialization details, int chosen) {
-    return Column(
-      children: Iterable.generate(3, (index) {
-        if (details == null) {
-          return CompanionSkillTraitBox(
-            hero: 'spec_${specIndex}_major_${offset}_$index',
-            skillTrait: null,
-            size: 38.0,
-            horizontalMargin: 4.0,
-          );
-        }
-
-        SkillTrait major = details.majorTraitDetails[offset + index];
-
-        return CompanionSkillTraitBox(
-          hero: 'spec_${specIndex}_major_${offset}_$index',
-          skillTrait: major,
-          greyedOut: major.id != chosen,
-          size: 38.0,
-          horizontalMargin: 4.0,
-          skillTraitType: 'Major trait',
-        );
-      }).toList(),
-    );
+    
   }
 }

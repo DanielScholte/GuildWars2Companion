@@ -3,7 +3,7 @@ import 'package:guildwars2_companion/core/widgets/cached_image.dart';
 import 'package:guildwars2_companion/features/build/models/skill_trait.dart';
 import 'package:guildwars2_companion/features/build/pages/skill_trait.dart';
 
-class CompanionSkillTraitBox extends StatelessWidget {
+class BuildSkillTraitBox extends StatelessWidget {
   final SkillTrait skillTrait;
   final String hero;
   final String skillTraitType;
@@ -12,7 +12,7 @@ class CompanionSkillTraitBox extends StatelessWidget {
   final bool greyedOut;
   final bool enablePopup;
 
-  CompanionSkillTraitBox({
+  BuildSkillTraitBox({
     @required this.skillTrait,
     @required this.hero,
     this.skillTraitType,

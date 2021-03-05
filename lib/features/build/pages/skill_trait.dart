@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/core/utils/guild_wars.dart';
-import 'package:guildwars2_companion/core/widgets/cached_image.dart';
-import 'package:guildwars2_companion/core/widgets/card.dart';
 import 'package:guildwars2_companion/core/widgets/header.dart';
-import 'package:guildwars2_companion/core/widgets/info_row.dart';
+import 'package:guildwars2_companion/core/widgets/info_card.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
 import 'package:guildwars2_companion/features/build/models/skill_trait.dart';
 import 'package:guildwars2_companion/features/build/widgets/skill_trait_box.dart';
+import 'package:guildwars2_companion/features/build/widgets/skill_trait_facts_card.dart';
 
 class SkillTraitPage extends StatelessWidget {
   final SkillTrait skillTrait;
@@ -24,14 +23,24 @@ class SkillTraitPage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          _buildHeader(context),
+          _SkillTraitHeader(
+            skillTrait: skillTrait,
+            hero: hero,
+            slotType: slotType,
+          ),
           Expanded(
             child: CompanionListView(
               children: <Widget>[
                 if (skillTrait.description != null)
-                  _buildDescription(context),
-                _buildDetails(context),
-                _buildEffects(context)
+                  CompanionInfoCard(title: 'Description', text: GuildWarsUtil.removeOnlyHtml(skillTrait.description)),
+                BuildSkillTraitFactsCard(
+                  facts: _getNonBuffFacts(),
+                  type: FactsType.STATS
+                ),
+                BuildSkillTraitFactsCard(
+                  facts: _getBuffFacts(),
+                  type: FactsType.EFFECTS
+                ),
               ],
             ),
           )
@@ -40,7 +49,28 @@ class SkillTraitPage extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
+  List<Fact> _getBuffFacts() {
+    return skillTrait.facts != null ? skillTrait.facts.where((f) => f.type == 'Buff' || f.type == 'PrefixedBuff').toList() : [];
+  }
+
+  List<Fact> _getNonBuffFacts() {
+    return skillTrait.facts != null ? skillTrait.facts.where((f) => f.type != 'Buff' && f.type != 'PrefixedBuff').toList() : [];
+  }
+}
+
+class _SkillTraitHeader extends StatelessWidget {
+  final SkillTrait skillTrait;
+  final String hero;
+  final String slotType;
+
+  _SkillTraitHeader({
+    @required this.skillTrait,
+    @required this.hero,
+    @required this.slotType,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return CompanionHeader(
       includeBack: true,
       wikiName: skillTrait.name,
@@ -48,7 +78,7 @@ class SkillTraitPage extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(top: 4.0),
-            child: CompanionSkillTraitBox(
+            child: BuildSkillTraitBox(
               skillTrait: skillTrait,
               hero: hero,
               enablePopup: false,
@@ -74,180 +104,5 @@ class SkillTraitPage extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Widget _buildDescription(BuildContext context) {
-    return CompanionCard(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              'Description',
-              style: Theme.of(context).textTheme.headline2,
-            ),
-          ),
-          Text(
-            GuildWarsUtil.removeOnlyHtml(skillTrait.description),
-            style: Theme.of(context).textTheme.bodyText1,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDetails(BuildContext context) {
-    List<Fact> nonBuffFacts = _getNonBuffFacts();
-
-    if (nonBuffFacts.isEmpty) {
-      return Container();
-    }
-
-    return CompanionCard(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              'Stats',
-              style: Theme.of(context).textTheme.headline2,
-            ),
-          ),
-          ...nonBuffFacts
-            .map((f) => _getFactWidget(f))  
-            .toList()
-        ],
-      ),
-    );
-  }
-
-  Widget _buildEffects(BuildContext context) {
-    List<Fact> buffFacts = _getBuffFacts();
-
-    if (buffFacts.isEmpty) {
-      return Container();
-    }
-
-    return CompanionCard(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              'Effects',
-              style: Theme.of(context).textTheme.headline2,
-            ),
-          ),
-          ...buffFacts
-            .map((f) => _getFactWidget(f))  
-            .toList()
-        ],
-      ),
-    );
-  }
-
-  Widget _getFactWidget(Fact fact) {
-    switch (fact.type) {
-      case 'AttributeAdjust':
-        return CompanionInfoRow(
-          leadingWidget: _getLeadingIcon(fact),
-          header: fact.target,
-          text: '+${fact.value}',
-        );
-      case 'BuffConversion':
-        return CompanionInfoRow(
-          leadingWidget: _getLeadingIcon(fact),
-          header: fact.target,
-          text: '+${fact.percent}%',
-        );
-      case 'Buff':
-      case 'PrefixedBuff':
-        return CompanionInfoRow(
-          leadingWidget: _getLeadingIcon(fact),
-          header: '${fact.status ?? ''}'
-            + (fact.applyCount != null && fact.applyCount > 1 ? ' x${fact.applyCount}' : '')
-            + (fact.duration != null && fact.duration > 0 ? ' (${fact.duration}s)' : ''),
-          text: GuildWarsUtil.removeOnlyHtml(fact.description),
-        );
-      case 'ComboField':
-        return CompanionInfoRow(
-          leadingWidget: _getLeadingIcon(fact),
-          header: fact.text,
-          text: fact.fieldType,
-        );
-      case 'ComboFinisher':
-        return CompanionInfoRow(
-          leadingWidget: _getLeadingIcon(fact),
-          header: fact.text,
-          text: fact.finisherType,
-        );
-      case 'Distance':
-        return CompanionInfoRow(
-          leadingWidget: _getLeadingIcon(fact),
-          header: fact.text,
-          text: fact.distance.toString(),
-        );
-      case 'Duration':
-      case 'Time':
-        return CompanionInfoRow(
-          leadingWidget: _getLeadingIcon(fact),
-          header: fact.text,
-          text: '${fact.duration}s',
-        );
-      case 'NoData':
-        return CompanionInfoRow(
-          leadingWidget: _getLeadingIcon(fact),
-          header: fact.text,
-          text: '',
-        );
-      case 'Range':
-      case 'Number':
-        return CompanionInfoRow(
-          leadingWidget: _getLeadingIcon(fact),
-          header: fact.text,
-          text: fact.value.toString(),
-        );
-      case 'Percent':
-        return CompanionInfoRow(
-          leadingWidget: _getLeadingIcon(fact),
-          header: fact.text,
-          text: '${fact.percent}%',
-        );
-      case 'Recharge':
-        return CompanionInfoRow(
-          leadingWidget: _getLeadingIcon(fact),
-          header: fact.text,
-          text: '${fact.value}s',
-        );
-      default: return Container();
-    }
-  }
-
-  Widget _getLeadingIcon(Fact fact) {
-    if (fact.icon == null) {
-      return Container();
-    }
-
-    return Container(
-      width: 18,
-      height: 18,
-      margin: EdgeInsets.only(right: 6.0),
-      child: CompanionCachedImage(
-        height: 18,
-        width: 18,
-        imageUrl: fact.icon,
-        iconSize: 12,
-        color: Colors.black,
-        fit: BoxFit.cover,
-      ),
-    );
-  }
-
-  List<Fact> _getBuffFacts() {
-    return skillTrait.facts != null ? skillTrait.facts.where((f) => f.type == 'Buff' || f.type == 'PrefixedBuff').toList() : [];
-  }
-
-  List<Fact> _getNonBuffFacts() {
-    return skillTrait.facts != null ? skillTrait.facts.where((f) => f.type != 'Buff' && f.type != 'PrefixedBuff').toList() : [];
   }
 }
