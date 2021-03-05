@@ -16,7 +16,7 @@ import 'package:guildwars2_companion/features/build/services/build.dart';
 import 'package:guildwars2_companion/features/changelog/bloc/changelog_bloc.dart';
 import 'package:guildwars2_companion/features/changelog/repositories/changelog.dart';
 import 'package:guildwars2_companion/features/changelog/services/changelog.dart';
-import 'package:guildwars2_companion/features/character/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/character/bloc/character_bloc.dart';
 import 'package:guildwars2_companion/features/character/repositories/character.dart';
 import 'package:guildwars2_companion/features/character/services/character.dart';
 import 'package:guildwars2_companion/features/configuration/bloc/configuration_bloc.dart';

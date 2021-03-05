@@ -13,7 +13,7 @@ import 'package:guildwars2_companion/features/achievement/pages/progression.dart
 import 'package:guildwars2_companion/features/bank/bloc/bank_bloc.dart';
 import 'package:guildwars2_companion/features/bank/pages/bank.dart';
 import 'package:guildwars2_companion/features/changelog/widgets/changelog.dart';
-import 'package:guildwars2_companion/features/character/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/character/bloc/character_bloc.dart';
 import 'package:guildwars2_companion/features/character/pages/characters.dart';
 import 'package:guildwars2_companion/features/home/pages/home.dart';
 import 'package:guildwars2_companion/features/trading_post/bloc/bloc.dart';

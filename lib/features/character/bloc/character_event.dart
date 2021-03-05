@@ -1,4 +1,4 @@
-import 'package:meta/meta.dart';
+part of 'character_bloc.dart';
 
 @immutable
 abstract class CharacterEvent {}

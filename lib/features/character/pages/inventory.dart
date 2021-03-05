@@ -5,7 +5,7 @@ import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/core/widgets/card.dart';
 import 'package:guildwars2_companion/core/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
-import 'package:guildwars2_companion/features/character/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/character/bloc/character_bloc.dart';
 import 'package:guildwars2_companion/features/character/models/bags.dart';
 import 'package:guildwars2_companion/features/character/models/character.dart';
 import 'package:guildwars2_companion/features/item/models/inventory.dart';
@@ -72,7 +72,12 @@ class InventoryPage extends StatelessWidget {
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
                 child: CompanionListView(
-                  children: character.bags.map((b) => _buildBag(context, b, character.bags.indexOf(b))).toList(),
+                  children: character.bags
+                    .map((b) => _InventoryBag(
+                      bag: b,
+                      index: character.bags.indexOf(b)
+                    ))
+                    .toList(),
                 ),
               );
             }
@@ -85,11 +90,21 @@ class InventoryPage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildBag(BuildContext context, Bags bag, int bagIndex) {
+class _InventoryBag extends StatelessWidget {
+  final Bags bag;
+  final int index;
+
+  _InventoryBag({
+    @required this.bag,
+    @required this.index
+  });
+
+  @override
+  Widget build(BuildContext context) {
     List<InventoryItem> inventory = bag.inventory.where((i) => i.id != -1 && i.itemInfo != null).toList();
-    int usedSlots = inventory.length;
-    FontStyle fontStyle = (usedSlots == bag.size ? FontStyle.italic : FontStyle.normal);
+
     return CompanionCard(
       padding: EdgeInsets.zero,
       child: Column(
@@ -101,7 +116,7 @@ class InventoryPage extends StatelessWidget {
                 if (bag.itemInfo != null)
                   CompanionItemBox(
                     item: bag.itemInfo,
-                    hero: '$bagIndex ${bag.id}',
+                    hero: '$index ${bag.id}',
                     size: 45.0,
                     includeMargin: false,
                     section: ItemSection.INVENTORY,
@@ -111,35 +126,30 @@ class InventoryPage extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                          bag.itemInfo.name,
-                          style: Theme
-                              .of(context)
-                              .textTheme
-                              .bodyText1
-                              .copyWith(
-                            fontWeight: FontWeight.w500,
-                            fontStyle: fontStyle
-                          )
+                        bag.itemInfo.name,
+                        style: Theme.of(context).textTheme.bodyText1.copyWith(
+                          fontWeight: FontWeight.w500
+                        )
                       ),
                     ),
                   ),
                 if (bag.itemInfo == null)
                   Spacer(),
                 Text(
-                  '$usedSlots/${bag.size}',
+                  '${inventory.length}/${bag.size}',
                   style: Theme.of(context).textTheme.bodyText1.copyWith(
-                    fontStyle: fontStyle
+                    fontStyle: inventory.length == bag.size ? FontStyle.italic : FontStyle.normal
                   ),
                 )
               ],
             ),
           ),
-          if (usedSlots > 0)
+          if (inventory.length > 0)
             Divider(
               height: 2,
               thickness: 1
             ),
-          if (usedSlots > 0)
+          if (inventory.length > 0)
             Container(
               width: double.infinity,
               margin: EdgeInsets.all(8.0),
@@ -152,7 +162,7 @@ class InventoryPage extends StatelessWidget {
                     CompanionItemBox(
                       item: i.itemInfo,
                       skin: i.skinInfo,
-                      hero: '$bagIndex ${inventory.indexOf(i)} ${i.id}',
+                      hero: '$index ${inventory.indexOf(i)} ${i.id}',
                       upgradesInfo: i.upgradesInfo,
                       infusionsInfo: i.infusionsInfo,
                       quantity: i.charges != null ? i.charges : i.count,

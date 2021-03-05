@@ -6,7 +6,7 @@ import 'package:guildwars2_companion/core/widgets/button.dart';
 import 'package:guildwars2_companion/core/widgets/cached_image.dart';
 import 'package:guildwars2_companion/core/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
-import 'package:guildwars2_companion/features/character/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/character/bloc/character_bloc.dart';
 import 'package:guildwars2_companion/features/character/models/character.dart';
 import 'package:guildwars2_companion/features/character/pages/equipment.dart';
 

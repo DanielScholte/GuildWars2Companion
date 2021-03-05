@@ -1,5 +1,4 @@
-import 'package:guildwars2_companion/features/character/models/character.dart';
-import 'package:meta/meta.dart';
+part of 'character_bloc.dart';
 
 @immutable
 abstract class CharacterState {}

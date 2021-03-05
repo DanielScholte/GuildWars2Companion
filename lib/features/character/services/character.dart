@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/widgets.dart';
 import 'package:guildwars2_companion/core/utils/urls.dart';
 import 'package:guildwars2_companion/features/character/models/character.dart';
 import 'package:guildwars2_companion/features/character/models/profession.dart';
 import 'package:guildwars2_companion/features/character/models/title.dart';
+import 'package:meta/meta.dart';
 
 class CharacterService {
   List<AccountTitle> _titles;

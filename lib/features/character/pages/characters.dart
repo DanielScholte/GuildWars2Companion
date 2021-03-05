@@ -7,7 +7,7 @@ import 'package:guildwars2_companion/core/widgets/cached_image.dart';
 import 'package:guildwars2_companion/core/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/button.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
-import 'package:guildwars2_companion/features/character/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/character/bloc/character_bloc.dart';
 import 'package:guildwars2_companion/features/character/models/character.dart';
 import 'package:guildwars2_companion/features/character/pages/character.dart';
 
@@ -42,7 +42,7 @@ class CharactersPage extends StatelessWidget {
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
                 child: CompanionListView(
-                  children: state.characters.map((c) => _buildCharacterRow(context, c)).toList(),
+                  children: state.characters.map((c) => _CharacterButton(character: c)).toList(),
                 ),
               );
             }
@@ -55,8 +55,17 @@ class CharactersPage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildCharacterRow(BuildContext context, Character character) {
+class _CharacterButton extends StatelessWidget {
+  final Character character;
+
+  _CharacterButton({
+    @required this.character
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return CompanionButton(
       color: character.professionColor,
       title: character.name,

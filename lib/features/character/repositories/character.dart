@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/features/character/models/character.dart';
 import 'package:guildwars2_companion/features/character/models/equipment.dart';
@@ -9,9 +8,9 @@ import 'package:guildwars2_companion/features/item/models/inventory.dart';
 import 'package:guildwars2_companion/features/item/models/item.dart';
 import 'package:guildwars2_companion/features/item/models/skin.dart';
 import 'package:guildwars2_companion/features/item/services/item.dart';
+import 'package:meta/meta.dart';
 
 class CharacterRepository {
-
   final CharacterService characterService;
   final ItemService itemService;
 

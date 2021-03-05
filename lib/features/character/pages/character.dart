@@ -12,16 +12,15 @@ import 'package:guildwars2_companion/core/widgets/info_box.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
 import 'package:guildwars2_companion/features/account/bloc/account_bloc.dart';
 import 'package:guildwars2_companion/features/build/pages/build.dart';
-import 'package:guildwars2_companion/features/character/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/character/bloc/character_bloc.dart';
 import 'package:guildwars2_companion/features/character/models/character.dart';
-import 'package:guildwars2_companion/features/character/models/crafting.dart';
 import 'package:guildwars2_companion/features/character/pages/build_selection.dart';
 import 'package:guildwars2_companion/features/character/pages/equipment.dart';
 import 'package:guildwars2_companion/features/character/pages/equipment_selection.dart';
 import 'package:guildwars2_companion/features/character/pages/inventory.dart';
+import 'package:guildwars2_companion/features/character/widgets/crafting_card.dart';
 
 class CharacterPage extends StatelessWidget {
-
   final Character _character;
 
   CharacterPage(this._character);
@@ -98,7 +97,7 @@ class CharacterPage extends StatelessWidget {
                     ),
                   ),
                   if (_character.crafting != null && _character.crafting.isNotEmpty)
-                    _buildCrafting(_character.crafting)
+                    CharacterCraftingCard(craftingList: _character.crafting)
                 ],
               ),
             ),
@@ -117,7 +116,10 @@ class CharacterPage extends StatelessWidget {
                 }
 
                 if (state is LoadedCharactersState) {
-                  return _buildButtons(context, state);
+                  return _CharacterButtons(
+                    character: _character,
+                    detailsLoaded: state.detailsLoaded && !state.detailsLoading,
+                  );
                 }
 
                 return Expanded(
@@ -132,55 +134,19 @@ class CharacterPage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildCrafting(List<Crafting> crafting) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.transparent,
-        border: Border.all(color: Colors.white, width: 2.0),
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      margin: EdgeInsets.only(top: 16.0),
-      padding: EdgeInsets.only(top: 4.0, left: 4.0, right: 4.0),
-      child: Column(
-        children: <Widget>[
-          Text(
-            'Crafting disciplines',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 12.0
-            ),
-            textAlign: TextAlign.center,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: crafting
-              .where((c) => GuildWarsUtil.validDisciplines().contains(c.discipline))
-              .map((c) => Padding(
-                padding: EdgeInsets.all(6.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Image.asset('assets/crafting/${c.discipline.toLowerCase()}.png'),
-                    Text(
-                      c.rating.toString(),
-                      style: TextStyle(
-                        color: Colors.white
-                      ),
-                    )
-                  ],
-                ),
-              ))
-              .toList(),
-          ),
-        ],
-      ),
-    );
-  }
+class _CharacterButtons extends StatelessWidget {
+  final Character character;
+  final bool detailsLoaded;
+ 
+  _CharacterButtons({
+    @required this.character,
+    @required this.detailsLoaded
+  });
 
-  Widget _buildButtons(BuildContext context, LoadedCharactersState characterState) {
+  @override
+  Widget build(BuildContext context) {
     return BlocBuilder<AccountBloc, AccountState>(
       builder: (context, state) {
         if (state is AuthenticatedState) {
@@ -199,16 +165,16 @@ class CharacterPage extends StatelessWidget {
                     CompanionButton(
                       color: Colors.teal,
                       onTap: () {
-                        if (!characterState.detailsLoaded && !characterState.detailsLoading) {
+                        if (!detailsLoaded) {
                           BlocProvider.of<CharacterBloc>(context).add(LoadCharacterDetailsEvent());
                         }
 
-                        if (_character.equipmentTabs != null &&
-                          _character.equipmentTabs.where((e) => e.equipment != null && e.equipment.length > 0).length == 1) {
+                        if (character.equipmentTabs != null &&
+                          character.equipmentTabs.where((e) => e.equipment != null && e.equipment.length > 0).length == 1) {
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => EquipmentPage(
-                              _character,
-                              _character.equipmentTabs
+                              character,
+                              character.equipmentTabs
                                 .where((e) => e.equipment != null && e.equipment.length > 0)
                                 .first
                                 ..name = 'Equipment',
@@ -220,7 +186,7 @@ class CharacterPage extends StatelessWidget {
                         }
 
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => EquipmentSelectionPage(_character),
+                          builder: (context) => EquipmentSelectionPage(character),
                         ));
                       },
                       title: 'Equipment',
@@ -234,20 +200,20 @@ class CharacterPage extends StatelessWidget {
                     CompanionButton(
                       color: Colors.purple,
                       onTap: () {
-                        if (!characterState.detailsLoaded && !characterState.detailsLoading) {
+                        if (!detailsLoaded) {
                           BlocProvider.of<CharacterBloc>(context).add(LoadCharacterDetailsEvent());
                         }
 
-                        if (_character.buildTabs != null && _character.buildTabs.length == 1) {
+                        if (character.buildTabs != null && character.buildTabs.length == 1) {
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => BuildPage(_character.buildTabs.first.build, singular: true,),
+                            builder: (context) => BuildPage(character.buildTabs.first.build, singular: true,),
                           ));
 
                           return;
                         }
 
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => CharacterBuildSelectionPage(_character),
+                          builder: (context) => CharacterBuildSelectionPage(character),
                         ));
                       },
                       title: 'Builds',
@@ -261,12 +227,12 @@ class CharacterPage extends StatelessWidget {
                     CompanionButton(
                       color: Colors.indigo,
                       onTap: () {
-                        if (!characterState.detailsLoaded && !characterState.detailsLoading) {
+                        if (!detailsLoaded) {
                           BlocProvider.of<CharacterBloc>(context).add(LoadCharacterDetailsEvent());
                         }
 
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => InventoryPage(_character),
+                          builder: (context) => InventoryPage(character),
                         ));
                       },
                       title: 'Inventory',

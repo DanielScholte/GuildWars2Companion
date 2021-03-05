@@ -4,7 +4,9 @@ import 'package:flutter/widgets.dart';
 import 'package:guildwars2_companion/features/build/repositories/build.dart';
 import 'package:guildwars2_companion/features/character/models/character.dart';
 import 'package:guildwars2_companion/features/character/repositories/character.dart';
-import './bloc.dart';
+
+part 'character_event.dart';
+part 'character_state.dart';
 
 class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
   final BuildRepository buildRepository;

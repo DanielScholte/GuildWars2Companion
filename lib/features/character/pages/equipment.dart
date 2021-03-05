@@ -4,7 +4,7 @@ import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/core/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
-import 'package:guildwars2_companion/features/character/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/character/bloc/character_bloc.dart';
 import 'package:guildwars2_companion/features/character/models/character.dart';
 import 'package:guildwars2_companion/features/character/models/equipment.dart';
 import 'package:guildwars2_companion/features/item/models/item.dart';
@@ -91,18 +91,18 @@ class EquipmentPage extends StatelessWidget {
   Widget _buildGear() {
     return Column(
       children: <Widget>[
-        _buildSlot(_getEquipmentPiece('Helm')),
-        _buildSlot(_getEquipmentPiece('Shoulders')),
-        _buildSlot(_getEquipmentPiece('Coat')),
-        _buildSlot(_getEquipmentPiece('Gloves')),
-        _buildSlot(_getEquipmentPiece('Leggings')),
-        _buildSlot(_getEquipmentPiece('Boots')),
+        _EquipmentSlot(_getEquipmentPiece('Helm')),
+        _EquipmentSlot(_getEquipmentPiece('Shoulders')),
+        _EquipmentSlot(_getEquipmentPiece('Coat')),
+        _EquipmentSlot(_getEquipmentPiece('Gloves')),
+        _EquipmentSlot(_getEquipmentPiece('Leggings')),
+        _EquipmentSlot(_getEquipmentPiece('Boots')),
         Container(height: 16.0,),
-        _buildSlot(_getEquipmentPiece('WeaponA1')),
-        _buildSlot(_getEquipmentPiece('WeaponA2'), small: true),
+        _EquipmentSlot(_getEquipmentPiece('WeaponA1')),
+        _EquipmentSlot(_getEquipmentPiece('WeaponA2'), small: true),
         Container(height: 16.0,),
-        _buildSlot(_getEquipmentPiece('WeaponB1')),
-        _buildSlot(_getEquipmentPiece('WeaponB2'), small: true),
+        _EquipmentSlot(_getEquipmentPiece('WeaponB1')),
+        _EquipmentSlot(_getEquipmentPiece('WeaponB2'), small: true),
       ],
     );
   }
@@ -112,32 +112,32 @@ class EquipmentPage extends StatelessWidget {
       children: <Widget>[
         Row(
           children: <Widget>[
-            _buildSlot(_getEquipmentPiece('Backpack')),
-            _buildSlot(_getEquipmentPiece('Accessory1')),
-            _buildSlot(_getEquipmentPiece('Accessory2')),
+            _EquipmentSlot(_getEquipmentPiece('Backpack')),
+            _EquipmentSlot(_getEquipmentPiece('Accessory1')),
+            _EquipmentSlot(_getEquipmentPiece('Accessory2')),
           ],
         ),
         Row(
           children: <Widget>[
-            _buildSlot(_getEquipmentPiece('Amulet')),
-            _buildSlot(_getEquipmentPiece('Ring1')),
-            _buildSlot(_getEquipmentPiece('Ring2')),
-          ],
-        ),
-        Container(height: 16.0,),
-        Row(
-          children: <Widget>[
-            _buildSlot(_getEquipmentPiece('Sickle')),
-            _buildSlot(_getEquipmentPiece('Axe')),
-            _buildSlot(_getEquipmentPiece('Pick')),
+            _EquipmentSlot(_getEquipmentPiece('Amulet')),
+            _EquipmentSlot(_getEquipmentPiece('Ring1')),
+            _EquipmentSlot(_getEquipmentPiece('Ring2')),
           ],
         ),
         Container(height: 16.0,),
         Row(
           children: <Widget>[
-            _buildSlot(_getEquipmentPiece('HelmAquatic')),
-            _buildSlot(_getEquipmentPiece('WeaponAquaticA')),
-            _buildSlot(_getEquipmentPiece('WeaponAquaticB')),
+            _EquipmentSlot(_getEquipmentPiece('Sickle')),
+            _EquipmentSlot(_getEquipmentPiece('Axe')),
+            _EquipmentSlot(_getEquipmentPiece('Pick')),
+          ],
+        ),
+        Container(height: 16.0,),
+        Row(
+          children: <Widget>[
+            _EquipmentSlot(_getEquipmentPiece('HelmAquatic')),
+            _EquipmentSlot(_getEquipmentPiece('WeaponAquaticA')),
+            _EquipmentSlot(_getEquipmentPiece('WeaponAquaticB')),
           ],
         ),
       ],
@@ -190,9 +190,22 @@ class EquipmentPage extends StatelessWidget {
 
     return equipment;
   }
+}
 
-  Widget _buildSlot(Equipment equipment, { bool small = false }) {
-    if (equipment ==  null) {
+class _EquipmentSlot extends StatelessWidget {
+  final Equipment _equipment;
+  final bool small;
+
+  _EquipmentSlot(
+    this._equipment,
+    {
+      this.small = false
+    }
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    if (_equipment ==  null) {
       return CompanionItemBox(
         size: small ? 45.0 : 55.0,
         item: null,
@@ -204,11 +217,11 @@ class EquipmentPage extends StatelessWidget {
 
     return CompanionItemBox(
       size: small ? 45.0 : 55.0,
-      item: equipment.itemInfo,
-      skin: equipment.skinInfo,
-      hero: '${equipment.slot}${equipment.id}',
-      upgradesInfo: equipment.upgradesInfo,
-      infusionsInfo: equipment.infusionsInfo,
+      item: _equipment.itemInfo,
+      skin: _equipment.skinInfo,
+      hero: '${_equipment.slot}${_equipment.id}',
+      upgradesInfo: _equipment.upgradesInfo,
+      infusionsInfo: _equipment.infusionsInfo,
       includeMargin: true,
       section: ItemSection.EQUIPMENT,
     );
