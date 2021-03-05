@@ -1,13 +1,10 @@
 part of 'changelog_bloc.dart';
 
-@immutable
-abstract class ChangelogState {}
-
-class LoadedChangelog extends ChangelogState {
+class ChangelogState {
   final List<Changelog> changelogs;
   final List<String> allChanges;
 
-  LoadedChangelog({
+  ChangelogState({
     @required this.changelogs,
     @required this.allChanges
   });

@@ -5,12 +5,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/core/utils/urls.dart';
 import 'package:guildwars2_companion/core/widgets/button.dart';
 import 'package:guildwars2_companion/core/widgets/header.dart';
+import 'package:guildwars2_companion/features/changelog/pages/changelog.dart';
 import 'package:guildwars2_companion/features/configuration/pages/theme.dart';
 import 'package:guildwars2_companion/features/configuration/pages/time.dart';
 import 'package:package_info/package_info.dart';
 
 import 'caching.dart';
-import 'changelog.dart';
 import 'faq.dart';
 import 'language.dart';
 import 'notifications.dart';

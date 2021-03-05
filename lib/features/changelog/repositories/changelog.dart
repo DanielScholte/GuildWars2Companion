@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/features/changelog/models/changelog.dart';
 import 'package:guildwars2_companion/features/changelog/services/changelog.dart';
+import 'package:meta/meta.dart';
 
 class ChangelogRepository {
-
   final ChangelogService changelogService;
 
   ChangelogRepository({

@@ -13,7 +13,7 @@ class ChangelogBloc extends Bloc<ChangelogEvent, ChangelogState> {
 
   ChangelogBloc({
     this.changelogRepository
-  }): super(LoadedChangelog(
+  }): super(ChangelogState(
     changelogs: changelogRepository.getChangelogData().changelog,
     allChanges: changelogRepository.getChangelogData().allChanges,
   ));
@@ -28,10 +28,10 @@ class ChangelogBloc extends Bloc<ChangelogEvent, ChangelogState> {
     }
   }
 
-  LoadedChangelog getChangelog() {
+  ChangelogState getChangelog() {
     ChangelogData changelogData = changelogRepository.getChangelogData();
 
-    return LoadedChangelog(
+    return ChangelogState(
       changelogs: changelogData.changelog,
       allChanges: changelogData.allChanges,
     );

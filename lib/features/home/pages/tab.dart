@@ -106,7 +106,7 @@ class _TabPageState extends State<TabPage> {
           return Stack(
             children: <Widget>[
               _buildTabPage(context, state),
-              CompanionChangelog(),
+              ChangelogPopup(),
             ],
           );
         },

@@ -16,7 +16,7 @@ class ChangelogPage extends StatelessWidget {
       ),
       body: BlocBuilder<ChangelogBloc, ChangelogState>(
         builder: (context, state) {
-          final List<Changelog> changelogs = (state as LoadedChangelog).changelogs;
+          final List<Changelog> changelogs = state.changelogs;
 
           return CompanionListView(
             children: changelogs

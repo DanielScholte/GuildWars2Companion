@@ -5,119 +5,146 @@ import 'package:guildwars2_companion/features/changelog/bloc/changelog_bloc.dart
 import 'package:guildwars2_companion/features/changelog/repositories/changelog.dart';
 import 'package:guildwars2_companion/core/widgets/simple_button.dart';
 
-class CompanionChangelog extends StatefulWidget {
+class ChangelogPopup extends StatefulWidget {
   @override
-  _CompanionChangelogState createState() => _CompanionChangelogState();
+  _ChangelogPopupState createState() => _ChangelogPopupState();
 }
 
-class _CompanionChangelogState extends State<CompanionChangelog> {
-
-  int _opacity = 0;
-  bool _displayChangelog = false;
+class _ChangelogPopupState extends State<ChangelogPopup> with TickerProviderStateMixin {
+  AnimationController _controller;
+  Animation<double> _animation;
 
   @override
   void initState() {
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 250),
+    );
+
+    _animation = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(CurvedAnimation(
+      curve: Curves.easeInOutSine,
+      parent: _controller,
+    ));
+
     super.initState();
 
-    _displayChangelog = RepositoryProvider.of<ChangelogRepository>(context).anyNewChanges();
-
-    if (_displayChangelog) {
-      setState(() {});
-
-      Future.delayed(Duration(milliseconds: 100))
-        .then((_) => setState(() => _opacity = 1));
+    if (RepositoryProvider.of<ChangelogRepository>(context).anyNewChanges()) {
+      Future.delayed(Duration(milliseconds: 250)).then((_) => _controller.forward());
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_displayChangelog) {
-      return BlocBuilder<ChangelogBloc, ChangelogState>(
-        builder: (context, state) {
-          final List<String> changes = (state as LoadedChangelog).allChanges;
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (BuildContext context, Widget child) {
+        if (_animation.value == 0) {
+          return Container();
+        }
 
-          return AnimatedOpacity(
-            opacity: _opacity.toDouble(),
-            duration: Duration(milliseconds: 250),
-            child: Container(
-              color: Colors.black87,
-              child: SafeArea(
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        return Opacity(
+          opacity: _animation.value,
+          child: _ChangelogLayout(
+            onDismiss: () {
+              BlocProvider.of<ChangelogBloc>(context).add(SetNewFeaturesSeenEvent());
+              _controller.reverse();
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+}
+
+class _ChangelogLayout extends StatelessWidget {
+  final Function onDismiss;
+
+  _ChangelogLayout({@required this.onDismiss});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ChangelogBloc, ChangelogState>(
+      builder: (context, state) {
+        return Container(
+          color: Colors.black87,
+          child: SafeArea(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Column(
                     children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          Icon(
-                            FontAwesomeIcons.smile,
-                            size: 48,
-                            color: Colors.white,
-                          ),
-                          Text(
-                            'Welcome back!',
-                            style: Theme.of(context).textTheme.headline1.copyWith(
-                              fontSize: 28,
-                              fontWeight: FontWeight.w500
-                            ),
-                          ),
-                        ],
+                      Icon(
+                        FontAwesomeIcons.smile,
+                        size: 48,
+                        color: Colors.white,
                       ),
-                      Column(
-                        children: <Widget>[
-                          Text(
-                            'Since your last visit, the following new features have been added to the app:',
-                            style: Theme.of(context).textTheme.headline2.copyWith(
-                              color: Colors.white
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: changes
-                                .map((c) => Row(
-                                  children: <Widget>[
-                                    Container(
-                                      width: 20.0,
-                                      child: Icon(
-                                        FontAwesomeIcons.solidCircle,
-                                        color: Colors.white,
-                                        size: 6.0,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        c,
-                                        style: Theme.of(context).textTheme.bodyText1.copyWith(
-                                          color: Colors.white
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ))
-                                .toList()
-                            ),
-                          ),
-                        ],
+                      Text(
+                        'Welcome back!',
+                        style: Theme.of(context).textTheme.headline1.copyWith(
+                          fontSize: 28,
+                          fontWeight: FontWeight.w500
+                        ),
                       ),
-                      CompanionSimpleButton(
-                        text: 'Continue',
-                        onPressed: () async {
-                          BlocProvider.of<ChangelogBloc>(context).add(SetNewFeaturesSeenEvent());
-                          setState(() => _opacity = 0);
-                          await Future.delayed(Duration(milliseconds: 250));
-                          setState(() => _displayChangelog = false);
-                        },
-                      )
                     ],
                   ),
-                ),
+                  Column(
+                    children: <Widget>[
+                      Text(
+                        'Since your last visit, the following new features have been added to the app:',
+                        style: Theme.of(context).textTheme.headline2.copyWith(
+                          color: Colors.white
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: state.allChanges
+                            .map((c) => Row(
+                              children: <Widget>[
+                                Container(
+                                  width: 20.0,
+                                  child: Icon(
+                                    FontAwesomeIcons.solidCircle,
+                                    color: Colors.white,
+                                    size: 6.0,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    c,
+                                    style: Theme.of(context).textTheme.bodyText1.copyWith(
+                                      color: Colors.white
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ))
+                            .toList()
+                        ),
+                      ),
+                    ],
+                  ),
+                  CompanionSimpleButton(
+                    text: 'Continue',
+                    onPressed: onDismiss,
+                  )
+                ],
               ),
             ),
-          );
-        },
-      );
-    }
-    return Container();
+          ),
+        );
+      },
+    );
   }
 }
