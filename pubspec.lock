@@ -311,9 +311,11 @@ packages:
   sqflite_migration:
     dependency: "direct main"
     description:
-      name: sqflite_migration
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "3847ec5cfb5857252db99e3d5dc875f17e3da667"
+      url: "git@github.com:DanielScholte/sqflite_migration.git"
+    source: git
     version: "0.2.0"
   stack_trace:
     dependency: transitive
