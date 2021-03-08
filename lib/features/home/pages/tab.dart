@@ -45,71 +45,72 @@ class _TabPageState extends State<TabPage> {
  
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
-      systemNavigationBarIconBrightness: Theme.of(context).brightness == Brightness.dark ? Brightness.light : Brightness.dark
-    ));
-
-    return WillPopScope(
-      onWillPop: () async {
-        if (_currentIndex != 0) {
-          setState(() => _currentIndex = 0);
-          return false;
-        }
-        return true;
-      },
-      child: BlocConsumer<AccountBloc, AccountState>(
-        listenWhen: (previous, current) => current is UnauthenticatedState || current is AuthenticatedState,
-        listener: (BuildContext context, state) async {
-          if (state is AuthenticatedState) {
-            await _handleAuth(context, state);
-            return;
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
+        systemNavigationBarIconBrightness: Theme.of(context).brightness == Brightness.dark ? Brightness.light : Brightness.dark
+      ),
+      child: WillPopScope(
+        onWillPop: () async {
+          if (_currentIndex != 0) {
+            setState(() => _currentIndex = 0);
+            return false;
           }
-          
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (BuildContext context) => TokenPage()));
+          return true;
         },
-        buildWhen: (previous, current) => current is LoadingAccountState || current is AuthenticatedState,
-        builder: (BuildContext context, state) {
-          if (state is UnauthenticatedState) {
-            return Scaffold(
-              body: Center(
-                child: CompanionError(
-                  title: 'the account',
-                  onTryAgain: () async =>
-                    BlocProvider.of<AccountBloc>(context).add(SetupAccountEvent()),
+        child: BlocConsumer<AccountBloc, AccountState>(
+          listenWhen: (previous, current) => current is UnauthenticatedState || current is AuthenticatedState,
+          listener: (BuildContext context, state) async {
+            if (state is AuthenticatedState) {
+              await _handleAuth(context, state);
+              return;
+            }
+            
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (BuildContext context) => TokenPage()));
+          },
+          buildWhen: (previous, current) => current is LoadingAccountState || current is AuthenticatedState,
+          builder: (BuildContext context, state) {
+            if (state is UnauthenticatedState) {
+              return Scaffold(
+                body: Center(
+                  child: CompanionError(
+                    title: 'the account',
+                    onTryAgain: () async =>
+                      BlocProvider.of<AccountBloc>(context).add(SetupAccountEvent()),
+                  ),
                 ),
-              ),
-            );
-          }
+              );
+            }
 
-          if (state is LoadingAccountState) {
-            return Scaffold(
-              body: Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    CircularProgressIndicator(),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        'Loading account information',
-                        style: Theme.of(context).textTheme.headline2,
-                      ),
-                    )
-                  ],
+            if (state is LoadingAccountState) {
+              return Scaffold(
+                body: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CircularProgressIndicator(),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          'Loading account information',
+                          style: Theme.of(context).textTheme.headline2,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }
+              );
+            }
 
-          return Stack(
-            children: <Widget>[
-              _buildTabPage(context, state),
-              ChangelogPopup(),
-            ],
-          );
-        },
+            return Stack(
+              children: <Widget>[
+                _buildTabPage(context, state),
+                ChangelogPopup(),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
