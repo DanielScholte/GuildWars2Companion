@@ -8,6 +8,7 @@ import 'package:guildwars2_companion/core/utils/guild_wars_icons.dart';
 import 'package:guildwars2_companion/core/widgets/error.dart';
 import 'package:guildwars2_companion/features/account/bloc/account_bloc.dart';
 import 'package:guildwars2_companion/features/account/pages/token.dart';
+import 'package:guildwars2_companion/features/account/widgets/layout.dart';
 import 'package:guildwars2_companion/features/achievement/bloc/achievement_bloc.dart';
 import 'package:guildwars2_companion/features/achievement/pages/progression.dart';
 import 'package:guildwars2_companion/features/bank/bloc/bank_bloc.dart';
@@ -45,47 +46,45 @@ class _TabPageState extends State<TabPage> {
  
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle(
-        systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
-        systemNavigationBarIconBrightness: Theme.of(context).brightness == Brightness.dark ? Brightness.light : Brightness.dark
-      ),
-      child: WillPopScope(
-        onWillPop: () async {
-          if (_currentIndex != 0) {
-            setState(() => _currentIndex = 0);
-            return false;
+    return WillPopScope(
+      onWillPop: () async {
+        if (_currentIndex != 0) {
+          setState(() => _currentIndex = 0);
+          return false;
+        }
+        return true;
+      },
+      child: BlocConsumer<AccountBloc, AccountState>(
+        listenWhen: (previous, current) => current is UnauthenticatedState || current is AuthenticatedState,
+        listener: (BuildContext context, state) async {
+          if (state is AuthenticatedState) {
+            await _handleAuth(context, state);
+            return;
           }
-          return true;
+          
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (BuildContext context) => TokenPage()));
         },
-        child: BlocConsumer<AccountBloc, AccountState>(
-          listenWhen: (previous, current) => current is UnauthenticatedState || current is AuthenticatedState,
-          listener: (BuildContext context, state) async {
-            if (state is AuthenticatedState) {
-              await _handleAuth(context, state);
-              return;
-            }
-            
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (BuildContext context) => TokenPage()));
-          },
-          buildWhen: (previous, current) => current is LoadingAccountState || current is AuthenticatedState,
-          builder: (BuildContext context, state) {
-            if (state is UnauthenticatedState) {
-              return Scaffold(
-                body: Center(
+        buildWhen: (previous, current) => current is LoadingAccountState || current is AuthenticatedState,
+        builder: (BuildContext context, state) {
+          if (state is UnauthenticatedState) {
+            return Scaffold(
+              body: TokenLayout(
+                child: Center(
                   child: CompanionError(
                     title: 'the account',
                     onTryAgain: () async =>
                       BlocProvider.of<AccountBloc>(context).add(SetupAccountEvent()),
                   ),
                 ),
-              );
-            }
+              ),
+            );
+          }
 
-            if (state is LoadingAccountState) {
-              return Scaffold(
-                body: Center(
+          if (state is LoadingAccountState) {
+            return Scaffold(
+              body: TokenLayout(
+                child: Center(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -100,17 +99,23 @@ class _TabPageState extends State<TabPage> {
                     ],
                   ),
                 ),
-              );
-            }
+              ),
+            );
+          }
 
-            return Stack(
+          return AnnotatedRegion<SystemUiOverlayStyle>(
+            value: SystemUiOverlayStyle(
+              systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
+              systemNavigationBarIconBrightness: Theme.of(context).brightness == Brightness.dark ? Brightness.light : Brightness.dark
+            ),
+            child: Stack(
               children: <Widget>[
                 _buildTabPage(context, state),
                 ChangelogPopup(),
               ],
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

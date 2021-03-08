@@ -1,7 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:guildwars2_companion/core/widgets/header.dart';
 
-class TokenHeader extends StatelessWidget {
+class TokenLayout extends StatelessWidget {
+  final Widget child;
+
+  TokenLayout({
+    @required this.child
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        systemNavigationBarColor: Colors.black,
+        systemNavigationBarIconBrightness: Brightness.light
+      ),
+      child: Stack(
+        children: <Widget>[
+          _Footer(),
+          Column(
+            children: <Widget>[
+              _Header(),
+              Expanded(child: child)
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (Theme.of(context).brightness == Brightness.dark) {
@@ -59,6 +89,25 @@ class TokenHeader extends StatelessWidget {
           ),
         )
       ],
+    );
+  }
+}
+
+class _Footer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    if (Theme.of(context).brightness == Brightness.dark) {
+      return Container();
+    }
+
+    return Align(
+      child: Image.asset(
+        'assets/token_footer.png',
+        width: double.infinity,
+        fit: BoxFit.cover,
+        alignment: Alignment.bottomLeft,
+      ),
+      alignment: Alignment.bottomLeft,
     );
   }
 }
