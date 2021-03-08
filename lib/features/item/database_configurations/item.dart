@@ -32,8 +32,7 @@ class ItemConfiguration extends DatabaseConfiguration {
 
   static final List<String> _migrationScripts = [
     'ALTER TABLE items ADD COLUMN cache_version INTEGER DEFAULT 1',
-    'ALTER TABLE items ADD COLUMN flags TEXT',
-    'CREATE TABLE items(id INTEGER PRIMARY KEY)',
+    'ALTER TABLE items ADD COLUMN flags TEXT'
   ];
 
   ItemConfiguration() : super(

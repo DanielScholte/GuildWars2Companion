@@ -4,12 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/features/account/bloc/account_bloc.dart';
+import 'package:guildwars2_companion/features/account/widgets/footer.dart';
+import 'package:guildwars2_companion/features/account/widgets/header.dart';
 import 'package:guildwars2_companion/features/account/widgets/token_button.dart';
 import 'package:guildwars2_companion/features/configuration/pages/configuration.dart';
 import 'package:guildwars2_companion/features/home/pages/tab.dart';
 import 'package:guildwars2_companion/features/account/pages/how_to.dart';
 import 'package:guildwars2_companion/features/account/pages/qr_code.dart';
-import 'package:guildwars2_companion/core/widgets/header.dart';
 
 class TokenPage extends StatelessWidget {
   @override
@@ -38,10 +39,10 @@ class TokenPage extends StatelessWidget {
             if (state is UnauthenticatedState) {
               return Stack(
                 children: <Widget>[
-                  _TokenFooter(),
+                  TokenFooter(),
                   Column(
                     children: <Widget>[
-                      _TokenHeader(),
+                      TokenHeader(),
                       if (state.tokens.isNotEmpty)
                         Expanded(
                           child: ListView(
@@ -90,11 +91,10 @@ class TokenPage extends StatelessWidget {
 
             return Stack(
               children: <Widget>[
-                _TokenFooter(),
+                TokenFooter(),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    _TokenHeader(),
+                    TokenHeader(),
                     CircularProgressIndicator(),
                     Container()
                   ],
@@ -217,87 +217,6 @@ class TokenPage extends StatelessWidget {
           ],
         );
       },
-    );
-  }
-}
-
-class _TokenHeader extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    if (Theme.of(context).brightness == Brightness.dark) {
-      return CompanionHeader(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Image.asset(
-              'assets/token_header_logo.png',
-              height: 64.0,
-            ),
-            Container(width: 8.0,),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  'GW2 Companion',
-                  style: Theme.of(context).textTheme.headline1.copyWith(
-                    fontWeight: FontWeight.w500
-                  ),
-                ),
-                Text(
-                  'Api Keys',
-                  style: Theme.of(context).textTheme.headline1.copyWith(
-                    fontWeight: FontWeight.w300
-                  ),
-                ),
-              ],
-            )
-          ],
-        ),
-      );
-    }
-
-    return Stack(
-      children: <Widget>[
-        Image.asset(
-          'assets/token_header.png',
-          height: 170.0,
-          width: double.infinity,
-          fit: BoxFit.cover,
-          alignment: Alignment.bottomCenter,
-        ),
-        SafeArea(
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.only(top: 8.0),
-              child: Image.asset(
-                'assets/token_header_logo.png',
-                height: 72.0,
-              ),
-            ),
-          ),
-        )
-      ],
-    );
-  }
-}
-
-class _TokenFooter extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    if (Theme.of(context).brightness == Brightness.dark) {
-      return Container();
-    }
-
-    return Align(
-      child: Image.asset(
-        'assets/token_footer.png',
-        width: double.infinity,
-        fit: BoxFit.cover,
-        alignment: Alignment.bottomLeft,
-      ),
-      alignment: Alignment.bottomLeft,
     );
   }
 }
