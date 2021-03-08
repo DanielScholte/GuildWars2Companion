@@ -5,6 +5,7 @@ import 'package:guildwars2_companion/core/themes/dark.dart';
 import 'package:guildwars2_companion/core/themes/light.dart';
 import 'package:guildwars2_companion/factory.dart';
 import 'package:guildwars2_companion/features/configuration/bloc/configuration_bloc.dart';
+import 'package:guildwars2_companion/features/error/pages/error.dart';
 import 'package:guildwars2_companion/features/home/pages/tab.dart';
 import 'package:guildwars2_companion/features/account/pages/token.dart';
 import 'features/configuration/models/configuration.dart';
@@ -13,23 +14,35 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   CompanionFactory companionFactory = CompanionFactory();
-  await companionFactory.initializeServices();
 
-  runApp(GuildWars2Companion(
-    companionFactory: companionFactory,
-    isAuthenticated: await companionFactory
-      .tokenService
-      .tokenPresent(),
-  ));
+  try {
+    await companionFactory.initializeServices();
+
+    runApp(GuildWars2Companion(
+      companionFactory: companionFactory,
+      page: await companionFactory
+        .tokenService
+        .tokenPresent()
+        ? TabPage() : TokenPage(),
+    ));
+  } catch (exception) {
+    runApp(GuildWars2Companion(
+      companionFactory: companionFactory,
+      page: ErrorPage(
+        exception: exception.toString(),
+      ),
+    ));
+  }
+  
 }
 
 class GuildWars2Companion extends StatelessWidget {
   final CompanionFactory companionFactory;
-  final bool isAuthenticated;
+  final Widget page;
 
   const GuildWars2Companion({
     @required this.companionFactory,
-    @required this.isAuthenticated
+    @required this.page
   });
 
   @override
@@ -47,7 +60,7 @@ class GuildWars2Companion extends StatelessWidget {
               theme: lightTheme,
               darkTheme: darkTheme,
               themeMode: configuration.themeMode,
-              home: isAuthenticated ? TabPage() : TokenPage(),
+              home: page,
             );
           }
         ),

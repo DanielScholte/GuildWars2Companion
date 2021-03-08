@@ -7,6 +7,7 @@ import 'package:guildwars2_companion/features/account/models/account.dart';
 import 'package:guildwars2_companion/features/account/models/token_info.dart';
 import 'package:guildwars2_companion/features/character/models/character.dart';
 import 'package:guildwars2_companion/features/character/models/profession.dart';
+import 'package:guildwars2_companion/features/home/pages/tab.dart';
 import 'package:guildwars2_companion/main.dart';
 import 'package:mockito/mockito.dart';
 
@@ -72,7 +73,7 @@ main() {
 
       await tester.pumpWidget(GuildWars2Companion(
         companionFactory: companionFactory,
-        isAuthenticated: true,
+        page: TabPage(),
       ));
 
       await tester.pumpAndSettle();
@@ -130,7 +131,7 @@ main() {
 
       await tester.pumpWidget(GuildWars2Companion(
         companionFactory: companionFactory,
-        isAuthenticated: true,
+        page: TabPage(),
       ));
 
       await tester.pumpAndSettle();
@@ -181,7 +182,7 @@ main() {
 
       await tester.pumpWidget(GuildWars2Companion(
         companionFactory: companionFactory,
-        isAuthenticated: true,
+        page: TabPage(),
       ));
 
       await tester.pumpAndSettle();

@@ -2,6 +2,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class Urls {
   static final String repositoryUrl = 'https://github.com/DanielScholte/GuildWars2Companion';
+  static final String emailUrl = 'danielscholte@outlook.com';
+
   static final String baseUrl = 'https://api.guildwars2.com/v2';
 
   static final String tokenInfoUrl = '/tokeninfo';
