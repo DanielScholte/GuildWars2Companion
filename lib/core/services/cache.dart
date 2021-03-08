@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:guildwars2_companion/core/database_configurations/base.dart';
 import 'package:guildwars2_companion/core/utils/urls.dart';
@@ -162,9 +164,24 @@ class CacheService<T> {
   }
 
   Future<Database> _getDatabase() async {
-    return await openDatabaseWithMigration(
-      await databaseConfiguration.getPath(),
-      databaseConfiguration.migrationConfig
-    );
+    try {
+      return await openDatabaseWithMigration(
+        await databaseConfiguration.getPath(),
+        databaseConfiguration.migrationConfig
+      );
+    } catch (exception) {
+      try {
+        print('Deleting ${databaseConfiguration.tableName} database');
+
+        await File(await databaseConfiguration.getPath()).delete();
+
+        return await openDatabaseWithMigration(
+          await databaseConfiguration.getPath(),
+          databaseConfiguration.migrationConfig
+        );
+      } catch (_) {
+        throw exception;
+      }
+    }
   }
 }
