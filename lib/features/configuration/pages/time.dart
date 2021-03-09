@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/features/configuration/bloc/configuration_bloc.dart';
-import 'package:guildwars2_companion/features/configuration/models/configuration.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 
 class TimeConfigurationPage extends StatelessWidget {
@@ -14,28 +13,33 @@ class TimeConfigurationPage extends StatelessWidget {
       ),
       body: BlocBuilder<ConfigurationBloc, ConfigurationState>(
         builder: (context, state) {
-          final Configuration configuration = (state as LoadedConfiguration).configuration;
-          
+          List<_TimeNotation> notations = [
+            _TimeNotation('24 hours', true),
+            _TimeNotation('12 hours', false)
+          ];
+
           return ListView(
-            children: <Widget>[
-              _buildTimeOption(context, configuration.timeNotation24Hours, true, '24 hours'),
-              _buildTimeOption(context, configuration.timeNotation24Hours, false, '12 hours'),
-            ],
+            children: notations
+              .map((notation) => RadioListTile(
+                groupValue: state.configuration.timeNotation24Hours,
+                value: notation.notation24Hour,
+                title: Text(
+                  notation.name,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                onChanged: (bool notation) => BlocProvider.of<ConfigurationBloc>(context).add(ChangeTimeNotationEvent(notation24Hours: notation)),
+              ))
+              .toList()
           );
         },
       ),
     );
   }
+}
 
-  Widget _buildTimeOption(BuildContext context, bool currentNotation, bool notation, String title) {
-    return RadioListTile(
-      groupValue: currentNotation,
-      value: notation,
-      title: Text(
-        title,
-        style: Theme.of(context).textTheme.bodyText1,
-      ),
-      onChanged: (bool notation) => BlocProvider.of<ConfigurationBloc>(context).add(ChangeTimeNotationEvent(notation24Hours: notation)),
-    );
-  }
+class _TimeNotation {
+  final String name;
+  final bool notation24Hour;
+
+  _TimeNotation(this.name, this.notation24Hour);
 }

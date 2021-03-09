@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/features/configuration/bloc/configuration_bloc.dart';
-import 'package:guildwars2_companion/features/configuration/models/configuration.dart';
 import 'package:guildwars2_companion/features/achievement/repositories/achievement.dart';
 import 'package:guildwars2_companion/features/build/repositories/build.dart';
 import 'package:guildwars2_companion/features/item/repositories/item.dart';
@@ -17,46 +16,40 @@ class LanguageConfigurationPage extends StatelessWidget {
       ),
       body: BlocBuilder<ConfigurationBloc, ConfigurationState>(
         builder: (context, state) {
-          final Configuration configuration = (state as LoadedConfiguration).configuration;
-          
+          List<_Language> languages = [
+            _Language('English', 'en'),
+          ];
+
           return ListView(
-            children: <Widget>[
-              _buildLanguageOption(context, configuration.language, 'en', 'English'),
-              _buildLanguageOption(context, configuration.language, 'es', 'Spanish'),
-              _buildLanguageOption(context, configuration.language, 'de', 'German'),
-              _buildLanguageOption(context, configuration.language, 'fr', 'French'),
-              _buildLanguageOption(context, configuration.language, 'zh', 'Chinese'),
-            ],
+            children: languages
+              .map((language) =>RadioListTile(
+                groupValue: state.configuration.language,
+                value: language.value,
+                title: Text(
+                  language.name,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                onChanged: (lang) => _clearCacheDialog(
+                  context: context,
+                  achievementRepository: RepositoryProvider.of<AchievementRepository>(context),
+                  itemRepository: RepositoryProvider.of<ItemRepository>(context),
+                  buildRepository: RepositoryProvider.of<BuildRepository>(context),
+                  lang: lang
+                ),
+              ))
+              .toList(),
           );
         },
       ),
     );
   }
 
-  Widget _buildLanguageOption(BuildContext context, String currentLanguage, String language, String title) {
-    return RadioListTile(
-      groupValue: currentLanguage,
-      value: language,
-      title: Text(
-        title,
-        style: Theme.of(context).textTheme.bodyText1,
-      ),
-      onChanged: (String lang) =>  _clearCacheDialog(
-        context: context,
-        achievementRepository: RepositoryProvider.of<AchievementRepository>(context),
-        itemRepository: RepositoryProvider.of<ItemRepository>(context),
-        buildRepository: RepositoryProvider.of<BuildRepository>(context),
-        lang: lang
-      ),
-    );
-  }
-
   _clearCacheDialog({
-    BuildContext context,
-    AchievementRepository achievementRepository,
-    ItemRepository itemRepository,
-    BuildRepository buildRepository,
-    String lang,
+    @required BuildContext context,
+    @required AchievementRepository achievementRepository,
+    @required ItemRepository itemRepository,
+    @required BuildRepository buildRepository,
+    @required String lang,
   }) async {
     return showDialog(
       context: context,
@@ -100,4 +93,11 @@ This will also clear your cache and require you to restart the app.'''
       },
     );
   }
+}
+
+class _Language {
+  final String name;
+  final String value;
+
+  _Language(this.name, this.value);
 }

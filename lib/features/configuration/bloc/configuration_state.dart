@@ -1,12 +1,9 @@
 part of 'configuration_bloc.dart';
 
-@immutable
-abstract class ConfigurationState {}
-
-class LoadedConfiguration extends ConfigurationState {
+class ConfigurationState  {
   final Configuration configuration;
 
-  LoadedConfiguration({
+  ConfigurationState({
     @required this.configuration,
   });
 }

@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/core/models/event_segment.dart';
 import 'package:guildwars2_companion/core/utils/urls.dart';
 import 'package:guildwars2_companion/features/configuration/bloc/configuration_bloc.dart';
-import 'package:guildwars2_companion/features/configuration/models/configuration.dart';
 import 'package:guildwars2_companion/features/event/bloc/notification_bloc.dart';
 import 'package:guildwars2_companion/features/event/pages/schedule_notification_type.dart';
 
@@ -145,13 +144,11 @@ class CompanionHeader extends StatelessWidget {
   Widget _buildWiki() {
     return BlocBuilder<ConfigurationBloc, ConfigurationState>(
       builder: (context, state) {
-        final Configuration configuration = (state as LoadedConfiguration).configuration;
-
-        if (wikiRequiresEnglish && configuration.language != 'en') {
+        if (wikiRequiresEnglish && state.configuration.language != 'en') {
           return Container();
         }
 
-        if (!['en', 'es', 'de', 'fr'].contains(configuration.language)) {
+        if (!['en', 'es', 'de', 'fr'].contains(state.configuration.language)) {
           return Container();
         }
 
@@ -163,7 +160,7 @@ class CompanionHeader extends StatelessWidget {
               color: foregroundColor,
               size: 20.0,
             ),
-            onPressed: () => Urls.launchUrl('${_getWikiUrl(configuration.language)}${wikiName.replaceAll(' ', '+')}'),
+            onPressed: () => Urls.launchUrl('${_getWikiUrl(state.configuration.language)}${wikiName.replaceAll(' ', '+')}'),
           ),
         );
       }

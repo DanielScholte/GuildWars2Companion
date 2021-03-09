@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/core/themes/dark.dart';
 import 'package:guildwars2_companion/core/themes/light.dart';
 import 'package:guildwars2_companion/features/configuration/bloc/configuration_bloc.dart';
-import 'package:guildwars2_companion/features/configuration/models/configuration.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 
 class ThemeConfigurationPage extends StatelessWidget {
@@ -17,21 +16,33 @@ class ThemeConfigurationPage extends StatelessWidget {
       ),
       body: BlocBuilder<ConfigurationBloc, ConfigurationState>(
         builder: (context, state) {
-          final Configuration configuration = (state as LoadedConfiguration).configuration;
-          
+          List<_Theme> themes = [
+            _Theme('Light', ThemeMode.light),
+            _Theme('Dark', ThemeMode.dark),
+            _Theme('Use system theme', ThemeMode.system),
+          ];
+
           return ListView(
-            children: <Widget>[
-              _buildThemeOption(context, configuration.themeMode, ThemeMode.light, 'Light'),
-              _buildThemeOption(context, configuration.themeMode, ThemeMode.dark, 'Dark'),
-              _buildThemeOption(context, configuration.themeMode, ThemeMode.system, 'Use system theme'),
-            ],
+            children: themes
+              .map((theme) => _buildThemeOption(
+                context: context,
+                currentThemeMode: state.configuration.themeMode,
+                themeMode: theme.value,
+                title: theme.name
+              ))
+              .toList()
           );
         },
       ),
     );
   }
 
-  Widget _buildThemeOption(BuildContext context, ThemeMode currentThemeMode, ThemeMode themeMode, String title) {
+  Widget _buildThemeOption({
+    @required BuildContext context,
+    @required ThemeMode currentThemeMode,
+    @required ThemeMode themeMode,
+    @required String title
+  }) {
     return RadioListTile(
       groupValue: currentThemeMode,
       value: themeMode,
@@ -51,4 +62,11 @@ class ThemeConfigurationPage extends StatelessWidget {
       },
     );
   }
+}
+
+class _Theme {
+  final String name;
+  final ThemeMode value;
+
+  _Theme(this.name, this.value);
 }

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/features/configuration/bloc/configuration_bloc.dart';
-import 'package:guildwars2_companion/features/configuration/models/configuration.dart';
 import 'package:guildwars2_companion/features/event/bloc/notification_bloc.dart';
 import 'package:guildwars2_companion/features/event/models/notification.dart';
 import 'package:intl/intl.dart';
@@ -45,8 +44,7 @@ class _CompanionNotificationListState extends State<CompanionNotificationList> {
   Widget build(BuildContext context) {
     return BlocBuilder<ConfigurationBloc, ConfigurationState>(
       builder: (context, state) {
-        final Configuration configuration = (state as LoadedConfiguration).configuration;
-        final DateFormat timeFormat = configuration.timeNotation24Hours ? DateFormat.Hm() : DateFormat.jm();
+        final DateFormat timeFormat = state.configuration.timeNotation24Hours ? DateFormat.Hm() : DateFormat.jm();
 
         return BlocBuilder<NotificationBloc, NotificationState>(
           builder: (context, state) {

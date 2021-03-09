@@ -44,7 +44,7 @@ class ConfigurationPage extends StatelessWidget {
                   'By Daniël Scholte / Revolt.2860',
                   style: Theme.of(context).textTheme.bodyText1
                 ),
-                _getAppVersion()
+                _AppVersion()
               ],
             ),
           ),
@@ -217,8 +217,11 @@ class ConfigurationPage extends StatelessWidget {
   IconData _getPlatformIcon() {
     return Platform.isIOS ? FontAwesomeIcons.appStoreIos : FontAwesomeIcons.googlePlay;
   }
+}
 
-  Widget _getAppVersion() {
+class _AppVersion extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return FutureBuilder<PackageInfo>(
       future: PackageInfo.fromPlatform(),
       builder: (context, snapshot) {

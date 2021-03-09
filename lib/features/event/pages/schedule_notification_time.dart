@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/core/models/event_segment.dart';
 import 'package:guildwars2_companion/features/configuration/bloc/configuration_bloc.dart';
-import 'package:guildwars2_companion/features/configuration/models/configuration.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/features/event/models/notification.dart';
@@ -181,8 +180,7 @@ class _ScheduleNotificationTimePageState extends State<ScheduleNotificationTimeP
 
     return BlocBuilder<ConfigurationBloc, ConfigurationState>(
       builder: (context, state) {
-        final Configuration configuration = (state as LoadedConfiguration).configuration;
-        final DateFormat timeFormat = configuration.timeNotation24Hours ? DateFormat.Hm() : DateFormat.jm();
+        final DateFormat timeFormat = state.configuration.timeNotation24Hours ? DateFormat.Hm() : DateFormat.jm();
 
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),

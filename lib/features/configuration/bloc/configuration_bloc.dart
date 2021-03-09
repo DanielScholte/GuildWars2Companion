@@ -14,7 +14,7 @@ class ConfigurationBloc extends Bloc<ConfigurationEvent, ConfigurationState> {
 
   ConfigurationBloc({
     this.configurationRepository
-  }): super(LoadedConfiguration(
+  }): super(ConfigurationState(
     configuration: configurationRepository.getConfiguration()
   ));
 
@@ -33,8 +33,8 @@ class ConfigurationBloc extends Bloc<ConfigurationEvent, ConfigurationState> {
     yield this.getConfiguration();
   }
 
-  LoadedConfiguration getConfiguration() {
-    return LoadedConfiguration(
+  ConfigurationState getConfiguration() {
+    return ConfigurationState(
       configuration: this.configurationRepository.getConfiguration()
     );
   }

@@ -8,7 +8,6 @@ import 'package:guildwars2_companion/features/configuration/bloc/configuration_b
 import 'package:guildwars2_companion/features/error/pages/error.dart';
 import 'package:guildwars2_companion/features/home/pages/tab.dart';
 import 'package:guildwars2_companion/features/account/pages/token.dart';
-import 'features/configuration/models/configuration.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,13 +52,11 @@ class GuildWars2Companion extends StatelessWidget {
       child: companionFactory.initializeBlocs(
         child: BlocBuilder<ConfigurationBloc, ConfigurationState>(
           builder: (context, state) {
-            final Configuration configuration = (state as LoadedConfiguration).configuration;
-
             return MaterialApp(
               title: 'Guild Wars 2 Companion',
               theme: lightTheme,
               darkTheme: darkTheme,
-              themeMode: configuration.themeMode,
+              themeMode: state.configuration.themeMode,
               home: page,
             );
           }

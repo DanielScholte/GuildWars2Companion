@@ -10,7 +10,6 @@ import 'package:guildwars2_companion/core/widgets/button.dart';
 import 'package:guildwars2_companion/features/error/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
 import 'package:guildwars2_companion/features/configuration/bloc/configuration_bloc.dart';
-import 'package:guildwars2_companion/features/configuration/models/configuration.dart';
 import 'package:guildwars2_companion/features/event/pages/event.dart';
 import 'package:guildwars2_companion/features/meta_event/bloc/event_bloc.dart';
 import 'package:guildwars2_companion/features/meta_event/models/meta_event.dart';
@@ -62,8 +61,7 @@ class _MetaEventPageState extends State<MetaEventPage> {
         ),
         body: BlocBuilder<ConfigurationBloc, ConfigurationState>(
           builder: (context, configurationState) {
-            final Configuration configuration = (configurationState as LoadedConfiguration).configuration;
-            final DateFormat timeFormat = configuration.timeNotation24Hours ? DateFormat.Hm() : DateFormat.jm();
+            final DateFormat timeFormat = configurationState.configuration.timeNotation24Hours ? DateFormat.Hm() : DateFormat.jm();
 
             return BlocBuilder<MetaEventBloc, MetaEventState>(
               builder: (context, state) {

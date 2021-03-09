@@ -53,29 +53,29 @@ class _CachingConfigurationPageState extends State<CachingConfigurationPage> {
       body: ListView(
         padding: EdgeInsets.all(8.0),
         children: <Widget>[
-          _cachedCountDisplay(
-            _cachedAchievementsFuture,
-            'achievements'
+          _CachedDisplay(
+            future: _cachedAchievementsFuture,
+            header: 'achievements'
           ),
-          _cachedCountDisplay(
-            _cachedItemsFuture,
-            'items'
+          _CachedDisplay(
+            future: _cachedItemsFuture,
+            header: 'items'
           ),
-          _cachedCountDisplay(
-            _cachedSkinsFuture,
-            'skins'
+          _CachedDisplay(
+            future: _cachedSkinsFuture,
+            header: 'skins'
           ),
-          _cachedCountDisplay(
-            _cachedMinisFuture,
-            'minis'
+          _CachedDisplay(
+            future: _cachedMinisFuture,
+            header: 'minis'
           ),
-          _cachedCountDisplay(
-            _cachedSkillsFuture,
-            'skills'
+          _CachedDisplay(
+            future: _cachedSkillsFuture,
+            header: 'skills'
           ),
-          _cachedCountDisplay(
-            _cachedTraitsFuture,
-            'traits'
+          _CachedDisplay(
+            future: _cachedTraitsFuture,
+            header: 'traits'
           ),
           CompanionSimpleButton(
             text: allowClearCache ? 'Clear cache' : 'Clearing cache...',
@@ -97,32 +97,6 @@ Experiencing issues with cached data, such as outdated information? Try clearing
           )
         ],
       )
-    );
-  }
-
-  Widget _cachedCountDisplay(Future<int> future, String header) {
-    return FutureBuilder<int>(
-      future: future,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return CompanionInfoRow(
-            header: 'Cached $header',
-            text: 'Error',
-          );
-        }
-
-        if (snapshot.hasData) {
-          return CompanionInfoRow(
-            header: 'Cached $header',
-            text: GuildWarsUtil.intToString(snapshot.data),
-          );
-        }
-
-        return CompanionInfoRow(
-          header: 'Cached $header',
-          text: 'Loading...',
-        );
-      },
     );
   }
 
@@ -171,11 +145,54 @@ Experiencing issues with cached data, such as outdated information? Try clearing
 
                 setState(() {
                   allowClearCache = true;
+
                   _cachedAchievementsFuture = _achievementRepository.getCachedAchievementsCount();
+                  _cachedItemsFuture = _itemRepository.getCachedItemsCount();
+                  _cachedSkinsFuture = _itemRepository.getCachedSkinsCount();
+                  _cachedMinisFuture = _itemRepository.getCachedMinisCount();
+                  _cachedSkillsFuture = _buildRepository.getCachedSkillsCount();
+                  _cachedTraitsFuture = _buildRepository.getCachedTraitsCount();
                 });
               },
             )
           ],
+        );
+      },
+    );
+  }
+}
+
+class _CachedDisplay extends StatelessWidget {
+  final Future<int> future;
+  final String header;
+
+  _CachedDisplay({
+    @required this.future,
+    @required this.header
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<int>(
+      future: future,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return CompanionInfoRow(
+            header: 'Cached $header',
+            text: 'Error',
+          );
+        }
+
+        if (snapshot.hasData) {
+          return CompanionInfoRow(
+            header: 'Cached $header',
+            text: GuildWarsUtil.intToString(snapshot.data),
+          );
+        }
+
+        return CompanionInfoRow(
+          header: 'Cached $header',
+          text: 'Loading...',
         );
       },
     );
