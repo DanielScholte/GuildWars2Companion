@@ -33,7 +33,6 @@ class TabBloc extends Bloc<TabEvent, TabState> {
         break;
       case SelectTabEvent:
         index = (event as SelectTabEvent).index;
-        print('switch index $_tabs');
 
         if (_tabs.isNotEmpty) {
           yield getTabState();
