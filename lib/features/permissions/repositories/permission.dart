@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:guildwars2_companion/features/account/services/permission.dart';
+import 'package:guildwars2_companion/features/permissions/services/permission.dart';
 
 class PermissionRepository {
   final PermissionService permissionService;
