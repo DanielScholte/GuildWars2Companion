@@ -5,7 +5,7 @@ import 'package:guildwars2_companion/features/dungeon/bloc/bloc.dart';
 import 'package:guildwars2_companion/features/dungeon/models/dungeon.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/card.dart';
-import 'package:guildwars2_companion/core/widgets/error.dart';
+import 'package:guildwars2_companion/features/error/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/header.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
 

@@ -5,7 +5,7 @@ import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/core/widgets/cached_image.dart';
 import 'package:guildwars2_companion/core/widgets/coin.dart';
-import 'package:guildwars2_companion/core/widgets/error.dart';
+import 'package:guildwars2_companion/features/error/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
 import 'package:guildwars2_companion/features/wallet/bloc/bloc.dart';
 import 'package:guildwars2_companion/features/wallet/models/currency.dart';

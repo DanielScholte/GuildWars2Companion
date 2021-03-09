@@ -18,7 +18,7 @@ import 'package:guildwars2_companion/features/wallet/pages/wallet.dart';
 import 'package:guildwars2_companion/features/world_boss/bloc/bloc.dart';
 import 'package:guildwars2_companion/features/world_boss/pages/world_bosses.dart';
 import 'package:guildwars2_companion/core/widgets/cached_image.dart';
-import 'package:guildwars2_companion/core/widgets/error.dart';
+import 'package:guildwars2_companion/features/error/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/button.dart';
 import 'package:guildwars2_companion/core/widgets/header.dart';
 import 'package:guildwars2_companion/core/widgets/info_box.dart';

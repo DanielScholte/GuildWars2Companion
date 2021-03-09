@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/core/utils/guild_wars_icons.dart';
-import 'package:guildwars2_companion/core/widgets/error.dart';
+import 'package:guildwars2_companion/features/error/widgets/error.dart';
 import 'package:guildwars2_companion/features/account/bloc/account_bloc.dart';
 import 'package:guildwars2_companion/features/account/pages/token.dart';
 import 'package:guildwars2_companion/features/account/widgets/layout.dart';
