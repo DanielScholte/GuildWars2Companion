@@ -1,7 +1,0 @@
-enum TabType {
-  HOME,
-  CHARACTERS,
-  BANK,
-  TRADING,
-  PROGRESSION
-}

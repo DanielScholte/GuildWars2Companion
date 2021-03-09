@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/features/account/bloc/account_bloc.dart';
+import 'package:guildwars2_companion/features/account/repositories/permission.dart';
 import 'package:guildwars2_companion/features/account/widgets/layout.dart';
 import 'package:guildwars2_companion/features/account/widgets/token_button.dart';
 import 'package:guildwars2_companion/features/configuration/pages/configuration.dart';
+import 'package:guildwars2_companion/features/tabs/bloc/tab_bloc.dart';
 import 'package:guildwars2_companion/features/tabs/pages/tab.dart';
 import 'package:guildwars2_companion/features/account/pages/how_to.dart';
 import 'package:guildwars2_companion/features/account/pages/qr_code.dart';
@@ -25,6 +27,16 @@ class TokenPage extends StatelessWidget {
 
             return;
           }
+
+          // Load Bloc data
+          RepositoryProvider.of<PermissionRepository>(context).loadBlocsWithPermissions(
+            context: context,
+            permissions: (state as AuthenticatedState).tokenInfo.permissions
+          );
+          // Set tabs by permissions
+          BlocProvider.of<TabBloc>(context).add(SetAvailableTabsEvent(
+            permissions: (state as AuthenticatedState).tokenInfo.permissions
+          ));
 
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (BuildContext context) => TabPage()));

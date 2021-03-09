@@ -12,7 +12,7 @@ class SelectTabEvent extends TabEvent {
 }
 
 class SetAvailableTabsEvent extends TabEvent {
-  final List<TabType> tabs;
+  final List<String> permissions;
 
-  SetAvailableTabsEvent(this.tabs);
+  SetAvailableTabsEvent({@required this.permissions});
 }

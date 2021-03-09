@@ -3,10 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:guildwars2_companion/core/widgets/header.dart';
 
 class TokenLayout extends StatelessWidget {
+  final String darkThemeTitle;
   final Widget child;
 
   TokenLayout({
-    @required this.child
+    @required this.child,
+    this.darkThemeTitle = 'Api Keys'
   });
 
   @override
@@ -21,7 +23,7 @@ class TokenLayout extends StatelessWidget {
           _Footer(),
           Column(
             children: <Widget>[
-              _Header(),
+              _Header(darkThemeTitle: darkThemeTitle),
               Expanded(child: child)
             ],
           ),
@@ -32,6 +34,12 @@ class TokenLayout extends StatelessWidget {
 }
 
 class _Header extends StatelessWidget {
+  final String darkThemeTitle;
+
+  _Header({
+    @required this.darkThemeTitle
+  });
+
   @override
   Widget build(BuildContext context) {
     if (Theme.of(context).brightness == Brightness.dark) {
@@ -55,12 +63,13 @@ class _Header extends StatelessWidget {
                     fontWeight: FontWeight.w500
                   ),
                 ),
-                Text(
-                  'Api Keys',
-                  style: Theme.of(context).textTheme.headline1.copyWith(
-                    fontWeight: FontWeight.w300
+                if (darkThemeTitle != null)
+                  Text(
+                    darkThemeTitle,
+                    style: Theme.of(context).textTheme.headline1.copyWith(
+                      fontWeight: FontWeight.w300
+                    ),
                   ),
-                ),
               ],
             )
           ],

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guildwars2_companion/features/account/repositories/permission.dart';
 import 'package:guildwars2_companion/features/error/widgets/error.dart';
 import 'package:guildwars2_companion/features/account/bloc/account_bloc.dart';
 import 'package:guildwars2_companion/features/account/pages/token.dart';
@@ -10,20 +11,10 @@ import 'package:guildwars2_companion/features/account/widgets/layout.dart';
 import 'package:guildwars2_companion/features/changelog/widgets/changelog.dart';
 import 'package:guildwars2_companion/features/tabs/bloc/tab_bloc.dart';
 import 'package:guildwars2_companion/features/tabs/models/tab.dart';
-import 'package:guildwars2_companion/features/tabs/utils/permission.dart';
 
 class TabPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    AccountState accountState = BlocProvider.of<AccountBloc>(context).state;
-
-    if (BlocProvider.of<TabBloc>(context).state is TabInitialing && accountState is AuthenticatedState) {
-      _handleAuth(
-        context,
-        accountState.tokenInfo.permissions
-      );
-    }
-
     return WillPopScope(
       onWillPop: () async {
         TabState tabState = BlocProvider.of<TabBloc>(context).state;
@@ -39,10 +30,15 @@ class TabPage extends StatelessWidget {
         listenWhen: (previous, current) => current is UnauthenticatedState || current is AuthenticatedState,
         listener: (BuildContext context, state) async {
           if (state is AuthenticatedState) {
-            _handleAuth(
-              context,
-              state.tokenInfo.permissions
+            // Load Bloc data
+            RepositoryProvider.of<PermissionRepository>(context).loadBlocsWithPermissions(
+              context: context,
+              permissions: state.tokenInfo.permissions
             );
+            // Set tabs by permissions
+            BlocProvider.of<TabBloc>(context).add(SetAvailableTabsEvent(
+              permissions: state.tokenInfo.permissions
+            ));
             return;
           }
           
@@ -88,6 +84,7 @@ class TabPage extends StatelessWidget {
 
               return Scaffold(
                 body: TokenLayout(
+                  darkThemeTitle: null,
                   child: Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -110,11 +107,6 @@ class TabPage extends StatelessWidget {
         },
       ),
     );
-  }
-
-  void _handleAuth(BuildContext context, List<String> permissions) {
-    PermissionUtil.loadBlocs(context, permissions);
-    BlocProvider.of<TabBloc>(context).add(SetAvailableTabsEvent(PermissionUtil.getTabTypes(permissions)));
   }
 }
 

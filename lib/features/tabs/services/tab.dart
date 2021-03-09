@@ -5,22 +5,21 @@ import 'package:guildwars2_companion/features/achievement/pages/progression.dart
 import 'package:guildwars2_companion/features/bank/pages/bank.dart';
 import 'package:guildwars2_companion/features/character/pages/characters.dart';
 import 'package:guildwars2_companion/features/home/pages/home.dart';
-import 'package:guildwars2_companion/features/tabs/enums/tab_type.dart';
 import 'package:guildwars2_companion/features/tabs/models/tab.dart';
 import 'package:guildwars2_companion/features/trading_post/pages/trading_post.dart';
 
 class TabService {
-  List<TabEntry> getTabs(List<TabType> types) {
+  List<TabEntry> getTabs(List<String> permissions) {
     return [
       _getHomeTab(),
 
-      if (types.contains(TabType.CHARACTERS))
+      if (permissions.contains('characters'))
         _getCharactersTab(),
       
-      if (types.contains(TabType.BANK))
+      if (permissions.contains('inventories') || permissions.contains('builds'))
         _getBankTab(),
 
-      if (types.contains(TabType.TRADING))
+      if (permissions.contains('tradingpost'))
         _getTradingTab(),
 
       _getProgressionTab()

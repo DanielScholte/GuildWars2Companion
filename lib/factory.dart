@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/core/utils/dio.dart';
 import 'package:guildwars2_companion/features/account/bloc/account_bloc.dart';
 import 'package:guildwars2_companion/features/account/repositories/account.dart';
+import 'package:guildwars2_companion/features/account/repositories/permission.dart';
 import 'package:guildwars2_companion/features/account/services/account.dart';
+import 'package:guildwars2_companion/features/account/services/permission.dart';
 import 'package:guildwars2_companion/features/account/services/token.dart';
 import 'package:guildwars2_companion/features/achievement/bloc/achievement_bloc.dart';
 import 'package:guildwars2_companion/features/achievement/repositories/achievement.dart';
@@ -66,6 +68,7 @@ class CompanionFactory {
   ItemService itemService;
   MapService mapService;
   NotificationService notificationService;
+  PermissionService permissionService;
   PvpService pvpService;
   RaidService raidService;
   TabService tabService;
@@ -109,6 +112,7 @@ class CompanionFactory {
     eventService = EventService();
     raidService = RaidService(dio: dioUtil.getDioInstance());
     mapService = MapService(dio: dioUtil.getDioInstance());
+    permissionService = PermissionService();
     pvpService = PvpService(dio: dioUtil.getDioInstance());
     tabService = TabService();
     tradingPostService = TradingPostService(dio: dioUtil.getDioInstance());
@@ -178,6 +182,11 @@ class CompanionFactory {
         RepositoryProvider<NotificationRepository>(
           create: (BuildContext context) => NotificationRepository(
             notificationService: notificationService,
+          ),
+        ),
+        RepositoryProvider<PermissionRepository>(
+          create: (BuildContext context) => PermissionRepository(
+            permissionService: permissionService,
           ),
         ),
         RepositoryProvider<PvpRepository>(
