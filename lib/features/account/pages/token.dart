@@ -7,7 +7,7 @@ import 'package:guildwars2_companion/features/account/bloc/account_bloc.dart';
 import 'package:guildwars2_companion/features/account/widgets/layout.dart';
 import 'package:guildwars2_companion/features/account/widgets/token_button.dart';
 import 'package:guildwars2_companion/features/configuration/pages/configuration.dart';
-import 'package:guildwars2_companion/features/home/pages/tab.dart';
+import 'package:guildwars2_companion/features/tabs/pages/tab.dart';
 import 'package:guildwars2_companion/features/account/pages/how_to.dart';
 import 'package:guildwars2_companion/features/account/pages/qr_code.dart';
 

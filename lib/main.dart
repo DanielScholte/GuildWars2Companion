@@ -6,7 +6,7 @@ import 'package:guildwars2_companion/core/themes/light.dart';
 import 'package:guildwars2_companion/factory.dart';
 import 'package:guildwars2_companion/features/configuration/bloc/configuration_bloc.dart';
 import 'package:guildwars2_companion/features/error/pages/error.dart';
-import 'package:guildwars2_companion/features/home/pages/tab.dart';
+import 'package:guildwars2_companion/features/tabs/pages/tab.dart';
 import 'package:guildwars2_companion/features/account/pages/token.dart';
 
 Future main() async {

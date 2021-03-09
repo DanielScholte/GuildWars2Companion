@@ -13,6 +13,7 @@ import 'package:guildwars2_companion/features/pvp/bloc/pvp_bloc.dart';
 import 'package:guildwars2_companion/features/pvp/pages/pvp.dart';
 import 'package:guildwars2_companion/features/raid/bloc/raid_bloc.dart';
 import 'package:guildwars2_companion/features/raid/pages/raids.dart';
+import 'package:guildwars2_companion/features/tabs/bloc/tab_bloc.dart';
 import 'package:guildwars2_companion/features/wallet/bloc/bloc.dart';
 import 'package:guildwars2_companion/features/wallet/pages/wallet.dart';
 import 'package:guildwars2_companion/features/world_boss/bloc/bloc.dart';
@@ -77,6 +78,7 @@ class HomePage extends StatelessWidget {
                   ),
                   onPressed: () {
                     BlocProvider.of<PvpBloc>(context).add(ResetPvpEvent());
+                    BlocProvider.of<TabBloc>(context).add(ResetTabsEvent());
                     BlocProvider.of<AccountBloc>(context).add(UnauthenticateEvent());
                   }
                 ),

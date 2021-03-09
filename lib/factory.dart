@@ -40,6 +40,9 @@ import 'package:guildwars2_companion/features/pvp/services/pvp.dart';
 import 'package:guildwars2_companion/features/raid/bloc/raid_bloc.dart';
 import 'package:guildwars2_companion/features/raid/repositories/raid.dart';
 import 'package:guildwars2_companion/features/raid/services/raid.dart';
+import 'package:guildwars2_companion/features/tabs/bloc/tab_bloc.dart';
+import 'package:guildwars2_companion/features/tabs/repositories/tab.dart';
+import 'package:guildwars2_companion/features/tabs/services/tab.dart';
 import 'package:guildwars2_companion/features/trading_post/bloc/bloc.dart';
 import 'package:guildwars2_companion/features/trading_post/repositories/trading_post.dart';
 import 'package:guildwars2_companion/features/trading_post/services/trading_post.dart';
@@ -65,6 +68,7 @@ class CompanionFactory {
   NotificationService notificationService;
   PvpService pvpService;
   RaidService raidService;
+  TabService tabService;
   TokenService tokenService;
   TradingPostService tradingPostService;
   WalletService walletService;
@@ -106,6 +110,7 @@ class CompanionFactory {
     raidService = RaidService(dio: dioUtil.getDioInstance());
     mapService = MapService(dio: dioUtil.getDioInstance());
     pvpService = PvpService(dio: dioUtil.getDioInstance());
+    tabService = TabService();
     tradingPostService = TradingPostService(dio: dioUtil.getDioInstance());
     walletService = WalletService(dio: dioUtil.getDioInstance());
     worldBossService = WorldBossService(dio: dioUtil.getDioInstance());
@@ -184,6 +189,11 @@ class CompanionFactory {
         RepositoryProvider<RaidRepository>(
           create: (BuildContext context) => RaidRepository(
             raidService: raidService,
+          ),
+        ),
+        RepositoryProvider<TabRepository>(
+          create: (BuildContext context) => TabRepository(
+            tabService: tabService
           ),
         ),
         RepositoryProvider<TradingPostRepository>(
@@ -265,6 +275,11 @@ class CompanionFactory {
         BlocProvider<RaidBloc>(
           create: (BuildContext context) => RaidBloc(
             raidRepository: RepositoryProvider.of<RaidRepository>(context),
+          ),
+        ),
+        BlocProvider<TabBloc>(
+          create: (BuildContext context) => TabBloc(
+            tabRepository: RepositoryProvider.of<TabRepository>(context)
           ),
         ),
         BlocProvider<TradingPostBloc>(
