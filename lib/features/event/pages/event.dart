@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/core/models/event_segment.dart';
-import 'package:guildwars2_companion/features/configuration/bloc/configuration_bloc.dart';
 import 'package:guildwars2_companion/features/event/models/notification.dart';
+import 'package:guildwars2_companion/features/event/widgets/notification_list_card.dart';
+import 'package:guildwars2_companion/features/event/widgets/times_card.dart';
 import 'package:guildwars2_companion/features/meta_event/models/meta_event.dart';
 import 'package:guildwars2_companion/features/world_boss/models/world_boss.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
-import 'package:guildwars2_companion/core/widgets/card.dart';
 import 'package:guildwars2_companion/core/widgets/header.dart';
-import 'package:guildwars2_companion/core/widgets/info_row.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
-import 'package:guildwars2_companion/features/configuration/widgets/notification_list.dart';
-import 'package:intl/intl.dart';
+import 'package:guildwars2_companion/features/world_boss/widgets/stats_card.dart';
 
 class EventPage extends StatelessWidget {
 
@@ -33,16 +30,29 @@ class EventPage extends StatelessWidget {
         body: Column(
           children: <Widget>[
             if (this.sequence != null)
-              _buildEventHeader(context),
+              _EventHeader(
+                segment: segment,
+                sequence: sequence,
+              ),
             if (this.worldBoss != null)
-              _buildWorldBossHeader(context),
+              _WorldBossHeader(
+                segment: segment,
+                worldBoss: worldBoss,
+              ),
             Expanded(
               child: CompanionListView(
                 children: <Widget>[
                   if (this.worldBoss != null)
-                    _buildWorldBossStats(context),
-                  _buildTimes(context),
-                  _buildNotificationList(context),
+                    WorldBossStatsCard(
+                      worldBoss: worldBoss,
+                    ),
+                  EventTimesCard(
+                    segment: segment,
+                    timeColor: worldBoss != null ? worldBoss.color : Colors.orange,
+                  ),
+                  EventNotificationListCard(
+                    eventId: segment.id,
+                  )
                 ],
               ),
             ),
@@ -51,8 +61,67 @@ class EventPage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildWorldBossHeader(BuildContext context) {
+class _EventHeader extends StatelessWidget {
+  final MetaEventSegment segment;
+  final MetaEventSequence sequence;
+
+  const _EventHeader({
+    @required this.segment,
+    @required this.sequence,
+  });
+  
+  @override
+  Widget build(BuildContext context) {
+    return CompanionHeader(
+      color: Colors.orange,
+      wikiName: segment.name,
+      wikiRequiresEnglish: true,
+      includeBack: true,
+      eventSegment: segment..type = EventType.META_EVENT,
+      child: Column(
+        children: <Widget>[
+          Hero(
+            tag: segment.name,
+            child: Image.asset(
+              'assets/button_headers/event_icon.png',
+              height: 48.0,
+              width: 48.0,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(4.0),
+            child: Text(
+              segment.name,
+              style: Theme.of(context).textTheme.headline1,
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Text(
+            sequence.name,
+            style: Theme.of(context).textTheme.bodyText1.copyWith(
+              color: Colors.white
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _WorldBossHeader extends StatelessWidget {
+  final WorldBoss worldBoss;
+  final MetaEventSegment segment;
+
+  const _WorldBossHeader({
+    @required this.worldBoss,
+    @required this.segment,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return CompanionHeader(
       color: worldBoss.color,
       wikiName: worldBoss.name,
@@ -98,137 +167,6 @@ class EventPage extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildEventHeader(BuildContext context) {
-    return CompanionHeader(
-      color: Colors.orange,
-      wikiName: segment.name,
-      wikiRequiresEnglish: true,
-      includeBack: true,
-      eventSegment: segment..type = EventType.META_EVENT,
-      child: Column(
-        children: <Widget>[
-          Hero(
-            tag: segment.name,
-            child: Image.asset(
-              'assets/button_headers/event_icon.png',
-              height: 48.0,
-              width: 48.0,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(4.0),
-            child: Text(
-              segment.name,
-              style: Theme.of(context).textTheme.headline1,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Text(
-            sequence.name,
-            style: Theme.of(context).textTheme.bodyText1.copyWith(
-              color: Colors.white
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildWorldBossStats(BuildContext context) {
-    return CompanionCard(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              'Stats',
-              style: Theme.of(context).textTheme.headline2,
-            ),
-          ),
-          CompanionInfoRow(
-            header: 'Level',
-            text: worldBoss.level.toString()
-          ),
-          CompanionInfoRow(
-            header: 'Map',
-            text: worldBoss.location
-          ),
-          CompanionInfoRow(
-            header: 'Waypoint',
-            text: worldBoss.waypoint
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTimes(BuildContext context) {
-    List<DateTime> times = segment.times.toList();
-    times.sort((a, b) => a.hour.compareTo(b.hour));
-
-    return BlocBuilder<ConfigurationBloc, ConfigurationState>(
-      builder: (context, state) {
-        final DateFormat timeFormat = state.configuration.timeNotation24Hours ? DateFormat.Hm() : DateFormat.jm();
-
-        Color lightColor = worldBoss != null ? worldBoss.color : Colors.orange;
-        
-        return CompanionCard(
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(bottom: 8.0),
-                child: Text(
-                  'Spawn Times',
-                  style: Theme.of(context).textTheme.headline2,
-                ),
-              ),
-              Wrap(
-                alignment: WrapAlignment.spaceEvenly,
-                spacing: 16.0,
-                runSpacing: 4.0,
-                children: times
-                  .map((t) => Chip(
-                    backgroundColor: Theme.of(context).brightness == Brightness.light ? lightColor : Colors.white12,
-                    label: Text(
-                      timeFormat.format(t),
-                      style: Theme.of(context).textTheme.bodyText1.copyWith(
-                        color: Colors.white
-                      ),
-                    ),
-                  ))
-                  .toList()
-              )
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildNotificationList(BuildContext context) {
-    return CompanionCard(
-      padding: EdgeInsets.zero,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(12.0),
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.0),
-              child: Text(
-                'Scheduled notifications',
-                style: Theme.of(context).textTheme.headline2,
-              ),
-            ),
-            CompanionNotificationList(
-              eventId: segment.id,
-            )
-          ],
-        ),
       ),
     );
   }

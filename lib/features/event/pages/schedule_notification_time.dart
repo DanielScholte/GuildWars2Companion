@@ -64,7 +64,36 @@ class _ScheduleNotificationTimePageState extends State<ScheduleNotificationTimeP
               top: false,
               left: false,
               right: false,
-              child: widget.notificationType == NotificationType.SINGLE ? _buildSingleOptions(context) : _buildDailyOptions(context),
+              child: Column(
+                children: [
+                  if (widget.notificationType == NotificationType.SINGLE)
+                    _DateSelector(
+                      selectedDate: _date,
+                      onSelect: (date) {
+                        setState(() {
+                          _date = date;
+
+                          _time = DateTime(
+                            _date.year,
+                            _date.month,
+                            _date.day,
+                            _time.hour,
+                            _time.minute
+                          );
+                        });
+                      },
+                    ),
+                  _TimeSelector(
+                    selectedTime: _time,
+                    baseDate: _date,
+                    times: _times,
+                    type: widget.notificationType,
+                    onSelect: (time) {
+                      setState(() => _time = time);
+                    },
+                  )
+                ],
+              )
             )
           ),
         ),
@@ -96,48 +125,32 @@ class _ScheduleNotificationTimePageState extends State<ScheduleNotificationTimeP
       ),
     );
   }
+}
 
-  Widget _buildSingleOptions(BuildContext context) {
-    return Column(
-      children: [
-        _buildDateSelector(context),
-        _buildTimeSelector(context)
-      ],
-    );
-  }
+class _DateSelector extends StatelessWidget {
+  final DateTime selectedDate;
+  final Function(DateTime) onSelect;
 
-  Widget _buildDailyOptions(BuildContext context) {
-    return Column(
-      children: [
-        _buildTimeSelector(context),
-      ],
-    );
-  }
+  _DateSelector({
+    @required this.selectedDate,
+    @required this.onSelect
+  });
 
-  Widget _buildDateSelector(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
         DateTime now = DateTime.now();
 
-        final DateTime picked = await showDatePicker(
+        final DateTime date = await showDatePicker(
           context: context,
-          initialDate: _date,
+          initialDate: selectedDate,
           firstDate: now,
           lastDate: now.add(Duration(days: 7))
         );
 
-        if (picked != null) {
-          setState(() {
-            _date = picked;
-
-            _time = DateTime(
-              _date.year,
-              _date.month,
-              _date.day,
-              _time.hour,
-              _time.minute
-            );
-          });
+        if (date != null) {
+          onSelect(date);
         }
       },
       child: Padding(
@@ -154,7 +167,7 @@ class _ScheduleNotificationTimePageState extends State<ScheduleNotificationTimeP
                   ),
                   children: [
                     TextSpan(
-                      text: DateFormat('yyyy-MM-dd').format(_date),
+                      text: DateFormat('yyyy-MM-dd').format(selectedDate),
                       style: TextStyle(
                         fontWeight: FontWeight.normal
                       ),
@@ -172,8 +185,25 @@ class _ScheduleNotificationTimePageState extends State<ScheduleNotificationTimeP
       ),
     );
   }
+}
 
-  Widget _buildTimeSelector(BuildContext context) {
+class _TimeSelector extends StatelessWidget {
+  final DateTime selectedTime;
+  final DateTime baseDate;
+  final List<DateTime> times;
+  final NotificationType type;
+  final Function(DateTime) onSelect;
+
+  _TimeSelector({
+    @required this.selectedTime,
+    @required this.baseDate,
+    @required this.times,
+    @required this.type,
+    @required this.onSelect
+  });
+
+  @override
+  Widget build(BuildContext context) {
     Color selectedColor = Theme.of(context).brightness == Brightness.light ? Colors.red : Colors.white38;
     Color unselectedColor = Theme.of(context).brightness == Brightness.light ? Colors.grey : Colors.white12;
     Color disabledColor = Theme.of(context).brightness == Brightness.light ? Colors.black26 : Colors.black;
@@ -187,7 +217,7 @@ class _ScheduleNotificationTimePageState extends State<ScheduleNotificationTimeP
           child: Container(
             width: double.infinity,
             child: Column(
-              crossAxisAlignment: widget.notificationType == NotificationType.SINGLE ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+              crossAxisAlignment: type == NotificationType.SINGLE ? CrossAxisAlignment.start : CrossAxisAlignment.center,
               children: [
                 Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
@@ -200,26 +230,26 @@ class _ScheduleNotificationTimePageState extends State<ScheduleNotificationTimeP
                   alignment: WrapAlignment.spaceEvenly,
                   spacing: 16.0,
                   runSpacing: 4.0,
-                  children: _times
+                  children: times
                     .map((t) {
                       DateTime time = DateTime(
-                        _date.year,
-                        _date.month,
-                        _date.day,
+                        baseDate.year,
+                        baseDate.month,
+                        baseDate.day,
                         t.hour,
                         t.minute
                       );
 
-                      bool disabled = widget.notificationType == NotificationType.SINGLE ? time.isBefore(DateTime.now()) : false;
+                      bool disabled = type == NotificationType.SINGLE ? time.isBefore(DateTime.now()) : false;
 
                       return GestureDetector(
                         onTap: () {
                           if (!disabled) {
-                            setState(() => _time = time);
+                            onSelect(time);
                           }
                         },
                         child: Chip(
-                          backgroundColor: disabled ? disabledColor : time == _time ? selectedColor : unselectedColor,
+                          backgroundColor: disabled ? disabledColor : time == selectedTime ? selectedColor : unselectedColor,
                           padding: EdgeInsets.all(8.0),
                           label: Text(
                             timeFormat.format(time),

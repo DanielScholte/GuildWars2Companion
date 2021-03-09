@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
-import 'package:guildwars2_companion/features/configuration/widgets/notification_list.dart';
+import 'package:guildwars2_companion/features/event/widgets/notification_list.dart';
 
 class NotificationsPage extends StatelessWidget {
   @override
@@ -14,7 +14,7 @@ class NotificationsPage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              CompanionNotificationList(),
+              EventNotificationList(),
             ],
           ),
         ),

@@ -8,18 +8,18 @@ import 'package:guildwars2_companion/features/event/bloc/notification_bloc.dart'
 import 'package:guildwars2_companion/features/event/models/notification.dart';
 import 'package:intl/intl.dart';
 
-class CompanionNotificationList extends StatefulWidget {
+class EventNotificationList extends StatefulWidget {
   final String eventId;
 
-  CompanionNotificationList({
+  EventNotificationList({
     this.eventId
   });
 
   @override
-  _CompanionNotificationListState createState() => _CompanionNotificationListState();
+  _EventNotificationListState createState() => _EventNotificationListState();
 }
 
-class _CompanionNotificationListState extends State<CompanionNotificationList> {
+class _EventNotificationListState extends State<EventNotificationList> {
   Timer _timer;
 
   @override
