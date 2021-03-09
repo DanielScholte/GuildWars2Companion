@@ -1,5 +1,4 @@
-import 'package:guildwars2_companion/features/dungeon/models/dungeon.dart';
-import 'package:meta/meta.dart';
+part of 'dungeon_bloc.dart';
 
 @immutable
 abstract class DungeonState {}

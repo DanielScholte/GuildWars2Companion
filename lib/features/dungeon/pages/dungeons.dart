@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:guildwars2_companion/features/dungeon/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/dungeon/bloc/dungeon_bloc.dart';
 import 'package:guildwars2_companion/features/dungeon/models/dungeon.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
@@ -43,7 +43,7 @@ class DungeonsPage extends StatelessWidget {
                 },
                 child: CompanionListView(
                   children: state.dungeons
-                    .map((d) => _buildDungeonRow(context, d))
+                    .map((d) => _DungeonRow(dungeon: d))
                     .toList(),
                 ),
               );
@@ -57,8 +57,15 @@ class DungeonsPage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildDungeonRow(BuildContext context, Dungeon dungeon) {
+class _DungeonRow extends StatelessWidget {
+  final Dungeon dungeon;
+
+  _DungeonRow({@required this.dungeon});
+
+  @override
+  Widget build(BuildContext context) {
     return CompanionButton(
       color: dungeon.color,
       title: dungeon.name,
@@ -109,4 +116,5 @@ class DungeonsPage extends StatelessWidget {
       )),
     );
   }
+
 }

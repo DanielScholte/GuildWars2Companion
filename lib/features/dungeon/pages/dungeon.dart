@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:guildwars2_companion/features/dungeon/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/dungeon/bloc/dungeon_bloc.dart';
 import 'package:guildwars2_companion/features/dungeon/models/dungeon.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
-import 'package:guildwars2_companion/core/widgets/card.dart';
+import 'package:guildwars2_companion/features/dungeon/widgets/progress_card.dart';
 import 'package:guildwars2_companion/features/error/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/header.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
@@ -22,17 +21,63 @@ class DungeonPage extends StatelessWidget {
       child: Scaffold(
         body: Column(
           children: <Widget>[
-            _buildHeader(context),
+            _Header(dungeon: dungeon),
             Expanded(
-              child: _buildProgression(context)
+              child: BlocBuilder<DungeonBloc, DungeonState>(
+                builder: (context, state) {
+                  if (state is ErrorDungeonsState) {
+                    return Center(
+                      child: CompanionError(
+                        title: 'the dungeon',
+                        onTryAgain: () =>
+                          BlocProvider.of<DungeonBloc>(context).add(LoadDungeonsEvent(state.includeProgress)),
+                      ),
+                    );
+                  }
+
+                  if (state is LoadedDungeonsState) {
+                    Dungeon _dungeon = state.dungeons.firstWhere((d) => d.id == dungeon.id);
+
+                    if (_dungeon != null) {
+                      return RefreshIndicator(
+                        backgroundColor: Theme.of(context).accentColor,
+                        color: Theme.of(context).cardColor,
+                        onRefresh: () async {
+                          BlocProvider.of<DungeonBloc>(context).add(LoadDungeonsEvent(state.includeProgress));
+                          await Future.delayed(Duration(milliseconds: 200), () {});
+                        },
+                        child: CompanionListView(
+                          children: [
+                            DungeonProgressCard(
+                              dungeon: _dungeon,
+                              includeProgress: state.includeProgress,
+                            )
+                          ],
+                        ),
+                      );
+                    }
+                  }
+
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              )
             )
           ],
         ),
       ),
     );
   }
+}
 
-  Widget _buildHeader(BuildContext context) {
+class _Header extends StatelessWidget {
+  final Dungeon dungeon;
+
+  _Header({@required this.dungeon});
+
+  @override
+  Widget build(BuildContext context) {
     return CompanionHeader(
       color: dungeon.color,
       wikiName: dungeon.name,
@@ -76,94 +121,6 @@ class DungeonPage extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildProgression(BuildContext context) {
-    return BlocBuilder<DungeonBloc, DungeonState>(
-      builder: (context, state) {
-        if (state is ErrorDungeonsState) {
-          return Center(
-            child: CompanionError(
-              title: 'the dungeon',
-              onTryAgain: () =>
-                BlocProvider.of<DungeonBloc>(context).add(LoadDungeonsEvent(state.includeProgress)),
-            ),
-          );
-        }
-
-        if (state is LoadedDungeonsState) {
-          Dungeon _dungeon = state.dungeons.firstWhere((d) => d.id == dungeon.id);
-
-          if (_dungeon != null) {
-            return RefreshIndicator(
-              backgroundColor: Theme.of(context).accentColor,
-              color: Theme.of(context).cardColor,
-              onRefresh: () async {
-                BlocProvider.of<DungeonBloc>(context).add(LoadDungeonsEvent(state.includeProgress));
-                await Future.delayed(Duration(milliseconds: 200), () {});
-              },
-              child: CompanionListView(
-                children: [
-                  _buildProgress(context, state.includeProgress, _dungeon)
-                ],
-              ),
-            );
-          }
-        }
-
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
-  }
-
-  Widget _buildProgress(BuildContext context, bool includeProgress, Dungeon _dungeon) {
-    return CompanionCard(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              includeProgress ? 'Daily Progress' : 'Paths',
-              style: Theme.of(context).textTheme.headline2,
-            ),
-          ),
-          Column(
-            children: _dungeon.paths
-              .map((p) => Row(
-                children: <Widget>[
-                  if (p.completed)
-                    Icon(
-                      FontAwesomeIcons.check,
-                      size: 20.0,
-                    )
-                  else
-                    Container(
-                      width: 20.0,
-                      child: Icon(
-                        FontAwesomeIcons.solidCircle,
-                        size: 6.0,
-                      ),
-                    ),
-                Expanded(
-                  child: Padding(
-                      padding: EdgeInsets.all(4.0),
-                      child: Text(
-                        p.name,
-                        style: Theme.of(context).textTheme.bodyText1,
-                        textAlign: TextAlign.left,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  )
-                ],
-              ))
-              .toList(),
-            ),
         ],
       ),
     );

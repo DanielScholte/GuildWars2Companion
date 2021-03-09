@@ -5,7 +5,7 @@ import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/features/account/bloc/account_bloc.dart';
 import 'package:guildwars2_companion/features/achievement/bloc/achievement_bloc.dart';
 import 'package:guildwars2_companion/features/configuration/pages/configuration.dart';
-import 'package:guildwars2_companion/features/dungeon/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/dungeon/bloc/dungeon_bloc.dart';
 import 'package:guildwars2_companion/features/dungeon/pages/dungeons.dart';
 import 'package:guildwars2_companion/features/meta_event/bloc/event_bloc.dart';
 import 'package:guildwars2_companion/features/meta_event/pages/meta_events.dart';

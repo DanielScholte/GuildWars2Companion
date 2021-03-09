@@ -1,7 +1,11 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:guildwars2_companion/features/dungeon/models/dungeon.dart';
 import 'package:guildwars2_companion/features/dungeon/repositories/dungeon.dart';
-import './bloc.dart';
+import 'package:meta/meta.dart';
+
+part 'dungeon_event.dart';
+part 'dungeon_state.dart';
 
 class DungeonBloc extends Bloc<DungeonEvent, DungeonState> {
   final DungeonRepository dungeonRepository;

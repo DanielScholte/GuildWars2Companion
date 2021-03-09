@@ -1,6 +1,6 @@
-import 'package:flutter/widgets.dart';
 import 'package:guildwars2_companion/features/dungeon/models/dungeon.dart';
 import 'package:guildwars2_companion/features/dungeon/services/dungeon.dart';
+import 'package:meta/meta.dart';
 
 class DungeonRepository {
   final DungeonService dungeonService;

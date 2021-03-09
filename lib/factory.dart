@@ -22,7 +22,7 @@ import 'package:guildwars2_companion/features/character/services/character.dart'
 import 'package:guildwars2_companion/features/configuration/bloc/configuration_bloc.dart';
 import 'package:guildwars2_companion/features/configuration/repositories/configuration.dart';
 import 'package:guildwars2_companion/features/configuration/services/configuration.dart';
-import 'package:guildwars2_companion/features/dungeon/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/dungeon/bloc/dungeon_bloc.dart';
 import 'package:guildwars2_companion/features/dungeon/repositories/dungeon.dart';
 import 'package:guildwars2_companion/features/dungeon/services/dungeon.dart';
 import 'package:guildwars2_companion/features/event/bloc/notification_bloc.dart';
