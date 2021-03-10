@@ -32,7 +32,6 @@ Future main() async {
       ),
     ));
   }
-  
 }
 
 class GuildWars2Companion extends StatelessWidget {
