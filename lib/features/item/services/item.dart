@@ -133,6 +133,10 @@ class ItemService {
     if (flags == null) return [];
 
     List<String> filteredFlags = flags.where((f) {
+      if (f.isEmpty) {
+        return false;
+      }
+
       switch (section) {
         case ItemSection.EQUIPMENT:
           if (f == 'HideSuffix') return false;
