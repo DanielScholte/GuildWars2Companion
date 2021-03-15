@@ -21,6 +21,8 @@ main() {
       companionFactory = MockCompanionFactory();
       await companionFactory.initializeServices();
 
+      companionFactory.configurationService.themeMode = ThemeMode.dark;
+
       when(companionFactory.tokenService.tokenPresent())
         .thenAnswer((_) async => true);
 

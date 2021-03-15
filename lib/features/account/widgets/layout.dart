@@ -22,6 +22,7 @@ class TokenLayout extends StatelessWidget {
         children: <Widget>[
           _Footer(),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               _Header(darkThemeTitle: darkThemeTitle),
               Expanded(child: child)
