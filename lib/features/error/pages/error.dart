@@ -135,7 +135,7 @@ class _CopyLogsButton extends StatelessWidget {
             width: double.infinity,
             alignment: Alignment.center,
             child: Text(
-              'Copy error to clipboard',
+              'Copy error log to clipboard',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,
