@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:guildwars2_companion/core/utils/urls.dart';
 import 'package:guildwars2_companion/features/account/database_configurations/token.dart';
+import 'package:guildwars2_companion/features/account/exceptions/api.dart';
 import 'package:guildwars2_companion/features/account/models/account.dart';
 import 'package:guildwars2_companion/features/account/models/token_entry.dart';
 import 'package:guildwars2_companion/features/account/models/token_info.dart';
@@ -92,6 +93,12 @@ class AccountService {
 
     if (response.statusCode == 200) {
       return Account.fromJson(response.data);
+    }
+
+    if (response.data != null && response.data['text'] != null) {
+      String apiMessage = response.data['text'];
+
+      throw ApiException(apiMessage.replaceAll(RegExp('access token', caseSensitive: false), 'Api Key'));
     }
 
     throw Exception();

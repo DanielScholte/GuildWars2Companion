@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
+import 'package:guildwars2_companion/features/account/exceptions/api.dart';
 import 'package:guildwars2_companion/features/account/models/account.dart';
 import 'package:guildwars2_companion/features/account/models/token_entry.dart';
 import 'package:guildwars2_companion/features/account/models/token_info.dart';
@@ -53,8 +54,14 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
         await accountRepository.getAccount(token),
         tokenInfo
       );
-    } catch (_) {
-      yield await _getUnauthenticated("Invalid Api Key");
+    } catch (exception) {
+      switch (exception.runtimeType) {
+        case ApiException:
+          yield await _getUnauthenticated("Api error: " + (exception as ApiException).apiMessage);
+          break;
+        default:
+          yield await _getUnauthenticated("Network error");
+      }
     }
   }
 
@@ -68,8 +75,14 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
         token: token,
       ));
       yield await _getUnauthenticated("Api Key added", tokenAdded: true);
-    } catch (_) {
-      yield await _getUnauthenticated("Invalid Api Key");
+    } catch (exception) {
+      switch (exception.runtimeType) {
+        case ApiException:
+          yield await _getUnauthenticated("Api error: " + (exception as ApiException).apiMessage);
+          break;
+        default:
+          yield await _getUnauthenticated("Network error");
+      }
     }
   }
 
