@@ -1,0 +1,8 @@
+enum ItemSection {
+  EQUIPMENT,
+  BANK,
+  INVENTORY,
+  MATERIAL,
+  TRADING_POST,
+  ALL
+}

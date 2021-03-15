@@ -9,7 +9,7 @@ import 'package:guildwars2_companion/core/widgets/cached_image.dart';
 import 'package:guildwars2_companion/core/widgets/coin.dart';
 import 'package:guildwars2_companion/features/error/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
-import 'package:guildwars2_companion/features/item/models/item.dart';
+import 'package:guildwars2_companion/features/item/enums/item_section.dart';
 import 'package:guildwars2_companion/features/item/widgets/item_box.dart';
 import 'package:guildwars2_companion/features/trading_post/bloc/bloc.dart';
 import 'package:guildwars2_companion/features/trading_post/models/delivery.dart';
@@ -301,7 +301,7 @@ class _TradingPostPageState extends State<TradingPostPage> with TickerProviderSt
                   hero: '${i.id} ${items.indexOf(i)}',
                   quantity: i.count,
                   includeMargin: false,
-                  section: ItemSection.TRADINGPOST,
+                  section: ItemSection.TRADING_POST,
                 ))
                 .toList(),
             ),

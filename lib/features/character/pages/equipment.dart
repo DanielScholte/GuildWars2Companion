@@ -7,7 +7,7 @@ import 'package:guildwars2_companion/core/widgets/list_view.dart';
 import 'package:guildwars2_companion/features/character/bloc/character_bloc.dart';
 import 'package:guildwars2_companion/features/character/models/character.dart';
 import 'package:guildwars2_companion/features/character/models/equipment.dart';
-import 'package:guildwars2_companion/features/item/models/item.dart';
+import 'package:guildwars2_companion/features/item/enums/item_section.dart';
 import 'package:guildwars2_companion/features/item/widgets/item_box.dart';
 
 class EquipmentPage extends StatelessWidget {

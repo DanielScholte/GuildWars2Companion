@@ -1,15 +1,5 @@
 import 'package:guildwars2_companion/features/item/models/item_details.dart';
 
-enum ItemSection {
-  EQUIPMENT,
-  BANK,
-  INVENTORY,
-  MATERIAL,
-  TRADINGPOST,
-  ALL
-}
-
-
 class Item {
   String name;
   String description;

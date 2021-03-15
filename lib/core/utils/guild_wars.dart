@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class GuildWarsUtil {
-
   static int calculatePlayTime(int playTime) {
     return (playTime / 60 / 60).round();
   }
@@ -122,6 +121,67 @@ class GuildWarsUtil {
       'Tailor',
       'Weaponsmith'
     ];
+  }
+
+  static String itemFlagToName(String flag) {
+    switch (flag) {
+      case 'AccountBindOnUse':
+        return 'Account bound on use';
+      case 'AccountBound':
+        return 'Account bound';
+      case 'Attuned':
+        return 'Attuned';
+      case 'BulkConsume':
+        return 'Bulk consumable';
+      case 'DeleteWarning':
+        return 'Warning on delete';
+      case 'HideSuffix':
+        return 'Suffix hidden';
+      case 'Infused':
+        return 'Infused';
+      case 'MonsterOnly':
+        return 'Monster only item';
+      case 'NoMysticForge':
+        return 'Cannot be used in the Mystic Forge';
+      case 'NoSalvage':
+        return 'Cannot be salvaged';
+      case 'NoSell':
+        return 'Cannot be sold';
+      case 'NotUpgradeable':
+        return 'Not upgradeable';
+      case 'NoUnderwater':
+        return 'Cannot be used underwater';
+      case 'SoulbindOnAcquire':
+        return 'Soul bound on acquire';
+      case 'SoulBindOnUse':
+        return 'Soul bound on use';
+      default: return flag;
+    }
+  }
+
+  static String itemTypeToName(String type) {
+    switch (type) {
+      case 'HelmAquatic':
+        return 'Helm Aquatic';
+      case 'AppearanceChange':
+        return 'Appearance Change';
+      case 'ContractNpc':
+        return 'Npc Contract';
+      case 'MountRandomUnlock':
+        return 'Random Mount Unlock';
+      case 'RandomUnlock':
+        return 'Random Unlock';
+      case 'UpgradeRemoval':
+        return 'Upgrade Removal';
+      case 'TeleportToFriend':
+        return 'Teleport To Friend';
+      case 'CraftingMaterial':
+        return 'Crafting Material';
+      case 'UpgradeComponent':
+        return 'Upgrade Component';
+      default:
+        return type;
+    }
   }
 
   static String removeOnlyHtml(String htmlText) {

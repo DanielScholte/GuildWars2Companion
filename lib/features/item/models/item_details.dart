@@ -53,3 +53,10 @@ class ItemDetails {
     return data;
   }
 }
+
+class ItemDetail {
+  final String title;
+  final String value;
+
+  ItemDetail(this.title, this.value);
+}
