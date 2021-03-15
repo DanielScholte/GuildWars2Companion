@@ -17,13 +17,12 @@ class ErrorPage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Theme.of(context).primaryColor,
         body: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Column(
+          child: Center(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Image.asset(
                       'assets/token_header_logo.png',
@@ -35,10 +34,7 @@ class ErrorPage extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline1,
                       textAlign: TextAlign.center,
                     ),
-                  ],
-                ),
-                Column(
-                  children: [
+                    Container(height: 96),
                     Text(
                       'You can send the error log to the developer to get the issue fixed.',
                       style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.white),
@@ -54,9 +50,9 @@ class ErrorPage extends StatelessWidget {
                     _SendLogsButton(exception: exception),
                     Container(height: 16),
                     _CopyLogsButton(exception: exception)
-                  ],
-                )
-              ],
+                  ]
+                ),
+              ),
             ),
           ),
         ),
