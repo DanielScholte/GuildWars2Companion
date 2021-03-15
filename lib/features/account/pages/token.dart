@@ -22,7 +22,13 @@ class TokenPage extends StatelessWidget {
         listener: (BuildContext context, state) {
           if (state is UnauthenticatedState) {
             if (state.message != null) {
-              Scaffold.of(context).showSnackBar(SnackBar(content: Text(state.message)));
+              Scaffold.of(context).showSnackBar(SnackBar(
+                content: Text(
+                  state.message,
+                  style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.white)
+                ),
+                backgroundColor: state.tokenAdded || state.tokenRemoved ? Colors.green : Colors.red,
+              ));
             }
 
             return;

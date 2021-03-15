@@ -75,14 +75,15 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
 
   Stream<AccountState> _removeToken(int tokenId) async* {
     await accountRepository.removeToken(tokenId);
-    yield await _getUnauthenticated("Api Key removed");
+    yield await _getUnauthenticated("Api Key removed", tokenRemoved: true);
   }  
 
-  Future<UnauthenticatedState> _getUnauthenticated(String message, { bool tokenAdded = false }) async {
+  Future<UnauthenticatedState> _getUnauthenticated(String message, { bool tokenAdded = false, bool tokenRemoved = false }) async {
     return UnauthenticatedState(
       await accountRepository.getTokens(),
       message,
-      tokenAdded
+      tokenAdded,
+      tokenRemoved
     );
   }
 }

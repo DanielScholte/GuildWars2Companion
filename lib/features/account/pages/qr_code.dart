@@ -31,7 +31,13 @@ class _QrCodePageState extends State<QrCodePage> {
         }
 
         if (state is UnauthenticatedState && !state.tokenAdded && state.message != null) {
-          _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(state.message)));
+          _scaffoldKey.currentState.showSnackBar(SnackBar(
+            content: Text(
+              state.message,
+              style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.white)
+            ),
+            backgroundColor: Colors.red,
+          ));
         }
       },
       child: Scaffold(

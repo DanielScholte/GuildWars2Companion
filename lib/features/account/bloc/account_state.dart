@@ -7,8 +7,9 @@ class UnauthenticatedState extends AccountState {
   final String message;
   final List<TokenEntry> tokens;
   final bool tokenAdded;
+  final bool tokenRemoved;
 
-  UnauthenticatedState(this.tokens, this.message, this.tokenAdded);
+  UnauthenticatedState(this.tokens, this.message, this.tokenAdded, this.tokenRemoved);
 }
 
 class LoadingAccountState extends AccountState {}
