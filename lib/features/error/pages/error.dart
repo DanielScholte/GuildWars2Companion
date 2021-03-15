@@ -34,7 +34,7 @@ class ErrorPage extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline1,
                       textAlign: TextAlign.center,
                     ),
-                    Container(height: 96),
+                    Container(height: MediaQuery.of(context).size.height / 7),
                     Text(
                       'You can send the error log to the developer to get the issue fixed.',
                       style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.white),
