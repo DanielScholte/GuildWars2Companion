@@ -24,11 +24,11 @@ Future main() async {
         .tokenPresent()
         ? TabPage() : TokenPage(),
     ));
-  } catch (exception) {
+  } catch (exception, stackTrace) {
     runApp(GuildWars2Companion(
       companionFactory: companionFactory,
       page: ErrorPage(
-        exception: exception.toString(),
+        exception: '$exception\n$stackTrace',
       ),
     ));
   }

@@ -51,7 +51,9 @@ class ErrorPage extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                     Container(height: 16),
-                    _SendLogsButton(exception: exception)
+                    _SendLogsButton(exception: exception),
+                    Container(height: 16),
+                    _CopyLogsButton(exception: exception)
                   ],
                 )
               ],
@@ -96,6 +98,47 @@ class _SendLogsButton extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Theme.of(context).primaryColor,
+                fontSize: 18.0,
+                fontWeight: FontWeight.w600,
+              )
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _CopyLogsButton extends StatelessWidget {
+  final String exception;
+
+  _CopyLogsButton({@required this.exception});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: Colors.transparent,
+        border: Border.all(
+          color: Colors.white,
+          width: 2
+        )
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: () => Clipboard.setData(ClipboardData(text: exception)),
+          child: Container(
+            height: 48,
+            width: double.infinity,
+            alignment: Alignment.center,
+            child: Text(
+              'Copy error to clipboard',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
                 fontSize: 18.0,
                 fontWeight: FontWeight.w600,
               )
