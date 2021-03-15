@@ -125,7 +125,16 @@ class _CopyLogsButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(8),
-          onTap: () => Clipboard.setData(ClipboardData(text: exception)),
+          onTap: () async {
+            await Clipboard.setData(ClipboardData(text: exception));
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text(
+                'Error log copied to clipboard',
+                style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.white)
+              ),
+              backgroundColor: Colors.green,
+            ));
+          },
           child: Container(
             height: 48,
             width: double.infinity,
