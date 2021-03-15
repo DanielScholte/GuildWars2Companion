@@ -124,7 +124,7 @@ class _CopyLogsButton extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           onTap: () => Clipboard.setData(ClipboardData(text: exception)),
           child: Container(
             height: 48,
