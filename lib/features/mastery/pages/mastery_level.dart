@@ -4,6 +4,7 @@ import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/cached_image.dart';
 import 'package:guildwars2_companion/core/widgets/card.dart';
 import 'package:guildwars2_companion/core/widgets/header.dart';
+import 'package:guildwars2_companion/core/widgets/info_card.dart';
 import 'package:guildwars2_companion/core/widgets/info_row.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
 import 'package:guildwars2_companion/features/mastery/models/mastery.dart';
@@ -87,19 +88,13 @@ class MasteryLevelPage extends StatelessWidget {
               child: CompanionListView(
                 children: <Widget>[
                   if (level.description != null && level.description.isNotEmpty)
-                    _buildDescription(context, 'Description', level.description),
+                    CompanionInfoCard(title: 'Description', text: level.description),
                   if (level.instruction != null && level.instruction.isNotEmpty)
-                    _buildDescription(context, 'Instructions', level.instruction),
-                  CompanionCard(
+                    CompanionInfoCard(title: 'Instructions', text: level.instruction),
+                  CompanionInfoCard(
+                    title: 'Instructions',
                     child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 8.0),
-                          child: Text(
-                            'Information',
-                            style: Theme.of(context).textTheme.headline2,
-                          ),
-                        ),
+                      children: [
                         CompanionInfoRow(
                           header: 'Region',
                           text: mastery.region
@@ -111,36 +106,16 @@ class MasteryLevelPage extends StatelessWidget {
                         CompanionInfoRow(
                           header: 'Experience',
                           text: GuildWarsUtil.intToString(level.expCost)
-                        ),
+                        )
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
           ],
         ),
       )
-    );
-  }
-
-  Widget _buildDescription(BuildContext context, String title, String text) {
-    return CompanionCard(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              title,
-              style: Theme.of(context).textTheme.headline2,
-            ),
-          ),
-          Text(
-            text,
-            style: Theme.of(context).textTheme.bodyText1,
-          ),
-        ],
-      ),
     );
   }
 }

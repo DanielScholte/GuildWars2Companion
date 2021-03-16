@@ -45,7 +45,7 @@ class MasteriesPage extends StatelessWidget {
               },
               child: CompanionListView(
                 children: state.masteries
-                  .map((g) => _buildMastery(context, g))
+                  .map((mastery) => _MasteryButton(mastery: mastery))
                   .toList(),
               ),
             );
@@ -58,8 +58,15 @@ class MasteriesPage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildMastery(BuildContext context, Mastery mastery) {
+class _MasteryButton extends StatelessWidget {
+  final Mastery mastery;
+
+  _MasteryButton({@required  this.mastery});
+
+  @override
+  Widget build(BuildContext context) {
     return CompanionButton(
       title: mastery.name,
       color: GuildWarsUtil.regionColor(mastery.region),
