@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/cached_image.dart';
-import 'package:guildwars2_companion/core/widgets/card.dart';
 import 'package:guildwars2_companion/core/widgets/header.dart';
 import 'package:guildwars2_companion/core/widgets/info_card.dart';
 import 'package:guildwars2_companion/core/widgets/info_row.dart';
