@@ -20,7 +20,7 @@ class RaidButton extends StatelessWidget {
           builder: (context) => RaidsPage()
         ));
       },
-      leading: Image.asset('assets/button_headers/raids.jpg'),
+      leading: Image.asset('assets/images/button_headers/raids.jpg'),
     );
   }
 }

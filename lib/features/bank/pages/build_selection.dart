@@ -49,7 +49,7 @@ class BankBuildSelectionPage extends StatelessWidget {
                       )),
                       leading: ColorFiltered(
                         child: Image.asset(
-                          'assets/professions/${b.profession.toLowerCase()}.png',
+                          'assets/images/professions/${b.profession.toLowerCase()}.png',
                           width: 48,
                           height: 48,
                         ),

@@ -11,13 +11,13 @@ class GuildWarsUtil {
   static String masteryIcon(String region) {
     switch (region) {
       case 'Desert':
-        return 'assets/progression/mastery_desert.png';
+        return 'assets/images/progression/mastery_desert.png';
       case 'Maguuma':
-        return 'assets/progression/mastery_maguuma.png';
+        return 'assets/images/progression/mastery_maguuma.png';
       case 'Tyria':
-        return 'assets/progression/mastery_tyria.png';
+        return 'assets/images/progression/mastery_tyria.png';
       default:
-        return 'assets/progression/mastery_unknown.png';
+        return 'assets/images/progression/mastery_unknown.png';
     }
   }
 
@@ -38,13 +38,13 @@ class GuildWarsUtil {
   static String regionIcon(String region) {
     switch (region) {
       case 'Desert':
-        return 'assets/expansions/desert.png';
+        return 'assets/images/expansions/desert.png';
       case 'Maguuma':
-        return 'assets/expansions/maguuma.png';
+        return 'assets/images/expansions/maguuma.png';
       case 'Tyria':
-        return 'assets/expansions/tyria.png';
+        return 'assets/images/expansions/tyria.png';
       default:
-        return 'assets/expansions/unknown.png';
+        return 'assets/images/expansions/unknown.png';
     }
   }
 

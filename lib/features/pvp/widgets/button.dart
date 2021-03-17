@@ -18,7 +18,7 @@ class PvpButton extends StatelessWidget {
           builder: (context) => PvpPage()
         ));
       },
-      leading: Image.asset('assets/button_headers/pvp.jpg'),
+      leading: Image.asset('assets/images/button_headers/pvp.jpg'),
     );
   }
 }

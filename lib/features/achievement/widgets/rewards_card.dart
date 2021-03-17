@@ -83,7 +83,7 @@ class AchievementRewardsCard extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Image.asset(
-                            'assets/progression/title.png',
+                            'assets/images/progression/title.png',
                             height: 32.0,
                             width: 32.0,
                           ),

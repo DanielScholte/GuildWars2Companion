@@ -106,7 +106,7 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
       hero: worldBoss.id,
       leading: Stack(
         children: <Widget>[
-          Image.asset('assets/world_bosses/${worldBoss.id}.jpg'),
+          Image.asset('assets/images/world_bosses/${worldBoss.id}.jpg'),
           if (worldBoss.completed)
             Container(
               width: double.infinity,

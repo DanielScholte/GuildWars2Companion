@@ -20,7 +20,7 @@ class DungeonButton extends StatelessWidget {
           builder: (context) => DungeonsPage()
         ));
       },
-      leading: Image.asset('assets/button_headers/dungeons.jpg'),
+      leading: Image.asset('assets/images/button_headers/dungeons.jpg'),
     );
   }
 }

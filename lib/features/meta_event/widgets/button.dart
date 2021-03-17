@@ -16,7 +16,7 @@ class MetaEventButton extends StatelessWidget {
           builder: (context) => MetaEventsPage()
         ));
       },
-      leading: Image.asset('assets/button_headers/events.jpg'),
+      leading: Image.asset('assets/images/button_headers/events.jpg'),
     );
   }
 }

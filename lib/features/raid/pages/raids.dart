@@ -65,7 +65,7 @@ class RaidsPage extends StatelessWidget {
       height: null,
       hero: raid.id,
       leading: Image.asset(
-        'assets/raids/${raid.id}.jpg'
+        'assets/images/raids/${raid.id}.jpg'
       ),
       subtitleWidgets: raid.checkpoints
         .map((c) => Padding(

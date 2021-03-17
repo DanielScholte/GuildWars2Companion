@@ -85,7 +85,7 @@ class _EventHeader extends StatelessWidget {
           Hero(
             tag: segment.name,
             child: Image.asset(
-              'assets/button_headers/event_icon.png',
+              'assets/images/button_headers/event_icon.png',
               height: 48.0,
               width: 48.0,
             ),
@@ -147,7 +147,7 @@ class _WorldBossHeader extends StatelessWidget {
               tag: worldBoss.id,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(6.0),
-                child: Image.asset('assets/world_bosses/${worldBoss.id}.jpg'),
+                child: Image.asset('assets/images/world_bosses/${worldBoss.id}.jpg'),
               ),
             ),
           ),

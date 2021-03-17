@@ -30,7 +30,7 @@ class ConfigurationPage extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Image.asset(
-                  'assets/logo.png',
+                  'assets/images/app/logo.png',
                   width: 80.0,
                 ),
                 Container(height: 4.0,),

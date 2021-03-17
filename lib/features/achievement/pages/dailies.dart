@@ -171,15 +171,15 @@ class _DailyTab extends StatelessWidget {
   String _getIcon() {
     switch (category) {
       case 'PvE':
-        return 'assets/button_headers/pve.png';
+        return 'assets/images/button_headers/pve.png';
       case 'PvP':
-        return 'assets/button_headers/pvp.png';
+        return 'assets/images/button_headers/pvp.png';
       case 'WvW':
-        return 'assets/button_headers/wvw.png';
+        return 'assets/images/button_headers/wvw.png';
       case 'Fractals':
-        return 'assets/button_headers/fractals.png';
+        return 'assets/images/button_headers/fractals.png';
       default:
-        return 'assets/button_headers/pve.png';
+        return 'assets/images/button_headers/pve.png';
     }
   }
 }

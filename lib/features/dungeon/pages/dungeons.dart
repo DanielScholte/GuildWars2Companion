@@ -72,7 +72,7 @@ class _DungeonRow extends StatelessWidget {
       height: null,
       hero: dungeon.id,
       leading: Image.asset(
-        'assets/dungeons/${dungeon.id}.jpg'
+        'assets/images/dungeons/${dungeon.id}.jpg'
       ),
       subtitleWidgets: dungeon.paths
         .map((p) => Padding(

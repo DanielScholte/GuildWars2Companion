@@ -48,7 +48,7 @@ class DailyCategoriesPage extends StatelessWidget {
                     CompanionButton(
                       title: 'PvE',
                       color: Colors.green[600],
-                      leading: Image.asset('assets/button_headers/pve.png'),
+                      leading: Image.asset('assets/images/button_headers/pve.png'),
                       onTap: () => Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => DailiesPage('PvE')
                       )),
@@ -56,7 +56,7 @@ class DailyCategoriesPage extends StatelessWidget {
                     CompanionButton(
                       title: 'PvP',
                       color: Colors.blue,
-                      leading: Image.asset('assets/button_headers/pvp.png'),
+                      leading: Image.asset('assets/images/button_headers/pvp.png'),
                       onTap: () => Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => DailiesPage('PvP')
                       )),
@@ -64,7 +64,7 @@ class DailyCategoriesPage extends StatelessWidget {
                     CompanionButton(
                       title: 'WvW',
                       color: Colors.red[600],
-                      leading: Image.asset('assets/button_headers/wvw.png'),
+                      leading: Image.asset('assets/images/button_headers/wvw.png'),
                       onTap: () => Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => DailiesPage('WvW')
                       )),
@@ -72,7 +72,7 @@ class DailyCategoriesPage extends StatelessWidget {
                     CompanionButton(
                       title: 'Fractals',
                       color: Colors.deepPurple,
-                      leading: Image.asset('assets/button_headers/fractals.png'),
+                      leading: Image.asset('assets/images/button_headers/fractals.png'),
                       onTap: () => Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => DailiesPage('Fractals')
                       )),

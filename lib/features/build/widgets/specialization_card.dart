@@ -76,7 +76,7 @@ class _SpecializationRow extends StatelessWidget {
                   )
                 else
                   Image.asset(
-                    'assets/specialization_placeholder.png',
+                    'assets/images/specialization/specialization_placeholder.png',
                     width: 48,
                     height: 48,
                   ),

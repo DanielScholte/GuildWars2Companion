@@ -21,7 +21,7 @@ class WorldBossButton extends StatelessWidget {
           builder: (context) => WorldBossesPage()
         ));
       },
-      leading: Image.asset('assets/button_headers/world_bosses.jpg'),
+      leading: Image.asset('assets/images/button_headers/world_bosses.jpg'),
     );
   }
 }

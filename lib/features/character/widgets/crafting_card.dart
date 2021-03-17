@@ -38,7 +38,7 @@ class CharacterCraftingCard extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Image.asset('assets/crafting/${c.discipline.toLowerCase()}.png'),
+                    Image.asset('assets/images/crafting/${c.discipline.toLowerCase()}.png'),
                     Text(
                       c.rating.toString(),
                       style: TextStyle(

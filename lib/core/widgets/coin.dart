@@ -55,19 +55,19 @@ class CompanionCoin extends StatelessWidget {
         Currency(
           name: 'Gold',
           value: gold,
-          icon: 'assets/coin/gold_coin.png'
+          icon: 'assets/images/coin/gold_coin.png'
         ),
       if (silver > 0 || (gold > 0 && includeZero))
         Currency(
           name: 'Silver',
           value: silver,
-          icon: 'assets/coin/silver_coin.png'
+          icon: 'assets/images/coin/silver_coin.png'
         ),
       if (includeZero || copper > 0)
         Currency(
           name: 'Copper',
           value: copper,
-          icon: 'assets/coin/copper_coin.png'
+          icon: 'assets/images/coin/copper_coin.png'
         ),
     ];
   }

@@ -198,7 +198,7 @@ class _AchievementPageLayout extends StatelessWidget {
                     ),
                     Container(width: 4.0,),
                     Image.asset(
-                      'assets/progression/ap.png',
+                      'assets/images/progression/ap.png',
                       height: 16.0,
                     )
                   ],

@@ -25,7 +25,7 @@ class ErrorPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Image.asset(
-                      'assets/token_header_logo.png',
+                      'assets/images/token/token_header_logo.png',
                       height: 128.0,
                     ),
                     Container(height: 16),

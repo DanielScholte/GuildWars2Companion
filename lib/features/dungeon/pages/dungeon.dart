@@ -102,7 +102,7 @@ class _Header extends StatelessWidget {
               tag: dungeon.id,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(6.0),
-                child: Image.asset('assets/dungeons_square/${dungeon.id}.jpg'),
+                child: Image.asset('assets/images/dungeons_square/${dungeon.id}.jpg'),
               ),
             ),
           ),

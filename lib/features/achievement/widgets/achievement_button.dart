@@ -102,7 +102,7 @@ class AchievementButton extends StatelessWidget {
               ),
               Container(width: 4.0,),
               Image.asset(
-                'assets/progression/ap.png',
+                'assets/images/progression/ap.png',
                 height: 16.0,
               )
             ],
@@ -122,7 +122,7 @@ class AchievementButton extends StatelessWidget {
                 Padding(
                   padding: region != null ? EdgeInsets.only(left: 4.0) : EdgeInsets.zero,
                   child: Image.asset(
-                    'assets/progression/chest.png',
+                    'assets/images/progression/chest.png',
                     height: 16.0,
                     width: 16.0,
                   ),
@@ -131,7 +131,7 @@ class AchievementButton extends StatelessWidget {
                 Padding(
                   padding: region != null || item ? EdgeInsets.only(left: 4.0) : EdgeInsets.zero,
                   child: Image.asset(
-                    'assets/progression/title.png',
+                    'assets/images/progression/title.png',
                     width: 16.0,
                     height: 16.0,
                   ),

@@ -100,7 +100,7 @@ class _EventButton extends StatelessWidget {
       height: 64.0,
       hero: segment.name,
       leading: Image.asset(
-        'assets/button_headers/event_icon.png',
+        'assets/images/button_headers/event_icon.png',
         height: 48.0,
         width: 48.0,
       ),

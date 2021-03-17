@@ -50,7 +50,7 @@ class _Header extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Image.asset(
-              'assets/token_header_logo.png',
+              'assets/images/token/token_header_logo.png',
               height: 64.0,
             ),
             Container(width: 8.0,),
@@ -81,7 +81,7 @@ class _Header extends StatelessWidget {
     return Stack(
       children: <Widget>[
         Image.asset(
-          'assets/token_header.png',
+          'assets/images/token/token_header.png',
           height: 170.0,
           width: double.infinity,
           fit: BoxFit.cover,
@@ -92,7 +92,7 @@ class _Header extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(top: 8.0),
               child: Image.asset(
-                'assets/token_header_logo.png',
+                'assets/images/token/token_header_logo.png',
                 height: 72.0,
               ),
             ),
@@ -112,7 +112,7 @@ class _Footer extends StatelessWidget {
 
     return Align(
       child: Image.asset(
-        'assets/token_footer.png',
+        'assets/images/token/token_footer.png',
         width: double.infinity,
         fit: BoxFit.cover,
         alignment: Alignment.bottomLeft,
