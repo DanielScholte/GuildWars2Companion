@@ -16,48 +16,19 @@ import 'package:guildwars2_companion/features/meta_event/models/meta_event.dart'
 import 'package:intl/intl.dart';
 import 'package:timer_builder/timer_builder.dart';
 
-class MetaEventPage extends StatefulWidget {
-
+class MetaEventPage extends StatelessWidget {
   final MetaEventSequence metaEventSequence;
 
   MetaEventPage(this.metaEventSequence);
 
   @override
-  _MetaEventPageState createState() => _MetaEventPageState();
-}
-
-class _MetaEventPageState extends State<MetaEventPage> {
-  Timer _timer;
-  int _refreshTimeout = 0;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _timer = Timer.periodic(	
-      Duration(seconds: 1),	
-      (Timer timer) {	
-        if (_refreshTimeout > 0) {	
-          _refreshTimeout--;	
-        }
-      },	
-    );
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return CompanionAccent(
-      lightColor: GuildWarsUtil.regionColor(widget.metaEventSequence.region),
+      lightColor: GuildWarsUtil.regionColor(metaEventSequence.region),
       child: Scaffold(
         appBar: CompanionAppBar(
-          title: widget.metaEventSequence.name,
-          color: GuildWarsUtil.regionColor(widget.metaEventSequence.region),
+          title: metaEventSequence.name,
+          color: GuildWarsUtil.regionColor(metaEventSequence.region),
         ),
         body: BlocBuilder<ConfigurationBloc, ConfigurationState>(
           builder: (context, configurationState) {
@@ -76,19 +47,23 @@ class _MetaEventPageState extends State<MetaEventPage> {
                 }
 
                 if (state is LoadedMetaEventsState) {
-                  MetaEventSequence _sequence = state.events.firstWhere((e) => e.id == widget.metaEventSequence.id);
+                  MetaEventSequence _sequence = state.events.firstWhere((e) => e.id == metaEventSequence.id);
 
                   return RefreshIndicator(
                     backgroundColor: Theme.of(context).accentColor,
                     color: Theme.of(context).cardColor,
                     onRefresh: () async {
-                      BlocProvider.of<MetaEventBloc>(context).add(LoadMetaEventsEvent(id: widget.metaEventSequence.id));
+                      BlocProvider.of<MetaEventBloc>(context).add(LoadMetaEventsEvent(id: metaEventSequence.id));
                       await Future.delayed(Duration(milliseconds: 200), () {});
                     },
                     child: CompanionListView(
                       children: _sequence.segments
-                        .where((e) => e.name != null)
-                        .map((e) => _buildEventButton(context, timeFormat, e))
+                        .where((s) => s.name != null)
+                        .map((segment) => _EventButton(
+                          segment: segment,
+                          sequence: metaEventSequence,
+                          timeFormat: timeFormat,
+                        ))
                         .toList(),
                     ),
                   );
@@ -104,10 +79,21 @@ class _MetaEventPageState extends State<MetaEventPage> {
       ),
     );
   }
+}
 
-  Widget _buildEventButton(BuildContext context, DateFormat timeFormat, MetaEventSegment segment) {
-    DateTime time = segment.time;
+class _EventButton extends StatelessWidget {
+  final MetaEventSequence sequence;
+  final MetaEventSegment segment;
+  final DateFormat timeFormat;
 
+  _EventButton({
+    @required this.segment,
+    @required this.sequence,
+    @required this.timeFormat
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return CompanionButton(
       color: Colors.orange,
       title: segment.name,
@@ -128,14 +114,11 @@ class _MetaEventPageState extends State<MetaEventPage> {
               builder: (context) {
                 DateTime now = DateTime.now();
 
-                bool isActive = time.isBefore(now);
-
-                if (time.add(segment.duration).isBefore(now)) {
-                  _refreshTimeout = 30;
-                  BlocProvider.of<MetaEventBloc>(context).add(LoadMetaEventsEvent(id: widget.metaEventSequence.id));
+                if (segment.time.add(segment.duration).isBefore(now)) {
+                  BlocProvider.of<MetaEventBloc>(context).add(LoadMetaEventsEvent(id: sequence.id));
                 }
 
-                if (isActive) {
+                if (segment.time.isBefore(now)) {
                   return Text(
                     'Active',
                     style: Theme.of(context).textTheme.headline2.copyWith(
@@ -145,7 +128,7 @@ class _MetaEventPageState extends State<MetaEventPage> {
                 }
                   
                 return Text(
-                  GuildWarsUtil.durationToString(time.difference(DateTime.now())),
+                  GuildWarsUtil.durationToString(segment.time.difference(DateTime.now())),
                   style: Theme.of(context).textTheme.headline2.copyWith(
                     color: Colors.white
                   ),
@@ -153,7 +136,7 @@ class _MetaEventPageState extends State<MetaEventPage> {
               },
             ),
             Text(
-              timeFormat.format(time),
+              timeFormat.format(segment.time),
               style: Theme.of(context).textTheme.bodyText1.copyWith(
                 color: Colors.white
               ),
@@ -165,7 +148,7 @@ class _MetaEventPageState extends State<MetaEventPage> {
         settings: RouteSettings(name: '/event'),
         builder: (context) => EventPage(
           segment: segment,
-          sequence: widget.metaEventSequence,
+          sequence: sequence,
         )
       )),
     );

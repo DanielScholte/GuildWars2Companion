@@ -45,10 +45,26 @@ class MetaEventsPage extends StatelessWidget {
                 },
                 child: CompanionListView(
                   children: <Widget>[
-                    _buildCategory(context, 'Tyria', 'Tyria', state.events),
-                    _buildCategory(context, 'Heart of Thorns', 'Maguuma', state.events),
-                    _buildCategory(context, 'Path of Fire', 'Desert', state.events),
-                    _buildCategory(context, 'Icebrood Saga', 'Icebrood', state.events),
+                    _MasteryCategoryButton(
+                      name: 'Tyria',
+                      region: 'Tyria',
+                      sequences: state.events,
+                    ),
+                    _MasteryCategoryButton(
+                      name: 'Heart of Thorns',
+                      region: 'Maguuma',
+                      sequences: state.events,
+                    ),
+                    _MasteryCategoryButton(
+                      name: 'Path of Fire',
+                      region: 'Desert',
+                      sequences: state.events,
+                    ),
+                    _MasteryCategoryButton(
+                      name: 'Icebrood Saga',
+                      region: 'Icebrood',
+                      sequences: state.events,
+                    ),
                   ],
                 ),
               );
@@ -62,8 +78,21 @@ class MetaEventsPage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildCategory(BuildContext context, String name, String region, List<MetaEventSequence> sequences) {
+class _MasteryCategoryButton extends StatelessWidget {
+  final String name;
+  final String region;
+  final List<MetaEventSequence> sequences;
+
+  _MasteryCategoryButton({
+    @required this.name,
+    @required this.region,
+    @required this.sequences
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return CompanionCard(
       padding: EdgeInsets.zero,
       backgroundColor: Theme.of(context).brightness == Brightness.light ? GuildWarsUtil.regionColor(region) : Colors.white30,
