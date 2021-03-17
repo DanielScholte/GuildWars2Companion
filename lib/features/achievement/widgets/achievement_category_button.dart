@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:guildwars2_companion/core/utils/guild_wars.dart';
+import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/core/widgets/button.dart';
 import 'package:guildwars2_companion/core/widgets/cached_image.dart';
 import 'package:guildwars2_companion/features/achievement/models/achievement_category.dart';
@@ -24,7 +24,7 @@ class AchievementCategoryButton extends StatelessWidget {
       trailing: Row(
         children: category.regions
           .map((r) => Image.asset(
-            GuildWarsUtil.masteryIcon(r),
+            Assets.getMasteryAsset(r),
             height: 28.0,
             width: 28.0,
           ))

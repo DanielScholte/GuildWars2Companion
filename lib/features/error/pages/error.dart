@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/core/utils/urls.dart';
 
 class ErrorPage extends StatelessWidget {
@@ -25,7 +26,7 @@ class ErrorPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Image.asset(
-                      'assets/images/token/token_header_logo.png',
+                      Assets.tokenHeaderLogo,
                       height: 128.0,
                     ),
                     Container(height: 16),

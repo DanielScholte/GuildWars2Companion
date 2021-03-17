@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/features/raid/bloc/raid_bloc.dart';
 import 'package:guildwars2_companion/features/raid/models/raid.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
@@ -57,7 +58,7 @@ class RaidPage extends StatelessWidget {
               tag: raid.id,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(6.0),
-                child: Image.asset('assets/images/raids_square/${raid.id}.jpg'),
+                child: Image.asset(Assets.getRaidAsset(raid.id)),
               ),
             ),
           ),

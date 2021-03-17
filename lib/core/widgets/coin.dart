@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/features/wallet/models/currency.dart';
 
@@ -55,19 +56,19 @@ class CompanionCoin extends StatelessWidget {
         Currency(
           name: 'Gold',
           value: gold,
-          icon: 'assets/images/coin/gold_coin.png'
+          icon: Assets.coinGold
         ),
       if (silver > 0 || (gold > 0 && includeZero))
         Currency(
           name: 'Silver',
           value: silver,
-          icon: 'assets/images/coin/silver_coin.png'
+          icon: Assets.coinSilver
         ),
       if (includeZero || copper > 0)
         Currency(
           name: 'Copper',
           value: copper,
-          icon: 'assets/images/coin/copper_coin.png'
+          icon: Assets.coinCopper
         ),
     ];
   }

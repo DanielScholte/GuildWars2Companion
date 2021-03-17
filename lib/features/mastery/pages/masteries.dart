@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/core/utils/guild_wars_icons.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
@@ -81,7 +82,7 @@ class _MasteryButton extends StatelessWidget {
               size: 32.0,
               color: Colors.white,
             ) : Image.asset(
-              GuildWarsUtil.masteryIcon(mastery.region),
+              Assets.getMasteryAsset(mastery.region),
               height: 32.0,
             )
           ),
@@ -108,7 +109,7 @@ class _MasteryButton extends StatelessWidget {
           size: 32.0,
           color: Colors.white,
         ) : Image.asset(
-          GuildWarsUtil.masteryIcon(mastery.region),
+          Assets.getMasteryAsset(mastery.region),
           height: 32.0,
         )
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/features/meta_event/bloc/event_bloc.dart';
 import 'package:guildwars2_companion/features/meta_event/models/meta_event.dart';
@@ -108,7 +109,7 @@ class _MasteryCategoryButton extends StatelessWidget {
                 height: 64.0,
                 title: s.name,
                 leading: Image.asset(
-                  'assets/images/button_headers/event_icon.png',
+                  Assets.buttonHeaderEventIcon,
                   height: 48.0,
                   width: 48.0,
                 ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/core/widgets/card.dart';
 import 'package:guildwars2_companion/core/widgets/coin.dart';
@@ -62,7 +63,7 @@ class AchievementRewardsCard extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Image.asset(
-                            GuildWarsUtil.masteryIcon(r.region),
+                            Assets.getMasteryAsset(r.region),
                             height: 32.0,
                             width: 32.0,
                           ),
@@ -83,7 +84,7 @@ class AchievementRewardsCard extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Image.asset(
-                            'assets/images/progression/title.png',
+                            Assets.progressionTitle,
                             height: 32.0,
                             width: 32.0,
                           ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:guildwars2_companion/core/utils/guild_wars.dart';
+import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/core/widgets/card.dart';
@@ -86,7 +86,7 @@ class _AchievementGroupCard extends StatelessWidget {
           child: Row(
             children: group.regions
               .map((r) => Image.asset(
-                GuildWarsUtil.masteryIcon(r),
+                Assets.getMasteryAsset(r),
                 height: 24.0,
                 width: 24.0,
               ))

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/features/error/widgets/error.dart';
@@ -171,15 +172,15 @@ class _DailyTab extends StatelessWidget {
   String _getIcon() {
     switch (category) {
       case 'PvE':
-        return 'assets/images/button_headers/pve.png';
+        return Assets.buttonHeaderPveAchievements;
       case 'PvP':
-        return 'assets/images/button_headers/pvp.png';
+        return Assets.buttonHeaderPvpAchievements;
       case 'WvW':
-        return 'assets/images/button_headers/wvw.png';
+        return Assets.buttonHeaderWvwAchievements;
       case 'Fractals':
-        return 'assets/images/button_headers/fractals.png';
+        return Assets.buttonHeaderFractalAchievements;
       default:
-        return 'assets/images/button_headers/pve.png';
+        return Assets.buttonHeaderPveAchievements;
     }
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:guildwars2_companion/core/utils/guild_wars.dart';
+import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/core/widgets/button.dart';
 import 'package:guildwars2_companion/core/widgets/cached_image.dart';
 import 'package:guildwars2_companion/core/widgets/coin.dart';
@@ -102,7 +102,7 @@ class AchievementButton extends StatelessWidget {
               ),
               Container(width: 4.0,),
               Image.asset(
-                'assets/images/progression/ap.png',
+                Assets.progressionAp,
                 height: 16.0,
               )
             ],
@@ -114,7 +114,7 @@ class AchievementButton extends StatelessWidget {
             children: <Widget>[
               if (region != null)
                 Image.asset(
-                  GuildWarsUtil.masteryIcon(region),
+                  Assets.getMasteryAsset(region),
                   height: 16.0,
                   width: 16.0,
                 ),
@@ -122,7 +122,7 @@ class AchievementButton extends StatelessWidget {
                 Padding(
                   padding: region != null ? EdgeInsets.only(left: 4.0) : EdgeInsets.zero,
                   child: Image.asset(
-                    'assets/images/progression/chest.png',
+                    Assets.progressionChest,
                     height: 16.0,
                     width: 16.0,
                   ),
@@ -131,7 +131,7 @@ class AchievementButton extends StatelessWidget {
                 Padding(
                   padding: region != null || item ? EdgeInsets.only(left: 4.0) : EdgeInsets.zero,
                   child: Image.asset(
-                    'assets/images/progression/title.png',
+                    Assets.progressionTitle,
                     width: 16.0,
                     height: 16.0,
                   ),

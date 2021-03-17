@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/core/widgets/header.dart';
 
 class TokenLayout extends StatelessWidget {
@@ -50,7 +51,7 @@ class _Header extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Image.asset(
-              'assets/images/token/token_header_logo.png',
+              Assets.tokenHeaderLogo,
               height: 64.0,
             ),
             Container(width: 8.0,),
@@ -81,7 +82,7 @@ class _Header extends StatelessWidget {
     return Stack(
       children: <Widget>[
         Image.asset(
-          'assets/images/token/token_header.png',
+          Assets.tokenHeader,
           height: 170.0,
           width: double.infinity,
           fit: BoxFit.cover,
@@ -92,7 +93,7 @@ class _Header extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(top: 8.0),
               child: Image.asset(
-                'assets/images/token/token_header_logo.png',
+                Assets.tokenHeaderLogo,
                 height: 72.0,
               ),
             ),
@@ -112,7 +113,7 @@ class _Footer extends StatelessWidget {
 
     return Align(
       child: Image.asset(
-        'assets/images/token/token_footer.png',
+        Assets.tokenFooter,
         width: double.infinity,
         fit: BoxFit.cover,
         alignment: Alignment.bottomLeft,

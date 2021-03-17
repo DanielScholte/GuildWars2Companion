@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/core/widgets/cached_image.dart';
 import 'package:guildwars2_companion/core/widgets/info_card.dart';
 import 'package:guildwars2_companion/features/build/models/build.dart';
@@ -76,7 +77,7 @@ class _SpecializationRow extends StatelessWidget {
                   )
                 else
                   Image.asset(
-                    'assets/images/specialization/specialization_placeholder.png',
+                    Assets.specializationPlaceholder,
                     width: 48,
                     height: 48,
                   ),

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/core/utils/urls.dart';
 import 'package:guildwars2_companion/core/widgets/button.dart';
 import 'package:guildwars2_companion/core/widgets/header.dart';
@@ -30,7 +31,7 @@ class ConfigurationPage extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Image.asset(
-                  'assets/images/app/logo.png',
+                  Assets.appLogo,
                   width: 80.0,
                 ),
                 Container(height: 4.0,),

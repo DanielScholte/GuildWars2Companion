@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/core/models/event_segment.dart';
+import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/features/event/models/notification.dart';
 import 'package:guildwars2_companion/features/event/widgets/notification_list_card.dart';
 import 'package:guildwars2_companion/features/event/widgets/times_card.dart';
@@ -85,7 +86,7 @@ class _EventHeader extends StatelessWidget {
           Hero(
             tag: segment.name,
             child: Image.asset(
-              'assets/images/button_headers/event_icon.png',
+              Assets.buttonHeaderEventIcon,
               height: 48.0,
               width: 48.0,
             ),
@@ -147,7 +148,7 @@ class _WorldBossHeader extends StatelessWidget {
               tag: worldBoss.id,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(6.0),
-                child: Image.asset('assets/images/world_bosses/${worldBoss.id}.jpg'),
+                child: Image.asset(Assets.getWorldBossAsset(worldBoss.id)),
               ),
             ),
           ),

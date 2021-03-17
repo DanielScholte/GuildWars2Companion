@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/features/dungeon/bloc/dungeon_bloc.dart';
 import 'package:guildwars2_companion/features/dungeon/models/dungeon.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
@@ -72,7 +73,7 @@ class _DungeonRow extends StatelessWidget {
       height: null,
       hero: dungeon.id,
       leading: Image.asset(
-        'assets/images/dungeons/${dungeon.id}.jpg'
+        Assets.getDungeonAsset(dungeon.id, square: false)
       ),
       subtitleWidgets: dungeon.paths
         .map((p) => Padding(

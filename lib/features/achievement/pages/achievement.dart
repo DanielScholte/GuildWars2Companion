@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/cached_image.dart';
@@ -198,7 +199,7 @@ class _AchievementPageLayout extends StatelessWidget {
                     ),
                     Container(width: 4.0,),
                     Image.asset(
-                      'assets/images/progression/ap.png',
+                      Assets.progressionAp,
                       height: 16.0,
                     )
                   ],

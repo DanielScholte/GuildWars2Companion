@@ -8,19 +8,6 @@ class GuildWarsUtil {
     return (playTime / 60 / 60).round();
   }
 
-  static String masteryIcon(String region) {
-    switch (region) {
-      case 'Desert':
-        return 'assets/images/progression/mastery_desert.png';
-      case 'Maguuma':
-        return 'assets/images/progression/mastery_maguuma.png';
-      case 'Tyria':
-        return 'assets/images/progression/mastery_tyria.png';
-      default:
-        return 'assets/images/progression/mastery_unknown.png';
-    }
-  }
-
   static String masteryName(String mastery) {
     switch (mastery) {
       case 'Maguuma':
@@ -32,19 +19,6 @@ class GuildWarsUtil {
         return 'Icebrood Saga';
       default:
         return mastery;
-    }
-  }
-
-  static String regionIcon(String region) {
-    switch (region) {
-      case 'Desert':
-        return 'assets/images/expansions/desert.png';
-      case 'Maguuma':
-        return 'assets/images/expansions/maguuma.png';
-      case 'Tyria':
-        return 'assets/images/expansions/tyria.png';
-      default:
-        return 'assets/images/expansions/unknown.png';
     }
   }
 

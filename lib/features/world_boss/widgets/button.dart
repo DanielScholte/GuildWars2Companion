@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/core/widgets/button.dart';
 import 'package:guildwars2_companion/features/world_boss/bloc/bloc.dart';
 import 'package:guildwars2_companion/features/world_boss/bloc/world_boss_event.dart';
@@ -21,7 +22,7 @@ class WorldBossButton extends StatelessWidget {
           builder: (context) => WorldBossesPage()
         ));
       },
-      leading: Image.asset('assets/images/button_headers/world_bosses.jpg'),
+      leading: Image.asset(Assets.buttonHeaderWorldBosses),
     );
   }
 }

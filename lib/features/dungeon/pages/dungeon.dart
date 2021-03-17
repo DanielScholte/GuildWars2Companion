@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/features/dungeon/bloc/dungeon_bloc.dart';
 import 'package:guildwars2_companion/features/dungeon/models/dungeon.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
@@ -102,7 +103,7 @@ class _Header extends StatelessWidget {
               tag: dungeon.id,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(6.0),
-                child: Image.asset('assets/images/dungeons_square/${dungeon.id}.jpg'),
+                child: Image.asset(Assets.getDungeonAsset(dungeon.id)),
               ),
             ),
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/core/widgets/button.dart';
 import 'package:guildwars2_companion/features/raid/bloc/raid_bloc.dart';
 import 'package:guildwars2_companion/features/raid/pages/raids.dart';
@@ -20,7 +21,7 @@ class RaidButton extends StatelessWidget {
           builder: (context) => RaidsPage()
         ));
       },
-      leading: Image.asset('assets/images/button_headers/raids.jpg'),
+      leading: Image.asset(Assets.buttonHeaderRaids),
     );
   }
 }

@@ -57,16 +57,17 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
-    - assets/button_headers/
-    - assets/coin/
-    - assets/crafting/
-    - assets/world_bosses/
-    - assets/dungeons/
-    - assets/dungeons_square/
-    - assets/progression/
-    - assets/professions/
-    - assets/raids/
-    - assets/raids_square/
+    - assets/images/
+    - assets/images/button_headers/
+    - assets/images/coin/
+    - assets/images/crafting/
+    - assets/images/world_bosses/
+    - assets/images/dungeons/
+    - assets/images/dungeons_square/
+    - assets/images/progression/
+    - assets/images/professions/
+    - assets/images/raids/
+    - assets/images/raids_square/
   #  - images/a_dot_ham.jpeg
   fonts:
     - family: GuildWars

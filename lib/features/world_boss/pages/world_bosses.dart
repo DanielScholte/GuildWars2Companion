@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
@@ -106,7 +107,7 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
       hero: worldBoss.id,
       leading: Stack(
         children: <Widget>[
-          Image.asset('assets/images/world_bosses/${worldBoss.id}.jpg'),
+          Image.asset(Assets.getWorldBossAsset(worldBoss.id)),
           if (worldBoss.completed)
             Container(
               width: double.infinity,

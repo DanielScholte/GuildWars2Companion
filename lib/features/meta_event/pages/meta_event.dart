@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/core/models/event_segment.dart';
+import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
@@ -100,7 +101,7 @@ class _EventButton extends StatelessWidget {
       height: 64.0,
       hero: segment.name,
       leading: Image.asset(
-        'assets/images/button_headers/event_icon.png',
+        Assets.buttonHeaderEventIcon,
         height: 48.0,
         width: 48.0,
       ),

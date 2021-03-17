@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/features/character/models/crafting.dart';
 
@@ -38,7 +39,7 @@ class CharacterCraftingCard extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Image.asset('assets/images/crafting/${c.discipline.toLowerCase()}.png'),
+                    Image.asset(Assets.getCraftingDisciplineAsset(c.discipline)),
                     Text(
                       c.rating.toString(),
                       style: TextStyle(
