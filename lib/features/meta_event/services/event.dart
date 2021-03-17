@@ -5,6 +5,34 @@ class EventService {
   List<MetaEventSequence> getMetaEvents() {
     return [
       MetaEventSequence(
+        id: 'day_night',
+        name: 'Day and Night',
+        region: 'Tyria',
+        offset: Duration(minutes: 15),
+        segments: [
+          MetaEventSegment(
+            id: 'night',
+            name: 'Night',
+            duration: Duration(minutes: 40),
+          ),
+          MetaEventSegment(
+            id: 'dawn',
+            name: 'Dawn',
+            duration: Duration(minutes: 5),
+          ),
+          MetaEventSegment(
+            id: 'day',
+            name: 'Day',
+            duration: Duration(minutes: 40),
+          ),
+          MetaEventSegment(
+            id: 'dusk',
+            name: 'Dusk',
+            duration: Duration(minutes: 5),
+          ),
+        ]
+      ),
+      MetaEventSequence(
         id: 'dry_top',
         name: 'Dry Top',
         region: 'Tyria',
@@ -17,6 +45,38 @@ class EventService {
           MetaEventSegment(
             id: 'dry_top_sandstorm',
             name: 'Sandstorm',
+            duration: Duration(minutes: 20),
+          ),
+        ]
+      ),
+      MetaEventSequence(
+        id: 'ley_line',
+        name: 'Ley-Line Anomaly',
+        region: 'Tyria',
+        offset: Duration(minutes: 80),
+        segments: [
+          MetaEventSegment(
+            duration: Duration(minutes: 100),
+          ),
+          MetaEventSegment(
+            id: 'ley_line_timerline',
+            name: 'Timberline Falls',
+            duration: Duration(minutes: 20),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 100),
+          ),
+          MetaEventSegment(
+            id: 'ley_line_iron',
+            name: 'Iron Marches',
+            duration: Duration(minutes: 20),
+          ),
+          MetaEventSegment(
+            duration: Duration(minutes: 100),
+          ),
+          MetaEventSegment(
+            id: 'ley_line_gendarran',
+            name: 'Gendarran Fields',
             duration: Duration(minutes: 20),
           ),
         ]
@@ -130,38 +190,6 @@ class EventService {
             id: 'lake_haven',
             name: "Saidra's Haven",
             duration: Duration(minutes: 45),
-          ),
-        ]
-      ),
-      MetaEventSequence(
-        id: 'ley_line',
-        name: 'Ley-Line Anomaly',
-        region: 'Maguuma',
-        offset: Duration(minutes: 80),
-        segments: [
-          MetaEventSegment(
-            duration: Duration(minutes: 100),
-          ),
-          MetaEventSegment(
-            id: 'ley_line_timerline',
-            name: 'Timberline Falls',
-            duration: Duration(minutes: 20),
-          ),
-          MetaEventSegment(
-            duration: Duration(minutes: 100),
-          ),
-          MetaEventSegment(
-            id: 'ley_line_iron',
-            name: 'Iron Marches',
-            duration: Duration(minutes: 20),
-          ),
-          MetaEventSegment(
-            duration: Duration(minutes: 100),
-          ),
-          MetaEventSegment(
-            id: 'ley_line_gendarran',
-            name: 'Gendarran Fields',
-            duration: Duration(minutes: 20),
           ),
         ]
       ),
