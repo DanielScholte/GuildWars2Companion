@@ -58,16 +58,19 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - assets/images/app/
     - assets/images/button_headers/
     - assets/images/coin/
     - assets/images/crafting/
-    - assets/images/world_bosses/
     - assets/images/dungeons/
     - assets/images/dungeons_square/
-    - assets/images/progression/
     - assets/images/professions/
+    - assets/images/progression/
     - assets/images/raids/
     - assets/images/raids_square/
+    - assets/images/specialization/
+    - assets/images/token/
+    - assets/images/world_bosses/
   #  - images/a_dot_ham.jpeg
   fonts:
     - family: GuildWars
