@@ -44,7 +44,7 @@ class RaidsPage extends StatelessWidget {
                 },
                 child: CompanionListView(
                   children: state.raids
-                    .map((d) => _buildRaidRow(context, d))
+                    .map((r) => _RaidRow(raid: r))
                     .toList(),
                 ),
               );
@@ -58,8 +58,15 @@ class RaidsPage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildRaidRow(BuildContext context, Raid raid) {
+class _RaidRow extends StatelessWidget {
+  final Raid raid;
+
+  _RaidRow({@required this.raid});
+
+  @override
+  Widget build(BuildContext context) {
     return CompanionButton(
       color: raid.color,
       title: raid.name,
