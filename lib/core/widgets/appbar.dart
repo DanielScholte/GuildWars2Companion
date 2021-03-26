@@ -24,6 +24,7 @@ class CompanionAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: implyLeading,
+      brightness: Brightness.dark,
       iconTheme: IconThemeData(
         color: foregroundColor,
       ),

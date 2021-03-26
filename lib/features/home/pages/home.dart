@@ -28,6 +28,7 @@ class HomePage extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.red : Theme.of(context).cardColor,
+              brightness: Brightness.dark,
               centerTitle: true,
               elevation: 0.0,
               title: RichText(
