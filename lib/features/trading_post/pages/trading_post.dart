@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/core/widgets/button.dart';
@@ -9,10 +7,7 @@ import 'package:guildwars2_companion/core/widgets/cached_image.dart';
 import 'package:guildwars2_companion/core/widgets/coin.dart';
 import 'package:guildwars2_companion/features/error/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
-import 'package:guildwars2_companion/features/item/enums/item_section.dart';
-import 'package:guildwars2_companion/features/item/widgets/item_box.dart';
 import 'package:guildwars2_companion/features/trading_post/bloc/bloc.dart';
-import 'package:guildwars2_companion/features/trading_post/models/delivery.dart';
 import 'package:guildwars2_companion/features/trading_post/models/transaction.dart';
 import 'package:guildwars2_companion/features/trading_post/pages/trading_post_item.dart';
 import 'package:guildwars2_companion/features/trading_post/widgets/delivery.dart';
