@@ -5,7 +5,6 @@ import 'package:guildwars2_companion/features/pvp/models/season.dart';
 import 'package:guildwars2_companion/features/pvp/models/standing.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/cached_image.dart';
-import 'package:guildwars2_companion/core/widgets/card.dart';
 import 'package:guildwars2_companion/core/widgets/header.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
 import 'package:guildwars2_companion/features/pvp/widgets/pvp_season_rank.dart';
