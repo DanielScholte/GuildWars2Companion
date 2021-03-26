@@ -13,7 +13,6 @@ import 'package:guildwars2_companion/features/trading_post/models/listing_offer.
 import 'package:guildwars2_companion/features/trading_post/models/transaction.dart';
 
 class TradingPostItemPage extends StatelessWidget {
-
   final Item item;
   final int orderValue;
 
@@ -131,8 +130,20 @@ class TradingPostItemPage extends StatelessWidget {
                     if (tradingPostTransaction != null && !tradingPostTransaction.loading && tradingPostTransaction.listing != null) {
                       return TabBarView(
                         children: <Widget>[
-                          _buildListingTab(context, state, tradingPostTransaction.listing.buys, 'Ordered', 'No orders found'),
-                          _buildListingTab(context, state, tradingPostTransaction.listing.sells, 'Available', 'No items found'),
+                          _ListingTab(
+                            offers: tradingPostTransaction.listing.buys,
+                            type: 'Ordered',
+                            errorMessage: 'No orders found',
+                            item: item,
+                            orderValue: orderValue,
+                          ),
+                          _ListingTab(
+                            offers: tradingPostTransaction.listing.sells,
+                            type: 'Available',
+                            errorMessage: 'No items found',
+                            item: item,
+                            orderValue: orderValue,
+                          ),
                         ],
                       );
                     }
@@ -151,7 +162,40 @@ class TradingPostItemPage extends StatelessWidget {
     );
   }
 
-  Widget _buildListingTab(BuildContext context, LoadedTradingPostState state, List<ListingOffer> offers, String type, String error) {
+  TradingPostTransaction _getTradingPostTransaction(LoadedTradingPostState state) {
+    TradingPostTransaction transaction;
+    [
+      state.buying,
+      state.selling,
+      state.bought,
+      state.sold
+    ].forEach((transactionList) {
+      if (transaction == null) {
+        transaction = transactionList.firstWhere((t) => t.itemId == item.id, orElse: () => null);
+      }
+    });
+
+    return transaction;
+  }
+}
+
+class _ListingTab extends StatelessWidget {
+  final List<ListingOffer> offers;
+  final Item item;
+  final int orderValue;
+  final String type;
+  final String errorMessage;
+
+  _ListingTab({
+    @required this.offers,
+    @required this.item,
+    @required this.orderValue,
+    @required this.type,
+    @required this.errorMessage
+  });
+
+  @override
+  Widget build(BuildContext context) {
     if (offers.isEmpty) {
       return RefreshIndicator(
         backgroundColor: Theme.of(context).accentColor,
@@ -168,7 +212,7 @@ class TradingPostItemPage extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.all(16.0),
                 child: Text(
-                  error,
+                  errorMessage,
                   style: Theme.of(context).textTheme.headline2,
                 ),
               ),
@@ -201,22 +245,5 @@ class TradingPostItemPage extends StatelessWidget {
         .toList(),
       ),
     );
-  }
-
-  TradingPostTransaction _getTradingPostTransaction(LoadedTradingPostState state) {
-    TradingPostTransaction transaction;
-
-    [
-      state.buying,
-      state.selling,
-      state.bought,
-      state.sold
-    ].forEach((transactionList) {
-      if (transaction == null) {
-        transaction = transactionList.firstWhere((t) => t.itemId == item.id, orElse: () => null);
-      }
-    });
-
-    return transaction;
   }
 }
