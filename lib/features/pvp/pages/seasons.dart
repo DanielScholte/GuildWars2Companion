@@ -13,7 +13,6 @@ import 'package:intl/intl.dart';
 import 'season.dart';
 
 class SeasonsPage extends StatelessWidget {
-  
   final DateFormat _dateFormat = DateFormat('yyyy-MM-dd');
 
   @override

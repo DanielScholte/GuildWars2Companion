@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/features/pvp/bloc/pvp_bloc.dart';
+import 'package:guildwars2_companion/features/pvp/models/game.dart';
+import 'package:guildwars2_companion/features/pvp/models/standing.dart';
 import 'package:guildwars2_companion/features/pvp/models/stats.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
@@ -23,38 +25,66 @@ class PvpPage extends StatelessWidget {
       child: BlocBuilder<PvpBloc, PvpState>(
         builder: (context, state) {
           if (state is ErrorPvpState) {
-            return _buildBasicPage(context, Center(
-              child: CompanionError(
-                title: 'PvP Statistics',
-                onTryAgain: () =>
-                  BlocProvider.of<PvpBloc>(context).add(LoadPvpEvent()),
-              ),
-            ));
+            return _Placeholder(
+              child: Center(
+                child: CompanionError(
+                  title: 'PvP Statistics',
+                  onTryAgain: () =>
+                    BlocProvider.of<PvpBloc>(context).add(LoadPvpEvent()),
+                ),
+              )
+            );
           }
 
           if (state is LoadedPvpState) {
-            return _buildPvpPage(context, state);
+            return _Body(
+              pvpStats: state.pvpStats,
+              pvpStandings: state.pvpStandings,
+              pvpGames: state.pvpGames
+            );
           }
 
-          return _buildBasicPage(context, Center(
-            child: CircularProgressIndicator()
-          ));
+          return _Placeholder(
+            child: Center(
+              child: CircularProgressIndicator()
+            )
+          );
         },
       )
     );
   }
+}
 
-  Widget _buildBasicPage(BuildContext context, Widget child) {
+class _Placeholder extends StatelessWidget {
+  final Widget child;
+
+  _Placeholder({@required this.child});
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: CompanionAppBar(
-        title: '',
+        title: 'PvP',
         color: Color(0xFF678A9E),
       ),
       body: child,
     );
   }
+}
 
-  Widget _buildPvpPage(BuildContext context, LoadedPvpState state) {
+class _Body extends StatelessWidget {
+  final PvpStats pvpStats;
+  final List<PvpStanding> pvpStandings;
+  final List<PvpGame> pvpGames;
+
+  _Body({
+    @required this.pvpStats,
+    @required this.pvpStandings,
+    @required this.pvpGames
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -69,7 +99,7 @@ class PvpPage extends StatelessWidget {
                     fit: BoxFit.none,
                     child: CompanionCachedImage(
                       height: 96.0,
-                      imageUrl: state.pvpStats.rank.icon,
+                      imageUrl: pvpStats.rank.icon,
                       color: Colors.white,
                       iconSize: 20,
                       fit: null,
@@ -77,11 +107,25 @@ class PvpPage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Rank ${state.pvpStats.pvpRank}',
+                  'Rank ${pvpStats.pvpRank}',
                   style: Theme.of(context).textTheme.headline1,
                 ),
-                if (state.pvpStats.pvpRankPointsNeeded != null && state.pvpStats.pvpRank < 80)
-                  _buildProgress(context, state),
+                if (pvpStats.pvpRankPointsNeeded != null && pvpStats.pvpRank < 80)
+                  Theme(
+                    data: Theme.of(context).copyWith(accentColor: Colors.white),
+                    child: Container(
+                      margin: EdgeInsets.all(4.0),
+                      width: 128.0,
+                      height: 8.0,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(4.0),
+                        child: LinearProgressIndicator(
+                          value: pvpStats.pvpRankPoints / pvpStats.pvpRankPointsNeeded,
+                          backgroundColor: Colors.white24
+                        ),
+                      ),
+                    ),
+                  ),
                 Container(
                   width: double.infinity,
                   margin: EdgeInsets.only(top: 8.0),
@@ -89,12 +133,18 @@ class PvpPage extends StatelessWidget {
                     alignment: WrapAlignment.spaceEvenly,
                     runSpacing: 16.0,
                     children: <Widget>[
-                      if (state.pvpStats.ladders != null && state.pvpStats.ladders.unranked != null
-                        && state.pvpStats.ladders.unranked.wins + state.pvpStats.ladders.unranked.losses != 0)
-                        _buildWinrateBox(state.pvpStats.ladders.unranked, 'Unranked\nwinrate'),
-                      if (state.pvpStats.ladders != null && state.pvpStats.ladders.ranked != null
-                        && state.pvpStats.ladders.ranked.wins + state.pvpStats.ladders.ranked.losses != 0)
-                        _buildWinrateBox(state.pvpStats.ladders.ranked, 'Ranked\nwinrate')
+                      if (pvpStats.ladders != null && pvpStats.ladders.unranked != null
+                        && pvpStats.ladders.unranked.wins + pvpStats.ladders.unranked.losses != 0)
+                        _WinRateInfoBox(
+                          header: 'Unranked\nwinrate',
+                          winLoss: pvpStats.ladders.unranked,
+                        ),
+                      if (pvpStats.ladders != null && pvpStats.ladders.ranked != null
+                        && pvpStats.ladders.ranked.wins + pvpStats.ladders.ranked.losses != 0)
+                        _WinRateInfoBox(
+                          header: 'Ranked\nwinrate',
+                          winLoss: pvpStats.ladders.ranked,
+                        ),
                     ],
                   ),
                 ),
@@ -143,32 +193,25 @@ class PvpPage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildWinrateBox(PvpWinLoss winLoss, String header) {
+class _WinRateInfoBox extends StatelessWidget {
+  final String header;
+  final PvpWinLoss winLoss;
+
+  _WinRateInfoBox({
+    @required this.header,
+    @required this.winLoss
+  });
+
+  @override
+  Widget build(BuildContext context) {
     int total = winLoss.wins + winLoss.losses;
 
     return CompanionInfoBox(
       header: header,
       text: ((winLoss.wins / total) * 100).toStringAsFixed(2) + '%',
       loading: false,
-    );
-  }
-
-  Widget _buildProgress(BuildContext context, LoadedPvpState state) {
-    return Theme(
-      data: Theme.of(context).copyWith(accentColor: Colors.white),
-      child: Container(
-        margin: EdgeInsets.all(4.0),
-        width: 128.0,
-        height: 8.0,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(4.0),
-          child: LinearProgressIndicator(
-            value: state.pvpStats.pvpRankPoints / state.pvpStats.pvpRankPointsNeeded,
-            backgroundColor: Colors.white24
-          ),
-        ),
-      ),
     );
   }
 }
