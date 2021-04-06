@@ -35,6 +35,15 @@ class ChangelogService {
 
   List<Changelog> changelog = [
     Changelog(
+      version: '1.5.4',
+      build: 33,
+      newFeatures: false,
+      changes: [
+        'Added error handling for errors during the splashscreen',
+        'Major code overhaul',
+      ],
+    ),
+    Changelog(
       version: '1.5.3',
       build: 31,
       newFeatures: true,
