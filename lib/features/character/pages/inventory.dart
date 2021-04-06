@@ -114,7 +114,7 @@ class _InventoryBag extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 if (bag.itemInfo != null)
-                  CompanionItemBox(
+                  ItemBox(
                     item: bag.itemInfo,
                     hero: '$index ${bag.id}',
                     size: 45.0,
@@ -159,7 +159,7 @@ class _InventoryBag extends StatelessWidget {
                 children: inventory
                     .where((i) => i.id != -1)
                     .map((i) =>
-                    CompanionItemBox(
+                    ItemBox(
                       item: i.itemInfo,
                       skin: i.skinInfo,
                       hero: '$index ${inventory.indexOf(i)} ${i.id}',

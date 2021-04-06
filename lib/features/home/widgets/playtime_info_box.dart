@@ -4,7 +4,7 @@ import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/core/widgets/info_box.dart';
 import 'package:guildwars2_companion/features/account/bloc/account_bloc.dart';
 
-class PlaytimeInfoBox extends StatelessWidget {
+class HomePlaytimeInfoBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AccountBloc, AccountState>(

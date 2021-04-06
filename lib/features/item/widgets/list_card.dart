@@ -21,7 +21,7 @@ class ItemListCard extends StatelessWidget {
         children: Iterable
           .generate(items.length, (index) => Row(
             children: <Widget>[
-              CompanionItemBox(
+              ItemBox(
                 item: items[index],
                 hero: disabled ? null : '$title $index ${items[index].id}',
                 size: 45.0,

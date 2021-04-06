@@ -84,7 +84,7 @@ class HomePage extends StatelessWidget {
                           alignment: WrapAlignment.spaceEvenly,
                           runSpacing: 16.0,
                           children: <Widget>[
-                            PlaytimeInfoBox(),
+                            HomePlaytimeInfoBox(),
                             if (state.tokenInfo.permissions.contains('progression'))
                               MasteryInfoBox(),
                             if (state.tokenInfo.permissions.contains('progression'))

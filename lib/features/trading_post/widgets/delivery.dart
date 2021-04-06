@@ -6,22 +6,22 @@ import 'package:guildwars2_companion/features/item/enums/item_section.dart';
 import 'package:guildwars2_companion/features/item/widgets/item_box.dart';
 import 'package:guildwars2_companion/features/trading_post/models/delivery.dart';
 
-class TradingPostExpandaleDelivery extends StatefulWidget {
+class TradingPostExpandableDelivery extends StatefulWidget {
   final TradingPostDelivery tradingPostDelivery;
   final bool expanded;
   final Function onExpand;
 
-  TradingPostExpandaleDelivery({
+  TradingPostExpandableDelivery({
     @required this.tradingPostDelivery,
     @required this.expanded,
     @required this.onExpand
   });
 
   @override
-  _TradingPostExpandaleDeliveryState createState() => _TradingPostExpandaleDeliveryState();
+  _TradingPostExpandableDeliveryState createState() => _TradingPostExpandableDeliveryState();
 }
 
-class _TradingPostExpandaleDeliveryState extends State<TradingPostExpandaleDelivery> with TickerProviderStateMixin {
+class _TradingPostExpandableDeliveryState extends State<TradingPostExpandableDelivery> with TickerProviderStateMixin {
   AnimationController _rotationController;
 
   @override
@@ -40,7 +40,7 @@ class _TradingPostExpandaleDeliveryState extends State<TradingPostExpandaleDeliv
   }
 
   @override
-  void didUpdateWidget(TradingPostExpandaleDelivery oldWidget) {
+  void didUpdateWidget(TradingPostExpandableDelivery oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     if (widget.expanded != oldWidget.expanded) {
@@ -164,7 +164,7 @@ class _TradingPostExpandaleDeliveryState extends State<TradingPostExpandaleDeliv
                           runSpacing: 4.0,
                           children: widget.tradingPostDelivery.items
                             .where((i) => i.id != -1)
-                            .map((i) => CompanionItemBox(
+                            .map((i) => ItemBox(
                               item: i.itemInfo,
                               hero: '${i.id} ${widget.tradingPostDelivery.items.indexOf(i)}',
                               quantity: i.count,

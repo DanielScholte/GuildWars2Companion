@@ -34,7 +34,7 @@ class SeasonPage extends StatelessWidget {
                 children: <Widget>[
                   Hero(
                     tag: standing.seasonId,
-                    child: CompanionPvpSeasonRank(
+                    child: PvpSeasonRankBadge(
                       rank: rank,
                       standing: standing,
                     ),

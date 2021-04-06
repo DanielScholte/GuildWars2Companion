@@ -206,7 +206,7 @@ class _EquipmentSlot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (_equipment ==  null) {
-      return CompanionItemBox(
+      return ItemBox(
         size: small ? 45.0 : 55.0,
         item: null,
         displayEmpty: true,
@@ -215,7 +215,7 @@ class _EquipmentSlot extends StatelessWidget {
       );
     }
 
-    return CompanionItemBox(
+    return ItemBox(
       size: small ? 45.0 : 55.0,
       item: _equipment.itemInfo,
       skin: _equipment.skinInfo,

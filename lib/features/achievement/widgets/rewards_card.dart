@@ -40,7 +40,7 @@ class AchievementRewardsCard extends StatelessWidget {
                   case 'Item':
                     return Row(
                       children: <Widget>[
-                        CompanionItemBox(
+                        ItemBox(
                           item: r.item,
                           hero: '${r.id} ${achievement.rewards.indexOf(r)}',
                           quantity: r.count,

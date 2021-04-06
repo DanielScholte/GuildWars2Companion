@@ -3,11 +3,11 @@ import 'package:guildwars2_companion/features/pvp/models/season.dart';
 import 'package:guildwars2_companion/features/pvp/models/standing.dart';
 import 'package:guildwars2_companion/core/widgets/cached_image.dart';
 
-class CompanionPvpSeasonRank extends StatelessWidget {
+class PvpSeasonRankBadge extends StatelessWidget {
   final PvpSeasonRank rank;
   final PvpStanding standing;
 
-  CompanionPvpSeasonRank({
+  PvpSeasonRankBadge({
     @required this.rank,
     @required this.standing
   });

@@ -83,7 +83,7 @@ class _MaterialCategoryCard extends StatelessWidget {
               spacing: 4.0,
               runSpacing: 4.0,
               children: category.materials
-                .map((i) => CompanionItemBox(
+                .map((i) => ItemBox(
                   item: i.itemInfo,
                   quantity: i.count,
                   hero: '${i.id} ${category.materials.indexOf(i)}',

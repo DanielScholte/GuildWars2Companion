@@ -56,7 +56,7 @@ class SeasonsPage extends StatelessWidget {
                       );
                     return CompanionButton(
                       hero: s.seasonId,
-                      leading: CompanionPvpSeasonRank(
+                      leading: PvpSeasonRankBadge(
                         rank: rank,
                         standing: s,
                       ),

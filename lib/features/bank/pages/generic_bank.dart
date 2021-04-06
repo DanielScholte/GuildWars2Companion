@@ -101,14 +101,14 @@ class _BankListView extends StatelessWidget {
                     children: bankTab
                       .map((i) {
                         if (i.id == -1) {
-                          return CompanionItemBox(
+                          return ItemBox(
                             item: null,
                             displayEmpty: true,
                             includeMargin: false,
                           );
                         }
 
-                        return CompanionItemBox(
+                        return ItemBox(
                           item: i.itemInfo,
                           skin: i.skinInfo,
                           hero: '${inventory.indexOf(i)}${i.id}',
@@ -148,7 +148,7 @@ class _SharedInventoryListView extends StatelessWidget {
             runSpacing: 4.0,
             children: inventory
               .where((i) => i.id != -1)
-              .map((i) => CompanionItemBox(
+              .map((i) => ItemBox(
                 item: i.itemInfo,
                 skin: i.skinInfo,
                 hero: '${inventory.indexOf(i)}${i.id}',

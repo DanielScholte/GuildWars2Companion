@@ -138,7 +138,7 @@ class _ItemBit extends StatelessWidget {
       padding: const EdgeInsets.all(2.0),
       child: Row(
         children: <Widget>[
-          CompanionItemBox(
+          ItemBox(
             item: bit.item,
             size: 40.0,
             hero: '${bit.id} $bitIndex',

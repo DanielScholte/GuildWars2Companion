@@ -118,7 +118,7 @@ class _TradingPostPageState extends State<TradingPostPage> {
                           ),
                           Align(
                             alignment: Alignment.bottomCenter,
-                            child: TradingPostExpandaleDelivery(
+                            child: TradingPostExpandableDelivery(
                               tradingPostDelivery: state.tradingPostDelivery,
                               expanded: _expanded,
                               onExpand: () => _toggleExpanded(),

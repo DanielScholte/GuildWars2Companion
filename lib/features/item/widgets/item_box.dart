@@ -7,7 +7,7 @@ import 'package:guildwars2_companion/features/item/models/item.dart';
 import 'package:guildwars2_companion/features/item/models/skin.dart';
 import 'package:guildwars2_companion/features/item/pages/item.dart';
 
-class CompanionItemBox extends StatelessWidget {
+class ItemBox extends StatelessWidget {
   final Item item;
   final Skin skin;
   final int quantity;
@@ -21,7 +21,7 @@ class CompanionItemBox extends StatelessWidget {
   final String hero;
   final ItemSection section;
 
-  CompanionItemBox({
+  ItemBox({
     @required this.item,
     this.skin,
     this.quantity = 1,

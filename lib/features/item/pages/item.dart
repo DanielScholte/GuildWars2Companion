@@ -82,7 +82,7 @@ class _Header extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(top: 4.0),
-            child: CompanionItemBox(
+            child: ItemBox(
               item: item,
               skin: skin,
               hero: hero,
