@@ -1,7 +1,8 @@
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:guildwars2_companion/models/other/meta_event.dart';
-import 'package:guildwars2_companion/repositories/event.dart';
+import 'package:guildwars2_companion/core/models/event_segment.dart';
+import 'package:guildwars2_companion/features/meta_event/models/meta_event.dart';
+import 'package:guildwars2_companion/features/meta_event/repositories/event.dart';
 import 'package:mockito/mockito.dart';
 
 import 'mocks/services.dart';
@@ -49,7 +50,7 @@ main() {
           ),
         ]);
 
-      final eventRepository = EventRepository(
+      final eventRepository = MetaEventRepository(
         eventService: eventService
       );
 
@@ -108,7 +109,7 @@ main() {
           ),
         ]);
 
-      final eventRepository = EventRepository(
+      final eventRepository = MetaEventRepository(
         eventService: eventService
       );
 
@@ -153,7 +154,7 @@ main() {
           ),
         ]);
 
-      final eventRepository = EventRepository(
+      final eventRepository = MetaEventRepository(
         eventService: eventService
       );
 
