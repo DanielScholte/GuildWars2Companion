@@ -1,5 +1,4 @@
-import 'package:guildwars2_companion/features/world_boss/models/world_boss.dart';
-import 'package:meta/meta.dart';
+part of 'world_boss_bloc.dart';
 
 @immutable
 abstract class WorldBossState {}

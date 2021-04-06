@@ -51,7 +51,7 @@ import 'package:guildwars2_companion/features/trading_post/services/trading_post
 import 'package:guildwars2_companion/features/wallet/bloc/bloc.dart';
 import 'package:guildwars2_companion/features/wallet/repositories/wallet.dart';
 import 'package:guildwars2_companion/features/wallet/services/wallet.dart';
-import 'package:guildwars2_companion/features/world_boss/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/world_boss/bloc/world_boss_bloc.dart';
 import 'package:guildwars2_companion/features/world_boss/repositories/world_boss.dart';
 import 'package:guildwars2_companion/features/world_boss/services/world_boss.dart';
 

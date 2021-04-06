@@ -1,4 +1,4 @@
-import 'package:meta/meta.dart';
+part of 'world_boss_bloc.dart';
 
 @immutable
 abstract class WorldBossEvent {}

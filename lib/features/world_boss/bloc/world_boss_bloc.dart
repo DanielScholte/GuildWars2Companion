@@ -5,7 +5,10 @@ import 'package:guildwars2_companion/features/meta_event/models/meta_event.dart'
 import 'package:guildwars2_companion/features/world_boss/models/world_boss.dart';
 import 'package:guildwars2_companion/features/meta_event/repositories/event.dart';
 import 'package:guildwars2_companion/features/world_boss/repositories/world_boss.dart';
-import './bloc.dart';
+
+part 'world_boss_event.dart';
+part 'world_boss_state.dart';
+
 class WorldBossBloc extends Bloc<WorldBossEvent, WorldBossState> {
   final MetaEventRepository eventRepository;
   final WorldBossRepository worldBossRepository;

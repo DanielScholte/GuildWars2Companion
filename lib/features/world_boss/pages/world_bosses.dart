@@ -12,7 +12,7 @@ import 'package:guildwars2_companion/features/error/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
 import 'package:guildwars2_companion/features/configuration/bloc/configuration_bloc.dart';
 import 'package:guildwars2_companion/features/event/pages/event.dart';
-import 'package:guildwars2_companion/features/world_boss/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/world_boss/bloc/world_boss_bloc.dart';
 import 'package:guildwars2_companion/features/world_boss/models/world_boss.dart';
 import 'package:intl/intl.dart';
 import 'package:timer_builder/timer_builder.dart';
@@ -25,6 +25,8 @@ class WorldBossesPage extends StatefulWidget {
 class _WorldBossesPageState extends State<WorldBossesPage> {
   Timer _timer;
   int _refreshTimeout = 0;
+
+  bool _canRefresh = true;
 
   @override
   void initState() {
@@ -81,7 +83,23 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
                     },
                     child: CompanionListView(
                       children: state.worldBosses
-                        .map((w) => _buildWorldbossRow(context, timeFormat, w))
+                        .map((w) => _Row(
+                          worldBoss: w,
+                          timeFormat: timeFormat,
+                          onRequiresRefresh: () {
+                            if (!_canRefresh) {
+                              return;
+                            }
+
+                            _canRefresh = false;
+                            _timer = Timer(
+                              Duration(seconds: 30),	
+                              () => _canRefresh = true	
+                            );
+
+                            BlocProvider.of<WorldBossBloc>(context).add(LoadWorldbossesEvent(false, null));
+                          },
+                        ))
                         .toList(),
                     ),
                   );
@@ -97,8 +115,21 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
       ),
     );
   }
-              
-  Widget _buildWorldbossRow(BuildContext context, DateFormat timeFormat, WorldBoss worldBoss) {
+}
+
+class _Row extends StatelessWidget {
+  final WorldBoss worldBoss;
+  final DateFormat timeFormat;
+  final Function onRequiresRefresh;
+
+  _Row({
+    @required this.worldBoss,
+    @required this.timeFormat,
+    @required this.onRequiresRefresh
+  });
+
+  @override
+  Widget build(BuildContext context) {
     DateTime time = worldBoss.segment.time;
 
     return CompanionButton(
@@ -137,9 +168,8 @@ class _WorldBossesPageState extends State<WorldBossesPage> {
 
                 bool isActive = time.isBefore(now);
 
-                if (time.add(worldBoss.segment.duration).isBefore(now) && _refreshTimeout == 0) {
-                  _refreshTimeout = 30;
-                  BlocProvider.of<WorldBossBloc>(context).add(LoadWorldbossesEvent(false, null));
+                if (time.add(worldBoss.segment.duration).isBefore(now)) {
+                  onRequiresRefresh();
                 }
 
                 if (isActive) {
