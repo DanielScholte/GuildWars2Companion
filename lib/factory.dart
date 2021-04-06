@@ -119,113 +119,145 @@ class CompanionFactory {
     walletService = WalletService(dio: dioUtil.getDioInstance());
     worldBossService = WorldBossService(dio: dioUtil.getDioInstance());
   }
+}
 
-  Widget initializeRepositories({ @required Widget child }) {
+class CompanionFactoryProvider extends StatelessWidget {
+  final CompanionFactory companionFactory;
+  final Widget child;
+
+  CompanionFactoryProvider({@required this.companionFactory, @required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return _RepositoryProviders(
+      companionFactory: companionFactory,
+      child: _BlocProviders(
+        child: child,
+      ),
+    );
+  }
+}
+
+class _RepositoryProviders extends StatelessWidget {
+  final CompanionFactory companionFactory;
+  final Widget child;
+
+  _RepositoryProviders({@required this.companionFactory, @required this.child});
+
+  @override
+  Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       child: child,
       providers: [
         RepositoryProvider<AccountRepository>(
           create: (BuildContext context) => AccountRepository(
-            accountService: accountService,
-            tokenService: tokenService,
+            accountService: companionFactory.accountService,
+            tokenService: companionFactory.tokenService,
           ),
         ),
         RepositoryProvider<AchievementRepository>(
           create: (BuildContext context) => AchievementRepository(
-            achievementService: achievementService,
-            characterService: characterService,
-            itemService: itemService,
+            achievementService: companionFactory.achievementService,
+            characterService: companionFactory.characterService,
+            itemService: companionFactory.itemService,
           ),
         ),
         RepositoryProvider<BankRepository>(
           create: (BuildContext context) => BankRepository(
-            bankService: bankService,
-            itemService: itemService,
+            bankService: companionFactory.bankService,
+            itemService: companionFactory.itemService,
           ),
         ),
         RepositoryProvider<BuildRepository>(
           create: (BuildContext context) => BuildRepository(
-            buildService: buildService,
+            buildService: companionFactory.buildService,
           ),
         ),
         RepositoryProvider<ChangelogRepository>(
           create: (BuildContext context) => ChangelogRepository(
-            changelogService: changelogService
+            changelogService: companionFactory.changelogService
           ),
         ),
         RepositoryProvider<CharacterRepository>(
           create: (BuildContext context) => CharacterRepository(
-            characterService: characterService,
-            itemService: itemService,
+            characterService: companionFactory.characterService,
+            itemService: companionFactory.itemService,
           ),
         ),
         RepositoryProvider<ConfigurationRepository>(
           create: (BuildContext context) => ConfigurationRepository(
-            configurationService: configurationService
+            configurationService: companionFactory.configurationService
           ),
         ),
         RepositoryProvider<DungeonRepository>(
           create: (BuildContext context) => DungeonRepository(
-            dungeonService: dungeonService,
+            dungeonService: companionFactory.dungeonService,
           ),
         ),
         RepositoryProvider<MetaEventRepository>(
           create: (BuildContext context) => MetaEventRepository(
-            eventService: eventService,
+            eventService: companionFactory.eventService,
           ),
         ),
         RepositoryProvider<ItemRepository>(
           create: (BuildContext context) => ItemRepository(
-            itemService: itemService,
+            itemService: companionFactory.itemService,
           ),
         ),
         RepositoryProvider<NotificationRepository>(
           create: (BuildContext context) => NotificationRepository(
-            notificationService: notificationService,
+            notificationService: companionFactory.notificationService,
           ),
         ),
         RepositoryProvider<PermissionRepository>(
           create: (BuildContext context) => PermissionRepository(
-            permissionService: permissionService,
+            permissionService: companionFactory.permissionService,
           ),
         ),
         RepositoryProvider<PvpRepository>(
           create: (BuildContext context) => PvpRepository(
-            mapService: mapService,
-            pvpService: pvpService,
+            mapService: companionFactory.mapService,
+            pvpService: companionFactory.pvpService,
           ),
         ),
         RepositoryProvider<RaidRepository>(
           create: (BuildContext context) => RaidRepository(
-            raidService: raidService,
+            raidService: companionFactory.raidService,
           ),
         ),
         RepositoryProvider<TabRepository>(
           create: (BuildContext context) => TabRepository(
-            tabService: tabService
+            tabService: companionFactory.tabService
           ),
         ),
         RepositoryProvider<TradingPostRepository>(
           create: (BuildContext context) => TradingPostRepository(
-            itemService: itemService,
-            tradingPostService: tradingPostService,
+            itemService: companionFactory.itemService,
+            tradingPostService: companionFactory.tradingPostService,
           ),
         ),
         RepositoryProvider<WalletRepository>(
           create: (BuildContext context) => WalletRepository(
-            walletService: walletService,
+            walletService: companionFactory.walletService,
           ),
         ),
         RepositoryProvider<WorldBossRepository>(
           create: (BuildContext context) => WorldBossRepository(
-            worldBossService: worldBossService
+            worldBossService: companionFactory.worldBossService
           ),
         ),
       ],
     );
   }
+}
 
-  Widget initializeBlocs({ @required Widget child }) {
+class _BlocProviders extends StatelessWidget {
+  final Widget child;
+
+  _BlocProviders({@required this.child});
+
+  @override
+  Widget build(BuildContext context) {
     return MultiBlocProvider(
       child: child,
       providers: [

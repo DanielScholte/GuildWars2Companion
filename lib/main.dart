@@ -47,19 +47,18 @@ class GuildWars2Companion extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-    return companionFactory.initializeRepositories(
-      child: companionFactory.initializeBlocs(
-        child: BlocBuilder<ConfigurationBloc, ConfigurationState>(
-          builder: (context, state) {
-            return MaterialApp(
-              title: 'Guild Wars 2 Companion',
-              theme: lightTheme,
-              darkTheme: darkTheme,
-              themeMode: state.configuration.themeMode,
-              home: page,
-            );
-          }
-        ),
+    return CompanionFactoryProvider(
+      companionFactory: companionFactory,
+      child: BlocBuilder<ConfigurationBloc, ConfigurationState>(
+        builder: (context, state) {
+          return MaterialApp(
+            title: 'Guild Wars 2 Companion',
+            theme: lightTheme,
+            darkTheme: darkTheme,
+            themeMode: state.configuration.themeMode,
+            home: page,
+          );
+        }
       ),
     );
   }
