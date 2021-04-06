@@ -7,7 +7,9 @@ ThemeData darkTheme = ThemeData(
   accentColor: Color(0xFFEEEEEE),
   cardColor: Color(0xFF262626),
   scaffoldBackgroundColor: Color(0xFF111111),
-  cursorColor: Color(0xFFAA0404),
+  textSelectionTheme: TextSelectionThemeData(
+    cursorColor: Color(0xFFAA0404)
+  ),
   textTheme: TextTheme(
     headline1: TextStyle(
       fontSize: 22.0,

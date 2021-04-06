@@ -22,7 +22,8 @@ class TokenPage extends StatelessWidget {
         listener: (BuildContext context, state) {
           if (state is UnauthenticatedState) {
             if (state.message != null) {
-              Scaffold.of(context).showSnackBar(SnackBar(
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(
                   state.message,
                   style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.white)
@@ -154,7 +155,7 @@ class TokenPage extends StatelessWidget {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text(
                 'Cancel',
                 style: TextStyle(
@@ -165,7 +166,7 @@ class TokenPage extends StatelessWidget {
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
+            TextButton(
               child: Text(
                 'Add',
                 style: TextStyle(

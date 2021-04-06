@@ -19,10 +19,9 @@ class Build {
     name = json['name'];
     profession = json['profession'];
     if (json['specializations'] != null) {
-      specializations = new List<BuildSpecialization>();
-      json['specializations'].forEach((v) {
-        specializations.add(new BuildSpecialization.fromJson(v));
-      });
+      specializations = (json['specializations'] as List)
+        .map((j) => BuildSpecialization.fromJson(j))
+        .toList();
     }
     skills =
         json['skills'] != null ? new BuildSkillset.fromJson(json['skills']) : null;

@@ -39,25 +39,30 @@ class Character {
 		created = json['created'];
 		deaths = json['deaths'];
 		if (json['crafting'] != null) {
-			crafting = new List<Crafting>();
-			json['crafting'].forEach((v) { crafting.add(new Crafting.fromJson(v)); });
+			crafting = (json['crafting'] as List)
+        .map((j) => Crafting.fromJson(j))
+        .toList();
 		}
     if (json['build_tabs'] != null) {
-			buildTabs = new List<BuildTab>();
-			json['build_tabs'].forEach((v) { buildTabs.add(new BuildTab.fromJson(v)); });
+			buildTabs = (json['build_tabs'] as List)
+        .map((j) => BuildTab.fromJson(j))
+        .toList();
 		}
     if (json['equipment_tabs'] != null) {
-			equipmentTabs = new List<EquipmentTab>();
-			json['equipment_tabs'].forEach((v) { equipmentTabs.add(new EquipmentTab.fromJson(v)); });
+			equipmentTabs = (json['equipment_tabs'] as List)
+        .map((j) => EquipmentTab.fromJson(j))
+        .toList();
 		}
 		title = json['title'];
     if (json['equipment'] != null) {
-			equipment = new List<Equipment>();
-			json['equipment'].forEach((v) { equipment.add(new Equipment.fromJson(v)); });
+			equipment = (json['equipment'] as List)
+        .map((j) => Equipment.fromJson(j))
+        .toList();
 		}
 		if (json['bags'] != null) {
-			bags = new List<Bags>();
-			json['bags'].where((b) => b != null).forEach((v) { bags.add(new Bags.fromJson(v)); });
+			bags = (json['bags'] as List)
+        .map((j) => Bags.fromJson(j))
+        .toList();
 		}
 	}
 
@@ -96,8 +101,9 @@ class EquipmentTab {
 		isActive = json['is_active'];
     name = json['name'];
 		if (json['equipment'] != null) {
-			equipment = new List<Equipment>();
-			json['equipment'].forEach((v) { equipment.add(new Equipment.fromJson(v)); });
+			equipment = (json['equipment'] as List)
+        .map((j) => Equipment.fromJson(j))
+        .toList();
 		}
 	}
 

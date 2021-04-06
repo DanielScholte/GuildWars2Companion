@@ -103,7 +103,7 @@ class _EventNotificationListState extends State<EventNotificationList> {
                                 'Are you sure that you want to remove this scheduled notification?'
                               ),
                               actions: <Widget>[
-                                FlatButton(
+                                TextButton(
                                   child: Text(
                                     'Cancel',
                                     style: TextStyle(
@@ -112,7 +112,7 @@ class _EventNotificationListState extends State<EventNotificationList> {
                                   ),
                                   onPressed: () => Navigator.of(context).pop(),
                                 ),
-                                FlatButton(
+                                TextButton(
                                   child: Text(
                                     'Remove',
                                     style: TextStyle(

@@ -11,7 +11,6 @@ class QrCodePage extends StatefulWidget {
 
 class _QrCodePageState extends State<QrCodePage> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   QRViewController controller;
 
@@ -20,33 +19,32 @@ class _QrCodePageState extends State<QrCodePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AccountBloc, AccountState>(
-      listenWhen: (previous, current) => current is UnauthenticatedState || current is LoadingAccountState,
-      listener: (context, state) {
-        canScan = !(state is LoadingAccountState);
+    return Scaffold(
+      appBar: CompanionAppBar(
+        title: 'Scan your Qr Code',
+        color: Colors.red,
+      ),
+      body: BlocListener<AccountBloc, AccountState>(
+        listenWhen: (previous, current) => current is UnauthenticatedState || current is LoadingAccountState,
+        listener: (context, state) {
+          canScan = !(state is LoadingAccountState);
 
-        if (state is UnauthenticatedState && state.tokenAdded) {
-          Navigator.of(context).pop();
-          return; 
-        }
+          if (state is UnauthenticatedState && state.tokenAdded) {
+            Navigator.of(context).pop();
+            return; 
+          }
 
-        if (state is UnauthenticatedState && !state.tokenAdded && state.message != null) {
-          _scaffoldKey.currentState.showSnackBar(SnackBar(
-            content: Text(
-              state.message,
-              style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.white)
-            ),
-            backgroundColor: Colors.red,
-          ));
-        }
-      },
-      child: Scaffold(
-        key: _scaffoldKey,
-        appBar: CompanionAppBar(
-          title: 'Scan your Qr Code',
-          color: Colors.red,
-        ),
-        body: Stack(
+          if (state is UnauthenticatedState && !state.tokenAdded && state.message != null) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                state.message,
+                style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.white)
+              ),
+              backgroundColor: Colors.red,
+            ));
+          }
+        },
+        child: Stack(
           children: <Widget>[
             Column(
               mainAxisAlignment: MainAxisAlignment.center,

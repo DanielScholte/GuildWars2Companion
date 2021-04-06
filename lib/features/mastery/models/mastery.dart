@@ -25,10 +25,9 @@ class Mastery {
     background = json['background'];
     region = json['region'];
     if (json['levels'] != null) {
-      levels = new List<MasteryLevel>();
-      json['levels'].forEach((v) {
-        levels.add(new MasteryLevel.fromJson(v));
-      });
+      levels = (json['levels'] as List)
+        .map((j) => MasteryLevel.fromJson(j))
+        .toList();
     }
   }
 

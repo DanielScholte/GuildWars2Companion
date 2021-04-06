@@ -34,17 +34,15 @@ class SkillTrait {
     chatLink = json['chat_link'];
 
     if (json['facts'] != null) {
-      facts = new List<Fact>();
-      json['facts'].forEach((v) {
-        facts.add(new Fact.fromJson(v));
-      });
+      facts = (json['facts'] as List)
+        .map((j) => Fact.fromJson(j))
+        .toList();
     }
 
     if (json['traited_facts'] != null) {
-      traitedFacts = new List<Fact>();
-      json['traited_facts'].forEach((v) {
-        traitedFacts.add(new Fact.fromJson(v));
-      });
+      traitedFacts = (json['traited_facts'] as List)
+        .map((j) => Fact.fromJson(j))
+        .toList();
     }
   }
 
