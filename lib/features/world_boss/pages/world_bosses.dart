@@ -24,23 +24,7 @@ class WorldBossesPage extends StatefulWidget {
 
 class _WorldBossesPageState extends State<WorldBossesPage> {
   Timer _timer;
-  int _refreshTimeout = 0;
-
   bool _canRefresh = true;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _timer = Timer.periodic(	
-      Duration(seconds: 1),	
-      (Timer timer) {	
-        if (_refreshTimeout > 0) {	
-          _refreshTimeout--;	
-        }
-      },	
-    );
-  }
 
   @override
   void dispose() {

@@ -13,8 +13,9 @@ class Bags {
 		id = json['id'];
 		size = json['size'];
 		if (json['inventory'] != null) {
-			inventory = new List<InventoryItem>();
-			json['inventory'].forEach((v) { inventory.add(new InventoryItem.fromJson(v)); });
+			inventory = (json['inventory'] as List)
+        .map((j) => InventoryItem.fromJson(j))
+        .toList();
 		}
 	}
 

@@ -116,7 +116,7 @@ Experiencing issues with cached data, such as outdated information? Try clearing
             'Are you sure that you want to clear the cache?'
           ),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text(
                 'Cancel',
                 style: TextStyle(
@@ -125,7 +125,7 @@ Experiencing issues with cached data, such as outdated information? Try clearing
               ),
               onPressed: () => Navigator.of(context).pop(),
             ),
-            FlatButton(
+            TextButton(
               child: Text(
                 'Clear cache',
                 style: TextStyle(

@@ -11,43 +11,38 @@ class DailyGroup {
 
   DailyGroup.fromJson(Map<String, dynamic> json) {
     if (json['pve'] != null) {
-      pve = new List<Daily>();
-      json['pve'].forEach((v) {
-        pve.add(new Daily.fromJson(v));
-      });
+      pve = (json['pve'] as List)
+        .map((j) => Daily.fromJson(j))
+        .toList();
     } else {
       pve = [];
     }
 
     if (json['pvp'] != null) {
-      pvp = new List<Daily>();
-      json['pvp'].forEach((v) {
-        pvp.add(new Daily.fromJson(v));
-      });
+      pvp = (json['pvp'] as List)
+        .map((j) => Daily.fromJson(j))
+        .toList();
     } else {
       pvp = [];
     }
     if (json['wvw'] != null) {
-      wvw = new List<Daily>();
-      json['wvw'].forEach((v) {
-        wvw.add(new Daily.fromJson(v));
-      });
+      wvw = (json['wvw'] as List)
+        .map((j) => Daily.fromJson(j))
+        .toList();
     } else {
       wvw = [];
     }
     if (json['fractals'] != null) {
-      fractals = new List<Daily>();
-      json['fractals'].forEach((v) {
-        fractals.add(new Daily.fromJson(v));
-      });
+      fractals = (json['fractals'] as List)
+        .map((j) => Daily.fromJson(j))
+        .toList();
     } else {
       fractals = [];
     }
     if (json['special'] != null) {
-      special = new List<Daily>();
-      json['special'].forEach((v) {
-        special.add(new Daily.fromJson(v));
-      });
+      special = (json['special'] as List)
+        .map((j) => Daily.fromJson(j))
+        .toList();
     } else {
       special = [];
     }

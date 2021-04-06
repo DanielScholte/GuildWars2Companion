@@ -23,8 +23,6 @@ class ScheduleNotificationTimePage extends StatefulWidget {
 }
 
 class _ScheduleNotificationTimePageState extends State<ScheduleNotificationTimePage> {
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
-
   List<DateTime> _times;
 
   DateTime _date;
@@ -53,7 +51,6 @@ class _ScheduleNotificationTimePageState extends State<ScheduleNotificationTimeP
     return CompanionAccent(
       lightColor: Colors.red,
       child: Scaffold(
-        key: _scaffoldKey,
         appBar: CompanionAppBar(
           title: 'Choose a${widget.notificationType == NotificationType.SINGLE ? " date and" : ""} spawn time',
           color: Colors.red,
@@ -100,7 +97,7 @@ class _ScheduleNotificationTimePageState extends State<ScheduleNotificationTimeP
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
             if (widget.notificationType == NotificationType.SINGLE && _time.isBefore(DateTime.now())) {
-              _scaffoldKey.currentState.showSnackBar(SnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text('Please select a date or time.')
               ));
               return;

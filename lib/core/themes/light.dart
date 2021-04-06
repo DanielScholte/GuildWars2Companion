@@ -7,7 +7,9 @@ ThemeData lightTheme = ThemeData(
   accentColor: Colors.red,
   cardColor: Colors.white,
   scaffoldBackgroundColor: Color(0xFFEEEEEE),
-  cursorColor: Color(0xFFAA0404),
+  textSelectionTheme: TextSelectionThemeData(
+    cursorColor: Color(0xFFAA0404)
+  ),
   textTheme: TextTheme(
     headline1: TextStyle(
       fontSize: 22.0,

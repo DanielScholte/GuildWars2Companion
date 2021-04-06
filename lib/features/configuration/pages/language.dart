@@ -62,7 +62,7 @@ class LanguageConfigurationPage extends StatelessWidget {
 This will also clear your cache and require you to restart the app.'''
           ),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text(
                 'Cancel',
                 style: TextStyle(
@@ -71,7 +71,7 @@ This will also clear your cache and require you to restart the app.'''
               ),
               onPressed: () => Navigator.of(context).pop(),
             ),
-            FlatButton(
+            TextButton(
               child: Text(
                 'Change language',
                 style: TextStyle(

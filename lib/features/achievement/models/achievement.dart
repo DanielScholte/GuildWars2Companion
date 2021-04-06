@@ -51,22 +51,19 @@ class Achievement {
     requirement = json['requirement'];
     lockedText = json['locked_text'];
     if (json['bits'] != null) {
-      bits = new List<AchievementBits>();
-      json['bits'].forEach((v) {
-        bits.add(new AchievementBits.fromJson(v));
-      });
+      bits = (json['bits'] as List)
+        .map((j) => AchievementBits.fromJson(j))
+        .toList();
     }
     if (json['tiers'] != null) {
-      tiers = new List<AchievementTiers>();
-      json['tiers'].forEach((v) {
-        tiers.add(new AchievementTiers.fromJson(v));
-      });
+      tiers = (json['tiers'] as List)
+        .map((j) => AchievementTiers.fromJson(j))
+        .toList();
     }
     if (json['rewards'] != null) {
-      rewards = new List<AchievementRewards>();
-      json['rewards'].forEach((v) {
-        rewards.add(new AchievementRewards.fromJson(v));
-      });
+      rewards = (json['rewards'] as List)
+        .map((j) => AchievementRewards.fromJson(j))
+        .toList();
     }
     if (json['prerequisites'] != null) {
       prerequisites = json['prerequisites'].cast<int>();

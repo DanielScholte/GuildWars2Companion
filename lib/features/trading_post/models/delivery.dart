@@ -9,10 +9,9 @@ class TradingPostDelivery {
   TradingPostDelivery.fromJson(Map<String, dynamic> json) {
     coins = json['coins'];
     if (json['items'] != null) {
-      items = new List<DeliveryItem>();
-      json['items'].forEach((v) {
-        items.add(new DeliveryItem.fromJson(v));
-      });
+      items = (json['items'] as List)
+        .map((j) => DeliveryItem.fromJson(j))
+        .toList();
     }
   }
 

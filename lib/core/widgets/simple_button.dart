@@ -15,12 +15,17 @@ class CompanionSimpleButton extends StatelessWidget {
     return Container(
       width: 400,
       padding: EdgeInsets.symmetric(vertical: 8.0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(12.0),
+      child: ElevatedButton(
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all(RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          )),
+          backgroundColor: MaterialStateProperty.all(
+            Theme.of(context).brightness == Brightness.light
+              ? Theme.of(context).accentColor
+              : Theme.of(context).cardColor
+          )
         ),
-        color: Theme.of(context).brightness == Brightness.light
-          ? Theme.of(context).accentColor : Theme.of(context).cardColor,
         child: Text(
           text,
           textAlign: TextAlign.center,

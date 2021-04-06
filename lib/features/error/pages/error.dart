@@ -128,7 +128,7 @@ class _CopyLogsButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           onTap: () async {
             await Clipboard.setData(ClipboardData(text: exception));
-            Scaffold.of(context).showSnackBar(SnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(
                 'Error log copied to clipboard',
                 style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.white)

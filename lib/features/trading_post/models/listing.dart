@@ -10,16 +10,14 @@ class TradingPostListing {
   TradingPostListing.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     if (json['buys'] != null) {
-      buys = new List<ListingOffer>();
-      json['buys'].forEach((v) {
-        buys.add(new ListingOffer.fromJson(v));
-      });
+      buys = (json['buys'] as List)
+        .map((j) => ListingOffer.fromJson(j))
+        .toList();
     }
     if (json['sells'] != null) {
-      sells = new List<ListingOffer>();
-      json['sells'].forEach((v) {
-        sells.add(new ListingOffer.fromJson(v));
-      });
+      sells = (json['sells'] as List)
+        .map((j) => ListingOffer.fromJson(j))
+        .toList();
     }
   }
 

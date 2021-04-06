@@ -23,16 +23,14 @@ class PvpSeason {
     end = json['end'];
     active = json['active'];
     if (json['divisions'] != null) {
-      divisions = new List<PvpDivision>();
-      json['divisions'].forEach((v) {
-        divisions.add(new PvpDivision.fromJson(v));
-      });
+      divisions = (json['divisions'] as List)
+        .map((j) => PvpDivision.fromJson(j))
+        .toList();
     }
     if (json['ranks'] != null) {
-      ranks = new List<PvpSeasonRank>();
-      json['ranks'].forEach((v) {
-        ranks.add(new PvpSeasonRank.fromJson(v));
-      });
+      ranks = (json['ranks'] as List)
+        .map((j) => PvpSeasonRank.fromJson(j))
+        .toList();
     }
   }
 
@@ -76,10 +74,9 @@ class PvpDivision {
     smallIcon = json['small_icon'];
     pipIcon = json['pip_icon'];
     if (json['tiers'] != null) {
-      tiers = new List<PvpDivisionTier>();
-      json['tiers'].forEach((v) {
-        tiers.add(new PvpDivisionTier.fromJson(v));
-      });
+      tiers = (json['tiers'] as List)
+        .map((j) => PvpDivisionTier.fromJson(j))
+        .toList();
     }
   }
 
@@ -136,10 +133,9 @@ class PvpSeasonRank {
     overlay = json['overlay'];
     overlaySmall = json['overlay_small'];
     if (json['tiers'] != null) {
-      tiers = new List<PvpRankTier>();
-      json['tiers'].forEach((v) {
-        tiers.add(new PvpRankTier.fromJson(v));
-      });
+      tiers = (json['tiers'] as List)
+        .map((j) => PvpRankTier.fromJson(j))
+        .toList();
     }
   }
 

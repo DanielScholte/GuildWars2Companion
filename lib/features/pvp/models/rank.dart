@@ -24,10 +24,9 @@ class PvpRank {
     minRank = json['min_rank'];
     maxRank = json['max_rank'];
     if (json['levels'] != null) {
-      levels = new List<PvpRankLevels>();
-      json['levels'].forEach((v) {
-        levels.add(new PvpRankLevels.fromJson(v));
-      });
+      levels = (json['levels'] as List)
+        .map((j) => PvpRankLevels.fromJson(j))
+        .toList();
     }
   }
 
