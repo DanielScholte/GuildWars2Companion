@@ -9,7 +9,7 @@ class CompanionButton extends StatelessWidget {
   final String title;
   final List<String> subtitles;
   final List<Widget> subtitleWidgets;
-  final VoidCallback onTap;
+  final Function onTap;
   final double height;
   final Color color;
   final Color foregroundColor;
@@ -47,121 +47,161 @@ class CompanionButton extends StatelessWidget {
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12.0),
-            child: wrapper != null ? wrapper(context, _buildBody(context)) : _buildBody(context),
+            child: _Wrapper(
+              wrapper: wrapper,
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  splashColor: Colors.black12,
+                  highlightColor: Colors.black12,
+                  onTap: onTap,
+                  child: Row(
+                    children: <Widget>[
+                      _Leading(
+                        child: leading,
+                        height: height,
+                        loading: loading,
+                        hero: hero,
+                      ),
+                      _Title(
+                        title: title,
+                        subtitles: subtitles,
+                        subtitleWidgets: subtitleWidgets,
+                        foregroundColor: foregroundColor,
+                      ),
+                      if (trailing != null)
+                        trailing,
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(
+                          FontAwesomeIcons.chevronRight,
+                          color: Theme.of(context).brightness == Brightness.light ? foregroundColor : Colors.white,
+                          size: 18.0,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            )
           ),
         ),
       ),
     );
   }
+}
 
-  Widget _buildBody(BuildContext context) {
-    return onTap != null ? Material(
-      color: Colors.transparent,
-      child: InkWell(
-        splashColor: Colors.black12,
-        highlightColor: Colors.black12,
-        onTap: () => onTap(),
-        child: Row(
-          children: <Widget>[
-            _buildLeadingContainer(context),
-            _buildTitle(context),
-            if (trailing != null)
-              trailing,
-            _buildArrow(context)
-          ],
-        ),
+class _Wrapper extends StatelessWidget {
+  final Widget Function(BuildContext, Widget) wrapper;
+  final Widget child;
+
+  _Wrapper({
+    @required this.wrapper,
+    @required this.child
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (wrapper == null) {
+      return child;
+    }
+
+    return wrapper(context, child);
+  }
+}
+
+class _Title extends StatelessWidget {
+  final String title;
+  final List<String> subtitles;
+  final List<Widget> subtitleWidgets;
+  final Color foregroundColor;
+
+  const _Title({
+    @required this.title,
+    this.subtitles,
+    this.subtitleWidgets,
+    this.foregroundColor
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              color: Theme.of(context).brightness == Brightness.light ? foregroundColor : Colors.white,
+              fontSize: 18.0,
+              fontWeight: FontWeight.w500
+            ),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          if (subtitleWidgets != null)
+            ...subtitleWidgets,
+          if (subtitles != null)
+            ...subtitles
+              .map((subtitle) => Text(
+                subtitle,
+                style: TextStyle(
+                  color: Theme.of(context).brightness == Brightness.light ? foregroundColor : Colors.white,
+                  fontSize: 16.0,
+                ),
+              ))
+              .toList()
+        ],
       ),
-    ) : Row(
-      children: <Widget>[
-        _buildLeadingContainer(context),
-        _buildTitle(context),
-        if (trailing != null)
-          trailing,
-      ],
     );
   }
+}
 
-  Widget _buildLeadingContainer(BuildContext context) {
+class _Leading extends StatelessWidget {
+  final Widget child;
+  final double height;
+  final bool loading;
+  final String hero;
+
+  _Leading({
+    @required this.child,
+    @required this.height,
+    @required this.loading,
+    this.hero
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: height == null ? 80.0 : height,
       height: height,
       color: Colors.black12,
       margin: EdgeInsets.only(right: 12.0),
       alignment: Alignment.center,
-      child: this.loading ?
-        Theme(
+      child: this.loading
+        ? Theme(
           data: Theme.of(context).copyWith(accentColor: Colors.white),
           child: CircularProgressIndicator(),
-        ) : _buildLeading(context),
-    );
-  }
+        )
+        : Builder(
+          builder: (context) {
+            if (hero != null) {
+              return Hero(
+                tag: hero,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(11.0),
+                    bottomLeft: Radius.circular(11.0),
+                  ),
+                  child: child,
+                ),
+              );
+            }
 
-  Widget _buildLeading(BuildContext context) {
-    if (hero != null) {
-      return Hero(
-        tag: hero,
-        child: ClipRRect(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(11.0),
-            bottomLeft: Radius.circular(11.0),
-          ),
-          child: leading,
+            return child;
+          },
         ),
-      );
-    }
-
-    return leading;
-  }
-
-  Widget _buildTitle(BuildContext context) {
-    List<Widget> titles = [
-      Text(
-        this.title,
-        style: TextStyle(
-          color: Theme.of(context).brightness == Brightness.light ? foregroundColor : Colors.white,
-          fontSize: 18.0,
-          fontWeight: FontWeight.w500
-        ),
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-      ),
-    ];
-
-    if (this.subtitleWidgets != null) {
-      titles.addAll(this.subtitleWidgets);
-    }
-
-    if (this.subtitles != null) {
-      titles.addAll(
-        this.subtitles.map(
-          (s) => Text(
-            s,
-            style: TextStyle(
-              color: Theme.of(context).brightness == Brightness.light ? foregroundColor : Colors.white,
-              fontSize: 16.0,
-            ),
-          )
-        ).toList()
-      );
-    }
-
-    return Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: titles,
-      ),
-    );
-  }
-
-  Widget _buildArrow(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(8.0),
-      child: Icon(
-        FontAwesomeIcons.chevronRight,
-        color: Theme.of(context).brightness == Brightness.light ? foregroundColor : Colors.white,
-        size: 18.0,
-      ),
     );
   }
 }

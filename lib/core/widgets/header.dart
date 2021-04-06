@@ -18,7 +18,7 @@ class CompanionHeader extends StatelessWidget {
   final bool includeShadow;
   final bool enforceColor;
   final bool isFavorite;
-  final VoidCallback onFavoriteToggle;
+  final Function onFavoriteToggle;
   final MetaEventSegment eventSegment;
 
   CompanionHeader({
@@ -77,11 +77,22 @@ class CompanionHeader extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       if (isFavorite != null)
-                        _buildFavorite(isFavorite),
+                        _Favorite(
+                          favorite: isFavorite,
+                          foregroundColor: foregroundColor,
+                          onFavoriteToggle: onFavoriteToggle,
+                        ),
                       if (eventSegment != null)
-                        _buildNotification(context),
+                        _Notification(
+                          eventSegment: eventSegment,
+                          foregroundColor: foregroundColor,
+                        ),
                       if (wikiName != null)
-                        _buildWiki(),
+                        _Wiki(
+                          wikiName: wikiName,
+                          wikiRequiresEnglish: wikiRequiresEnglish,
+                          foregroundColor: foregroundColor,
+                        ),
                     ],
                   ),
                 ),
@@ -98,8 +109,21 @@ class CompanionHeader extends StatelessWidget {
       )
     );
   }
+}
 
-  Widget _buildFavorite(bool favorite) {
+class _Favorite extends StatelessWidget {
+  final bool favorite;
+  final Color foregroundColor;
+  final Function onFavoriteToggle;
+
+  _Favorite({
+    @required this.favorite,
+    @required this.foregroundColor,
+    @required this.onFavoriteToggle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
       child: IconButton(
@@ -108,12 +132,23 @@ class CompanionHeader extends StatelessWidget {
           color: foregroundColor,
           size: 28.0,
         ),
-        onPressed: () => onFavoriteToggle(),
+        onPressed: onFavoriteToggle,
       ),
     );
   }
+}
 
-  Widget _buildNotification(BuildContext context) {
+class _Notification extends StatelessWidget {
+  final MetaEventSegment eventSegment;
+  final Color foregroundColor;
+
+  _Notification({
+    @required this.eventSegment,
+    @required this.foregroundColor
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return BlocBuilder<NotificationBloc, NotificationState>(
       builder: (context, state) {
         if (state is ScheduledNotificationsState) {
@@ -140,8 +175,21 @@ class CompanionHeader extends StatelessWidget {
       }
     );
   }
+}
 
-  Widget _buildWiki() {
+class _Wiki extends StatelessWidget {
+  final String wikiName;
+  final bool wikiRequiresEnglish;
+  final Color foregroundColor;
+
+  _Wiki({
+    @required this.wikiName,
+    @required this.wikiRequiresEnglish,
+    @required this.foregroundColor
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return BlocBuilder<ConfigurationBloc, ConfigurationState>(
       builder: (context, state) {
         if (wikiRequiresEnglish && state.configuration.language != 'en') {

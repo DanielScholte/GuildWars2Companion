@@ -46,50 +46,38 @@ class BuildSkillTraitBox extends StatelessWidget {
           child: Stack(
             alignment: Alignment.center,
             children: <Widget>[
-              _buildImage(),
+              CompanionCachedImage(
+                height: size,
+                width: size,
+                imageUrl: skillTrait.icon,
+                iconSize: size / 1.5,
+                color: Colors.white,
+                fit: BoxFit.cover,
+              ),
               if (greyedOut)
-                _buildGreyOverlay(),
+                Container(
+                  width: this.size,
+                  height: this.size,
+                  color: Colors.black54,
+                ),
               if (enablePopup)
-                _buildInkwell(context),
+                Positioned.fill(
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => SkillTraitPage(
+                          skillTrait: skillTrait,
+                          hero: hero,
+                          slotType: skillTraitType,
+                        )
+                      ))
+                    ),
+                  ),
+                ),
             ],
           ),
         ) : null,
-      ),
-    );
-  }
-
-  Widget _buildImage() {
-    return CompanionCachedImage(
-      height: size,
-      width: size,
-      imageUrl: skillTrait.icon,
-      iconSize: size / 1.5,
-      color: Colors.white,
-      fit: BoxFit.cover,
-    );
-  }
-
-  Widget _buildGreyOverlay() { 
-    return Container(
-      width: this.size,
-      height: this.size,
-      color: Colors.black54,
-    );
-  }
-
-  Widget _buildInkwell(BuildContext context) {
-    return Positioned.fill(
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => SkillTraitPage(
-              skillTrait: skillTrait,
-              hero: hero,
-              slotType: skillTraitType,
-            )
-          ))
-        ),
       ),
     );
   }

@@ -45,15 +45,29 @@ class AchievementButton extends StatelessWidget {
           )
         ));
       },
-      leading: _buildLeading(context),
-      trailing: _buildTrailing(context),
-      subtitles: this.levels != null ? [
-        this.levels
-      ] : null,
+      leading: _Leading(
+        achievement: achievement,
+        categoryIcon: categoryIcon,
+        includeProgression: includeProgression,
+        hero: hero,
+      ),
+      trailing: _Trailing(achievement: achievement),
+      subtitles: this.levels != null
+        ? [this.levels]
+        : null,
     );
   }
+}
 
-  Widget _buildTrailing(BuildContext context) {
+class _Trailing extends StatelessWidget {
+  final Achievement achievement;
+
+  _Trailing({
+    @required this.achievement
+  });
+
+  @override
+  Widget build(BuildContext context) {
     int points = 0;
     achievement.tiers.forEach((t) => points += t.points);
 
@@ -147,10 +161,29 @@ class AchievementButton extends StatelessWidget {
       ],
     );
   }
+}
 
-  Widget _buildLeading(BuildContext context) {
+class _Leading extends StatelessWidget {
+  final Achievement achievement;
+  final bool includeProgression;
+  final String categoryIcon;
+  final String hero;
+
+  _Leading({
+    @required this.achievement,
+    @required this.includeProgression,
+    @required this.categoryIcon,
+    this.hero
+  });
+
+  @override
+  Widget build(BuildContext context) {
     if (!includeProgression) {
-      return _buildIcon();
+      return _Icon(
+        achievement: achievement,
+        categoryIcon: categoryIcon,
+        hero: hero,
+      );
     }
 
     int points = 0;
@@ -171,7 +204,12 @@ class AchievementButton extends StatelessWidget {
                 size: 28.0,
               )
             else
-              _buildIcon(height: 40.0),
+              _Icon(
+                achievement: achievement,
+                categoryIcon: categoryIcon,
+                hero: hero,
+                height: 40.0
+              ),
             if (achievement.progress != null && achievement.progress.current != null && achievement.progress.max != null)
               Builder(
                 builder: (context) {
@@ -218,8 +256,23 @@ class AchievementButton extends StatelessWidget {
       ],
     );
   }
+}
 
-  Widget _buildIcon({height = 48.0}) {
+class _Icon extends StatelessWidget {
+  final Achievement achievement;
+  final String categoryIcon;
+  final String hero;
+  final double height;
+
+  _Icon({
+    @required this.achievement,
+    @required this.categoryIcon,
+    this.height = 48.0,
+    this.hero,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     if (achievement.icon == null && categoryIcon != null && categoryIcon.contains('assets')) {
       return Hero(
         tag: hero != null ? hero : achievement.id.toString(),

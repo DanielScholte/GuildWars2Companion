@@ -85,106 +85,11 @@ class _EventNotificationListState extends State<EventNotificationList> {
 
               return Column(
                 children: scheduledNotifications
-                  .map((n) {
-                    String date = DateFormat('yyyy-MM-dd').format(n.spawnDateTime);
-
-                    String before = n.offset.inMinutes > 0 ? '${n.offset.inMinutes} minutes before' : 'When spawning at';
-
-                    return Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () => showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text('Remove scheduled notification'),
-                              content: Text(
-                                'Are you sure that you want to remove this scheduled notification?'
-                              ),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: Text(
-                                    'Cancel',
-                                    style: TextStyle(
-                                      fontSize: 18.0
-                                    ),
-                                  ),
-                                  onPressed: () => Navigator.of(context).pop(),
-                                ),
-                                TextButton(
-                                  child: Text(
-                                    'Remove',
-                                    style: TextStyle(
-                                      fontSize: 18.0
-                                    ),
-                                  ),
-                                  onPressed: () async {
-                                    Navigator.of(context).pop();
-
-                                    BlocProvider.of<NotificationBloc>(context).add(RemoveScheduledNotificationEvent(n.id));
-                                  },
-                                )
-                              ],
-                            );
-                          }
-                        ),
-                          // 
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
-                          child: Row(
-                            children: [
-                              if (n.type == NotificationType.DAILY)
-                                Container(
-                                  width: 28,
-                                  child: Icon(
-                                    Icons.repeat,
-                                    size: 28,
-                                  ),
-                                )
-                              else
-                                Container(
-                                  width: 28,
-                                  child: Icon(
-                                    FontAwesomeIcons.solidBell,
-                                    size: 20,
-                                  ),
-                                ),
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 8.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      if (widget.eventId == null)
-                                        Text(
-                                          n.eventName,
-                                          style: Theme.of(context).textTheme.bodyText1,
-                                        ),
-                                      if (n.type == NotificationType.DAILY)
-                                        Text(
-                                          '$before ${timeFormat.format(n.spawnDateTime)}',
-                                          style: Theme.of(context).textTheme.bodyText1,
-                                        )
-                                      else
-                                        Text(
-                                          '$before $date ${timeFormat.format(n.spawnDateTime)}',
-                                          style: Theme.of(context).textTheme.bodyText1,
-                                        )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Icon(
-                                FontAwesomeIcons.trash,
-                                size: 20,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  })
+                  .map((n) => _NotificationRow(
+                    notification: n,
+                    timeFormat: timeFormat,
+                    eventId: widget.eventId,
+                  ))
                   .toList(),
               );
             }
@@ -193,6 +98,120 @@ class _EventNotificationListState extends State<EventNotificationList> {
           },
         );
       }
+    );
+  }
+}
+
+class _NotificationRow extends StatelessWidget {
+  final ScheduledNotification notification;
+  final DateFormat timeFormat;
+  final String eventId;
+
+  _NotificationRow({
+    @required this.notification,
+    @required this.timeFormat,
+    @required this.eventId,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    String date = DateFormat('yyyy-MM-dd').format(notification.spawnDateTime);
+
+    String leading = notification.offset.inMinutes > 0 ? '${notification.offset.inMinutes} minutes before' : 'When spawning at';
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () => showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Remove scheduled notification'),
+              content: Text(
+                'Are you sure that you want to remove this scheduled notification?'
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: Text(
+                    'Cancel',
+                    style: TextStyle(
+                      fontSize: 18.0
+                    ),
+                  ),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+                TextButton(
+                  child: Text(
+                    'Remove',
+                    style: TextStyle(
+                      fontSize: 18.0
+                    ),
+                  ),
+                  onPressed: () async {
+                    Navigator.of(context).pop();
+
+                    BlocProvider.of<NotificationBloc>(context).add(RemoveScheduledNotificationEvent(notification.id));
+                  },
+                )
+              ],
+            );
+          }
+        ),
+          // 
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
+          child: Row(
+            children: [
+              if (notification.type == NotificationType.DAILY)
+                Container(
+                  width: 28,
+                  child: Icon(
+                    Icons.repeat,
+                    size: 28,
+                  ),
+                )
+              else
+                Container(
+                  width: 28,
+                  child: Icon(
+                    FontAwesomeIcons.solidBell,
+                    size: 20,
+                  ),
+                ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (eventId == null)
+                        Text(
+                          notification.eventName,
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                      if (notification.type == NotificationType.DAILY)
+                        Text(
+                          '$leading ${timeFormat.format(notification.spawnDateTime)}',
+                          style: Theme.of(context).textTheme.bodyText1,
+                        )
+                      else
+                        Text(
+                          '$leading $date ${timeFormat.format(notification.spawnDateTime)}',
+                          style: Theme.of(context).textTheme.bodyText1,
+                        )
+                    ],
+                  ),
+                ),
+              ),
+              Icon(
+                FontAwesomeIcons.trash,
+                size: 20,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

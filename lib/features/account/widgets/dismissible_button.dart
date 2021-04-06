@@ -36,20 +36,31 @@ class DismissibleButton extends StatelessWidget {
           child: child,
           key: key,
           onDismissed: (_) => onDismissed(),
-          background: dismissibleBackground(false),
-          secondaryBackground: dismissibleBackground(true),
+          background: _Background(),
+          secondaryBackground: _Background(rtl: true),
         );
       },
     );
   }
+}
 
-  Widget dismissibleBackground(bool end) {
+class _Background extends StatelessWidget {
+  final bool rtl;
+
+  _Background({
+    this.rtl = false
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       color: Colors.red,
       child: Row(
-        mainAxisAlignment: end ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment: rtl
+          ? MainAxisAlignment.end
+          : MainAxisAlignment.start,
         children: <Widget>[
-          if (!end)
+          if (!rtl)
             Padding(
               padding: EdgeInsets.all(8.0),
               child: Icon(
@@ -64,7 +75,7 @@ class DismissibleButton extends StatelessWidget {
               fontSize: 18.0
             ),
           ),
-          if (end)
+          if (rtl)
             Padding(
               padding: EdgeInsets.all(8.0),
               child: Icon(
