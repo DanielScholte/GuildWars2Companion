@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/core/utils/guild_wars.dart';
+import 'package:guildwars2_companion/core/widgets/expandable_card.dart';
 import 'package:guildwars2_companion/features/meta_event/bloc/event_bloc.dart';
 import 'package:guildwars2_companion/features/meta_event/models/meta_event.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/core/widgets/button.dart';
-import 'package:guildwars2_companion/core/widgets/card.dart';
 import 'package:guildwars2_companion/features/error/widgets/error.dart';
-import 'package:guildwars2_companion/core/widgets/expandable_header.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
 
 import 'meta_event.dart';
@@ -94,36 +93,33 @@ class _MasteryCategoryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CompanionCard(
-      padding: EdgeInsets.zero,
-      backgroundColor: Theme.of(context).brightness == Brightness.light ? GuildWarsUtil.regionColor(region) : Colors.white30,
-      child: CompanionExpandableHeader(
-        header: name,
-        foreground: Colors.white,
-        child: Padding(
-          padding: EdgeInsets.only(bottom: 4.0),
-          child: Column(
-            children: sequences
-              .where((s) => s.region == region)
-              .map((s) => CompanionButton(
-                height: 64.0,
-                title: s.name,
-                leading: Image.asset(
-                  Assets.buttonHeaderEventIcon,
-                  height: 48.0,
-                  width: 48.0,
-                ),
-                color: Colors.white,
-                foregroundColor: Colors.black,
-                onTap: () {
-                  BlocProvider.of<MetaEventBloc>(context).add(LoadMetaEventsEvent(id: s.id));
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => MetaEventPage(s)
-                  ));
-                },
-              ))
-              .toList()
-          ),
+    return CompanionExpandableCard(
+      title: name,
+      foreground: Colors.white,
+      background: Theme.of(context).brightness == Brightness.light ? GuildWarsUtil.regionColor(region) : Colors.white30,
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 4.0),
+        child: Column(
+          children: sequences
+            .where((s) => s.region == region)
+            .map((s) => CompanionButton(
+              height: 64.0,
+              title: s.name,
+              leading: Image.asset(
+                Assets.buttonHeaderEventIcon,
+                height: 48.0,
+                width: 48.0,
+              ),
+              color: Colors.white,
+              foregroundColor: Colors.black,
+              onTap: () {
+                BlocProvider.of<MetaEventBloc>(context).add(LoadMetaEventsEvent(id: s.id));
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => MetaEventPage(s)
+                ));
+              },
+            ))
+            .toList()
         ),
       ),
     );

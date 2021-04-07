@@ -3,9 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
-import 'package:guildwars2_companion/core/widgets/card.dart';
+import 'package:guildwars2_companion/core/widgets/expandable_card.dart';
 import 'package:guildwars2_companion/features/error/widgets/error.dart';
-import 'package:guildwars2_companion/core/widgets/expandable_header.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
 import 'package:guildwars2_companion/features/achievement/bloc/achievement_bloc.dart';
 import 'package:guildwars2_companion/features/achievement/models/achievement_category.dart';
@@ -48,6 +47,7 @@ class AchievementCategoriesPage extends StatelessWidget {
                 },
                 child: CompanionListView(
                   children: state.achievementGroups
+                    .where((g) => g.categoriesInfo.any((c) => c.achievementsInfo.isNotEmpty))
                     .map((g) => _AchievementGroupCard(group: g))
                     .toList(),
                 ),
@@ -75,31 +75,28 @@ class _AchievementGroupCard extends StatelessWidget {
       .where((c) => c.achievementsInfo.isNotEmpty)
       .toList();
 
-    return CompanionCard(
-      padding: EdgeInsets.zero,
-      backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.blueGrey : Colors.white30,
-      child: CompanionExpandableHeader(
-        header: group.name,
-        foreground: Colors.white,
-        trailing: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Row(
-            children: group.regions
-              .map((r) => Image.asset(
-                Assets.getMasteryAsset(r),
-                height: 24.0,
-                width: 24.0,
-              ))
-              .toList(),
-          ),
+    return CompanionExpandableCard(
+      title: group.name,
+      foreground: Colors.white,
+      background: Theme.of(context).brightness == Brightness.light ? Colors.blueGrey : Colors.white30,
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 4.0),
+        child: Column(
+          children: categories
+            .map((c) => AchievementCategoryButton(category: c))
+            .toList()
         ),
-        child: Padding(
-          padding: EdgeInsets.only(bottom: 4.0),
-          child: Column(
-            children: categories
-              .map((c) => AchievementCategoryButton(category: c))
-              .toList()
-          ),
+      ),
+      trailing: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8.0),
+        child: Row(
+          children: group.regions
+            .map((r) => Image.asset(
+              Assets.getMasteryAsset(r),
+              height: 24.0,
+              width: 24.0,
+            ))
+            .toList(),
         ),
       ),
     );
