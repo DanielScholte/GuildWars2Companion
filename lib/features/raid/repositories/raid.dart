@@ -10,7 +10,7 @@ class RaidRepository {
   });
 
   Future<List<Raid>> getRaids(bool includeProgress) async {
-    List<Raid> raids = raidService.getRaids();
+    List<Raid> raids = await raidService.getRaids();
 
     if (includeProgress) {
       List<String> completedCheckpoints = await raidService.getCompletedRaids();

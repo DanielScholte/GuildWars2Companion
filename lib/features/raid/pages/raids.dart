@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/core/utils/assets.dart';
+import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/features/raid/bloc/raid_bloc.dart';
 import 'package:guildwars2_companion/features/raid/models/raid.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
@@ -68,7 +69,7 @@ class _RaidRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CompanionButton(
-      color: raid.color,
+      color: GuildWarsUtil.regionColor(raid.region),
       title: raid.name,
       height: null,
       hero: raid.id,

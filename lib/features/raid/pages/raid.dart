@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/core/utils/assets.dart';
+import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/core/widgets/content_elevation.dart';
 import 'package:guildwars2_companion/core/widgets/info_card.dart';
 import 'package:guildwars2_companion/features/raid/bloc/raid_bloc.dart';
@@ -20,12 +21,12 @@ class RaidPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CompanionAccent(
-      lightColor: raid.color,
+      lightColor: GuildWarsUtil.regionColor(raid.region),
       child: Scaffold(
         body: Column(
           children: <Widget>[
             CompanionHeader(
-              color: raid.color,
+              color: GuildWarsUtil.regionColor(raid.region),
               wikiName: raid.name,
               wikiRequiresEnglish: true,
               includeBack: true,

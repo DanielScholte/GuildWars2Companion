@@ -1,0 +1,155 @@
+[
+    {
+        "id": "spirit_vale",
+        "name": "Spirit Vale",
+        "region": "Maguuma",
+        "checkpoints": [
+            {
+                "id": "vale_guardian",
+                "name": "Vale Guardian"
+            },
+            {
+                "id": "spirit_woods",
+                "name": "Spirit Woods"
+            },
+            {
+                "id": "gorseval",
+                "name": "Gorseval the Multifarious"
+            },
+            {
+                "id": "sabetha",
+                "name": "Sabetha the Saboteur"
+            }
+        ]
+    },
+    {
+        "id": "salvation_pass",
+        "name": "Salvation Pass",
+        "region": "Maguuma",
+        "checkpoints": [
+            {
+                "id": "slothasor",
+                "name": "Slothasor"
+            },
+            {
+                "id": "bandit_trio",
+                "name": "Protect the caged prisoners"
+            },
+            {
+                "id": "matthias",
+                "name": "Matthias Gabrel"
+            }
+        ]
+    },
+    {
+        "id": "stronghold_of_the_faithful",
+        "name": "Stronghold of the Faithful",
+        "region": "Maguuma",
+        "checkpoints": [
+            {
+                "id": "escort",
+                "name": "Siege the Stronghold"
+            },
+            {
+                "id": "keep_construct",
+                "name": "Keep Construct"
+            },
+            {
+                "id": "twisted_castle",
+                "name": "Twisted Castle"
+            },
+            {
+                "id": "xera",
+                "name": "Xera"
+            }
+        ]
+    },
+    {
+        "id": "bastion_of_the_penitent",
+        "name": "Bastion of the Penitent",
+        "region": "Maguuma",
+        "checkpoints": [
+            {
+                "id": "cairn",
+                "name": "Cairn the Indomitable"
+            },
+            {
+                "id": "mursaat_overseer",
+                "name": "Mursaat Overseer"
+            },
+            {
+                "id": "samarog",
+                "name": "Samarog"
+            },
+            {
+                "id": "deimos",
+                "name": "Deimos"
+            }
+        ]
+    },
+    {
+        "id": "hall_of_chains",
+        "name": "Hall of Chains",
+        "region": "Desert",
+        "checkpoints": [
+            {
+                "id": "soulless_horror",
+                "name": "Soulless Horror"
+            },
+            {
+                "id": "river_of_souls",
+                "name": "River of Souls"
+            },
+            {
+                "id": "statues_of_grenth",
+                "name": "Statues of Grenth"
+            },
+            {
+                "id": "voice_in_the_void",
+                "name": "Dhuum"
+            }
+        ]
+    },
+    {
+        "id": "mythwright_gambit",
+        "name": "Mythwright Gambit",
+        "region": "Desert",
+        "checkpoints": [
+            {
+                "id": "conjured_amalgamate",
+                "name": "Conjured Amalgamate"
+            },
+            {
+                "id": "twin_largos",
+                "name": "Twin Largos"
+            },
+            {
+                "id": "qadim",
+                "name": "Qadim"
+            }
+        ]
+    },
+    {
+        "id": "the_key_of_ahdashim",
+        "name": "The Key of Ahdashim",
+        "region": "Desert",
+        "checkpoints": [
+            {
+                "id": "gate",
+                "name": "Front Gate"
+            },
+            {
+                "id": "adina",
+                "name": "Cardinal Adina"
+            },
+            {
+                "id": "sabir",
+                "name": "Cardinal Sabir"
+            },
+            {
+                "id": "qadim_the_peerless",
+                "name": "Qadim the Peerless"
+            }
+        ]
+    }
+]
