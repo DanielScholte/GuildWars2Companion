@@ -1,6 +1,6 @@
 name: guildwars2_companion
 description: The Guild Wars 2 Companion app
-version: 1.5.4+33
+version: 1.5.4+34
 publish_to: none
 
 environment:

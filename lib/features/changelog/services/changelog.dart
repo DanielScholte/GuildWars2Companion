@@ -9,10 +9,14 @@ class ChangelogService {
   int currentBuildNumber = 0;
 
   Future<void> loadChangelogData() async {
-    List changelogData = await Assets.loadDataAsset(Assets.changelog);
-    changelog = changelogData
-      .map((c) => Changelog.fromJson(c))
-      .toList();
+    try {
+      List changelogData = await Assets.loadDataAsset(Assets.changelog);
+      changelog = changelogData
+        .map((c) => Changelog.fromJson(c))
+        .toList();
+    } catch (_) {
+      changelog = [];
+    }
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     lastLaunchBuildNumber = prefs.getInt("lastlaunch_buildnumber") ?? 0;
