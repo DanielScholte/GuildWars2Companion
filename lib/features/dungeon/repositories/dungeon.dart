@@ -10,7 +10,7 @@ class DungeonRepository {
   });
 
   Future<List<Dungeon>> getDungeons(bool includeProgress) async {
-    List<Dungeon> dungeons = dungeonService.getDungeons();
+    List<Dungeon> dungeons = await dungeonService.getDungeons();
 
     if (includeProgress) {
       List<String> completedDungeons = await dungeonService.getCompletedDungeons();
