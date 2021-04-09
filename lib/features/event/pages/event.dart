@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/core/models/event_segment.dart';
 import 'package:guildwars2_companion/core/utils/assets.dart';
+import 'package:guildwars2_companion/core/widgets/content_elevation.dart';
 import 'package:guildwars2_companion/features/event/models/notification.dart';
 import 'package:guildwars2_companion/features/event/widgets/notification_list_card.dart';
 import 'package:guildwars2_companion/features/event/widgets/times_card.dart';
@@ -131,24 +132,20 @@ class _WorldBossHeader extends StatelessWidget {
       eventSegment: segment..type = EventType.WORLD_BOSS,
       child: Column(
         children: <Widget>[
-          Container(
-            width: 80.0,
-            height: 80.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6.0),
-              boxShadow: [
-                if (Theme.of(context).brightness == Brightness.light)
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 4.0,
-                  ),
-              ],
-            ),
-            child: Hero(
-              tag: worldBoss.id,
-              child: ClipRRect(
+          CompanionContentElevation(
+            radius: BorderRadius.circular(7.0),
+            child: Container(
+              width: 80.0,
+              height: 80.0,
+              decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(6.0),
-                child: Image.asset(Assets.getWorldBossAsset(worldBoss.id)),
+              ),
+              child: Hero(
+                tag: worldBoss.id,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(6.0),
+                  child: Image.asset(Assets.getWorldBossAsset(worldBoss.id)),
+                ),
               ),
             ),
           ),

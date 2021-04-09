@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/cached_image.dart';
+import 'package:guildwars2_companion/core/widgets/content_elevation.dart';
 import 'package:guildwars2_companion/core/widgets/header.dart';
 import 'package:guildwars2_companion/core/widgets/info_card.dart';
 import 'package:guildwars2_companion/core/widgets/info_row.dart';
@@ -27,27 +28,23 @@ class MasteryLevelPage extends StatelessWidget {
               color: GuildWarsUtil.regionColor(mastery.region),
               child: Column(
                 children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6.0),
-                      boxShadow: [
-                        if (Theme.of(context).brightness == Brightness.light)
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 4.0,
-                          ),
-                      ],
-                    ),
-                    child: Hero(
-                      tag: level.name,
-                      child: ClipRRect(
+                  CompanionContentElevation(
+                    radius: BorderRadius.circular(7.0),
+                    child: Container(
+                      decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(6.0),
-                        child: CompanionCachedImage(
-                          height: 60.0,
-                          imageUrl: level.icon,
-                          color: Colors.white,
-                          iconSize: 28,
-                          fit: BoxFit.fill,
+                      ),
+                      child: Hero(
+                        tag: level.name,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(6.0),
+                          child: CompanionCachedImage(
+                            height: 60.0,
+                            imageUrl: level.icon,
+                            color: Colors.white,
+                            iconSize: 28,
+                            fit: BoxFit.fill,
+                          ),
                         ),
                       ),
                     ),

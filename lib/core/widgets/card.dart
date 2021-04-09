@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guildwars2_companion/core/widgets/content_elevation.dart';
 
 class CompanionCard extends StatelessWidget {
 
@@ -18,9 +19,7 @@ class CompanionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-      child: Material(
-        borderRadius: BorderRadius.circular(13.0),
-        elevation: 2.0,
+      child: CompanionContentElevation(
         child: Container(
           width: double.infinity,
           padding: padding,

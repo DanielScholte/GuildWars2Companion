@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/core/utils/assets.dart';
+import 'package:guildwars2_companion/core/widgets/content_elevation.dart';
 import 'package:guildwars2_companion/features/dungeon/bloc/dungeon_bloc.dart';
 import 'package:guildwars2_companion/features/dungeon/models/dungeon.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
@@ -89,21 +90,14 @@ class _Header extends StatelessWidget {
           Container(
             width: 80.0,
             height: 80.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6.0),
-              boxShadow: [
-                if (Theme.of(context).brightness == Brightness.light)
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 4.0,
-                  ),
-              ],
-            ),
             child: Hero(
               tag: dungeon.id,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(6.0),
-                child: Image.asset(Assets.getDungeonAsset(dungeon.id)),
+              child: CompanionContentElevation(
+                radius: BorderRadius.circular(7.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(6.0),
+                  child: Image.asset(Assets.getDungeonAsset(dungeon.id)),
+                ),
               ),
             ),
           ),

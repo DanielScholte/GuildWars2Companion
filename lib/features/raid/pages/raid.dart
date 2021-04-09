@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/core/utils/assets.dart';
+import 'package:guildwars2_companion/core/widgets/content_elevation.dart';
 import 'package:guildwars2_companion/core/widgets/info_card.dart';
 import 'package:guildwars2_companion/features/raid/bloc/raid_bloc.dart';
 import 'package:guildwars2_companion/features/raid/models/raid.dart';
@@ -30,24 +31,20 @@ class RaidPage extends StatelessWidget {
               includeBack: true,
               child: Column(
                 children: <Widget>[
-                  Container(
-                    width: 80.0,
-                    height: 80.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6.0),
-                      boxShadow: [
-                        if (Theme.of(context).brightness == Brightness.light)
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 4.0,
-                          ),
-                      ],
-                    ),
-                    child: Hero(
-                      tag: raid.id,
-                      child: ClipRRect(
+                  CompanionContentElevation(
+                    radius: BorderRadius.circular(7.0),
+                    child: Container(
+                      width: 80.0,
+                      height: 80.0,
+                      decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(6.0),
-                        child: Image.asset(Assets.getRaidAsset(raid.id)),
+                      ),
+                      child: Hero(
+                        tag: raid.id,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(6.0),
+                          child: Image.asset(Assets.getRaidAsset(raid.id)),
+                        ),
                       ),
                     ),
                   ),

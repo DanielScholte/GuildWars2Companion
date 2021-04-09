@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/core/models/event_segment.dart';
 import 'package:guildwars2_companion/core/utils/urls.dart';
+import 'package:guildwars2_companion/core/widgets/content_elevation.dart';
 import 'package:guildwars2_companion/features/configuration/bloc/configuration_bloc.dart';
 import 'package:guildwars2_companion/features/event/bloc/notification_bloc.dart';
 import 'package:guildwars2_companion/features/event/pages/schedule_notification_type.dart';
@@ -37,8 +38,9 @@ class CompanionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      elevation: 4.0,
+    return CompanionContentElevation(
+      radius: BorderRadius.zero,
+      elevation: includeShadow ? 4.0 : 0,
       child: Container(
         color: Theme.of(context).brightness == Brightness.light || enforceColor ? color : Theme.of(context).cardColor,
         width: double.infinity,

@@ -227,24 +227,21 @@ class _SpeedDailLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(6.0),
-      margin: EdgeInsets.only(right: 16.0),
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        boxShadow: [
-          if (Theme.of(context).brightness == Brightness.light)
-            BoxShadow(
-              color: Colors.black54,
-              blurRadius: 4.0,
-            ),
-        ],
-        borderRadius: BorderRadius.circular(6.0)
-      ),
-      child: Text(
-        label,
-        style: Theme.of(context).textTheme.bodyText1.copyWith(
-          fontWeight: FontWeight.w500
+    return Material(
+      borderRadius: BorderRadius.circular(7.0),
+      elevation: 2.0,
+      child: Container(
+        padding: EdgeInsets.all(6.0),
+        margin: EdgeInsets.only(right: 16.0),
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(6.0)
+        ),
+        child: Text(
+          label,
+          style: Theme.of(context).textTheme.bodyText1.copyWith(
+            fontWeight: FontWeight.w500
+          ),
         ),
       ),
     );
