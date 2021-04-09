@@ -40,6 +40,7 @@ class ChangelogService {
       newFeatures: false,
       changes: [
         'Added error handling for errors during the splashscreen',
+        'Design tweaks',
         'Major code overhaul',
       ],
     ),
