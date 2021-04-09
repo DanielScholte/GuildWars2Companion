@@ -10,7 +10,6 @@ import 'package:guildwars2_companion/features/pvp/services/map.dart';
 import 'package:guildwars2_companion/features/pvp/services/pvp.dart';
 
 class PvpRepository {
-
   final MapService mapService;
   final PvpService pvpService;
 

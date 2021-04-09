@@ -5,7 +5,6 @@ import 'package:guildwars2_companion/features/wallet/models/currency.dart';
 import 'package:guildwars2_companion/features/wallet/models/wallet.dart';
 
 class WalletService {
-
   Dio dio;
 
   WalletService({

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class CompanionAccent extends StatelessWidget {
-
   final Color lightColor;
   final Widget child;
 

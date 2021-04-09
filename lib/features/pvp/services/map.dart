@@ -4,7 +4,6 @@ import 'package:guildwars2_companion/core/utils/urls.dart';
 import 'package:guildwars2_companion/features/pvp/models/map.dart';
 
 class MapService {
-
   Dio dio;
 
   MapService({

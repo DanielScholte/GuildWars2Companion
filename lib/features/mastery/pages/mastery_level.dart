@@ -10,7 +10,6 @@ import 'package:guildwars2_companion/core/widgets/list_view.dart';
 import 'package:guildwars2_companion/features/mastery/models/mastery.dart';
 
 class MasteryLevelPage extends StatelessWidget {
-
   final Mastery mastery;
   final MasteryLevel level;
 

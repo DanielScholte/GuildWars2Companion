@@ -11,7 +11,6 @@ import 'package:guildwars2_companion/core/widgets/header.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
 
 class DungeonPage extends StatelessWidget {
-
   final Dungeon dungeon;
 
   DungeonPage(this.dungeon);

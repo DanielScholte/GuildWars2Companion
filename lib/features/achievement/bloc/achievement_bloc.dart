@@ -14,7 +14,6 @@ part 'achievement_event.dart';
 part 'achievement_state.dart';
 
 class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
-
   final AchievementRepository achievementRepository;
 
   AchievementData _achievementData;

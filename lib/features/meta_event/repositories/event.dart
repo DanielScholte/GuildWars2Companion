@@ -3,7 +3,6 @@ import 'package:guildwars2_companion/features/meta_event/models/meta_event.dart'
 import 'package:guildwars2_companion/features/meta_event/services/event.dart';
 
 class MetaEventRepository {
-
   final EventService eventService;
 
   MetaEventRepository({

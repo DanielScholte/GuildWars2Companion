@@ -4,7 +4,6 @@ import 'package:guildwars2_companion/features/world_boss/models/world_boss.dart'
 import 'package:guildwars2_companion/features/world_boss/services/world_boss.dart';
 
 class WorldBossRepository {
-
   final WorldBossService worldBossService;
 
   WorldBossRepository({

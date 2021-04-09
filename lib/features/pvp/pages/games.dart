@@ -9,7 +9,6 @@ import 'package:guildwars2_companion/features/pvp/bloc/pvp_bloc.dart';
 import 'package:intl/intl.dart';
 
 class PvpGamesPage extends StatelessWidget {
-
   final DateFormat _dateFormat = DateFormat('yyyy-MM-dd');
 
   @override

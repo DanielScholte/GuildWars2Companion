@@ -5,7 +5,6 @@ import 'package:guildwars2_companion/features/account/services/token.dart';
 import 'package:meta/meta.dart';
 
 class DioUtil {
-
   final TokenService tokenService;
   final ConfigurationService configurationService;
 

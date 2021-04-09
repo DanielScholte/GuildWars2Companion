@@ -7,7 +7,6 @@ import 'package:guildwars2_companion/features/meta_event/models/meta_event.dart'
 import '../models/world_boss.dart';
 
 class WorldBossService {
-
   Dio dio;
 
   WorldBossService({

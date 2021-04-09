@@ -10,7 +10,6 @@ class MasteryInfoBox extends StatelessWidget {
     return BlocBuilder<AchievementBloc, AchievementState>(
       builder: (context, state) {
         if (state is LoadedAchievementsState) {
-
           if (state.masteryLevel == null) {
             return CompanionInfoBox(
               header: 'Mastery level',

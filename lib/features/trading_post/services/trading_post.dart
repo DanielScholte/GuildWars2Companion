@@ -7,7 +7,6 @@ import 'package:guildwars2_companion/features/trading_post/models/price.dart';
 import 'package:guildwars2_companion/features/trading_post/models/transaction.dart';
 
 class TradingPostService {
-
   Dio dio;
 
   TradingPostService({

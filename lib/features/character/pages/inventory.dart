@@ -13,7 +13,6 @@ import 'package:guildwars2_companion/features/item/models/inventory.dart';
 import 'package:guildwars2_companion/features/item/widgets/item_box.dart';
 
 class InventoryPage extends StatelessWidget {
-
   final Character _character;
 
   InventoryPage(this._character);

@@ -13,7 +13,6 @@ import 'package:guildwars2_companion/core/widgets/list_view.dart';
 import 'package:guildwars2_companion/features/world_boss/widgets/stats_card.dart';
 
 class EventPage extends StatelessWidget {
-
   final MetaEventSequence sequence;
   final MetaEventSegment segment;
   final WorldBoss worldBoss;

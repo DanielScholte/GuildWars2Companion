@@ -4,7 +4,6 @@ import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/features/wallet/models/currency.dart';
 
 class CompanionCoin extends StatelessWidget {
-
   final int coin;
   final double innerPadding;
   final Color color;

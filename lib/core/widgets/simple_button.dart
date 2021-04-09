@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class CompanionSimpleButton extends StatelessWidget {
-
   final String text;
   final VoidCallback onPressed;
 

@@ -15,7 +15,6 @@ import 'package:guildwars2_companion/features/achievement/widgets/prerequisites_
 import 'package:guildwars2_companion/features/achievement/widgets/rewards_card.dart';
 
 class AchievementPage extends StatelessWidget {
-
   final Achievement achievement;
   final String categoryIcon;
   final String hero;

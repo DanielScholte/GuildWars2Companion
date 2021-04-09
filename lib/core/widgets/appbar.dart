@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class CompanionAppBar extends StatelessWidget implements PreferredSizeWidget {
-
   final String title;
   final Widget icon;
   final Color color;

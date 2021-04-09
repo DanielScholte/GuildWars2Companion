@@ -3,7 +3,6 @@ import 'package:guildwars2_companion/features/configuration/models/configuration
 import 'package:guildwars2_companion/features/configuration/services/configuration.dart';
 
 class ConfigurationRepository {
-
   final ConfigurationService configurationService;
 
   ConfigurationRepository({

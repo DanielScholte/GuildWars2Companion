@@ -15,7 +15,6 @@ import 'package:guildwars2_companion/features/mastery/models/mastery.dart';
 import 'mastery_level.dart';
 
 class MasteryLevelsPage extends StatelessWidget {
-
   final Mastery mastery;
 
   MasteryLevelsPage(this.mastery);

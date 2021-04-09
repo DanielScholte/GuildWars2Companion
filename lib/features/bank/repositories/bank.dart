@@ -9,7 +9,6 @@ import 'package:guildwars2_companion/features/item/services/item.dart';
 import 'package:meta/meta.dart';
 
 class BankRepository {
-
   final BankService bankService;
   final ItemService itemService;
 

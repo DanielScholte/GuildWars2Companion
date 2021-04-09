@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/core/widgets/simple_button.dart';
 
 class CompanionError extends StatelessWidget {
-
   final String title;
   final VoidCallback onTryAgain;
 

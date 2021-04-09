@@ -9,7 +9,6 @@ import 'package:guildwars2_companion/features/achievement/models/achievement_cat
 import 'package:guildwars2_companion/features/achievement/widgets/achievement_button.dart';
 
 class AchievementsPage extends StatelessWidget {
-
   final AchievementCategory achievementCategory;
 
   AchievementsPage(this.achievementCategory);

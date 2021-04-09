@@ -8,7 +8,6 @@ import 'package:guildwars2_companion/features/pvp/models/standing.dart';
 import 'package:guildwars2_companion/features/pvp/models/stats.dart';
 
 class PvpService {
-
   Dio dio;
 
   PvpService({

@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 
 class CompanionCachedImage extends StatelessWidget {
-
   final String imageUrl;
   final Color color;
   final double iconSize;

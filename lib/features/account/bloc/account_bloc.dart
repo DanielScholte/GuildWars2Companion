@@ -11,7 +11,6 @@ part 'account_event.dart';
 part 'account_state.dart';
 
 class AccountBloc extends Bloc<AccountEvent, AccountState> {
-
   final AccountRepository accountRepository;
 
   AccountBloc({

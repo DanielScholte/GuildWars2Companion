@@ -13,7 +13,6 @@ import 'package:guildwars2_companion/core/widgets/header.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
 
 class RaidPage extends StatelessWidget {
-
   final Raid raid;
 
   RaidPage(this.raid);

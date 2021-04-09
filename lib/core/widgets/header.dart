@@ -9,7 +9,6 @@ import 'package:guildwars2_companion/features/event/bloc/notification_bloc.dart'
 import 'package:guildwars2_companion/features/event/pages/schedule_notification_type.dart';
 
 class CompanionHeader extends StatelessWidget {
-
   final Color color;
   final Color foregroundColor;
   final Widget child;
