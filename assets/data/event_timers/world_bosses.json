@@ -1,0 +1,250 @@
+[
+    {
+        "name": "World Bosses",
+        "offsetInMinutes": 0,
+        "segments": [
+            {
+                "id": "admiral_taidha_covington",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "svanir_shaman_chief",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "megadestroyer",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "fire_elemental",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "the_shatterer",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "great_jungle_wurm",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "modniir_ulgoth",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "shadow_behemoth",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "inquest_golem_mark_ii",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "svanir_shaman_chief",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "claw_of_jormag",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "fire_elemental",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "admiral_taidha_covington",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "great_jungle_wurm",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "megadestroyer",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "shadow_behemoth",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "the_shatterer",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "svanir_shaman_chief",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "modniir_ulgoth",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "fire_elemental",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "inquest_golem_mark_ii",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "great_jungle_wurm",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "claw_of_jormag",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "shadow_behemoth",
+                "durationInMinutes": 15
+            }
+        ]
+    },
+    {
+        "name": "Hard World Bosses",
+        "offsetInMinutes": 0,
+        "segments": [
+            {
+                "id": "tequatl_the_sunless",
+                "durationInMinutes": 30
+            },
+            {
+                "durationInMinutes": 30
+            },
+            {
+                "id": "triple_trouble_wurm",
+                "durationInMinutes": 30
+            },
+            {
+                "durationInMinutes": 30
+            },
+            {
+                "id": "karka_queen",
+                "durationInMinutes": 30
+            },
+            {
+                "durationInMinutes": 30
+            },
+            {
+                "id": "tequatl_the_sunless",
+                "durationInMinutes": 30
+            },
+            {
+                "durationInMinutes": 30
+            },
+            {
+                "id": "triple_trouble_wurm",
+                "durationInMinutes": 30
+            },
+            {
+                "durationInMinutes": 90
+            },
+            {
+                "id": "karka_queen",
+                "durationInMinutes": 30
+            },
+            {
+                "durationInMinutes": 30
+            },
+            {
+                "id": "tequatl_the_sunless",
+                "durationInMinutes": 30
+            },
+            {
+                "durationInMinutes": 30
+            },
+            {
+                "id": "triple_trouble_wurm",
+                "durationInMinutes": 30
+            },
+            {
+                "durationInMinutes": 120
+            },
+            {
+                "id": "karka_queen",
+                "durationInMinutes": 30
+            },
+            {
+                "durationInMinutes": 30
+            },
+            {
+                "id": "tequatl_the_sunless",
+                "durationInMinutes": 30
+            },
+            {
+                "durationInMinutes": 30
+            },
+            {
+                "id": "triple_trouble_wurm",
+                "durationInMinutes": 30
+            },
+            {
+                "durationInMinutes": 120
+            },
+            {
+                "id": "karka_queen",
+                "durationInMinutes": 30
+            },
+            {
+                "durationInMinutes": 30
+            },
+            {
+                "id": "tequatl_the_sunless",
+                "durationInMinutes": 30
+            },
+            {
+                "durationInMinutes": 30
+            },
+            {
+                "id": "triple_trouble_wurm",
+                "durationInMinutes": 30
+            },
+            {
+                "durationInMinutes": 30
+            },
+            {
+                "id": "karka_queen",
+                "durationInMinutes": 30
+            },
+            {
+                "durationInMinutes": 30
+            },
+            {
+                "id": "tequatl_the_sunless",
+                "durationInMinutes": 30
+            },
+            {
+                "durationInMinutes": 30
+            },
+            {
+                "id": "triple_trouble_wurm",
+                "durationInMinutes": 30
+            },
+            {
+                "durationInMinutes": 150
+            },
+            {
+                "id": "karka_queen",
+                "durationInMinutes": 30
+            },
+            {
+                "durationInMinutes": 30
+            },
+            {
+                "id": "tequatl_the_sunless",
+                "durationInMinutes": 30
+            },
+            {
+                "durationInMinutes": 30
+            },
+            {
+                "id": "triple_trouble_wurm",
+                "durationInMinutes": 30
+            },
+            {
+                "durationInMinutes": 30
+            }
+        ]
+    }
+]

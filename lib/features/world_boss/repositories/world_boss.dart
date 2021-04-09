@@ -25,5 +25,5 @@ class WorldBossRepository {
     return worldBosses;
   }
 
-  List<MetaEventSequence> getWorldBossSequences() => worldBossService.getWorldBossSequences();
+  Future<List<MetaEventSequence>> getWorldBossSequences() => worldBossService.getWorldBossSequences();
 }

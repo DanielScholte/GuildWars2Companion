@@ -35,7 +35,7 @@ class WorldBossBloc extends Bloc<WorldBossEvent, WorldBossState> {
         }
 
         List<WorldBoss> worldBosses = await worldBossRepository.getWorldBosses(includeProgress);
-        List<MetaEventSequence> sequences = worldBossRepository.getWorldBossSequences();
+        List<MetaEventSequence> sequences = await worldBossRepository.getWorldBossSequences();
         
         sequences.forEach((s) => eventRepository.processMetaEventSequence(s));
 
