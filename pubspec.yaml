@@ -39,6 +39,8 @@ flutter:
 
   assets:
     - assets/
+    - assets/data/
+    - assets/data/event_timers/
     - assets/images/
     - assets/images/app/
     - assets/images/button_headers/

@@ -1,12 +1,19 @@
+import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/features/changelog/models/changelog.dart';
 import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChangelogService {
+  List<Changelog> changelog;
   int lastLaunchBuildNumber = 0;
   int currentBuildNumber = 0;
 
   Future<void> loadChangelogData() async {
+    List changelogData = await Assets.loadDataAsset(Assets.changelog);
+    changelog = changelogData
+      .map((c) => Changelog.fromJson(c))
+      .toList();
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     lastLaunchBuildNumber = prefs.getInt("lastlaunch_buildnumber") ?? 0;
 
@@ -32,149 +39,4 @@ class ChangelogService {
       .take(10)
       .toList();
   }
-
-  List<Changelog> changelog = [
-    Changelog(
-      version: '1.5.4',
-      build: 33,
-      newFeatures: false,
-      changes: [
-        'Added error handling for errors during the splashscreen',
-        'Design tweaks',
-        'Major code overhaul',
-      ],
-    ),
-    Changelog(
-      version: '1.5.3',
-      build: 31,
-      newFeatures: true,
-      changes: [
-        'Added flags to the item page (Thanks to Apcro)',
-        'Reworked caching',
-      ],
-    ),
-    Changelog(
-      version: '1.5.2',
-      build: 30,
-      newFeatures: false,
-      changes: [
-        'Fixed an error on the progression tab',
-        'Fixed a dark theme bug on the masteries page'
-      ],
-    ),
-    Changelog(
-      version: '1.5.1',
-      build: 29,
-      newFeatures: false,
-      changes: [
-        'Fixed typo on the schedule notification page',
-        'Fixed notification text issue'
-      ],
-    ),
-    Changelog(
-      version: '1.5.0',
-      build: 28,
-      newFeatures: true,
-      changes: [
-        'Added notifications for World bosses and meta events',
-        'Improved the bank page',
-        'Improved the inventory page (Thanks to Apcro)',
-        'Improved the wallet page (Thanks to Apcro)'
-      ],
-    ),
-    Changelog(
-      version: '1.4.3',
-      build: 23,
-      newFeatures: false,
-      changes: [
-        'Fixed an alignment bug on iOS',
-        'Fixed an issue where the achievement points were calculated incorrectly',
-        'Added a link to the github page'
-      ],
-    ),
-    Changelog(
-      version: '1.4.2',
-      build: 22,
-      newFeatures: false,
-      changes: [
-        'Fixed a bug with non-legendary gear and upgrades'
-      ],
-    ),
-    Changelog(
-      version: '1.4.1',
-      build: 18,
-      newFeatures: false,
-      changes: [
-        'Fixed Dark Theme bugs'
-      ],
-    ),
-    Changelog(
-      version: '1.4.0',
-      build: 17,
-      newFeatures: true,
-      changes: [
-        'Equipment tabs',
-        'Build tabs',
-        'Build storage',
-        'User interface improvements',
-        'Network improvements'
-      ],
-    ),
-    Changelog(
-      version: '1.3.1',
-      build: 15,
-      newFeatures: true,
-      changes: [
-        'User interface improvements'
-      ],
-    ),
-    Changelog(
-      version: '1.3.0',
-      build: 13,
-      newFeatures: true,
-      changes: [
-        'Favorite achievements',
-        'Achievement category progression'
-      ],
-    ),
-    Changelog(
-      version: '1.2.1',
-      build: 11,
-      newFeatures: false,
-      changes: [
-        'Fixed Dark Theme bugs',
-      ],
-    ),
-    Changelog(
-      version: '1.2.0',
-      build: 10,
-      newFeatures: true,
-      changes: [
-        "Dark theme",
-        "Language configuration",
-      ],
-    ),
-    Changelog(
-      version: '1.1.0',
-      build: 5,
-      newFeatures: true,
-      changes: [
-        "The new PvP section",
-      ],
-    ),
-    Changelog(
-      version: '1.0.3',
-      build: 3,
-      changes: [
-        "Bug fixes",
-      ],
-    ),
-    Changelog(
-      version: '1.0.0',
-      build: 1,
-      changes: [
-        "Initial release",
-      ],
-    ),
-  ];
 }

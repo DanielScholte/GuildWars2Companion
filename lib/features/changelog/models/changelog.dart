@@ -10,6 +10,13 @@ class Changelog {
     this.build,
     this.changes,
   });
+
+  Changelog.fromJson(Map<String, dynamic> json) {
+    version = json['version'];
+    build = json['build'];
+    newFeatures = json['newFeatures'];
+    changes = json['changes'].cast<String>();
+  }
 }
 
 class ChangelogData {

@@ -1,6 +1,19 @@
+import 'dart:convert' show json;
+
+import 'package:flutter/services.dart' show rootBundle;
+
 class Assets {
   static final String base = 'assets';
   static final String images = '$base/images';
+  static final String data = '$base/data';
+
+  static final String changelog = '$data/changelog.json';
+  static final String dungeons = '$data/dungeons.json';
+  static final String raids = '$data/raids.json';
+  static final String worldBosses = '$data/world_bosses.json';
+
+  static final String eventTimersMetaEvents = '$data/event_timers/meta_events.json';
+  static final String eventTimersWorldBosses = '$data/event_timers/world_bosses.json';
 
   static final String appLogo = '$images/app/logo.png';
 
@@ -100,6 +113,10 @@ class Assets {
   static final String worldBossesTequatlTheSunless = '$images/world_bosses/tequatl_the_sunless.jpg';
   static final String worldBossesTheShatterer = '$images/world_bosses/the_shatterer.jpg';
   static final String worldBossesTripleTroubleWurm = '$images/world_bosses/triple_trouble_wurm.jpg';
+
+  static Future<dynamic> loadDataAsset(String asset) async {
+    return json.decode(await rootBundle.loadString(asset));
+  }
 
   static String getCraftingDisciplineAsset(String disciplineId) {
     switch (disciplineId.toLowerCase()) {
