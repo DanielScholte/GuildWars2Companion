@@ -11,7 +11,8 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="GW2 Companion"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
