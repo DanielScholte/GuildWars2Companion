@@ -9,10 +9,10 @@ class MetaEventRepository {
     this.eventService,
   });
 
-  List<MetaEventSequence> getMetaEvents({
+  Future<List<MetaEventSequence>> getMetaEvents({
     String id
-  }) {
-    List<MetaEventSequence> events = eventService.getMetaEvents();
+  }) async {
+    List<MetaEventSequence> events = await eventService.getMetaEvents();
 
     events.forEach((event) {
       event.segments.forEach((segment) {

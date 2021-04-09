@@ -16,4 +16,10 @@ class MetaEventSegment {
     this.times,
     this.time,
   });
+
+  MetaEventSegment.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    duration = Duration(minutes: json['durationInMinutes']);
+  }
 }

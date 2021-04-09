@@ -24,7 +24,7 @@ class MetaEventBloc extends Bloc<MetaEventEvent, MetaEventState> {
         yield LoadingMetaEventsState();
 
         yield LoadedMetaEventsState(
-          events: eventRepository.getMetaEvents(id: event.id)
+          events: await eventRepository.getMetaEvents(id: event.id)
         );
       } catch (_) {
         yield ErrorMetaEventsState();

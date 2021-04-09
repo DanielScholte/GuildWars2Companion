@@ -1,0 +1,444 @@
+[
+    {
+        "id": "day_night",
+        "name": "Day and Night",
+        "region": "Tyria",
+        "offsetInMinutes": 15,
+        "segments": [
+            {
+                "id": "night",
+                "name": "Night",
+                "durationInMinutes": 40
+            },
+            {
+                "id": "dawn",
+                "name": "Dawn",
+                "durationInMinutes": 5
+            },
+            {
+                "id": "day",
+                "name": "Day",
+                "durationInMinutes": 40
+            },
+            {
+                "id": "dusk",
+                "name": "Dusk",
+                "durationInMinutes": 5
+            }
+        ]
+    },
+    {
+        "id": "dry_top",
+        "name": "Dry Top",
+        "region": "Tyria",
+        "offsetInMinutes": 0,
+        "segments": [
+            {
+                "id": "dry_top_crash",
+                "name": "Crash Site",
+                "durationInMinutes": 40
+            },
+            {
+                "id": "dry_top_sandstorm",
+                "name": "Sandstorm",
+                "durationInMinutes": 20
+            }
+        ]
+    },
+    {
+        "id": "ley_line",
+        "name": "Ley-Line Anomaly",
+        "region": "Tyria",
+        "offsetInMinutes": 80,
+        "segments": [
+            {
+                "durationInMinutes": 100
+            },
+            {
+                "id": "ley_line_timerline",
+                "name": "Timberline Falls",
+                "durationInMinutes": 20
+            },
+            {
+                "durationInMinutes": 100
+            },
+            {
+                "id": "ley_line_iron",
+                "name": "Iron Marches",
+                "durationInMinutes": 20
+            },
+            {
+                "durationInMinutes": 100
+            },
+            {
+                "id": "ley_line_gendarran",
+                "name": "Gendarran Fields",
+                "durationInMinutes": 20
+            }
+        ]
+    },
+    {
+        "id": "verdant",
+        "name": "Verdant Brink",
+        "region": "Maguuma",
+        "offsetInMinutes": 15,
+        "segments": [
+            {
+                "id": "verdant_night",
+                "name": "Night",
+                "durationInMinutes": 25
+            },
+            {
+                "id": "verdant_night_bosses",
+                "name": "Night Bosses",
+                "durationInMinutes": 20
+            },
+            {
+                "id": "verdant_day",
+                "name": "Daytime",
+                "durationInMinutes": 75
+            }
+        ]
+    },
+    {
+        "id": "auric",
+        "name": "Auric Basin",
+        "region": "Maguuma",
+        "offsetInMinutes": 30,
+        "segments": [
+            {
+                "id": "auric_pylons",
+                "name": "Pylons",
+                "durationInMinutes": 75
+            },
+            {
+                "id": "auric_challenges",
+                "name": "Challenges",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "auric_octovine",
+                "name": "Octovine",
+                "durationInMinutes": 20
+            },
+            {
+                "id": "auric_reset",
+                "name": "Reset",
+                "durationInMinutes": 10
+            }
+        ]
+    },
+    {
+        "id": "tangled",
+        "name": "Tangled Depths",
+        "region": "Maguuma",
+        "offsetInMinutes": 70,
+        "segments": [
+            {
+                "id": "tangled_outposts",
+                "name": "Help the Outposts",
+                "durationInMinutes": 95
+            },
+            {
+                "id": "tangled_prep",
+                "name": "Prep",
+                "durationInMinutes": 5
+            },
+            {
+                "id": "tangled_chak",
+                "name": "Chak Gerent",
+                "durationInMinutes": 20
+            }
+        ]
+    },
+    {
+        "id": "dragonstand",
+        "name": "Dragon's Stand",
+        "region": "Maguuma",
+        "offsetInMinutes": 0,
+        "segments": [
+            {
+                "durationInMinutes": 90
+            },
+            {
+                "id": "dragonstand_start",
+                "name": "Start",
+                "durationInMinutes": 30
+            }
+        ]
+    },
+    {
+        "id": "lake",
+        "name": "Lake Doric",
+        "region": "Maguuma",
+        "offsetInMinutes": 15,
+        "segments": [
+            {
+                "id": "lake_loamhurst",
+                "name": "New Loamhurst",
+                "durationInMinutes": 45
+            },
+            {
+                "id": "lake_homestead",
+                "name": "Noran's Homestead",
+                "durationInMinutes": 30
+            },
+            {
+                "id": "lake_haven",
+                "name": "Saidra's Haven",
+                "durationInMinutes": 45
+            }
+        ]
+    },
+    {
+        "id": "oasis",
+        "name": "Crystal Oasis",
+        "region": "Desert",
+        "offsetInMinutes": 90,
+        "segments": [
+            {
+                "durationInMinutes": 95
+            },
+            {
+                "id": "oasis_rounds",
+                "name": "Rounds 1 to 3",
+                "durationInMinutes": 16
+            },
+            {
+                "id": "oasis_pinata",
+                "name": "Pinata/Reset",
+                "durationInMinutes": 9
+            }
+        ]
+    },
+    {
+        "id": "desert_highlands",
+        "name": "Desert Highlands",
+        "region": "Desert",
+        "offsetInMinutes": 40,
+        "segments": [
+            {
+                "durationInMinutes": 100
+            },
+            {
+                "id": "desert_highlands_buried",
+                "name": "Buried Treasure",
+                "durationInMinutes": 20
+            }
+        ]
+    },
+    {
+        "id": "elon_riverlands",
+        "name": "Elon Riverlands",
+        "region": "Desert",
+        "offsetInMinutes": 5,
+        "segments": [
+            {
+                "id": "elon_riverlands_doppelganger",
+                "name": "Doppelganger",
+                "durationInMinutes": 20
+            },
+            {
+                "durationInMinutes": 75
+            },
+            {
+                "id": "elon_riverlands_acension",
+                "name": "The Path to Ascension: Augury Rock",
+                "durationInMinutes": 25
+            }
+        ]
+    },
+    {
+        "id": "desolation",
+        "name": "The Desolation",
+        "region": "Desert",
+        "offsetInMinutes": 10,
+        "segments": [
+            {
+                "durationInMinutes": 40
+            },
+            {
+                "id": "desolation_junundu",
+                "name": "Junundu Rising",
+                "durationInMinutes": 20
+            },
+            {
+                "durationInMinutes": 10
+            },
+            {
+                "id": "desolation_torment",
+                "name": "Maws of Torment",
+                "durationInMinutes": 20
+            },
+            {
+                "durationInMinutes": 10
+            },
+            {
+                "id": "desolation_junundu",
+                "name": "Junundu Rising",
+                "durationInMinutes": 20
+            }
+        ]
+    },
+    {
+        "id": "vabbi",
+        "name": "Domain of Vabbi",
+        "region": "Desert",
+        "offsetInMinutes": 0,
+        "segments": [
+            {
+                "id": "vabbi_forged",
+                "name": "Forged with Fire",
+                "durationInMinutes": 30
+            },
+            {
+                "id": "vabbi_serpent",
+                "name": "Serpents' Ire",
+                "durationInMinutes": 30
+            },
+            {
+                "id": "vabbi_forged",
+                "name": "Forged with Fire",
+                "durationInMinutes": 30
+            },
+            {
+                "durationInMinutes": 30
+            }
+        ]
+    },
+    {
+        "id": "istan",
+        "name": "Domain of Istan",
+        "region": "Desert",
+        "offsetInMinutes": 15,
+        "segments": [
+            {
+                "id": "istan_palawadan",
+                "name": "Palawadan",
+                "durationInMinutes": 30
+            },
+            {
+                "durationInMinutes": 90
+            }
+        ]
+    },
+    {
+        "id": "jahai",
+        "name": "Jahai Bluffs",
+        "region": "Desert",
+        "offsetInMinutes": 30,
+        "segments": [
+            {
+                "durationInMinutes": 90
+            },
+            {
+                "id": "jahai_escort",
+                "name": "Escorts",
+                "durationInMinutes": 15
+            },
+            {
+                "id": "jahai_shatterer",
+                "name": "Death-Branded Shatterer",
+                "durationInMinutes": 15
+            }
+        ]
+    },
+    {
+        "id": "thunderhead",
+        "name": "Thunderhead Peaks",
+        "region": "Desert",
+        "offsetInMinutes": 15,
+        "segments": [
+            {
+                "id": "thunderhead_keep",
+                "name": "Thunderhead Keep",
+                "durationInMinutes": 20
+            },
+            {
+                "durationInMinutes": 40
+            },
+            {
+                "id": "thunderhead_oil",
+                "name": "The Oil Floes",
+                "durationInMinutes": 15
+            },
+            {
+                "durationInMinutes": 45
+            }
+        ]
+    },
+    {
+        "id": "grothmar",
+        "name": "Grothmar Valley",
+        "region": "Icebrood",
+        "offsetInMinutes": 5,
+        "segments": [
+            {
+                "durationInMinutes": 15
+            },
+            {
+                "id": "grothmar_effigy",
+                "name": "Effigy",
+                "durationInMinutes": 15
+            },
+            {
+                "durationInMinutes": 13
+            },
+            {
+                "id": "grothmar_doomlore",
+                "name": "Doomlore Shrine",
+                "durationInMinutes": 22
+            },
+            {
+                "durationInMinutes": 5
+            },
+            {
+                "id": "grothmar_ooze",
+                "name": "Ooze Pits",
+                "durationInMinutes": 20
+            },
+            {
+                "durationInMinutes": 15
+            },
+            {
+                "id": "grothmar_metal",
+                "name": "Metal Concert",
+                "durationInMinutes": 15
+            }
+        ]
+    },
+    {
+        "id": "bjora",
+        "name": "Bjora Marches",
+        "region": "Icebrood",
+        "offsetInMinutes": 0,
+        "segments": [
+            {
+                "id": "bjora_shards",
+                "name": "Shards and Construct",
+                "durationInMinutes": 5
+            },
+            {
+                "id": "bjora_icebrood",
+                "name": "Icebrood Champions",
+                "durationInMinutes": 15
+            },
+            {
+                "durationInMinutes": 45
+            },
+            {
+                "id": "bjora_drakkar",
+                "name": "Drakkar and Spirits of the Wild",
+                "durationInMinutes": 35
+            },
+            {
+                "durationInMinutes": 5
+            },
+            {
+                "id": "bjora_shrines",
+                "name": "Raven Shrines",
+                "durationInMinutes": 15
+            }
+        ]
+    }
+]

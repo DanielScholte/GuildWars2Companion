@@ -9,11 +9,11 @@ import 'mocks/services.dart';
 
 main() {
   group('Event Timers', () {
-    test('No meta requested', () {
+    test('No meta requested', () async {
       final eventService = MockEventService();
 
       when(eventService.getMetaEvents())
-        .thenReturn([
+        .thenAnswer((_) async => [
           MetaEventSequence(
             id: 'test',
             name: 'Test Meta Event',
@@ -54,7 +54,7 @@ main() {
         eventService: eventService
       );
 
-      final metaEventSequences = eventRepository.getMetaEvents();
+      final metaEventSequences = await eventRepository.getMetaEvents();
 
       expect(metaEventSequences, hasLength(2));
 
@@ -68,11 +68,11 @@ main() {
       }
     });
 
-    test('Meta requested', () {
+    test('Meta requested', () async {
       final eventService = MockEventService();
 
       when(eventService.getMetaEvents())
-        .thenReturn([
+        .thenAnswer((_) async => [
           MetaEventSequence(
             id: 'test',
             name: 'Test Meta Event',
@@ -113,7 +113,7 @@ main() {
         eventService: eventService
       );
 
-      final metaEventSequences = eventRepository.getMetaEvents(
+      final metaEventSequences = await eventRepository.getMetaEvents(
         id: 'test'
       );
 
@@ -134,11 +134,11 @@ main() {
       }
     });
 
-    test('Removes offset times', () {
+    test('Removes offset times', () async {
       final eventService = MockEventService();
 
       when(eventService.getMetaEvents())
-        .thenReturn([
+        .thenAnswer((_) async => [
           MetaEventSequence(
             id: 'test',
             name: 'Test Meta Event',
@@ -158,7 +158,7 @@ main() {
         eventService: eventService
       );
 
-      final metaEventSequences = eventRepository.getMetaEvents(
+      final metaEventSequences = await eventRepository.getMetaEvents(
         id: 'test'
       );
 
