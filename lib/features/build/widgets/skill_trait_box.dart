@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guildwars2_companion/core/utils/shadow.dart';
 import 'package:guildwars2_companion/core/widgets/cached_image.dart';
 import 'package:guildwars2_companion/features/build/models/skill_trait.dart';
 import 'package:guildwars2_companion/features/build/pages/skill_trait.dart';
@@ -35,10 +36,7 @@ class BuildSkillTraitBox extends StatelessWidget {
           borderRadius: BorderRadius.circular(4.0),
           boxShadow: [
             if (Theme.of(context).brightness == Brightness.light)
-              BoxShadow(
-                color: Colors.black26,
-                blurRadius: 4.0,
-              ),
+              ShadowUtil.getMaterialShadow()
           ],
         ),
         child: skillTrait != null ? ClipRRect(

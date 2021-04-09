@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:guildwars2_companion/core/utils/guild_wars.dart';
+import 'package:guildwars2_companion/core/utils/shadow.dart';
 import 'package:guildwars2_companion/core/widgets/cached_image.dart';
 import 'package:guildwars2_companion/features/item/enums/item_section.dart';
 import 'package:guildwars2_companion/features/item/models/item.dart';
@@ -55,10 +56,7 @@ class ItemBox extends StatelessWidget {
           borderRadius: BorderRadius.circular(6.0),
           boxShadow: [
             if (Theme.of(context).brightness == Brightness.light)
-              BoxShadow(
-                color: Colors.black26,
-                blurRadius: 4.0,
-              ),
+              ShadowUtil.getMaterialShadow()
           ],
           border: Border.all(
             color: GuildWarsUtil.getRarityColor(displayEmpty ? 'Basic' : item.rarity),
@@ -254,10 +252,8 @@ class _Empty extends StatelessWidget {
         color: Colors.grey,
         borderRadius: BorderRadius.circular(6.0),
         boxShadow: [
-          BoxShadow(
-            color: Colors.black26,
-            blurRadius: 4.0,
-          ),
+          if (Theme.of(context).brightness == Brightness.light)
+            ShadowUtil.getMaterialShadow()
         ],
         border: Border.all(
           color: GuildWarsUtil.getRarityColor('Basic'),
