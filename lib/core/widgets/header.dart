@@ -37,76 +37,70 @@ class CompanionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
+    return Material(
+      elevation: 4.0,
+      child: Container(
         color: Theme.of(context).brightness == Brightness.light || enforceColor ? color : Theme.of(context).cardColor,
-        boxShadow: [
-          if (includeShadow && Theme.of(context).brightness == Brightness.light)
-            BoxShadow(
-              color: Colors.black38,
-              blurRadius: 6.0,
-            ),
-        ],
-      ),
-      width: double.infinity,
-      child: Stack(
-        alignment: Alignment.topCenter,
-        children: <Widget>[
-          if (includeBack)
-            SafeArea(
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: EdgeInsets.all(4.0),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: BackButton(
-                      color: foregroundColor,
+        width: double.infinity,
+        child: Stack(
+          alignment: Alignment.topCenter,
+          children: <Widget>[
+            if (includeBack)
+              SafeArea(
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: BackButton(
+                        color: foregroundColor,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          if (wikiName != null || isFavorite != null)
-            SafeArea(
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                  padding: EdgeInsets.all(4.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      if (isFavorite != null)
-                        _Favorite(
-                          favorite: isFavorite,
-                          foregroundColor: foregroundColor,
-                          onFavoriteToggle: onFavoriteToggle,
-                        ),
-                      if (eventSegment != null)
-                        _Notification(
-                          eventSegment: eventSegment,
-                          foregroundColor: foregroundColor,
-                        ),
-                      if (wikiName != null)
-                        _Wiki(
-                          wikiName: wikiName,
-                          wikiRequiresEnglish: wikiRequiresEnglish,
-                          foregroundColor: foregroundColor,
-                        ),
-                    ],
+            if (wikiName != null || isFavorite != null)
+              SafeArea(
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        if (isFavorite != null)
+                          _Favorite(
+                            favorite: isFavorite,
+                            foregroundColor: foregroundColor,
+                            onFavoriteToggle: onFavoriteToggle,
+                          ),
+                        if (eventSegment != null)
+                          _Notification(
+                            eventSegment: eventSegment,
+                            foregroundColor: foregroundColor,
+                          ),
+                        if (wikiName != null)
+                          _Wiki(
+                            wikiName: wikiName,
+                            wikiRequiresEnglish: wikiRequiresEnglish,
+                            foregroundColor: foregroundColor,
+                          ),
+                      ],
+                    ),
                   ),
                 ),
               ),
+            SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0, top: 14.0),
+                child: child,
+              )
             ),
-          SafeArea(
-            bottom: false,
-            child: Padding(
-              padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0, top: 14.0),
-              child: child,
-            )
-          ),
-        ],
-      )
+          ],
+        )
+      ),
     );
   }
 }
