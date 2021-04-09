@@ -117,7 +117,7 @@ class _Row extends StatelessWidget {
     DateTime time = worldBoss.segment.time;
 
     return CompanionButton(
-      color: worldBoss.color,
+      color: GuildWarsUtil.getWorldBossColor(hardDifficulty: worldBoss.hardDifficulty),
       title: worldBoss.name,
       hero: worldBoss.id,
       leading: Stack(

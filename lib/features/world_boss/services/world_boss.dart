@@ -1,12 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/core/models/event_segment.dart';
+import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/core/utils/urls.dart';
 import 'package:guildwars2_companion/features/meta_event/models/meta_event.dart';
-
-import '../models/world_boss.dart';
+import 'package:guildwars2_companion/features/world_boss/models/world_boss.dart';
 
 class WorldBossService {
+  List<WorldBoss> _worldBoss;
   Dio dio;
 
   WorldBossService({
@@ -24,113 +25,15 @@ class WorldBossService {
     throw Exception();
   }
 
-  List<WorldBoss> getWorldBosses() {
-    return [
-      WorldBoss(
-        name: 'Admiral Taidha Covington',
-        id: 'admiral_taidha_covington',
-        location: 'Bloodtide Coast',
-        waypoint: 'Laughing Gull Waypoint',
-        level: 50,
-        color: Colors.green,
-      ),
-      WorldBoss(
-        name: 'Claw of Jormag',
-        id: 'claw_of_jormag',
-        location: 'Frostgorge Sound',
-        waypoint: 'Earthshake Waypoint',
-        level: 80,
-        color: Colors.green,
-      ),
-      WorldBoss(
-        name: 'Fire Elemental',
-        id: 'fire_elemental',
-        location: 'Metrica Province',
-        waypoint: 'Muridian Waypoint',
-        level: 15,
-        color: Colors.green,
-      ),
-      WorldBoss(
-        name: 'Great Jungle Wurm',
-        id: 'great_jungle_wurm',
-        location: 'Caledon Forest',
-        waypoint: 'Twilight Arbor Waypoint',
-        level: 15,
-        color: Colors.green,
-      ),
-      WorldBoss(
-        name: 'Inquest Golem Mark II',
-        id: 'inquest_golem_mark_ii',
-        location: 'Mount Maelstrom',
-        waypoint: 'Old Sledge Site Waypoint',
-        level: 68,
-        color: Colors.green,
-      ),
-      WorldBoss(
-        name: 'Karka Queen',
-        id: 'karka_queen',
-        location: 'Southsun Cove',
-        waypoint: 'Camp Karka Waypoint',
-        level: 80,
-        color: Colors.pink,
-      ),
-      WorldBoss(
-        name: 'Megadestroyer',
-        id: 'megadestroyer',
-        location: 'Mount Maelstrom',
-        waypoint: "Maelstrom's Waypoint",
-        level: 66,
-        color: Colors.green,
-      ),
-      WorldBoss(
-        name: 'Modniir Ulgoth',
-        id: 'modniir_ulgoth',
-        location: 'Harathi Hinterlands',
-        waypoint: 'Cloven Hoof Waypoint',
-        level: 43,
-        color: Colors.green,
-      ),
-      WorldBoss(
-        name: 'Shadow Behemoth',
-        id: 'shadow_behemoth',
-        location: 'Queensdale',
-        waypoint: 'Swamplost Haven Waypoint',
-        level: 15,
-        color: Colors.green,
-      ),
-      WorldBoss(
-        name: 'Svanir Shaman Chief',
-        id: 'svanir_shaman_chief',
-        location: 'Wayfarer Foothills',
-        waypoint: "Krennak's Homestead Waypoint",
-        level: 10,
-        color: Colors.green,
-      ),
-      WorldBoss(
-        name: 'Tequatl the Sunless',
-        id: 'tequatl_the_sunless',
-        location: 'Sparkfly Fen',
-        waypoint: 'Splintered Coast Waypoint',
-        level: 65,
-        color: Colors.pink,
-      ),
-      WorldBoss(
-        name: 'The Shatterer',
-        id: 'the_shatterer',
-        location: 'Blazeridge Steppes',
-        waypoint: 'Lowland Burns Waypoint',
-        level: 50,
-        color: Colors.green,
-      ),
-      WorldBoss(
-        name: 'Triple Trouble Wurm',
-        id: 'triple_trouble_wurm',
-        location: 'Bloodtide Coast',
-        waypoint: 'Firthside Vigil Waypoint',
-        level: 55,
-        color: Colors.pink,
-      ),
-    ];
+  Future<List<WorldBoss>> getWorldBosses() async {
+    if (_worldBoss == null) {
+      List worldBossData = await Assets.loadDataAsset(Assets.worldBosses);
+      _worldBoss = worldBossData
+        .map((w) => WorldBoss.fromJson(w))
+        .toList();
+    }
+    
+    return _worldBoss;
   }
 
   List<MetaEventSequence> getWorldBossSequences() {

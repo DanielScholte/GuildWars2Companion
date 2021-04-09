@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/foundation.dart';
 import 'package:guildwars2_companion/core/models/event_segment.dart';
 
@@ -9,7 +7,7 @@ class WorldBoss {
   String location;
   String waypoint;
   int level;
-  Color color;
+  bool hardDifficulty;
   bool completed;
   MetaEventSegment segment;
 
@@ -18,9 +16,19 @@ class WorldBoss {
     @required this.location,
     this.id,
     this.completed = false,
-    this.color,
+    this.hardDifficulty,
     this.level,
     this.waypoint,
     this.segment
   });
+
+  WorldBoss.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    location = json['location'];
+    waypoint = json['waypoint'];
+    level = json['level'];
+    hardDifficulty = json['hardDifficulty'];
+    completed = false;
+  }
 }

@@ -25,9 +25,9 @@ class RaidService {
 
   Future<List<Raid>> getRaids() async {
     if (_raids == null) {
-      List dungeonData = await Assets.loadDataAsset(Assets.raids);
-      _raids = dungeonData
-        .map((d) => Raid.fromJson(d))
+      List raidData = await Assets.loadDataAsset(Assets.raids);
+      _raids = raidData
+        .map((r) => Raid.fromJson(r))
         .toList();
     }
     

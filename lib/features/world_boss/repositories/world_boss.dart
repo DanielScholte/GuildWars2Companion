@@ -11,7 +11,7 @@ class WorldBossRepository {
   });
 
   Future<List<WorldBoss>> getWorldBosses(bool includeProgress) async {
-    List<WorldBoss> worldBosses = worldBossService.getWorldBosses();
+    List<WorldBoss> worldBosses = await worldBossService.getWorldBosses();
 
     List<String> completedWorldBosses;
     if (includeProgress) {

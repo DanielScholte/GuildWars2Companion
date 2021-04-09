@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:guildwars2_companion/core/models/event_segment.dart';
 import 'package:guildwars2_companion/core/utils/assets.dart';
+import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/core/widgets/content_elevation.dart';
 import 'package:guildwars2_companion/features/event/models/notification.dart';
 import 'package:guildwars2_companion/features/event/widgets/notification_list_card.dart';
@@ -49,7 +50,9 @@ class EventPage extends StatelessWidget {
                     ),
                   EventTimesCard(
                     segment: segment,
-                    timeColor: worldBoss != null ? worldBoss.color : Colors.orange,
+                    timeColor: worldBoss != null
+                      ? GuildWarsUtil.getWorldBossColor(hardDifficulty: worldBoss.hardDifficulty)
+                      : Colors.orange,
                   ),
                   EventNotificationListCard(
                     eventId: segment.id,
@@ -124,7 +127,7 @@ class _WorldBossHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CompanionHeader(
-      color: worldBoss.color,
+      color: GuildWarsUtil.getWorldBossColor(hardDifficulty: worldBoss.hardDifficulty),
       wikiName: worldBoss.name,
       wikiRequiresEnglish: true,
       includeBack: true,

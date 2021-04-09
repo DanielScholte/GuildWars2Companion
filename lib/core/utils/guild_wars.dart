@@ -35,6 +35,8 @@ class GuildWarsUtil {
     }
   }
 
+  static Color getWorldBossColor({@required hardDifficulty})  => hardDifficulty ? Colors.pink : Colors.green;
+
   static Color getProfessionColor(String professionId) {
     switch (professionId) {
       case 'Guardian':
