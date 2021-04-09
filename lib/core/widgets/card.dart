@@ -16,22 +16,21 @@ class CompanionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-      padding: padding,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(borderRadius),
-        color: backgroundColor != null ? backgroundColor : Theme.of(context).cardColor,
-        boxShadow: [
-          if (Theme.of(context).brightness == Brightness.light)
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 4.0,
-            ),
-        ]
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+      child: Material(
+        borderRadius: BorderRadius.circular(13.0),
+        elevation: 2.0,
+        child: Container(
+          width: double.infinity,
+          padding: padding,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(borderRadius),
+            color: backgroundColor != null ? backgroundColor : Theme.of(context).cardColor,
+          ),
+          child: child
+        ),
       ),
-      child: child
     );
   }
 }
