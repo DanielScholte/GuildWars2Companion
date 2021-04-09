@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:guildwars2_companion/core/models/event_segment.dart';
+import 'package:guildwars2_companion/features/event/models/event_segment.dart';
 
 class MetaEventSequence {
   String id;

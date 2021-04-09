@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:guildwars2_companion/core/models/event_segment.dart';
+import 'package:guildwars2_companion/features/event/models/event_segment.dart';
 
 class WorldBoss {
   String name;

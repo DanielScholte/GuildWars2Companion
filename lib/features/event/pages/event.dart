@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:guildwars2_companion/core/models/event_segment.dart';
+import 'package:guildwars2_companion/features/event/models/event_segment.dart';
 import 'package:guildwars2_companion/core/utils/assets.dart';
 import 'package:guildwars2_companion/core/utils/guild_wars.dart';
 import 'package:guildwars2_companion/core/widgets/content_elevation.dart';
