@@ -16,8 +16,8 @@ class RaidService {
     final response = await dio.get(Urls.completedRaidsUrl);
 
     if (response.statusCode == 200) {
-      List dungeons = response.data;
-      return dungeons.map((a) => a.toString()).toList();
+      List raids = response.data;
+      return raids.map((a) => a.toString()).toList();
     }
 
     throw Exception();
