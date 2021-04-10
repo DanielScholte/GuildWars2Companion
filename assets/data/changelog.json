@@ -1,7 +1,7 @@
 [
     {
         "version": "1.5.4",
-        "build": 34,
+        "build": 35,
         "newFeatures": false,
         "changes": [
             "Added error handling for errors during the splashscreen",
