@@ -1,0 +1,304 @@
+[
+    {
+        "id": "ascalonian_catacombs",
+        "name": "Ascalonian Catacombs",
+        "location": "Plains of Ashford",
+        "color": {
+            "a": 255,
+            "r": 3,
+            "g": 169,
+            "b": 244
+        },
+        "paths": [
+            {
+                "id": "ac_story",
+                "name": "Story",
+                "coin": 0,
+                "level": 30
+            },
+            {
+                "id": "hodgins",
+                "name": "Path 1 - Hodgins",
+                "coin": 5000,
+                "level": 35
+            },
+            {
+                "id": "detha",
+                "name": "Path 2 - Detha",
+                "coin": 5000,
+                "level": 35
+            },
+            {
+                "id": "tzark",
+                "name": "Path 3 - Tzark",
+                "coin": 5000,
+                "level": 35
+            }
+        ]
+    },
+    {
+        "id": "caudecus_manor",
+        "name": "Caudecus's Manor",
+        "location": "Queensdale",
+        "color": {
+            "a": 255,
+            "r": 76,
+            "g": 175,
+            "b": 80
+        },
+        "paths": [
+            {
+                "id": "cm_story",
+                "name": "Story",
+                "coin": 0,
+                "level": 40
+            },
+            {
+                "id": "asura",
+                "name": "Path 1 - Asura",
+                "coin": 3500,
+                "level": 45
+            },
+            {
+                "id": "seraph",
+                "name": "Path 2 - Seraph",
+                "coin": 3500,
+                "level": 45
+            },
+            {
+                "id": "butler",
+                "name": "Path 3 - Butler",
+                "coin": 3500,
+                "level": 45
+            }
+        ]
+    },
+    {
+        "id": "twilight_arbor",
+        "name": "Twilight Arbor",
+        "location": "Caledon Forest",
+        "color": {
+            "a": 255,
+            "r": 139,
+            "g": 195,
+            "b": 74
+        },
+        "paths": [
+            {
+                "id": "ta_story",
+                "name": "Story",
+                "coin": 0,
+                "level": 50
+            },
+            {
+                "id": "leurent",
+                "name": "Path 1 - Leurent (Up)",
+                "coin": 3500,
+                "level": 55
+            },
+            {
+                "id": "vevina",
+                "name": "Path 3 - Vevina (Forward)",
+                "coin": 3500,
+                "level": 55
+            },
+            {
+                "id": "aetherpath",
+                "name": "Path 4 - Aetherpath",
+                "coin": 6600,
+                "level": 80
+            }
+        ]
+    },
+    {
+        "id": "sorrows_embrace",
+        "name": "Sorrow's Embrace",
+        "location": "Dredgehaunt Cliffs",
+        "color": {
+            "a": 255,
+            "r": 255,
+            "g": 87,
+            "b": 34
+        },
+        "paths": [
+            {
+                "id": "se_story",
+                "name": "Story",
+                "coin": 0,
+                "level": 60
+            },
+            {
+                "id": "fergg",
+                "name": "Path 1 - Fergg",
+                "coin": 3500,
+                "level": 65
+            },
+            {
+                "id": "rasalov",
+                "name": "Path 2 - Rasolov",
+                "coin": 3500,
+                "level": 65
+            },
+            {
+                "id": "koptev",
+                "name": "Path 3 - Koptev",
+                "coin": 3500,
+                "level": 65
+            }
+        ]
+    },
+    {
+        "id": "citadel_of_flame",
+        "name": "Citadel of Flame",
+        "location": "Fireheart Rise",
+        "color": {
+            "a": 255,
+            "r": 244,
+            "g": 67,
+            "b": 54
+        },
+        "paths": [
+            {
+                "id": "cof_story",
+                "name": "Story",
+                "coin": 0,
+                "level": 70
+            },
+            {
+                "id": "ferrah",
+                "name": "Path 1 - Ferrah",
+                "coin": 3500,
+                "level": 75
+            },
+            {
+                "id": "magg",
+                "name": "Path 2 - Magg",
+                "coin": 3500,
+                "level": 75
+            },
+            {
+                "id": "rhiannon",
+                "name": "Path 3 - Rhiannon",
+                "coin": 3500,
+                "level": 75
+            }
+        ]
+    },
+    {
+        "id": "honor_of_the_waves",
+        "name": "Honor of the Waves",
+        "location": "Frostgorge Sound",
+        "color": {
+            "a": 255,
+            "r": 33,
+            "g": 150,
+            "b": 243
+        },
+        "paths": [
+            {
+                "id": "hotw_story",
+                "name": "Story",
+                "coin": 0,
+                "level": 76
+            },
+            {
+                "id": "butcher",
+                "name": "Path 1 - Butcher",
+                "coin": 3500,
+                "level": 80
+            },
+            {
+                "id": "plunderer",
+                "name": "Path 2 - Plunderer",
+                "coin": 3500,
+                "level": 80
+            },
+            {
+                "id": "zealot",
+                "name": "Path 3 - Zealot",
+                "coin": 3500,
+                "level": 80
+            }
+        ]
+    },
+    {
+        "id": "crucible_of_eternity",
+        "name": "Crucible of Eternity",
+        "location": "Mount Maelstrom",
+        "color": {
+            "a": 255,
+            "r": 103,
+            "g": 58,
+            "b": 183
+        },
+        "paths": [
+            {
+                "id": "coe_story",
+                "name": "Story",
+                "coin": 0,
+                "level": 78
+            },
+            {
+                "id": "submarine",
+                "name": "Path 1 - Submarine",
+                "coin": 3500,
+                "level": 80
+            },
+            {
+                "id": "teleporter",
+                "name": "Path 2 - Teleporter",
+                "coin": 3500,
+                "level": 80
+            },
+            {
+                "id": "front_door",
+                "name": "Path 3 - Front door",
+                "coin": 3500,
+                "level": 80
+            }
+        ]
+    },
+    {
+        "id": "ruined_city_of_arah",
+        "name": "The Ruined City of Arah",
+        "location": "Cursed Shore",
+        "color": {
+            "a": 255,
+            "r": 96,
+            "g": 79,
+            "b": 59
+        },
+        "paths": [
+            {
+                "id": "arah_story",
+                "name": "Story",
+                "coin": 0,
+                "level": 80
+            },
+            {
+                "id": "jotun",
+                "name": "Path 1 - Jotun",
+                "coin": 10000,
+                "level": 80
+            },
+            {
+                "id": "mursaat",
+                "name": "Path 2 - Mursaat",
+                "coin": 10500,
+                "level": 80
+            },
+            {
+                "id": "forgotten",
+                "name": "Path 3 - Forgotten",
+                "coin": 5000,
+                "level": 80
+            },
+            {
+                "id": "seer",
+                "name": "Path 4 - Seer",
+                "coin": 10000,
+                "level": 80
+            }
+        ]
+    }
+]

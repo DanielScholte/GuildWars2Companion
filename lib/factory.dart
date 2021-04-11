@@ -1,54 +1,59 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:guildwars2_companion/blocs/account/bloc.dart';
-import 'package:guildwars2_companion/blocs/achievement/bloc.dart';
-import 'package:guildwars2_companion/blocs/bank/bloc.dart';
-import 'package:guildwars2_companion/blocs/changelog/changelog_bloc.dart';
-import 'package:guildwars2_companion/blocs/configuration/configuration_bloc.dart';
-import 'package:guildwars2_companion/blocs/dungeon/dungeon_bloc.dart';
-import 'package:guildwars2_companion/blocs/character/bloc.dart';
-import 'package:guildwars2_companion/blocs/event/event_bloc.dart';
-import 'package:guildwars2_companion/blocs/notification/notification_bloc.dart';
-import 'package:guildwars2_companion/blocs/pvp/pvp_bloc.dart';
-import 'package:guildwars2_companion/blocs/raid/raid_bloc.dart';
-import 'package:guildwars2_companion/blocs/trading_post/bloc.dart';
-import 'package:guildwars2_companion/blocs/wallet/bloc.dart';
-import 'package:guildwars2_companion/blocs/world_boss/bloc.dart';
-import 'package:guildwars2_companion/repositories/account.dart';
-import 'package:guildwars2_companion/repositories/achievement.dart';
-import 'package:guildwars2_companion/repositories/bank.dart';
-import 'package:guildwars2_companion/repositories/build.dart';
-import 'package:guildwars2_companion/repositories/changelog.dart';
-import 'package:guildwars2_companion/repositories/character.dart';
-import 'package:guildwars2_companion/repositories/configuration.dart';
-import 'package:guildwars2_companion/repositories/dungeon.dart';
-import 'package:guildwars2_companion/repositories/event.dart';
-import 'package:guildwars2_companion/repositories/item.dart';
-import 'package:guildwars2_companion/repositories/notification.dart';
-import 'package:guildwars2_companion/repositories/pvp.dart';
-import 'package:guildwars2_companion/repositories/raid.dart';
-import 'package:guildwars2_companion/repositories/trading_post.dart';
-import 'package:guildwars2_companion/repositories/wallet.dart';
-import 'package:guildwars2_companion/repositories/world_boss.dart';
-import 'package:guildwars2_companion/services/account.dart';
-import 'package:guildwars2_companion/services/achievement.dart';
-import 'package:guildwars2_companion/services/bank.dart';
-import 'package:guildwars2_companion/services/build.dart';
-import 'package:guildwars2_companion/services/changelog.dart';
-import 'package:guildwars2_companion/services/character.dart';
-import 'package:guildwars2_companion/services/configuration.dart';
-import 'package:guildwars2_companion/services/dungeon.dart';
-import 'package:guildwars2_companion/services/event.dart';
-import 'package:guildwars2_companion/services/item.dart';
-import 'package:guildwars2_companion/services/map.dart';
-import 'package:guildwars2_companion/services/notification.dart';
-import 'package:guildwars2_companion/services/pvp.dart';
-import 'package:guildwars2_companion/services/raid.dart';
-import 'package:guildwars2_companion/services/token.dart';
-import 'package:guildwars2_companion/services/trading_post.dart';
-import 'package:guildwars2_companion/services/wallet.dart';
-import 'package:guildwars2_companion/services/world_boss.dart';
-import 'package:guildwars2_companion/utils/dio.dart';
+import 'package:guildwars2_companion/core/utils/dio.dart';
+import 'package:guildwars2_companion/features/account/bloc/account_bloc.dart';
+import 'package:guildwars2_companion/features/account/repositories/account.dart';
+import 'package:guildwars2_companion/features/permissions/repositories/permission.dart';
+import 'package:guildwars2_companion/features/account/services/account.dart';
+import 'package:guildwars2_companion/features/permissions/services/permission.dart';
+import 'package:guildwars2_companion/features/account/services/token.dart';
+import 'package:guildwars2_companion/features/achievement/bloc/achievement_bloc.dart';
+import 'package:guildwars2_companion/features/achievement/repositories/achievement.dart';
+import 'package:guildwars2_companion/features/achievement/services/achievement.dart';
+import 'package:guildwars2_companion/features/bank/bloc/bank_bloc.dart';
+import 'package:guildwars2_companion/features/bank/repositories/bank.dart';
+import 'package:guildwars2_companion/features/bank/services/bank.dart';
+import 'package:guildwars2_companion/features/build/repositories/build.dart';
+import 'package:guildwars2_companion/features/build/services/build.dart';
+import 'package:guildwars2_companion/features/changelog/bloc/changelog_bloc.dart';
+import 'package:guildwars2_companion/features/changelog/repositories/changelog.dart';
+import 'package:guildwars2_companion/features/changelog/services/changelog.dart';
+import 'package:guildwars2_companion/features/character/bloc/character_bloc.dart';
+import 'package:guildwars2_companion/features/character/repositories/character.dart';
+import 'package:guildwars2_companion/features/character/services/character.dart';
+import 'package:guildwars2_companion/features/configuration/bloc/configuration_bloc.dart';
+import 'package:guildwars2_companion/features/configuration/repositories/configuration.dart';
+import 'package:guildwars2_companion/features/configuration/services/configuration.dart';
+import 'package:guildwars2_companion/features/dungeon/bloc/dungeon_bloc.dart';
+import 'package:guildwars2_companion/features/dungeon/repositories/dungeon.dart';
+import 'package:guildwars2_companion/features/dungeon/services/dungeon.dart';
+import 'package:guildwars2_companion/features/event/bloc/notification_bloc.dart';
+import 'package:guildwars2_companion/features/event/repositories/notification.dart';
+import 'package:guildwars2_companion/features/event/services/notification.dart';
+import 'package:guildwars2_companion/features/item/repositories/item.dart';
+import 'package:guildwars2_companion/features/item/services/item.dart';
+import 'package:guildwars2_companion/features/meta_event/bloc/event_bloc.dart';
+import 'package:guildwars2_companion/features/meta_event/repositories/event.dart';
+import 'package:guildwars2_companion/features/meta_event/services/event.dart';
+import 'package:guildwars2_companion/features/pvp/bloc/pvp_bloc.dart';
+import 'package:guildwars2_companion/features/pvp/repositories/pvp.dart';
+import 'package:guildwars2_companion/features/pvp/services/map.dart';
+import 'package:guildwars2_companion/features/pvp/services/pvp.dart';
+import 'package:guildwars2_companion/features/raid/bloc/raid_bloc.dart';
+import 'package:guildwars2_companion/features/raid/repositories/raid.dart';
+import 'package:guildwars2_companion/features/raid/services/raid.dart';
+import 'package:guildwars2_companion/features/tabs/bloc/tab_bloc.dart';
+import 'package:guildwars2_companion/features/tabs/repositories/tab.dart';
+import 'package:guildwars2_companion/features/tabs/services/tab.dart';
+import 'package:guildwars2_companion/features/trading_post/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/trading_post/repositories/trading_post.dart';
+import 'package:guildwars2_companion/features/trading_post/services/trading_post.dart';
+import 'package:guildwars2_companion/features/wallet/bloc/bloc.dart';
+import 'package:guildwars2_companion/features/wallet/repositories/wallet.dart';
+import 'package:guildwars2_companion/features/wallet/services/wallet.dart';
+import 'package:guildwars2_companion/features/world_boss/bloc/world_boss_bloc.dart';
+import 'package:guildwars2_companion/features/world_boss/repositories/world_boss.dart';
+import 'package:guildwars2_companion/features/world_boss/services/world_boss.dart';
 
 class CompanionFactory {
   AccountService accountService;
@@ -63,8 +68,10 @@ class CompanionFactory {
   ItemService itemService;
   MapService mapService;
   NotificationService notificationService;
+  PermissionService permissionService;
   PvpService pvpService;
   RaidService raidService;
+  TabService tabService;
   TokenService tokenService;
   TradingPostService tradingPostService;
   WalletService walletService;
@@ -105,108 +112,152 @@ class CompanionFactory {
     eventService = EventService();
     raidService = RaidService(dio: dioUtil.getDioInstance());
     mapService = MapService(dio: dioUtil.getDioInstance());
+    permissionService = PermissionService();
     pvpService = PvpService(dio: dioUtil.getDioInstance());
+    tabService = TabService();
     tradingPostService = TradingPostService(dio: dioUtil.getDioInstance());
     walletService = WalletService(dio: dioUtil.getDioInstance());
     worldBossService = WorldBossService(dio: dioUtil.getDioInstance());
   }
+}
 
-  Widget initializeRepositories({ Widget child }) {
+class CompanionFactoryProvider extends StatelessWidget {
+  final CompanionFactory companionFactory;
+  final Widget child;
+
+  CompanionFactoryProvider({@required this.companionFactory, @required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return _RepositoryProviders(
+      companionFactory: companionFactory,
+      child: _BlocProviders(
+        child: child,
+      ),
+    );
+  }
+}
+
+class _RepositoryProviders extends StatelessWidget {
+  final CompanionFactory companionFactory;
+  final Widget child;
+
+  _RepositoryProviders({@required this.companionFactory, @required this.child});
+
+  @override
+  Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       child: child,
       providers: [
         RepositoryProvider<AccountRepository>(
           create: (BuildContext context) => AccountRepository(
-            accountService: accountService,
-            tokenService: tokenService,
+            accountService: companionFactory.accountService,
+            tokenService: companionFactory.tokenService,
           ),
         ),
         RepositoryProvider<AchievementRepository>(
           create: (BuildContext context) => AchievementRepository(
-            achievementService: achievementService,
-            characterService: characterService,
-            itemService: itemService,
+            achievementService: companionFactory.achievementService,
+            characterService: companionFactory.characterService,
+            itemService: companionFactory.itemService,
           ),
         ),
         RepositoryProvider<BankRepository>(
           create: (BuildContext context) => BankRepository(
-            bankService: bankService,
-            itemService: itemService,
+            bankService: companionFactory.bankService,
+            itemService: companionFactory.itemService,
           ),
         ),
         RepositoryProvider<BuildRepository>(
           create: (BuildContext context) => BuildRepository(
-            buildService: buildService,
+            buildService: companionFactory.buildService,
           ),
         ),
         RepositoryProvider<ChangelogRepository>(
           create: (BuildContext context) => ChangelogRepository(
-            changelogService: changelogService
+            changelogService: companionFactory.changelogService
           ),
         ),
         RepositoryProvider<CharacterRepository>(
           create: (BuildContext context) => CharacterRepository(
-            characterService: characterService,
-            itemService: itemService,
+            characterService: companionFactory.characterService,
+            itemService: companionFactory.itemService,
           ),
         ),
         RepositoryProvider<ConfigurationRepository>(
           create: (BuildContext context) => ConfigurationRepository(
-            configurationService: configurationService
+            configurationService: companionFactory.configurationService
           ),
         ),
         RepositoryProvider<DungeonRepository>(
           create: (BuildContext context) => DungeonRepository(
-            dungeonService: dungeonService,
+            dungeonService: companionFactory.dungeonService,
           ),
         ),
-        RepositoryProvider<EventRepository>(
-          create: (BuildContext context) => EventRepository(
-            eventService: eventService,
+        RepositoryProvider<MetaEventRepository>(
+          create: (BuildContext context) => MetaEventRepository(
+            eventService: companionFactory.eventService,
           ),
         ),
         RepositoryProvider<ItemRepository>(
           create: (BuildContext context) => ItemRepository(
-            itemService: itemService,
+            itemService: companionFactory.itemService,
           ),
         ),
         RepositoryProvider<NotificationRepository>(
           create: (BuildContext context) => NotificationRepository(
-            notificationService: notificationService,
+            notificationService: companionFactory.notificationService,
+          ),
+        ),
+        RepositoryProvider<PermissionRepository>(
+          create: (BuildContext context) => PermissionRepository(
+            permissionService: companionFactory.permissionService,
           ),
         ),
         RepositoryProvider<PvpRepository>(
           create: (BuildContext context) => PvpRepository(
-            mapService: mapService,
-            pvpService: pvpService,
+            mapService: companionFactory.mapService,
+            pvpService: companionFactory.pvpService,
           ),
         ),
         RepositoryProvider<RaidRepository>(
           create: (BuildContext context) => RaidRepository(
-            raidService: raidService,
+            raidService: companionFactory.raidService,
+          ),
+        ),
+        RepositoryProvider<TabRepository>(
+          create: (BuildContext context) => TabRepository(
+            tabService: companionFactory.tabService
           ),
         ),
         RepositoryProvider<TradingPostRepository>(
           create: (BuildContext context) => TradingPostRepository(
-            itemService: itemService,
-            tradingPostService: tradingPostService,
+            itemService: companionFactory.itemService,
+            tradingPostService: companionFactory.tradingPostService,
           ),
         ),
         RepositoryProvider<WalletRepository>(
           create: (BuildContext context) => WalletRepository(
-            walletService: walletService,
+            walletService: companionFactory.walletService,
           ),
         ),
         RepositoryProvider<WorldBossRepository>(
           create: (BuildContext context) => WorldBossRepository(
-            worldBossService: worldBossService
+            worldBossService: companionFactory.worldBossService
           ),
         ),
       ],
     );
   }
+}
 
-  Widget initializeBlocs({ Widget child }) {
+class _BlocProviders extends StatelessWidget {
+  final Widget child;
+
+  _BlocProviders({@required this.child});
+
+  @override
+  Widget build(BuildContext context) {
     return MultiBlocProvider(
       child: child,
       providers: [
@@ -247,9 +298,9 @@ class CompanionFactory {
             dungeonRepository: RepositoryProvider.of<DungeonRepository>(context),
           ),
         ),
-        BlocProvider<EventBloc>(
-          create: (BuildContext context) => EventBloc(
-            eventRepository: RepositoryProvider.of<EventRepository>(context),
+        BlocProvider<MetaEventBloc>(
+          create: (BuildContext context) => MetaEventBloc(
+            eventRepository: RepositoryProvider.of<MetaEventRepository>(context),
           ),
         ),
         BlocProvider<NotificationBloc>(
@@ -267,6 +318,11 @@ class CompanionFactory {
             raidRepository: RepositoryProvider.of<RaidRepository>(context),
           ),
         ),
+        BlocProvider<TabBloc>(
+          create: (BuildContext context) => TabBloc(
+            tabRepository: RepositoryProvider.of<TabRepository>(context)
+          ),
+        ),
         BlocProvider<TradingPostBloc>(
           create: (BuildContext context) => TradingPostBloc(
             tradingPostRepository: RepositoryProvider.of<TradingPostRepository>(context)
@@ -279,7 +335,7 @@ class CompanionFactory {
         ),
         BlocProvider<WorldBossBloc>(
           create: (BuildContext context) => WorldBossBloc(
-            eventRepository: RepositoryProvider.of<EventRepository>(context),
+            eventRepository: RepositoryProvider.of<MetaEventRepository>(context),
             worldBossRepository: RepositoryProvider.of<WorldBossRepository>(context),
           ),
         ),

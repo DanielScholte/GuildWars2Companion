@@ -1,0 +1,106 @@
+[
+    {
+        "id": "admiral_taidha_covington",
+        "name": "Admiral Taidha Covington",
+        "location": "Bloodtide Coast",
+        "waypoint": "Laughing Gull Waypoint",
+        "level": 50,
+        "hardDifficulty": false
+    },
+    {
+        "id": "claw_of_jormag",
+        "name": "Claw of Jormag",
+        "location": "Frostgorge Sound",
+        "waypoint": "Earthshake Waypoint",
+        "level": 80,
+        "hardDifficulty": false
+    },
+    {
+        "id": "fire_elemental",
+        "name": "Fire Elemental",
+        "location": "Metrica Province",
+        "waypoint": "Muridian Waypoint",
+        "level": 15,
+        "hardDifficulty": false
+    },
+    {
+        "id": "great_jungle_wurm",
+        "name": "Great Jungle Wurm",
+        "location": "Caledon Forest",
+        "waypoint": "Twilight Arbor Waypoint",
+        "level": 15,
+        "hardDifficulty": false
+    },
+    {
+        "id": "inquest_golem_mark_ii",
+        "name": "Inquest Golem Mark II",
+        "location": "Mount Maelstrom",
+        "waypoint": "Old Sledge Site Waypoint",
+        "level": 68,
+        "hardDifficulty": false
+    },
+    {
+        "id": "karka_queen",
+        "name": "Karka Queen",
+        "location": "Southsun Cove",
+        "waypoint": "Camp Karka Waypoint",
+        "level": 80,
+        "hardDifficulty": true
+    },
+    {
+        "id": "megadestroyer",
+        "name": "Megadestroyer",
+        "location": "Mount Maelstrom",
+        "waypoint": "Maelstrom's Waypoint",
+        "level": 66,
+        "hardDifficulty": false
+    },
+    {
+        "id": "modniir_ulgoth",
+        "name": "Modniir Ulgoth",
+        "location": "Harathi Hinterlands",
+        "waypoint": "Cloven Hoof Waypoint",
+        "level": 43,
+        "hardDifficulty": false
+    },
+    {
+        "id": "shadow_behemoth",
+        "name": "Shadow Behemoth",
+        "location": "Queensdale",
+        "waypoint": "Swamplost Haven Waypoint",
+        "level": 15,
+        "hardDifficulty": false
+    },
+    {
+        "id": "svanir_shaman_chief",
+        "name": "Svanir Shaman Chief",
+        "location": "Wayfarer Foothills",
+        "waypoint": "Krennak's Homestead Waypoint",
+        "level": 10,
+        "hardDifficulty": false
+    },
+    {
+        "id": "tequatl_the_sunless",
+        "name": "Tequatl the Sunless",
+        "location": "Sparkfly Fen",
+        "waypoint": "Splintered Coast Waypoint",
+        "level": 65,
+        "hardDifficulty": true
+    },
+    {
+        "id": "the_shatterer",
+        "name": "The Shatterer",
+        "location": "Blazeridge Steppes",
+        "waypoint": "Lowland Burns Waypoint",
+        "level": 50,
+        "hardDifficulty": false
+    },
+    {
+        "id": "triple_trouble_wurm",
+        "name": "Triple Trouble Wurm",
+        "location": "Bloodtide Coast",
+        "waypoint": "Firthside Vigil Waypoint",
+        "level": 55,
+        "hardDifficulty": true
+    }
+]
