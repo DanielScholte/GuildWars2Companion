@@ -61,7 +61,8 @@ class Character {
 		}
 		if (json['bags'] != null) {
 			bags = (json['bags'] as List)
-        .map((j) => Bags.fromJson(j))
+        .where((b) => b != null)
+        .map((b) => Bags.fromJson(b))
         .toList();
 		}
 	}
