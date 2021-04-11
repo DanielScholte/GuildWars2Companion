@@ -26,16 +26,19 @@ class CompanionError extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(left: 8.0, right: 8.0),
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
           child: Text(
             "Please check your internet connection",
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyText1,
           ),
         ),
-        CompanionSimpleButton(
-          text: 'Click here to try again',
-          onPressed: () => onTryAgain(),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
+          child: CompanionSimpleButton(
+            text: 'Click here to try again',
+            onPressed: () => onTryAgain(),
+          ),
         )
       ],
     );
