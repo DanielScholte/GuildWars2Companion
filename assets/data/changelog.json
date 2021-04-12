@@ -1,5 +1,13 @@
 [
     {
+        "version": "1.5.5",
+        "build": 39,
+        "newFeatures": false,
+        "changes": [
+            "Fixed an issue that could cause crashes during the splashscreen"
+        ]
+    },
+    {
         "version": "1.5.4",
         "build": 37,
         "newFeatures": false,

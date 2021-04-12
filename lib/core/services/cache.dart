@@ -34,18 +34,7 @@ class CacheService<T> {
       return;
     }
 
-    Database database = await _getDatabase();
-
-    DateTime now = DateTime.now().toUtc();
-
-    await database.delete(
-      databaseConfiguration.tableName,
-      where: "expiration_date <= ? OR cache_version < ?",
-      whereArgs: [
-        DateFormat('yyyyMMdd').format(now),
-        databaseConfiguration.migrationConfig.migrationScripts.length
-      ],
-    );
+    Database database = await _getDatabase(clearInvalid: true);
 
     final List<Map<String, dynamic>> data = await database.query(databaseConfiguration.tableName);
     _data = List.generate(data.length, (i) => fromMap(data[i]));
@@ -163,25 +152,54 @@ class CacheService<T> {
     return data;
   }
 
-  Future<Database> _getDatabase() async {
+  Future<Database> _getDatabase({bool clearInvalid = false}) async {
     try {
-      return await openDatabaseWithMigration(
+      Database database = await openDatabaseWithMigration(
         await databaseConfiguration.getPath(),
         databaseConfiguration.migrationConfig
       );
+
+      if (clearInvalid) {
+        await _clearInvalidExpiredObjects(database: database);
+      }
+
+      return database;
     } catch (exception) {
       try {
         print('Deleting ${databaseConfiguration.tableName} database');
 
         await File(await databaseConfiguration.getPath()).delete();
 
-        return await openDatabaseWithMigration(
+        Database database = await openDatabaseWithMigration(
           await databaseConfiguration.getPath(),
           databaseConfiguration.migrationConfig
         );
+
+        if (clearInvalid) {
+          await _clearInvalidExpiredObjects(database: database);
+        }
+
+        return database;
       } catch (_) {
         throw exception;
       }
+    }
+  }
+
+  Future<void> _clearInvalidExpiredObjects({@required Database database}) async {
+    DateTime now = DateTime.now().toUtc();
+
+    int deleted = await database.delete(
+      databaseConfiguration.tableName,
+      where: "expiration_date <= ? OR cache_version < ?",
+      whereArgs: [
+        DateFormat('yyyyMMdd').format(now),
+        databaseConfiguration.migrationConfig.migrationScripts.length
+      ],
+    );
+
+    if (deleted > 0) {
+      print('Deleted $deleted objects from ${databaseConfiguration.tableName}');
     }
   }
 }
