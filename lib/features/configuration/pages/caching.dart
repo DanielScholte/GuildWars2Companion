@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/core/utils/guild_wars.dart';
+import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 import 'package:guildwars2_companion/core/widgets/info_row.dart';
 import 'package:guildwars2_companion/core/widgets/simple_button.dart';
@@ -45,58 +46,61 @@ class _CachingConfigurationPageState extends State<CachingConfigurationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CompanionAppBar(
-        title: 'Caching',
-        color: Colors.blue,
-      ),
-      body: ListView(
-        padding: EdgeInsets.all(8.0),
-        children: <Widget>[
-          _CachedDisplay(
-            future: _cachedAchievementsFuture,
-            header: 'achievements'
-          ),
-          _CachedDisplay(
-            future: _cachedItemsFuture,
-            header: 'items'
-          ),
-          _CachedDisplay(
-            future: _cachedSkinsFuture,
-            header: 'skins'
-          ),
-          _CachedDisplay(
-            future: _cachedMinisFuture,
-            header: 'minis'
-          ),
-          _CachedDisplay(
-            future: _cachedSkillsFuture,
-            header: 'skills'
-          ),
-          _CachedDisplay(
-            future: _cachedTraitsFuture,
-            header: 'traits'
-          ),
-          CompanionSimpleButton(
-            text: allowClearCache ? 'Clear cache' : 'Clearing cache...',
-            onPressed: allowClearCache ? () => _clearCacheDialog(
-              context: context,
-              achievementRepository: _achievementRepository,
-              itemRepository: _itemRepository,
-              buildRepository: _buildRepository
-            ) : null,
-          ),
-          Text(
-            '''
+    return CompanionAccent(
+      lightColor: Colors.blue,
+      child: Scaffold(
+        appBar: CompanionAppBar(
+          title: 'Caching',
+          color: Colors.blue,
+        ),
+        body: ListView(
+          padding: EdgeInsets.all(8.0),
+          children: <Widget>[
+            _CachedDisplay(
+              future: _cachedAchievementsFuture,
+              header: 'achievements'
+            ),
+            _CachedDisplay(
+              future: _cachedItemsFuture,
+              header: 'items'
+            ),
+            _CachedDisplay(
+              future: _cachedSkinsFuture,
+              header: 'skins'
+            ),
+            _CachedDisplay(
+              future: _cachedMinisFuture,
+              header: 'minis'
+            ),
+            _CachedDisplay(
+              future: _cachedSkillsFuture,
+              header: 'skills'
+            ),
+            _CachedDisplay(
+              future: _cachedTraitsFuture,
+              header: 'traits'
+            ),
+            CompanionSimpleButton(
+              text: allowClearCache ? 'Clear cache' : 'Clearing cache...',
+              onPressed: allowClearCache ? () => _clearCacheDialog(
+                context: context,
+                achievementRepository: _achievementRepository,
+                itemRepository: _itemRepository,
+                buildRepository: _buildRepository
+              ) : null,
+            ),
+            Text(
+              '''
 Caching allows GW2 Companion to load quicker while saving bandwidth and reducing the possibility for connection failures.
 Only mostly static data such as Achievements and Items are cached. Progression isn't cached.
 Experiencing issues with cached data, such as outdated information? Try clearing the cache.
-            ''',
-            style: Theme.of(context).textTheme.bodyText1,
-            textAlign: TextAlign.left,
-          )
-        ],
-      )
+              ''',
+              style: Theme.of(context).textTheme.bodyText1,
+              textAlign: TextAlign.left,
+            )
+          ],
+        )
+      ),
     );
   }
 

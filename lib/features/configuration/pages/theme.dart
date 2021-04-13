@@ -3,36 +3,40 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/core/themes/dark.dart';
 import 'package:guildwars2_companion/core/themes/light.dart';
+import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/features/configuration/bloc/configuration_bloc.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
 
 class ThemeConfigurationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CompanionAppBar(
-        title: 'Theme',
-        color: Colors.blue,
-      ),
-      body: BlocBuilder<ConfigurationBloc, ConfigurationState>(
-        builder: (context, state) {
-          List<_Theme> themes = [
-            _Theme('Light', ThemeMode.light),
-            _Theme('Dark', ThemeMode.dark),
-            _Theme('Use system theme', ThemeMode.system),
-          ];
+    return CompanionAccent(
+      lightColor: Colors.blue,
+      child: Scaffold(
+        appBar: CompanionAppBar(
+          title: 'Theme',
+          color: Colors.blue,
+        ),
+        body: BlocBuilder<ConfigurationBloc, ConfigurationState>(
+          builder: (context, state) {
+            List<_Theme> themes = [
+              _Theme('Light', ThemeMode.light),
+              _Theme('Dark', ThemeMode.dark),
+              _Theme('Use system theme', ThemeMode.system),
+            ];
 
-          return ListView(
-            children: themes
-              .map((theme) => _buildThemeOption(
-                context: context,
-                currentThemeMode: state.configuration.themeMode,
-                themeMode: theme.value,
-                title: theme.name
-              ))
-              .toList()
-          );
-        },
+            return ListView(
+              children: themes
+                .map((theme) => _buildThemeOption(
+                  context: context,
+                  currentThemeMode: state.configuration.themeMode,
+                  themeMode: theme.value,
+                  title: theme.name
+                ))
+                .toList()
+            );
+          },
+        ),
       ),
     );
   }

@@ -27,7 +27,9 @@ class EventPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CompanionAccent(
-      lightColor: Colors.orange,
+      lightColor: worldBoss != null
+        ? GuildWarsUtil.getWorldBossColor(hardDifficulty: worldBoss.hardDifficulty)
+        : Colors.orange,
       child: Scaffold(
         body: Column(
           children: <Widget>[
