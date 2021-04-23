@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/features/configuration/bloc/configuration_bloc.dart';
 import 'package:guildwars2_companion/features/achievement/repositories/achievement.dart';
 import 'package:guildwars2_companion/features/build/repositories/build.dart';
@@ -9,37 +10,40 @@ import 'package:guildwars2_companion/core/widgets/appbar.dart';
 class LanguageConfigurationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CompanionAppBar(
-        title: 'Api and Wiki Language',
-        color: Colors.blue,
-      ),
-      body: BlocBuilder<ConfigurationBloc, ConfigurationState>(
-        builder: (context, state) {
-          List<_Language> languages = [
-            _Language('English', 'en'),
-          ];
+    return CompanionAccent(
+      lightColor: Colors.blue,
+      child: Scaffold(
+        appBar: CompanionAppBar(
+          title: 'Api and Wiki Language',
+          color: Colors.blue,
+        ),
+        body: BlocBuilder<ConfigurationBloc, ConfigurationState>(
+          builder: (context, state) {
+            List<_Language> languages = [
+              _Language('English', 'en'),
+            ];
 
-          return ListView(
-            children: languages
-              .map((language) =>RadioListTile(
-                groupValue: state.configuration.language,
-                value: language.value,
-                title: Text(
-                  language.name,
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                onChanged: (lang) => _clearCacheDialog(
-                  context: context,
-                  achievementRepository: RepositoryProvider.of<AchievementRepository>(context),
-                  itemRepository: RepositoryProvider.of<ItemRepository>(context),
-                  buildRepository: RepositoryProvider.of<BuildRepository>(context),
-                  lang: lang
-                ),
-              ))
-              .toList(),
-          );
-        },
+            return ListView(
+              children: languages
+                .map((language) =>RadioListTile(
+                  groupValue: state.configuration.language,
+                  value: language.value,
+                  title: Text(
+                    language.name,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  onChanged: (lang) => _clearCacheDialog(
+                    context: context,
+                    achievementRepository: RepositoryProvider.of<AchievementRepository>(context),
+                    itemRepository: RepositoryProvider.of<ItemRepository>(context),
+                    buildRepository: RepositoryProvider.of<BuildRepository>(context),
+                    lang: lang
+                  ),
+                ))
+                .toList(),
+            );
+          },
+        ),
       ),
     );
   }

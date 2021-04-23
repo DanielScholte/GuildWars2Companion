@@ -27,5 +27,15 @@ class MetaEventSequence {
         .toList();
     }
   }
+
+  MetaEventSequence.copy(MetaEventSequence metaEventSequence) {
+    id = metaEventSequence.id;
+    name = metaEventSequence.name;
+    region = metaEventSequence.region;
+    offset = metaEventSequence.offset;
+    if (metaEventSequence.segments != null) {
+      segments = List.of(metaEventSequence.segments);
+    }
+  }
 }
 

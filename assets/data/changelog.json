@@ -1,5 +1,13 @@
 [
     {
+        "version": "1.5.6",
+        "build": 40,
+        "newFeatures": false,
+        "changes": [
+            "Fixed an issue that could cause incorrect event timers"
+        ]
+    },
+    {
         "version": "1.5.5",
         "build": 39,
         "newFeatures": false,

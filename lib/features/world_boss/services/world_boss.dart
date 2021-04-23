@@ -44,6 +44,8 @@ class WorldBossService {
         .toList();
     }
     
-    return _worldBossSequences;
+    return _worldBossSequences
+      .map((m) => MetaEventSequence.copy(m))
+      .toList();
   }
 }
