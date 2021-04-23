@@ -12,6 +12,8 @@ class EventService {
         .toList();
     }
     
-    return _metaEvents;
+    return _metaEvents
+      .map((m) => MetaEventSequence.copy(m))
+      .toList();
   }
 }
