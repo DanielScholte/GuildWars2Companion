@@ -21,6 +21,10 @@ class LanguageConfigurationPage extends StatelessWidget {
           builder: (context, state) {
             List<_Language> languages = [
               _Language('English', 'en'),
+              _Language('Spanish', 'es'),
+              _Language('German', 'de'),
+              _Language('French', 'fr'),
+              _Language('Chinese', 'zh'),
             ];
 
             return ListView(
