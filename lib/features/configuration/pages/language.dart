@@ -21,6 +21,10 @@ class LanguageConfigurationPage extends StatelessWidget {
           builder: (context, state) {
             List<_Language> languages = [
               _Language('English', 'en'),
+              _Language('Spanish', 'es'),
+              _Language('German', 'de'),
+              _Language('French', 'fr'),
+              _Language('Chinese', 'zh'),
             ];
 
             return ListView(
@@ -32,7 +36,7 @@ class LanguageConfigurationPage extends StatelessWidget {
                     language.name,
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
-                  onChanged: (lang) => _clearCacheDialog(
+                  onChanged: (lang) => _changeLanguageDialog(
                     context: context,
                     achievementRepository: RepositoryProvider.of<AchievementRepository>(context),
                     itemRepository: RepositoryProvider.of<ItemRepository>(context),
@@ -48,7 +52,7 @@ class LanguageConfigurationPage extends StatelessWidget {
     );
   }
 
-  _clearCacheDialog({
+  _changeLanguageDialog({
     @required BuildContext context,
     @required AchievementRepository achievementRepository,
     @required ItemRepository itemRepository,

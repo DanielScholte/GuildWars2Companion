@@ -1,5 +1,13 @@
 [
     {
+        "version": "1.5.7",
+        "build": 41,
+        "newFeatures": false,
+        "changes": [
+            "Fixed missing language options"
+        ]
+    },
+    {
         "version": "1.5.6",
         "build": 40,
         "newFeatures": false,
