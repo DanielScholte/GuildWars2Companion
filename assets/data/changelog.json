@@ -1,5 +1,13 @@
 [
     {
+        "version": "1.6.0",
+        "build": 42,
+        "newFeatures": true,
+        "changes": [
+            "Added event timer previews to the meta event page"
+        ]
+    },
+    {
         "version": "1.5.7",
         "build": 41,
         "newFeatures": false,

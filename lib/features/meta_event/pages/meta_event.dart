@@ -54,7 +54,7 @@ class MetaEventPage extends StatelessWidget {
                     backgroundColor: Theme.of(context).accentColor,
                     color: Theme.of(context).cardColor,
                     onRefresh: () async {
-                      BlocProvider.of<MetaEventBloc>(context).add(LoadMetaEventsEvent(id: metaEventSequence.id));
+                      BlocProvider.of<MetaEventBloc>(context).add(LoadMetaEventsEvent());
                       await Future.delayed(Duration(milliseconds: 200), () {});
                     },
                     child: CompanionListView(
@@ -114,10 +114,6 @@ class _EventButton extends StatelessWidget {
             TimerBuilder.periodic(Duration(seconds: 1),
               builder: (context) {
                 DateTime now = DateTime.now();
-
-                if (segment.time.add(segment.duration).isBefore(now)) {
-                  BlocProvider.of<MetaEventBloc>(context).add(LoadMetaEventsEvent(id: sequence.id));
-                }
 
                 if (segment.time.isBefore(now)) {
                   return Text(
