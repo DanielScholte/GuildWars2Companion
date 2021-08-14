@@ -225,12 +225,10 @@ class _Leading extends StatelessWidget {
                           color: Colors.white,
                         ),
                       ),
-                      Theme(
-                        data: Theme.of(context).copyWith(accentColor: Colors.white),
-                        child: LinearProgressIndicator(
-                          value: progress,
-                          backgroundColor: Colors.transparent,
-                        ),
+                      LinearProgressIndicator(
+                        value: progress,
+                        color: Colors.white,
+                        backgroundColor: Colors.transparent,
                       )
                     ],
                   );

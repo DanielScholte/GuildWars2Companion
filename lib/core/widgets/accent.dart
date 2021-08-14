@@ -18,6 +18,10 @@ class CompanionAccent extends StatelessWidget {
     return Theme(
       data: Theme.of(context).copyWith(
         accentColor: lightColor,
+        colorScheme: Theme.of(context).colorScheme.copyWith(
+          primary: lightColor,
+          secondary: lightColor
+        ),
       ),
       child: child,
     );

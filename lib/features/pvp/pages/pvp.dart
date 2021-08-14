@@ -111,18 +111,16 @@ class _Body extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline1,
                 ),
                 if (pvpStats.pvpRankPointsNeeded != null && pvpStats.pvpRank < 80)
-                  Theme(
-                    data: Theme.of(context).copyWith(accentColor: Colors.white),
-                    child: Container(
-                      margin: EdgeInsets.all(4.0),
-                      width: 128.0,
-                      height: 8.0,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(4.0),
-                        child: LinearProgressIndicator(
-                          value: pvpStats.pvpRankPoints / pvpStats.pvpRankPointsNeeded,
-                          backgroundColor: Colors.white24
-                        ),
+                  Container(
+                    margin: EdgeInsets.all(4.0),
+                    width: 128.0,
+                    height: 8.0,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(4.0),
+                      child: LinearProgressIndicator(
+                        value: pvpStats.pvpRankPoints / pvpStats.pvpRankPointsNeeded,
+                        color: Colors.white,
+                        backgroundColor: Colors.white24
                       ),
                     ),
                   ),

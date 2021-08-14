@@ -180,10 +180,7 @@ class _Leading extends StatelessWidget {
       margin: EdgeInsets.only(right: 12.0),
       alignment: Alignment.center,
       child: this.loading
-        ? Theme(
-          data: Theme.of(context).copyWith(accentColor: Colors.white),
-          child: CircularProgressIndicator(),
-        )
+        ? CircularProgressIndicator(color: Colors.white)
         : Builder(
           builder: (context) {
             if (hero != null) {

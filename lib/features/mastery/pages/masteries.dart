@@ -94,12 +94,10 @@ class _MasteryButton extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-              Theme(
-                data: Theme.of(context).copyWith(accentColor: Colors.white),
-                child: LinearProgressIndicator(
-                  value: (mastery.level) / mastery.levels.length,
-                  backgroundColor: Colors.transparent,
-                ),
+              LinearProgressIndicator(
+                value: (mastery.level) / mastery.levels.length,
+                color: Colors.white,
+                backgroundColor: Colors.transparent,
               )
             ],
           )
