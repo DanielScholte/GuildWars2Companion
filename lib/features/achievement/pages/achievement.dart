@@ -220,18 +220,16 @@ class _AchievementPageLayout extends StatelessWidget {
                               color: Colors.white
                             ),
                           ),
-                          Theme(
-                            data: Theme.of(context).copyWith(accentColor: Colors.white),
-                            child: Container(
-                              margin: EdgeInsets.all(4.0),
-                              width: 128.0,
-                              height: 8.0,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(4.0),
-                                child: LinearProgressIndicator(
-                                  value: progress,
-                                  backgroundColor: Colors.white24
-                                ),
+                          Container(
+                            margin: EdgeInsets.all(4.0),
+                            width: 128.0,
+                            height: 8.0,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(4.0),
+                              child: LinearProgressIndicator(
+                                value: progress,
+                                color: Colors.white,
+                                backgroundColor: Colors.white24
                               ),
                             ),
                           )

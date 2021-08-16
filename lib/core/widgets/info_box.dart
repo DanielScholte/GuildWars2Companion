@@ -43,15 +43,13 @@ class CompanionInfoBox extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           if (loading)
-            Theme(
-              data: Theme.of(context).copyWith(accentColor: borderColor),
-              child: Container(
-                width: 22.0,
-                height: 22.0,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2.0,
-                )
-              ),
+            Container(
+              width: 22.0,
+              height: 22.0,
+              child: CircularProgressIndicator(
+                strokeWidth: 2.0,
+                color: borderColor,
+              )
             ),
           if (!loading && widget == null)
             Text(

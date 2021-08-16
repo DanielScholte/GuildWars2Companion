@@ -65,14 +65,10 @@ class _AchievementCategoryLeading extends StatelessWidget {
                       color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
                     ),
                   ),
-                  Theme(
-                    data: Theme.of(context).copyWith(
-                      accentColor: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white
-                    ),
-                    child: LinearProgressIndicator(
-                      value: ratio,
-                      backgroundColor: Colors.transparent,
-                    ),
+                  LinearProgressIndicator(
+                    value: ratio,
+                    color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
+                    backgroundColor: Colors.transparent,
                   )
                 ],
               )
