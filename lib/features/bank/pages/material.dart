@@ -97,6 +97,21 @@ class _MaterialCategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var items = category.materials
+      .where((i) => i.itemInfo.name.toLowerCase().contains(search.toLowerCase()))
+      .map((i) => ItemBox(
+        item: i.itemInfo,
+        quantity: i.count,
+        hero: '${i.id} ${category.materials.indexOf(i)}',
+        includeMargin: false,
+        section: ItemSection.MATERIAL,
+      ))
+      .toList();
+
+    if (items.isEmpty) {
+      return Container();
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
       child: Column(
@@ -115,16 +130,7 @@ class _MaterialCategoryCard extends StatelessWidget {
               alignment: WrapAlignment.center,
               spacing: 4.0,
               runSpacing: 4.0,
-              children: category.materials
-                .where((i) => i.itemInfo.name.toLowerCase().contains(search.toLowerCase()))
-                .map((i) => ItemBox(
-                  item: i.itemInfo,
-                  quantity: i.count,
-                  hero: '${i.id} ${category.materials.indexOf(i)}',
-                  includeMargin: false,
-                  section: ItemSection.MATERIAL,
-                ))
-                .toList(),
+              children: items,
             ),
           ),
         ],
