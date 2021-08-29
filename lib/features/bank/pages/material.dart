@@ -9,7 +9,15 @@ import 'package:guildwars2_companion/features/bank/models/material_category.dart
 import 'package:guildwars2_companion/features/item/enums/item_section.dart';
 import 'package:guildwars2_companion/features/item/widgets/item_box.dart';
 
-class MaterialBankPage extends StatelessWidget {
+
+class MaterialBankPage extends StatefulWidget {
+  @override
+  _MaterialBankPageState createState() => _MaterialBankPageState();
+}
+
+class _MaterialBankPageState extends State<MaterialBankPage> {
+  String _search = "";
+
   @override
   Widget build(BuildContext context) {
     return CompanionAccent(
@@ -39,10 +47,26 @@ class MaterialBankPage extends StatelessWidget {
                   BlocProvider.of<BankBloc>(context).add(LoadBankEvent());
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
-                child: CompanionListView(
-                  children: state.materialCategories
-                    .map((c) => _MaterialCategoryCard(category: c))
-                    .toList(),
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          hintText: "Item to search for",
+                          labelText: "Search",
+                          contentPadding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                          focusColor: Theme.of(context).accentColor
+                        ),
+                        onChanged: (String value) {
+                          setState(() => _search = value );
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: buildCategories(state, this._search)
+                    )
+                  ]
                 ),
               );
             }
@@ -55,12 +79,21 @@ class MaterialBankPage extends StatelessWidget {
       ),
     );
   }
+
+  CompanionListView buildCategories(LoadedBankState state, String search) {
+    return CompanionListView(
+      children: state.materialCategories
+        .map((c) => _MaterialCategoryCard(category: c, search: search))
+        .toList(),
+    );
+  }
 }
 
 class _MaterialCategoryCard extends StatelessWidget {
   final MaterialCategory category;
+  String search;
 
-  _MaterialCategoryCard({@required this.category});
+  _MaterialCategoryCard({@required this.category, @required this.search});
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +116,7 @@ class _MaterialCategoryCard extends StatelessWidget {
               spacing: 4.0,
               runSpacing: 4.0,
               children: category.materials
+                .where((i) => i.itemInfo.name.toLowerCase().contains(search.toLowerCase()))
                 .map((i) => ItemBox(
                   item: i.itemInfo,
                   quantity: i.count,
