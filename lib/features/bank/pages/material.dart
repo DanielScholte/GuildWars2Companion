@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
+import 'package:guildwars2_companion/core/widgets/search_page.dart';
 import 'package:guildwars2_companion/features/error/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
 import 'package:guildwars2_companion/features/bank/bloc/bank_bloc.dart';
@@ -16,8 +17,6 @@ class MaterialBankPage extends StatefulWidget {
 }
 
 class _MaterialBankPageState extends State<MaterialBankPage> {
-  String _search = "";
-
   @override
   Widget build(BuildContext context) {
     return CompanionAccent(
@@ -47,27 +46,7 @@ class _MaterialBankPageState extends State<MaterialBankPage> {
                   BlocProvider.of<BankBloc>(context).add(LoadBankEvent());
                   await Future.delayed(Duration(milliseconds: 200), () {});
                 },
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          hintText: "Item to search for",
-                          labelText: "Search",
-                          contentPadding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                          focusColor: Theme.of(context).accentColor
-                        ),
-                        onChanged: (String value) {
-                          setState(() => _search = value );
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: buildCategories(state, this._search)
-                    )
-                  ]
-                ),
+                child: SearchPage(builder: (context, search) { return buildCategories(state, search); })
               );
             }
 

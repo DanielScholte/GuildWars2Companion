@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guildwars2_companion/core/widgets/accent.dart';
 import 'package:guildwars2_companion/core/widgets/appbar.dart';
+import 'package:guildwars2_companion/core/widgets/search_page.dart';
 import 'package:guildwars2_companion/features/error/widgets/error.dart';
 import 'package:guildwars2_companion/core/widgets/list_view.dart';
 import 'package:guildwars2_companion/features/bank/bloc/bank_bloc.dart';
@@ -71,6 +72,10 @@ class _BankListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return SearchPage(builder: buildBankList);
+  }
+
+  CompanionListView buildBankList(BuildContext context, String search) {
     return CompanionListView(
       children: Iterable
         .generate((inventory.length / 30).ceil())
@@ -78,7 +83,20 @@ class _BankListView extends StatelessWidget {
           List<InventoryItem> bankTab = inventory
             .skip(index * 30)
             .take(30)
+            .where((i) {
+              if (search.isEmpty) {
+                return true;
+              }
+
+              return i.itemInfo != null 
+                     && i.itemInfo.name != null
+                     && i.itemInfo.name.toLowerCase().contains(search.toLowerCase());
+            })
             .toList();
+
+          if (bankTab.isEmpty) {
+            return Container();
+          }
 
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
