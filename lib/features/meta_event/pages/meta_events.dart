@@ -86,6 +86,12 @@ class _MetaEventsPageState extends State<MetaEventsPage> {
                       sequences: state.events,
                       onRequiresRefresh: () => refreshMetaEvents(),
                     ),
+                    _MasteryCategoryButton(
+                      name: 'End of Dragons',
+                      region: 'Cantha',
+                      sequences: state.events,
+                      onRequiresRefresh: () => refreshMetaEvents(),
+                    ),
                   ],
                 ),
               );

@@ -436,8 +436,118 @@
             },
             {
                 "id": "bjora_shrines",
-                "name": "Raven Shrines",
+                "name": "Defend Jora's Keep",
                 "durationInMinutes": 15
+            }
+        ]
+    },
+    {
+        "id": "dragonstorm",
+        "name": "Dragonstorm",
+        "region": "Icebrood",
+        "offsetInMinutes": 40,
+        "segments": [
+            {
+                "durationInMinutes": 100
+            },
+            {
+                "id": "dragonstorm",
+                "name": "Dragonstorm (Public)",
+                "durationInMinutes": 20
+            }
+        ]
+    },
+    {
+        "id": "cantha_day_night",
+        "name": "Cantha: Day and Night",
+        "region": "Cantha",
+        "offsetInMinutes": 20,
+        "segments": [
+            {
+                "id": "night",
+                "name": "Night",
+                "durationInMinutes": 55
+            },
+            {
+                "id": "dawn",
+                "name": "Dawn",
+                "durationInMinutes": 5
+            },
+            {
+                "id": "day",
+                "name": "Day",
+                "durationInMinutes": 55
+            },
+            {
+                "id": "dusk",
+                "name": "Dusk",
+                "durationInMinutes": 5
+            }
+        ]
+    },
+    {
+        "id": "seitung_province",
+        "name": "Seitung Province",
+        "region": "Cantha",
+        "offsetInMinutes": 0,
+        "segments": [
+            {
+                "durationInMinutes": 90
+            },
+            {
+                "id": "assault",
+                "name": "Aetherblade Assault",
+                "durationInMinutes": 30
+            }
+        ]
+    },
+    {
+        "id": "new_kaineng_city",
+        "name": "New Kaineng City",
+        "region": "Cantha",
+        "offsetInMinutes": 0,
+        "segments": [
+            {
+                "id": "blackout",
+                "name": "Kaineng Blackout",
+                "durationInMinutes": 30
+            },
+            {
+                "durationInMinutes": 90
+            }
+        ]
+    },
+    {
+        "id": "the_echovald_wilds",
+        "name": "The Echovald Wilds",
+        "region": "Cantha",
+        "offsetInMinutes": 55,
+        "segments": [
+            {
+                "durationInMinutes": 85
+            },
+            {
+                "id": "war",
+                "name": "Gang War",
+                "durationInMinutes": 35
+            }
+        ]
+    },
+    {
+        "id": "dragons_end",
+        "name": "Dragon's End",
+        "region": "Cantha",
+        "offsetInMinutes": 0,
+        "segments": [
+            {
+                "id": "preparations",
+                "name": "Preparations",
+                "durationInMinutes": 60
+            },
+            {
+                "id": "battle",
+                "name": "The Battle for the Jade Sea",
+                "durationInMinutes": 60
             }
         ]
     }

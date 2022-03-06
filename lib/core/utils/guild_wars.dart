@@ -15,8 +15,10 @@ class GuildWarsUtil {
       case 'Desert':
         return 'Path of Fire';
       case 'Tundra':
-      case 'Unknown':
+      case 'Icebrood':
         return 'Icebrood Saga';
+      case 'Unknown':
+        return 'End of Dragons';
       default:
         return mastery;
     }
@@ -30,8 +32,11 @@ class GuildWarsUtil {
         return Colors.green;
       case 'Tyria':
         return Colors.red[600];
-      default:
+      case 'Tundra':
+      case 'Icebrood':
         return Colors.blueAccent;
+      default:
+        return Color(0xFF118E8A);
     }
   }
 
