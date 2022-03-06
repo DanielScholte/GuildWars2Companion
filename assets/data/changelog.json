@@ -1,5 +1,13 @@
 [
     {
+        "version": "1.6.1",
+        "build": 46,
+        "newFeatures": true,
+        "changes": [
+            "Added End of Dragons meta events"
+        ]
+    },
+    {
         "version": "1.6.0",
         "build": 43,
         "newFeatures": true,
