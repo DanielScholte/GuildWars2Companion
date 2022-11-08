@@ -18,7 +18,7 @@
             {
                 "id": "day",
                 "name": "Day",
-                "durationInMinutes": 40
+                "durationInMinutes": 70
             },
             {
                 "id": "dusk",
@@ -510,10 +510,10 @@
             {
                 "id": "blackout",
                 "name": "Kaineng Blackout",
-                "durationInMinutes": 30
+                "durationInMinutes": 40
             },
             {
-                "durationInMinutes": 90
+                "durationInMinutes": 80
             }
         ]
     },
